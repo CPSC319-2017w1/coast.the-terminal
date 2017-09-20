@@ -23,18 +23,18 @@
          * user testing 
          * j-unit testing
          * other...testing methods  
-            * Resource Plan: 
-               * Personal contributions/responsible  
-               * technical requirements 
-                    * what server/etc. - ask questions tomorrow!
-            * Design Plan 
-               * UML/ER diagram description 
-            * Development Plan:
-               * main layers of development 
-                  * UI 
-                  * communications 
-                  * database 
-               * documentation plan
+       * Resource Plan:
+         * Personal contributions/responsible
+         * technical requirements 
+            * what server/etc. - ask questions tomorrow!
+       * Design Plan 
+         * UML/ER diagram description 
+       * Development Plan:
+         * main layers of development 
+            * UI
+            * communications 
+            * database 
+         * documentation plan
             
    
     I am missing that should be in there? Appendices maybe?
@@ -48,9 +48,9 @@
 7. Spend rest of time on project plan sections.
 
 
-TODO: prioritize questions for tomorrow 
-TODO: Anushka --> UI for actually updating the database; figure out a shorter, more succint way to explain idea 
-TODO: write up project plan
-TODO: Maia --> communications needs to be highlighted as a "critital path" in the project plan
-TODO: Make a detailed plan on what to say tomorrow
+* TODO: prioritize questions for tomorrow 
+* TODO: Anushka --> UI for actually updating the database; figure out a shorter, more succint way to explain idea 
+* TODO: write up project plan
+* TODO: Maia --> communications needs to be highlighted as a "critital path" in the project plan
+* TODO: Make a detailed plan on what to say tomorrow
 
