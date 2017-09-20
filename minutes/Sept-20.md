@@ -4,37 +4,37 @@
         * Should we go into detailed tasks or should it be a high level description?
 2. Finalize what sections should be in the project plan.
     * Currently we have 
-            Overview (est. 1.5 page) 
-                detailed introduction
-                     back-story/overview about the company 
-                     problem with current system
-                     our potential solution (needs to be written after stakeholder meeting) 
-                     why it's better
-                Agile methods 
-                     test driven development 
-                     bi-scrum meetings
-                     cross-functional teams 
-            Estimated Schedule
-                Gannt chart 
-                description
-            Testing Plan (est. 1 page?):
-                remember to test on IE!!
-                selenium (+ description)
-                user testing 
-                j-unit testing
-                other...testing methods  
-            Resource Plan: 
-               Personal contributions/responsible  
-               technical requirements 
-                    what server/etc. - ask questions tomorrow!
-            Design Plan 
-               UML/ER diagram description 
-            Development Plan:
-               main layers of development 
-                  UI 
-                  communications 
-                  database 
-               documentation plan
+            * Overview (est. 1.5 page) 
+                * detailed introduction
+                     * back-story/overview about the company 
+                     * problem with current system
+                     * our potential solution (needs to be written after stakeholder meeting) 
+                     * why it's better
+                * Agile methods 
+                     * test driven development 
+                     * bi-scrum meetings
+                     * cross-functional teams 
+            * Estimated Schedule
+                * Gannt chart 
+                * description
+            * Testing Plan (est. 1 page?):
+                * remember to test on IE!!
+                * selenium (+ description)
+                * user testing 
+                * j-unit testing
+                * other...testing methods  
+            * Resource Plan: 
+               * Personal contributions/responsible  
+               * technical requirements 
+                    * what server/etc. - ask questions tomorrow!
+            * Design Plan 
+               * UML/ER diagram description 
+            * Development Plan:
+               * main layers of development 
+                  * UI 
+                  * communications 
+                  * database 
+               * documentation plan
             
    
     I am missing that should be in there? Appendices maybe?
