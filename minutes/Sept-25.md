@@ -15,7 +15,9 @@
 
 * Lets aim to do our respective tasks by next Wednesday.
 
-* Ask TA for feedback on Piazza about previous milestone and ask any follow-up questions that we had thought of for the Coast Capital people. 
+* Ask TA for feedback on Piazza about previous milestone and ask any follow-up questions that we had thought of for the Coast Capital people.
+
+* We could use Tableau instead of d3.js
 
 # Minutes
 
