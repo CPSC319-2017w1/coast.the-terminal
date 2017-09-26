@@ -49,13 +49,16 @@
 
       [Vaastav]
       Different layers:
+
       <ul>
         <li>Database</li>
         <li>Backend</li>
         <li>Communication between back and UI/front end</li>
       </ul>
+
       [Shrey, Maia]
       Should decide what framework to bring in for front end
+
     </td>
   </tr>
   <tr>
@@ -87,12 +90,15 @@
         <li>Priority #1: Requirements</li>
         <li>
           Next priorities:
+
           <ul>
             <li>Database schema</li>
             <li>Front end environment setup (make sure you’re aware of licenses, browser compatibility, etc)</li>
           </ul>
+
         </li>
-      </ul>      
+      </ul>
+
     </td>
   </tr>
   <tr>
