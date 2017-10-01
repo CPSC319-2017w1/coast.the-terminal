@@ -2,6 +2,10 @@
 
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage{tabu}
+\usepackage[final]{pdfpages}
+
+\setboolean{@twoside}{false}
 
 \author{\textbf{The Terminal}}
 
@@ -94,33 +98,7 @@ The aim of our project is to simplify the system Coast Capital uses for capturin
 
 \section{Functional Requirements}
 
-\subsection{Requirement Traceability Matrix}
-
-    \begin{tabular}{|| c | c | c | c | c | c | c | c ||}
-        \hline
-        Version & Reference & Description & Type & Priority & MVP & Related Test Cae & Test Status \\ [0.5ex]
-        \hline\hline
-        1.0.0 & Use Case 1 & Adding or editing contractors & Functional & 1 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & Use Case 2 & Filtering Data to extract information from the larger database & Functional & 1 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & Use Case 3 & Generating graphs for trend report analysis & Functional & 2 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & Use Case 4 & Managing user permissions or adding new users to the system & Functional & 2 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & Use Case 5 & Adding or editing skills table & Functional & 2 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & Use Case 6 & Maintaining HR pay equivalent table & Functional & 2 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & Use Case 7 & Maintaining HR Role table & Functional & 2 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & Use Case 8 & Maintaining a list of Hiring Managers & Functional & 2 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & NA & Support UI on IE 11 & Non Functional & 1 & Y & TBD & TBD \\
-        \hline
-        1.0.0 & NA & Support UI on Firefox & Non Functional & 3 & Y & TBD & TBD \\
-        \hline
-    \end{tabular}
+\includepdf[pages=-, pagecommand={\subsection{Requirement Traceability Matrix} \thispagestyle{empty}}, fitpaper=true]{RTM.pdf}
 
 \subsection{Use Cases Diagram}
 
