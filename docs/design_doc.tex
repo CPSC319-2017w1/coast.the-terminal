@@ -23,7 +23,7 @@
 
 \subsection{Overview}
 
-The aim of our project is to simplify the system Coast Capital uses for capturing contractor data. Their current system requires tedious manual data entry and complex spreadsheet manipulation, and we want to provide a better method of visualization, management and maintenance. We will be building will be an online web application designed for ease of use and powerful data analysis. The application aims to make it a straightforward process to add, edit, and visualize contractor data.
+The aim of our project is to simplify the system Coast Capital uses for capturing contractor data. Their current system requires tedious manual data entry and complex spreadsheet manipulation, and we want to provide a better method of visualization, management and maintenance. We will be building an online web application designed for ease of use and powerful data analysis. The application aims to make it a straightforward process to add, edit, and visualize contractor data.
 
 \subsection{Goals}
 
@@ -49,7 +49,7 @@ The login page is simply designed to allow us to know who is entering the system
 
 \includegraphics[width=1.0\textwidth]{../design/Dashboard}
 
-The dashboard allows the user to select the type of task they would like to do once logging in. While the same buttons are available on the left navigation panel, this allows the user to cleanly enter the web application, without the landing page overwhelming them with data that would otherwise be the data filtration page. Additional functionality (not shown) could be to have some form of a profile page. 
+The dashboard allows the user to select the type of task they would like to do once logged in. While the same buttons are available on the left navigation panel, this allows the user to cleanly enter the web application, without the landing page overwhelming them with data that would otherwise be the data filtration page. Additional functionality (not shown) could be to have some form of a profile page. 
 
 \includegraphics[width=1.0\textwidth]{"../design/Filter Data"}
 
@@ -152,7 +152,7 @@ We will be using JavaScript, Java and MySQL for this project.
     \hline
     Chai & Chai is a great extension for Mocha which will give us more in-depth unit testing abilities.\\
     \hline
-    Sinon & Chai is a great extension for Mocha which will give us more in-depth unit testing abilities.\\
+    Sinon & In order to test API calls from the front-end, Sinon will give us a fake server, function spies, fake responses, etc.\\
     \hline
     \end{tabularx}
     \end{table}
@@ -181,7 +181,7 @@ We visualized the back-end and front-end architecture using a UML Class Object a
 
 \includegraphics[width=1.0\textwidth]{../design/uml-1}
 
-The system flow shows the communication between the frontend and backend as well as the structure of the frontend code. As shown in the diagram below, each user is validated while logging in which determines if they get administrative access. The administrator has the right to add, edit, or delete users. All users in the system can add and edit contractors, view and filter tables or generate reports/graphs.
+The system flow shows the communication between the frontend and backend as well as the structure of the frontend code. As shown in the diagram below, each user is validated while logging in which determines if they get administrative access. The administrator has the right to add, edit, or delete users. All users in the system can add and edit contractors, view and filter tables or generate reports/graphs. The admin's management of other tables isn't shown explicitly in the diagram but pls refer to the mock up screen
 
 \includegraphics[width=1.0\textwidth]{../design/FlowChart}
 
