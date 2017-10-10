@@ -1,0 +1,9 @@
+# Folders
+node_modules/
+.idea/
+
+# Files
+dist/bundle.js
+
+# Extensions
+*.log
