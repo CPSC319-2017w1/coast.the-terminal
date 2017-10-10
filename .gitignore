@@ -32,3 +32,13 @@ fabric.properties
 # Maven
 log/
 target/
+
+# NPM
+node_modules/
+
+# Files
+dist/bundle.js
+
+# Extensions
+*.log
+
