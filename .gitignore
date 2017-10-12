@@ -5,9 +5,6 @@ code/.idea/
 # CMake
 cmake-build-debug/
 
-# Mongo Explorer plugin:
-.idea/**/mongoSettings.xml
-
 ## File-based project format:
 *.iws
 
@@ -32,3 +29,13 @@ fabric.properties
 # Maven
 log/
 target/
+
+# NPM
+code/frontend/node_modules/
+
+# Files
+code/frontend/dist/bundle.js
+
+# Extensions
+*.log
+
