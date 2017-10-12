@@ -5,9 +5,6 @@ code/.idea/
 # CMake
 cmake-build-debug/
 
-# Mongo Explorer plugin:
-.idea/**/mongoSettings.xml
-
 ## File-based project format:
 *.iws
 
@@ -34,10 +31,10 @@ log/
 target/
 
 # NPM
-node_modules/
+code/frontend/node_modules/
 
 # Files
-dist/bundle.js
+code/frontend/dist/bundle.js
 
 # Extensions
 *.log
