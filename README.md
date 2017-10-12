@@ -5,7 +5,7 @@
 This repository tracks the development of the project for Coast Capital
 
 ## Setting Up Backend Project With Intellij
-0. You can download Intellij from https://www.youtube.com/watch?v=i5ox40dwVHM
+0. You can download Intellij from https://www.jetbrains.com/idea/
 1. Clone Repository into directory of your choosing
 2. Open Intellij, Select "New Project from Existing Sources"
 3. Select the "code" folder in the repository, Select Next
