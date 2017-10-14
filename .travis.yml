@@ -6,3 +6,9 @@ matrix:
             - cd code/backend
             - mvn compile -DskipTests=true -U
           install: mvn test
+    include:
+        - language: node_js
+          before_install:
+            - cd code/frontend
+          install: npm install
+          script: npm test
