@@ -15,7 +15,7 @@ This repository tracks the development of the project for Coast Capital
 7. Select JDK 1.8 root directory as Project SDK. If it isn't an option locate JDK 1.8 on your Computer or install JDK 1.8
 8. Select Finish.
 
-## How to run the front-end of the project:
+## How To Run The Front-end
 * Run 'npm i' in the command line in the same directory as package.json (code/frontend)
 * Run 'npm start'
 * Open 'localhost:1234' on a browser
