@@ -15,6 +15,8 @@ matrix:
             - cd code/frontend
           install: npm i
           script: webpack
-    cache:
-        directories:
-            - "code/frontend/node_modules"
+          cache:
+            directories:
+                - node_modules
+                - code/frontend/node_modules
+                - $HOME/.npm
