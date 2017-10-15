@@ -17,6 +17,5 @@ matrix:
           script: webpack
           cache:
             directories:
-                - node_modules
-                - code/frontend/node_modules
                 - $HOME/.npm
+                - $TRAVIS_BUILD_DIR/code/frontend/node_modules
