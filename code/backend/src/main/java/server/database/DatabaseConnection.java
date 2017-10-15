@@ -18,5 +18,11 @@ public class DatabaseConnection {
             logger.log(Level.INFO, "Database connection successful");
     }
 
+    /*
+     * Close the Database connection to release the resources
+     */
+    public void closeConnection() throws SQLException {
+        dbConnection.close();
+    }
 
 }
