@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Contractor</title>
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <div id="header">
+            <h1>Contractor Information</h1>
+            <p>Use the form below to add contractor information into the system.</p>
+        </div>
+        <br/>
+        <div id="wrapper">
+            <div id="contractorinformation">
+                <form name="contractorinformation" action="#" method="post">
+            	    First name <input type="text" name="firstname">
+            	    Last name <input type="text" name="lastname"><br/>
+            	    Company <input type="text" name="company">
+                    Status <input type="radio" name="status" value="active">Active
+                    <input type="radio" name="status" value="inactive">Inactive
+                    Rehire <input type="radio" name="rehire" value="Yes">Yes
+                    <input type="radio" name="rehire" value="No">No<br/>
+                </form>
+            </div>
+            <div id="projectdetails">
+                <form id="projectdetails" name="projectdetails" action="#" method="post">                    
+                    Project name <input type="text" name="projectname">
+                    Reporting Manager <select name="reportingmanager">
+                    <option> Tom Hanks</option>
+                    <option> Brad Pitt</option>
+                    <option> Johnny Depp</option>
+                    <option> Chris Pratt</option>
+                    <option> >Ryan Reynolds</option>
+                </select>
+                    Cost Centre <input type="text" name="costcentre"><br/>
+                    HR Position <select name="hrposition">
+                    <option>select HR position</option>
+                </select><br/>
+                    Rate Type <select name="ratetype">
+                    <option> 1</option>
+                    <option> 2</option>
+                    <option> 3</option>
+                   </select>
+                    <label for="amount">Enter amount</label>
+                    <div class="flex">
+                        <span class="currency">$</span>
+                        <input id="amount" name="amount" type="text" maxlength="15" />
+                    </div>
+                     HR Pay Grade <select name="paygrade">
+                    <option> 1</option>
+                    <option> 2</option>
+                    <option> 3</option>
+                   </select>
+                    PO Reference Number <input type="number" name="POreference" min="0" ><br/>
+                    Currency <input type="radio" name="currency" value="USD">USD
+                    <input type="radio" name="currency" value="CAD">CAD<br/>
+                    <br/><br/> 
+                    <button> Add Additional Project </button>
+                    <input type="submit" value="Add Contract">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
