@@ -13,4 +13,5 @@ matrix:
             - 6
           before_install:
             - cd code/frontend
-          install: npm i -d
+          install: npm i
+          script: webpack
