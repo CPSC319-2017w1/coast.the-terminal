@@ -10,12 +10,21 @@ class UserControllerTest {
 
     @Test
     void loginFailure() {
-
         String exampleUsenname = "exUsername";
         String examplePassword = "exPassword";
         UserController controller = new UserController();
         LoginResponse response = controller.login(exampleUsenname, examplePassword);
 
-        assertEquals(response.getErrorMessage(), LOGIN_INCORRECT_RESPONSE);
+        assertEquals(LOGIN_INCORRECT_RESPONSE,response.getErrorMessage());
+    }
+    @Test
+    void loginSuccessAdmin() {
+        final String EXPECTED_PERMISSIONS = "admin";
+        String adminUsername = "admin";
+        String adminPassword = "admin";
+        UserController controller = new UserController();
+        LoginResponse response = controller.login(adminUsername, adminPassword);
+
+        assertEquals( EXPECTED_PERMISSIONS, response.getPermissions());
     }
 }

@@ -39,6 +39,7 @@ public class UserController {
             if (!resultSet.isBeforeFirst()) {
                 return LoginResponse.loginFailure("Incorrect username or password");
             }
+            resultSet.next();
             user = resultSet.getString("username");
             permissions = resultSet.getString("permissions");
 
