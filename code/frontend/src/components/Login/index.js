@@ -56,12 +56,13 @@ class LoginContainer extends React.Component {
 
   render() {
     const {state} = this;
-    return <LoginComponent
-      username={state.username}
-      password={state.password}
-      handleUsernameInput={this.handleUsernameInput}
-      handlePasswordInput={this.handlePasswordInput}
-      handleSubmit={this.handleSubmit} />;
+    let username = state.username;
+    let password = state.password;
+    let handleUsernameInput = this.handleUsernameInput();
+    let handlePasswordInput = this.handlePasswordInput();
+    let handleSubmit = this.handleSubmit();
+
+    return LoginComponent({username, password, handleUsernameInput, handlePasswordInput, handleSubmit});
   }
 }
 
