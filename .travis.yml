@@ -1,0 +1,21 @@
+matrix:
+    include:
+        - language: java
+          jdk: oraclejdk8
+          before_install:
+            - cd code/backend
+            - mvn compile -DskipTests=true -U
+          install: mvn test
+    include:
+        - language: node_js
+          sudo: true
+          node_js:
+            - 6
+          before_install:
+            - cd code/frontend
+          install: npm i
+          script: webpack
+          cache:
+            directories:
+                - $HOME/.npm
+                - $TRAVIS_BUILD_DIR/code/frontend/node_modules

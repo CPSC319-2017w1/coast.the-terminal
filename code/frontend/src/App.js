@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import * as reducers from './reducers';
 import Layout from './components/Layout';
 
 const reducer = combineReducers(reducers);
-const store = createStore(reducer);
+const middleware = applyMiddleware(logger, thunk);
+const store = createStore(reducer, middleware);
 
 export default class App extends Component {
   render() {
