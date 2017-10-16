@@ -14,6 +14,7 @@ class DatabaseConnectionTest {
     void databaseConnection(){
         try {
             DatabaseConnection dbConnection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+            dbConnection.openConnection();
         } catch(SQLException e) {
             fail("Db connection failed: " + e.getMessage());
         }

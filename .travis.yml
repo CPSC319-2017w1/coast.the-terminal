@@ -6,7 +6,7 @@ matrix:
             - cd code/backend
             - mvn compile -DskipTests=true -U
           install: mvn test
-    include:
+        
         - language: node_js
           sudo: true
           node_js:
