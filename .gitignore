@@ -33,8 +33,8 @@ target/
 # NPM
 code/frontend/node_modules/
 
-# Files
-code/frontend/dist/bundle.js
+# Folders
+code/frontend/dist/
 
 # Extensions
 *.log
