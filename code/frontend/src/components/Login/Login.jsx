@@ -6,9 +6,9 @@ function LoginComponent({username, password, handleUsernameInput, handlePassword
   return (
     <div className={css.wrapper}>
       <form>
-        <input type="text" value={username} onChange={handleUsernameInput} />
-        <input type="password" value={password} onChange={handlePasswordInput} />
-        <input type="submit" onClick={handleSubmit} value="Login" />
+        <input className={css.username} type="text" value={username} onChange={handleUsernameInput} />
+        <input className={css.password} type="password" value={password} onChange={handlePasswordInput} />
+        <input className={css.submit} type="submit" onClick={handleSubmit} value="Login" />
       </form>
     </div>
   );
