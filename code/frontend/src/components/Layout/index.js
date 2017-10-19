@@ -15,19 +15,13 @@ const mapStateToProps = (state) => {
 
 function LayoutContainer({tab, isLoggedIn}) {
   if (!isLoggedIn) {
-    return (
-      <div className={css.wrapper}>
-        <Login />
-      </div>
-    );
+    return <Login />;
   }
   let child = null;
   switch (tab) {
     case 'home':
+    default: // TODO: error page for default
       child = <Home />;
-      break;
-    default:
-      child = null; // TODO: replace with error page
       break;
   }
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser, switchView } from '../../actions';
+import { loginUser, loginFailed, loginSuccessful } from '../../actions';
 import LoginComponent from './Login.jsx';
 
 const mapStateToProps = state => {
@@ -14,7 +14,13 @@ const mapDispatchToProps = dispatch => {
   return {
     onSubmit: (username, password) => {
       dispatch(loginUser(username, password));
-      dispatch(switchView('home')); //todo: needs to be dynamic
+    },
+    // temporary workaround until cross origin issues are resolved
+    onLoginFail: () => {
+      dispatch(loginFailed('Incorrect username or password'));
+    },
+    onLoginSuccess: (username, isAdmin) => {
+      dispatch(loginSuccessful(username, isAdmin));
     }
   };
 };
@@ -50,24 +56,41 @@ class LoginContainer extends React.Component {
   }
 
   handleSubmit() {
-    const {state} = this;
-    this.props.onSubmit(state.username, state.password);
+    const {username, password} = this.state;
+    //this.props.onSubmit(state.username, state.password);
+    // TODO: REMOVE
+    // TEMP WORKAROUND UNTIL CROSS ORIGIN ISSUES ARE RESOLVED
+    if (username === 'user' && password === 'user') {
+      debugger;
+      this.props.onLoginSuccess(username, false);
+    } else if (username === 'admin' && password === 'admin') {
+      debugger;
+      this.props.onLoginSuccess(username, true);
+    } else {
+      debugger;
+      this.props.onLoginFail();
+    }
   }
 
   render() {
     const {state} = this;
-    return <LoginComponent
-      username={state.username}
-      password={state.password}
-      handleUsernameInput={this.handleUsernameInput}
-      handlePasswordInput={this.handlePasswordInput}
-      handleSubmit={this.handleSubmit} />;
+    return (
+      <LoginComponent
+        username={state.username}
+        password={state.password}
+        error={this.props.user.error}
+        handleUsernameInput={this.handleUsernameInput}
+        handlePasswordInput={this.handlePasswordInput}
+        handleSubmit={this.handleSubmit} />
+    );
   }
 }
 
 LoginContainer.propTypes = {
   user: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onLoginSuccess: PropTypes.func.isRequired, //TODO: REMOVE
+  onLoginFail: PropTypes.func.isRequired //TODO: REMOVE
 };
 
 const Login = connect(
