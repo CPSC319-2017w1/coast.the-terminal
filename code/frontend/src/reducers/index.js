@@ -1,14 +1,20 @@
 import * as ACTIONS from '../constants/index';
 
 const mainInitialState = {
-  tab: 'home'
+  tab: 'home',
+  isLoading: false
 };
 
 export function main(state = mainInitialState, action) {
   switch (action.type) {
     case ACTIONS.SWITCH_TAB:
       return Object.assign({}, state, {
-        tab: action.tab
+        tab: action.tab,
+        isLoading: false
+      });
+    case ACTIONS.TOGGLE_LOADING:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
       });
     default:
       return state;
@@ -18,26 +24,29 @@ export function main(state = mainInitialState, action) {
 const userInitialState = {
   isLoggedIn: false,
   isAdmin: false,
-  username: ''
+  username: '',
+  error: false
 };
 
 export function user(state = userInitialState, action) {
   switch (action.type) {
     case ACTIONS.LOGIN:
       return Object.assign({}, state, {
-        isLoggedIn: true
+        isLoggedIn: true,
+        isAdmin: action.isAdmin,
+        username: action.username,
+        error: false
       });
     case ACTIONS.LOGOUT:
       return Object.assign({}, state, {
-        isLoggedIn: false
+        isLoggedIn: false,
+        isAdmin: false,
+        username: '',
+        error: false
       });
-    case ACTIONS.SET_USERNAME:
+    case ACTIONS.LOGIN_FAILED:
       return Object.assign({}, state, {
-        username: action.username
-      });
-    case ACTIONS.SET_ISADMIN:
-      return Object.assign({}, state, {
-        isAdmin: action.isAdmin
+        error: action.error
       });
     default:
       return state;

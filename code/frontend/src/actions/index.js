@@ -1,3 +1,4 @@
+import request from 'superagent';
 import * as ACTIONS from '../constants';
 
 export function switchView(tab) {
@@ -7,13 +8,60 @@ export function switchView(tab) {
   };
 }
 
-export function loginUser(username, password) {
-  console.log('login button clicked'); //eslint-disable-line
-  console.log('login username: ' + username); //eslint-disable-line
-  console.log('login password: ' + password); //eslint-disable-line
-  // todo: create API call to log in the user, for now just log in the user
+export function isLoading() {
+  return {
+    type: ACTIONS.TOGGLE_LOADING,
+    isLoading: true
+  };
+}
+
+export function hasStoppedLoading() {
+  return {
+    type: ACTIONS.TOGGLE_LOADING,
+    isLoading: false
+  };
+}
+
+export function loginFailed(error) {
+  return {
+    type: ACTIONS.LOGIN_FAILED,
+    error
+  };
+}
+
+export function loginSuccessful(username, isAdmin) {
   return {
     type: ACTIONS.LOGIN,
-    username
+    username,
+    isAdmin
   };
+}
+
+export function loginUser(username, password) {
+  /*
+  return dispatch => {
+    dispatch(isLoading());
+    request
+      .get('http://localhost:8080/login') // todo: route to proper backend port
+      .query({ username, password })
+      .end((err, res) => {
+        if (err || !res.ok) {
+          dispatch(hasStoppedLoading());
+          dispatch(loginFailed(err.message));
+        } else {
+          try {
+            const body = JSON.stringify(res.body);
+            if (body.error) {
+              throw new Error(body.errorMessage);
+            }
+            dispatch(hasStoppedLoading());
+            dispatch(loginSuccessful(body.username, body.permissions === 'admin'));
+          } catch (ex) {
+            dispatch(hasStoppedLoading());
+            dispatch(loginFailed(ex.message));
+          }
+        }
+      });
+  };
+  */
 }
