@@ -1,7 +1,7 @@
 import * as ACTIONS from '../constants/index';
 
 const mainInitialState = {
-  tab: 'home',
+  tab: 'DASHBOARD',
   isLoading: false
 };
 

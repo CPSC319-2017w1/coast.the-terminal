@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Home from '../Home';
-import Menu from '../Menu';
+import Navbar from '../Navbar';
 import Login from '../Login';
 import css from './layout.css';
 
@@ -26,7 +26,7 @@ function LayoutContainer({tab, isLoggedIn}) {
   }
   return (
     <div className={css.wrapper}>
-      <Menu />
+      <Navbar />
       <div className={css.content}>
         {child}
       </div>
