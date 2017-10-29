@@ -16,12 +16,12 @@ const mapDispatchToProps = dispatch => {
       dispatch(loginUser(username, password));
     },
     // temporary workaround until cross origin issues are resolved
-/*    onLoginFail: () => {
+    onLoginFail: () => {
       dispatch(loginFailed('Incorrect username or password'));
     },
     onLoginSuccess: (username, isAdmin) => {
       dispatch(loginSuccessful(username, isAdmin));
-    }*/
+    }
   };
 };
 
