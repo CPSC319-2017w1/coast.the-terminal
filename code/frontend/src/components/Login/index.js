@@ -16,12 +16,12 @@ const mapDispatchToProps = dispatch => {
       dispatch(loginUser(username, password));
     },
     // temporary workaround until cross origin issues are resolved
-    onLoginFail: () => {
+/*    onLoginFail: () => {
       dispatch(loginFailed('Incorrect username or password'));
     },
     onLoginSuccess: (username, isAdmin) => {
       dispatch(loginSuccessful(username, isAdmin));
-    }
+    }*/
   };
 };
 
@@ -55,12 +55,13 @@ class LoginContainer extends React.Component {
     });
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
+    event.preventDefault();
     const {username, password} = this.state;
-    //this.props.onSubmit(state.username, state.password);
+    this.props.onSubmit(this.state.username, this.state.password);
     // TODO: REMOVE
     // TEMP WORKAROUND UNTIL CROSS ORIGIN ISSUES ARE RESOLVED
-    if (username === 'user' && password === 'user') {
+/*    if (username === 'user' && password === 'user') {
       debugger;
       this.props.onLoginSuccess(username, false);
     } else if (username === 'admin' && password === 'admin') {
@@ -69,7 +70,7 @@ class LoginContainer extends React.Component {
     } else {
       debugger;
       this.props.onLoginFail();
-    }
+    }*/
   }
 
   render() {

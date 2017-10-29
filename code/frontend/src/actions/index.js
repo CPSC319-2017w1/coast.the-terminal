@@ -38,19 +38,21 @@ export function loginSuccessful(username, isAdmin) {
 }
 
 export function loginUser(username, password) {
-  /*
+
   return dispatch => {
     dispatch(isLoading());
     request
-      .get('http://localhost:8080/login') // todo: route to proper backend port
+      .get('https://localhost:8443/login')
       .query({ username, password })
       .end((err, res) => {
         if (err || !res.ok) {
           dispatch(hasStoppedLoading());
+          console.log(err);
+          console.log(res);
           dispatch(loginFailed(err.message));
         } else {
           try {
-            const body = JSON.stringify(res.body);
+            const body = res.body; //dunno why this was stringified before, prevented all the actions below from working.
             if (body.error) {
               throw new Error(body.errorMessage);
             }
@@ -63,5 +65,4 @@ export function loginUser(username, password) {
         }
       });
   };
-  */
 }
