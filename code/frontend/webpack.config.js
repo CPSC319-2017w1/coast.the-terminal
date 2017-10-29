@@ -2,11 +2,10 @@ var webpack = require('webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-var isProdVersion = process.argv.includes('--prod');
-
-module.exports = [
-  {
-    devtool: isProdVersion ? '' : 'source-map',
+module.exports = (env) => {
+  var isDev = typeof env !== 'undefined' && typeof env.dev !== 'undefined' && env.dev;
+  return {
+    devtool: isDev ? 'source-map' : 'eval',
     entry: './index.js',
     output: {
       path: __dirname + '/dist',
@@ -43,7 +42,7 @@ module.exports = [
         }
       ]
     },
-    plugins: isProdVersion ? [] : [
+    plugins: isDev ? [] : [
       new CleanWebpackPlugin(['dist']),
       new UglifyJSPlugin(),
       new webpack.DefinePlugin({
@@ -52,5 +51,5 @@ module.exports = [
         }
       })
     ]
-  }
-];
+  };
+}

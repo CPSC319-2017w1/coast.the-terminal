@@ -16,6 +16,14 @@ This repository tracks the development of the project for Coast Capital
 8. Select Finish.
 
 ## How To Run The Front-end
-* Run 'npm i' in the command line in the same directory as package.json (code/frontend)
-* Run 'npm start'
-* Open 'localhost:1234' on a browser
+* To install the NPM packages:
+	* Run 'npm i' in the command line in the same directory as package.json (code/frontend)
+* To run the front-end project:
+	* Run 'npm start'
+	* Open 'localhost:1234' on a browser
+* To develop while running the project:
+	* Instead of running 'npm start', run 'npm run dev'
+	* Open 'localhost:1234' on a browser
+	* Every time you make a change in the front-end code, it will be automatically compiled
+* Notes
+	* If you are having issues running webpack, install webpack on your PATH by running ’npm install -g webpack’. You may need to run terminal on administrator mode on Windows or add ‘sudo’ on Mac/Linux.
