@@ -24,6 +24,17 @@ module.exports = (env) => {
           }
         },
         {
+          test: /\.(png|jpg|gif|svg|jpeg)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '../dist/images/[hash].[ext]'
+              }
+            }
+          ]
+        },
+        {
           test: /\.css$/,
           exclude: /node_modules/,
           loader: 'style-loader'

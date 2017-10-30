@@ -14,13 +14,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onSubmit: (username, password) => {
       dispatch(loginUser(username, password));
-    },
-    // temporary workaround until cross origin issues are resolved
-    onLoginFail: () => {
-      dispatch(loginFailed('Incorrect username or password'));
-    },
-    onLoginSuccess: (username, isAdmin) => {
-      dispatch(loginSuccessful(username, isAdmin));
     }
   };
 };
@@ -58,19 +51,7 @@ class LoginContainer extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const {username, password} = this.state;
-    this.props.onSubmit(this.state.username, this.state.password);
-    // TODO: REMOVE
-    // TEMP WORKAROUND UNTIL CROSS ORIGIN ISSUES ARE RESOLVED
-/*    if (username === 'user' && password === 'user') {
-      debugger;
-      this.props.onLoginSuccess(username, false);
-    } else if (username === 'admin' && password === 'admin') {
-      debugger;
-      this.props.onLoginSuccess(username, true);
-    } else {
-      debugger;
-      this.props.onLoginFail();
-    }*/
+    this.props.onSubmit(username, password);
   }
 
   render() {
@@ -89,9 +70,7 @@ class LoginContainer extends React.Component {
 
 LoginContainer.propTypes = {
   user: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onLoginSuccess: PropTypes.func.isRequired, //TODO: REMOVE
-  onLoginFail: PropTypes.func.isRequired //TODO: REMOVE
+  onSubmit: PropTypes.func.isRequired
 };
 
 const Login = connect(

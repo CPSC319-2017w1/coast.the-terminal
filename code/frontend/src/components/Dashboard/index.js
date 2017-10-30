@@ -8,17 +8,17 @@ const mapStateToProps = state => {
   };
 };
 
-function HomeContainer({ isAdmin }) {
+function DashboardContainer({ isAdmin }) {
   return <div>Logged in as a user <strong>{isAdmin ? 'with' : 'without'}</strong> admin privileges.</div>;
 }
 
-HomeContainer.propTypes = {
+DashboardContainer.propTypes = {
   isAdmin: PropTypes.bool.isRequired
 };
 
-const Home = connect(
+const Dashboard = connect(
   mapStateToProps,
   null
-)(HomeContainer);
+)(DashboardContainer);
 
-export default Home;
+export default Dashboard;
