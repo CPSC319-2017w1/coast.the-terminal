@@ -1,5 +1,5 @@
 import request from 'superagent';
-import * as ACTIONS from '../constants';
+import * as ACTIONS from '../constants/action-types.js';
 
 export function switchView(tab) {
   return {
@@ -47,12 +47,10 @@ export function loginUser(username, password) {
       .end((err, res) => {
         if (err || !res.ok) {
           dispatch(hasStoppedLoading());
-          console.log(err);
-          console.log(res);
           dispatch(loginFailed(err.message));
         } else {
           try {
-            const body = res.body; //dunno why this was stringified before, prevented all the actions below from working.
+            const body = res.body;
             if (body.error) {
               throw new Error(body.errorMessage);
             }

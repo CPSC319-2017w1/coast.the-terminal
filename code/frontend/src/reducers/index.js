@@ -1,7 +1,8 @@
-import * as ACTIONS from '../constants/index';
+import * as ACTIONS from '../constants/action-types.js';
+import { DASHBOARD } from '../constants/tabs.js';
 
 const mainInitialState = {
-  tab: 'DASHBOARD',
+  tab: DASHBOARD,
   isLoading: false
 };
 

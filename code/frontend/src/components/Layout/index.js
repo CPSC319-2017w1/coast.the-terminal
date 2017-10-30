@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Home from '../Home';
-import Navbar from '../Navbar';
+import * as TABS from '../../constants/tabs.js';
 import Login from '../Login';
+import Navbar from '../Navbar';
+import Dashboard from '../Dashboard';
+import AdminPanel from '../AdminPanel';
+import ContractorInfo from '../ContractorInfo';
+import Filtering from '../Filtering';
+import Reports from '../Reports';
+import Settings from '../Settings';
 import css from './layout.css';
 
 const mapStateToProps = (state) => {
@@ -19,9 +25,24 @@ function LayoutContainer({tab, isLoggedIn}) {
   }
   let child = null;
   switch (tab) {
-    case 'home':
+    case TABS.ADMIN_PANEL:
+      child = <AdminPanel />;
+      break;
+    case TABS.CONTRACTOR_INFO:
+      child = <ContractorInfo />;
+      break;
+    case TABS.FILTERING:
+      child = <Filtering />;
+      break;
+    case TABS.REPORTS:
+      child = <Reports />;
+      break;
+    case TABS.SETTINGS:
+      child = <Settings />;
+      break;
+    case TABS.DASHBOARD:
     default: // TODO: error page for default
-      child = <Home />;
+      child = <Dashboard />;
       break;
   }
   return (
