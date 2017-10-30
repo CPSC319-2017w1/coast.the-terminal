@@ -1,12 +1,13 @@
 var webpack = require('webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+require('babel-polyfill');
 
 module.exports = (env) => {
   var isDev = typeof env !== 'undefined' && typeof env.dev !== 'undefined' && env.dev;
   return {
     devtool: isDev ? 'source-map' : 'eval',
-    entry: './index.js',
+    entry: ['babel-polyfill', './index.js'],
     output: {
       path: __dirname + '/dist',
       filename: 'bundle.js'
@@ -52,4 +53,4 @@ module.exports = (env) => {
       })
     ]
   };
-}
+};
