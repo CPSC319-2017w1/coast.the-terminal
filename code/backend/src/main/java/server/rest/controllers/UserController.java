@@ -15,11 +15,7 @@ import java.util.logging.Logger;
 
 @CrossOrigin(origins = "http://localhost:1234")
 @RestController
-public class UserController {
-    //TODO move these to a configuration somewhere (possibly a spring bean)
-    private static final String dbConnectionUrl = "jdbc:mysql://the-terminal-db-instance.c8lixxetvm6e.us-west-2.rds.amazonaws.com:3306/coast_capital_db";
-    private static final String dbUsername = "Administrator";
-    private static final String dbPassword = "TheTerminal!";
+public class UserController extends Controller {
     private static final String loginQuery = "select * from User where username=? and password=?";
 
     @RequestMapping("/login")
