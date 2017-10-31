@@ -1,5 +1,4 @@
-var chai = require('chai');
-var expect = chai.expect;
+import {expect} from 'chai';
 
 describe('Blobs', function() {
   it('should list ALL blobs on /blobs GET');
