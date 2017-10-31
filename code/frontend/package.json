@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "mocha --recursive tests",
+    "test": "mocha --recursive",
     "start": "webpack && http-server -p 1234",
     "build": "webpack",
     "server": "http-server -p 1234",
