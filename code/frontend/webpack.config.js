@@ -5,15 +5,7 @@ require('babel-polyfill');
 
 module.exports = (env) => {
   var isDev = typeof env !== 'undefined' && typeof env.dev !== 'undefined' && env.dev;
-  var shouldCompileTest = typeof env !== 'undefined' && typeof env.test !== 'undefined' && env.test;
-  var testBundle = {};
-  if (shouldCompileTest) {
-    testBundle = {
-
-    };
-  }
-
-  return [{
+  return {
     devtool: isDev ? 'source-map' : 'eval',
     entry: ['babel-polyfill', './index.js'],
     output: {
@@ -71,5 +63,5 @@ module.exports = (env) => {
         }
       })
     ]
-  }, testBundle];
+  };
 };
