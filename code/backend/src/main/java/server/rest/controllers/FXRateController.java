@@ -1,6 +1,8 @@
 package server.rest.controllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import server.database.DatabaseConnection;
 import server.model.FXRate;
 import server.rest.responses.FXRatesResponse;
@@ -12,9 +14,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by vaast on 30/10/2017.
- */
+@CrossOrigin(origins = "http://localhost:1234")
+@RestController
 public class FXRateController extends Controller {
     private static final String fxrateQuery = "select * from FXRate;";
 
@@ -40,6 +41,7 @@ public class FXRateController extends Controller {
         {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get FxRates Failed: " + e.getMessage());
+            return FXRatesResponse.fxRatesFailure(e.getMessage());
         }
         return new FXRatesResponse(fxRates);
     }
