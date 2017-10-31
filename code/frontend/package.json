@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "mocha spec",
+    "test": "mocha --recursive tests",
     "start": "webpack && http-server -p 1234",
     "build": "webpack",
     "server": "http-server -p 1234",
@@ -54,6 +54,8 @@
     "http-server": "^0.10.0",
     "mocha": "^3.5.3",
     "redux-logger": "^3.0.6",
+    "sinon": "^4.0.2",
+    "sinon-chai": "^2.14.0",
     "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.6.0"
