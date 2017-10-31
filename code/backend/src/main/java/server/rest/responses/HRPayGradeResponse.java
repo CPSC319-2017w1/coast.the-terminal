@@ -22,4 +22,8 @@ public class HRPayGradeResponse extends Response {
     public HRPayGradeResponse(ArrayList<HRPayGrade> payGrades) {
         this.payGrades = payGrades;
     }
+
+    public ArrayList<HRPayGrade> getPayGrades() {
+        return payGrades;
+    }
 }

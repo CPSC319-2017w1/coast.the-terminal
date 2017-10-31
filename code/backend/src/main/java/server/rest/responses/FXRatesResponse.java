@@ -22,4 +22,8 @@ public class FXRatesResponse extends Response {
     public FXRatesResponse(ArrayList<FXRate> fxRates) {
         this.rates = fxRates;
     }
+
+    public ArrayList<FXRate> getRates() {
+        return rates;
+    }
 }
