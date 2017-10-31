@@ -1,14 +1,29 @@
 .wrapper {
-    width: 20%;
-    background-color: cornflowerblue;
+    width: 20vw;
+    background-color: #6C6666;
     height: 100vh;
     display: inline-block;
+
+}
+
+.wrapper ul {
+    list-style: none;
+    font-size: 13px;
+    margin: 0.8125em 0 0.8125em 0;
+    padding-left: 0;
+}
+
+.wrapper li {
+
+
 }
 
 .option {
+    background-color: #6C6666;
+    margin: .1em 0;
 
 }
 
 .selected {
-
+    background-color: #645E5E;
 }
