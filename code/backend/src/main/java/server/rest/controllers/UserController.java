@@ -1,10 +1,12 @@
 package server.rest.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.database.DatabaseConnection;
+import server.database.DatabaseConnectionConfig;
 import server.rest.responses.LoginResponse;
 
 import java.sql.PreparedStatement;
@@ -16,16 +18,13 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = "http://localhost:1234")
 @RestController
 public class UserController {
-    //TODO move these to a configuration somewhere (possibly a spring bean)
-    private static final String dbConnectionUrl = "jdbc:mysql://the-terminal-db-instance.c8lixxetvm6e.us-west-2.rds.amazonaws.com:3306/coast_capital_db";
-    private static final String dbUsername = "Administrator";
-    private static final String dbPassword = "TheTerminal!";
+    private DatabaseConnectionConfig dbConfig;
     private static final String loginQuery = "select * from User where username=? and password=?";
 
     @RequestMapping("/login")
     public LoginResponse login(@RequestParam("username") String username,
                                @RequestParam("password") String password) {
-        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        DatabaseConnection connection = new DatabaseConnection(dbConfig.getDbConnectionURL(), dbConfig.getDbUsername(), dbConfig.getDbPassword());
         boolean success = true;
         String user = username;
         String permissions = "none";
@@ -53,5 +52,11 @@ public class UserController {
 
         //NOTE Spring automatically converts all fields with getters into JSON for transmission
         return new LoginResponse(user, success, permissions);
+    }
+
+    @Autowired
+    public void setDbConnectionUrl(DatabaseConnectionConfig dbConnectionUrl) {
+        Logger.getAnonymousLogger().log(Level.INFO, "DB username = " + dbConnectionUrl.getDbUsername());
+        this.dbConfig = dbConnectionUrl;
     }
 }
