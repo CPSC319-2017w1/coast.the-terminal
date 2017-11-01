@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @Autowired
-    public void setDbConnectionUrl(DatabaseConnectionConfig dbConnectionUrl) {
+    public void setDbConnectionConfig(DatabaseConnectionConfig dbConnectionUrl) {
         Logger.getAnonymousLogger().log(Level.INFO, "DB username = " + dbConnectionUrl.getDbUsername());
         this.dbConfig = dbConnectionUrl;
     }
