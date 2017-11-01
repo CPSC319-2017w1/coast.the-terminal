@@ -8,9 +8,9 @@
   },
   "scripts": {
     "test": "mocha --recursive --require babel-register",
-    "start": "webpack && http-server -p 1234",
+    "start": "webpack && http-server -p 1234 ./dist",
     "build": "webpack",
-    "server": "http-server -p 1234",
+    "server": "http-server -p 1234 ./dist",
     "watch": "webpack --watch --env.dev",
     "dev": "concurrently --kill-others \"npm run server\" \"npm run watch\""
   },

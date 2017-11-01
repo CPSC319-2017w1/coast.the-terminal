@@ -56,12 +56,12 @@ module.exports = (env) => {
     },
     plugins: isDev ? [] : [
       new CleanWebpackPlugin(['dist']),
-      new UglifyJSPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify('production')
         }
-      })
+      }),
+      new UglifyJSPlugin()
     ]
   };
 };
