@@ -2,14 +2,14 @@ import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
-export function loginFailed(error) {
+function loginFailed(error) {
   return {
     type: ACTIONS.LOGIN_FAILED,
     error
   };
 }
 
-export function loginSuccessful(username, isAdmin) {
+function loginSuccessful(username, isAdmin) {
   return {
     type: ACTIONS.LOGIN,
     username,
