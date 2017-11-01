@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import nock from 'nock';
-import { loginUser } from '../src/actions';
+import { loginUser } from '../src/actions/login-actions.js';
 import * as TYPES from '../src/constants/action-types.js';
 
 const middlewares = [thunk];

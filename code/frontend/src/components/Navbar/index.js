@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { switchView } from '../../actions/index';
+import { switchView } from '../../actions/main-actions.js';
 import NavbarComponent from './Navbar.jsx';
 
 const mapStateToProps = state => {
