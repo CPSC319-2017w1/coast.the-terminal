@@ -6,7 +6,7 @@ import * as TABS from '../../constants/tabs.js';
 function NavbarComponent({username, isAdmin, tab, onClick}) {
   return (
     <div className={css.wrapper}>
-      <div>
+      <div className={css.usertype}>
         Logged in as <strong>{username}</strong>
       </div>
       <div>
