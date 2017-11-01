@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser, loginFailed, loginSuccessful } from '../../actions';
+import { loginUser } from '../../actions/login-actions.js';
 import LoginComponent from './Login.jsx';
 
 const mapStateToProps = state => {

@@ -23,5 +23,15 @@
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "comma-dangle": ["error", "never"]
+  },
+  "globals": {
+    "describe": true,
+    "it": true,
+    "after": true,
+    "afterEach": true,
+    "afterAll": true,
+    "before": true,
+    "beforeEach": true,
+    "beforeAll": true
   }
 }
