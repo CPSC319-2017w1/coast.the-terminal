@@ -38,29 +38,21 @@ export function loginSuccessful(username, isAdmin) {
 }
 
 export function loginUser(username, password) {
-
   return dispatch => {
     dispatch(isLoading());
-    request
+    return request
       .get('https://localhost:8443/login')
       .query({ username, password })
-      .end((err, res) => {
-        if (err || !res.ok) {
-          dispatch(hasStoppedLoading());
-          dispatch(loginFailed(err.message));
-        } else {
-          try {
-            const body = res.body;
-            if (body.error) {
-              throw new Error(body.errorMessage);
-            }
-            dispatch(hasStoppedLoading());
-            dispatch(loginSuccessful(body.username, body.permissions === 'admin'));
-          } catch (ex) {
-            dispatch(hasStoppedLoading());
-            dispatch(loginFailed(ex.message));
-          }
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
         }
+        dispatch(hasStoppedLoading());
+        dispatch(loginSuccessful(body.username, body.permissions === 'admin'));
+      }).catch((err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(loginFailed(err.message));
       });
   };
 }

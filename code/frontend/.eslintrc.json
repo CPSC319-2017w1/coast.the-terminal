@@ -26,6 +26,12 @@
   },
   "globals": {
     "describe": true,
-    "it": true
+    "it": true,
+    "after": true,
+    "afterEach": true,
+    "afterAll": true,
+    "before": true,
+    "beforeEach": true,
+    "beforeAll": true
   }
 }
