@@ -42,7 +42,7 @@ public class ContractorsController extends Controller {
             }
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
-            logger.log(Level.INFO, "Get FxRates Failed: " + e.getMessage());
+            logger.log(Level.INFO, "Get Contractors Failed: " + e.getMessage());
             return ContractorsResponse.contractorsFailure(e.getMessage());
         }
 

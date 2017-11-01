@@ -23,7 +23,7 @@ public class User {
      * Gets the permissions of this user
      * @return The permissions of the current User object
      */
-    public int getPermissions() {
+    public String getPermissions() {
         return permissions;
     }
 
