@@ -1,10 +1,20 @@
 package server.rest.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import server.database.DatabaseConnectionConfig;
+
 /**
  * Created by vaast on 30/10/2017.
  */
 public class Controller {
-    protected static final String dbConnectionUrl = "jdbc:mysql://the-terminal-db-instance.c8lixxetvm6e.us-west-2.rds.amazonaws.com:3306/coast_capital_db";
-    protected static final String dbUsername = "Administrator";
-    protected static final String dbPassword = "TheTerminal!";
+    protected static String dbConnectionUrl;
+    protected static String dbUsername;
+    protected static String dbPassword;
+
+    @Autowired
+    public void setDbConfig(DatabaseConnectionConfig dbConfig) {
+        dbConnectionUrl = dbConfig.getDbConnectionURL();
+        dbUsername = dbConfig.getDbUsername();
+        dbPassword = dbConfig.getDbPassword();
+    }
 }

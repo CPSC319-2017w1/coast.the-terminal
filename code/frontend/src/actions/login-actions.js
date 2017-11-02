@@ -21,7 +21,7 @@ export function loginUser(username, password) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .get('https://localhost:8443/login')
+      .get('http://theterminal-env.us-west-2.elasticbeanstalk.com/login')
       .query({ username, password })
       .then((res) => {
         const body = res.body;
