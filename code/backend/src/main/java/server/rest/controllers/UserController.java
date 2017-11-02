@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import server.database.DatabaseConnection;
 import server.model.User;
 import server.rest.responses.LoginResponse;
+import server.rest.responses.Response;
 import server.rest.responses.UsersResponse;
 
 import java.sql.PreparedStatement;
@@ -78,5 +79,23 @@ public class UserController extends Controller {
             return UsersResponse.usersResponseFailure(e.getMessage());
         }
         return new UsersResponse(users);
+    }
+
+    @RequestMapping("/users/edit")
+    public Response editUser(User user) {
+        //TODO
+        return new Response();
+    }
+
+    @RequestMapping("/users/add")
+    public Response addUser(User user) {
+        //TODO
+        return new Response();
+    }
+
+    @RequestMapping("/users/delete")
+    public Response deleteUser(User user) {
+        //TODO
+        return new Response();
     }
 }

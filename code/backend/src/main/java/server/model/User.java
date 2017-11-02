@@ -42,4 +42,8 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+    }
 }

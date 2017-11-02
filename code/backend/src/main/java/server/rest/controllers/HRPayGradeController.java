@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import server.database.DatabaseConnection;
 import server.model.HRPayGrade;
 import server.rest.responses.HRPayGradeResponse;
+import server.rest.responses.Response;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,5 +43,11 @@ public class HRPayGradeController extends Controller {
             return HRPayGradeResponse.hrPayGradeFailure(e.getMessage());
         }
         return new HRPayGradeResponse(payGrades);
+    }
+
+    @RequestMapping("/paygrades/add")
+    public Response addPayGrade(HRPayGrade payGrade){
+        //TODO
+        return new Response();
     }
 }
