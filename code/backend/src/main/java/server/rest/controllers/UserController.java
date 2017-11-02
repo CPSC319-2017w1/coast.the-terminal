@@ -1,30 +1,31 @@
 package server.rest.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.database.DatabaseConnection;
-import server.database.DatabaseConnectionConfig;
+import server.model.User;
 import server.rest.responses.LoginResponse;
+import server.rest.responses.UsersResponse;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@CrossOrigin(origins = {"http://localhost:1234", "http://theterminal.s3-website.us-west-2.amazonaws.com"})
+@CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com/"})
 @RestController
-public class UserController {
-    private DatabaseConnectionConfig dbConfig;
+public class UserController extends Controller {
     private static final String loginQuery = "select * from User where username=? and password=?";
+    private static final String usersQuery = "select * from User;";
 
     @RequestMapping("/login")
     public LoginResponse login(@RequestParam("username") String username,
                                @RequestParam("password") String password) {
-        DatabaseConnection connection = new DatabaseConnection(dbConfig.getDbConnectionURL(), dbConfig.getDbUsername(), dbConfig.getDbPassword());
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         boolean success = true;
         String user = username;
         String permissions = "none";
@@ -54,9 +55,28 @@ public class UserController {
         return new LoginResponse(user, success, permissions);
     }
 
-    @Autowired
-    public void setDbConnectionConfig(DatabaseConnectionConfig dbConnectionUrl) {
-        Logger.getAnonymousLogger().log(Level.INFO, "DB username = " + dbConnectionUrl.getDbUsername());
-        this.dbConfig = dbConnectionUrl;
+    @RequestMapping("/users/view")
+    public UsersResponse users() {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        ArrayList<User> users = new ArrayList<User>();
+        try {
+            connection.openConnection();
+            if (!connection.isConnected()) {
+                return UsersResponse.usersResponseFailure("Can't connect to Database");
+            }
+            PreparedStatement st = connection.getPreparedStatement(usersQuery);
+            ResultSet set = st.executeQuery();
+            while(set.next()) {
+                User user = new User(set.getString("username"),
+                                     set.getString("password"),
+                                     set.getString("permissions"));
+                users.add(user);
+            }
+        } catch(SQLException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.log(Level.INFO, "Get users failed: " + e.getMessage());
+            return UsersResponse.usersResponseFailure(e.getMessage());
+        }
+        return new UsersResponse(users);
     }
 }
