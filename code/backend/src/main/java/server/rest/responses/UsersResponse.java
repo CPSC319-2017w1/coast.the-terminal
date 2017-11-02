@@ -3,6 +3,7 @@ package server.rest.responses;
 import server.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vaast on 31/10/2017.
@@ -21,5 +22,9 @@ public class UsersResponse extends Response {
 
     public UsersResponse(ArrayList<User> users) {
         this.users = users;
+    }
+
+    public List<User> getUsers() {
+        return this.users;
     }
 }

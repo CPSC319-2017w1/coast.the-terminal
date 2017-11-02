@@ -4,7 +4,7 @@ package server.model;
  * Created by vaast on 31/10/2017.
  */
 public class Contractor {
-    private int id;
+    private String id;
     private String firstName;
     private String lastName;
     private String agencySource;
@@ -20,7 +20,7 @@ public class Contractor {
      * @param status Status of the Contractor
      * @param rehire Rehire status of the Contractor
      */
-    public Contractor(int id, String firstName, String lastName, String agencySource, String status, boolean rehire) {
+    public Contractor(String id, String firstName, String lastName, String agencySource, String status, boolean rehire) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,7 +33,7 @@ public class Contractor {
      * Gets the Id of the current contractor
      * @return The id of the contractor
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -75,5 +75,9 @@ public class Contractor {
      */
     public String getStatus() {
         return status;
+    }
+
+    public void setAgencySource(String agencySource) {
+        this.agencySource = agencySource;
     }
 }

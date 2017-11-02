@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import server.database.DatabaseConnection;
 import server.model.Contractor;
 import server.rest.responses.ContractorsResponse;
+import server.rest.responses.Response;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +33,7 @@ public class ContractorsController extends Controller {
             PreparedStatement st = connection.getPreparedStatement(getQuery);
             ResultSet set = st.executeQuery();
             while(set.next()) {
-                Contractor c = new Contractor(set.getInt("id"),
+                Contractor c = new Contractor(set.getString("id"),
                                               set.getString("firstName"),
                                               set.getString("surname"),
                                               set.getString("agencySource"),
@@ -49,4 +50,15 @@ public class ContractorsController extends Controller {
         return new ContractorsResponse(contractors);
     }
 
+    @RequestMapping("/contractors/add")
+    public Response addContractor(Contractor contractor) {
+        //TODO
+        return new Response();
+    }
+
+    @RequestMapping("/contractors/edit")
+    public Response editContractor(Contractor contractor) {
+        //TODO
+        return new Response();
+    }
 }
