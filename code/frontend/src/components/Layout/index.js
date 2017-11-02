@@ -28,9 +28,9 @@ function LayoutContainer({tab, isLoggedIn}) {
     case TABS.ADMIN_PANEL:
       child = <AdminPanel />;
       break;
-    case TABS.CONTRACTOR_INFO:
-      child = <ContractorInfo />;
-      break;
+      case TABS.CONTRACTOR_INFO:
+          child = <ContractorInfo />;
+          break;
     case TABS.FILTERING:
       child = <Filtering />;
       break;
