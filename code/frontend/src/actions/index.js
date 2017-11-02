@@ -42,7 +42,7 @@ export function loginUser(username, password) {
   return dispatch => {
     dispatch(isLoading());
     request
-      .get('https://localhost:8443/login')
+      .get('http://theterminal-env.us-west-2.elasticbeanstalk.com/login')
       .query({ username, password })
       .end((err, res) => {
         if (err || !res.ok) {
