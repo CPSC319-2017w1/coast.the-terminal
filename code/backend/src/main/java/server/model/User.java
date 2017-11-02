@@ -2,29 +2,29 @@ package server.model;
 
 //TODO add stuff to this class, have it implement the IUser interface we define
 public class User {
-    //maybe can change this to String?
-    private int id;
+
     private String username;
     private String password;
+    private String permissions;
 
     /**
      * Creates a user object
-     * @param id the user ID
      * @param username the supplied username
      * @param password the supplied password
+     * @param permissions the permissions for this user
      */
-    public User(int id, String username, String password) {
-        this.id = id;
+    public User(String username, String password, String permissions) {
         this.username = username;
         this.password = password;
+        this.permissions = permissions;
     }
 
     /**
-     * Gets the user id of this user
-     * @return The user id of the current User object
+     * Gets the permissions of this user
+     * @return The permissions of the current User object
      */
-    public int getId() {
-        return id;
+    public String getPermissions() {
+        return permissions;
     }
 
     /**
