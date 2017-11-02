@@ -3,17 +3,40 @@ import Dropdown from 'react-dropdown';
 import PropTypes from 'prop-types';
 import css from './addcontractor.css';
 
-const fields = [
+const contractorfields = [
   {
     text: 'First Name',
     key: 'firstname'
+  },
+  {
+    text: 'Last Name',
+    key: 'lastname'
+  },
+  {
+    text: 'Company',
+    key: 'company'
   }
 ];
 
-function getField(data, contractor) {
+const projectTextFields = [
+  {
+    text: 'Project Name',
+    key: 'projectname'
+  },
+  {
+    text: 'Est. Hourly Rate',
+    key: 'hourlyrate'
+  }
+];
+
+function getField(data, object, type, func) {
   return <p>
     {data.text}
-    <input className="" value={contractor[data.key]}/>
+    <input className={css.txtfield}
+      name={data.key}
+      type={type}
+      value={object[data.key]}
+      onChange={func}/>
   </p>;
 }
 
@@ -27,29 +50,29 @@ function AddContractorComponent({Contractor, Projects, handleTextInput, handleSt
       <div className={css.contractorInfo}>
         <form>
           {
-            fields.map((field) => { return getField(field, Contractor); })
+            contractorfields.map((field) => { return getField(field, Contractor, 'text', handleTextInput); })
           }
-          <p>
-                    First Name
-            <input className={css.txtfield}
-              name=""
-              type="text"
-              value={Contractor.firstname}
-              onChange={handleTextInput}/>
-          </p>
-          <p>
-                    Last Name
-            <input className={css.txtfield}
-              type="text" value={Contractor.lastname}
-              onChange={handleTextInput}/>
-          </p>
-          <p>
-                    Company
-            <input className={css.txtfield}
-              type="text"
-              value={Contractor.company}
-              onChange={handleTextInput}/>
-          </p>
+          {/*<p>*/}
+                    {/*First Name*/}
+            {/*<input className={css.txtfield}*/}
+              {/*name=""*/}
+              {/*type="text"*/}
+              {/*value={Contractor.firstname}*/}
+              {/*onChange={handleTextInput}/>*/}
+          {/*</p>*/}
+          {/*<p>*/}
+                    {/*Last Name*/}
+            {/*<input className={css.txtfield}*/}
+              {/*type="text" value={Contractor.lastname}*/}
+              {/*onChange={handleTextInput}/>*/}
+          {/*</p>*/}
+          {/*<p>*/}
+                    {/*Company*/}
+            {/*<input className={css.txtfield}*/}
+              {/*type="text"*/}
+              {/*value={Contractor.company}*/}
+              {/*onChange={handleTextInput}/>*/}
+          {/*</p>*/}
           <p>
                     Status
             <input className={css.radiobutton}
@@ -65,6 +88,9 @@ function AddContractorComponent({Contractor, Projects, handleTextInput, handleSt
       </div>
       <div className={css.projectInfo}>
         <form>
+          {
+            getField(projectTextFields[0], Projects)
+          }
                     Project Name <input className={css.txtfield} type="text" value={Projects[0].projectname} onChange={handleTextInput}/>
                     Reporting Manager <Dropdown className={css.txtfield} list = {Projects[0].reportingmanagers} onChange={handleDropdownInput}/>
                     Start Date
