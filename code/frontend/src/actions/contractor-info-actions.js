@@ -49,6 +49,7 @@ export function addContractor(data) {
     dispatch(isLoading());
     return request
       .post('https://localhost:8443/contractors/add')
+      .type('application/json')
       .send(data)
       .then((res) => {
         const body = res.body;
@@ -69,6 +70,7 @@ export function editContractor(data) {
     dispatch(isLoading());
     return request
       .post('https://localhost:8443/contractors/edit')
+      .type('application/json')
       .send(data)
       .then((res) => {
         const body = res.body;
