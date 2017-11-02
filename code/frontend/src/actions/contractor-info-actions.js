@@ -30,11 +30,25 @@ function editContractorFailed(error) {
   };
 }
 
+function viewContractorSuccessful(data) {
+  return {
+    type: ACTIONS.VIEW_CONTRACTORS,
+    data
+  };
+}
+
+function viewContractorFailed(error) {
+  return {
+    type: ACTIONS.VIEW_CONTRACTORS_FAILED,
+    error
+  };
+}
+
 export function addContractor(data) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .post('https://localhost:8443/???')
+      .post('https://localhost:8443/contractors/add')
       .send(data)
       .then((res) => {
         const body = res.body;
@@ -54,7 +68,7 @@ export function editContractor(data) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .post('https://localhost:8443/???')
+      .post('https://localhost:8443/contractors/edit')
       .send(data)
       .then((res) => {
         const body = res.body;
@@ -66,6 +80,25 @@ export function editContractor(data) {
       }).catch((err) => {
         dispatch(hasStoppedLoading());
         dispatch(editContractorFailed(err.message));
+      });
+  };
+}
+
+export function viewContractors() {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .get('https://localhost:8443/contractors/view')
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        dispatch(hasStoppedLoading());
+        dispatch(viewContractorSuccessful(body.data));
+      }).catch((err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(viewContractorFailed(err.message));
       });
   };
 }
