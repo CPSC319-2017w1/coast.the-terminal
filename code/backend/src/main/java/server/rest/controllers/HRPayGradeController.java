@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class HRPayGradeController extends Controller {
     private static String getQuery = "select * from HRPayGrade;";
 
-    @RequestMapping("/paygrades")
+    @RequestMapping("/paygrades/view")
     public HRPayGradeResponse paygrades() {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<HRPayGrade> payGrades = new ArrayList<HRPayGrade>();

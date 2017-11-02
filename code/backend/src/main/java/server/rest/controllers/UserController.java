@@ -55,7 +55,7 @@ public class UserController extends Controller {
         return new LoginResponse(user, success, permissions);
     }
 
-    @RequestMapping("/users")
+    @RequestMapping("/users/view")
     public UsersResponse users() {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<User> users = new ArrayList<User>();
@@ -74,7 +74,7 @@ public class UserController extends Controller {
             }
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
-            logger.log(Level.INFO, "Login failed: " + e.getMessage());
+            logger.log(Level.INFO, "Get users failed: " + e.getMessage());
             return UsersResponse.usersResponseFailure(e.getMessage());
         }
         return new UsersResponse(users);

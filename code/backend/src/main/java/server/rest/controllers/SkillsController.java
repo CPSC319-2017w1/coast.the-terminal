@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class SkillsController extends Controller {
     private static String getQuery = "select * from Skill;";
 
-    @RequestMapping("/skills")
+    @RequestMapping("/skills/view")
     public SkillsResponse skills() {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<Skill> skills = new ArrayList<Skill>();

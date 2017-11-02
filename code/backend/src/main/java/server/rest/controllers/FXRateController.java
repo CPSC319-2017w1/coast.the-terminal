@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class FXRateController extends Controller {
     private static final String fxrateQuery = "select * from FXRate;";
 
-    @RequestMapping("/fxrates")
+    @RequestMapping("/fxrates/view")
     public FXRatesResponse fxrates() {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<FXRate> fxRates = new ArrayList<FXRate>();

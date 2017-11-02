@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class HRPositionRoleController extends Controller {
     private static String getQuery = "select * from HRPositionRole;";
 
-    @RequestMapping("/hrroles")
+    @RequestMapping("/hrroles/view")
     public HRPositionRoleResponse hrroles() {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<HRPositionRole> roles = new ArrayList<HRPositionRole>();
@@ -39,7 +39,7 @@ public class HRPositionRoleController extends Controller {
             }
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
-            logger.log(Level.INFO, "Get HRPayGrades Failed: " + e.getMessage());
+            logger.log(Level.INFO, "Get HRPositionRoles Failed: " + e.getMessage());
             return HRPositionRoleResponse.positionRoleFailure(e.getMessage());
         }
         return new HRPositionRoleResponse(roles);

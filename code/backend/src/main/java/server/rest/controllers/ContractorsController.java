@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class ContractorsController extends Controller {
     private static String getQuery = "select * from Contractor;";
 
-    @RequestMapping("/contractors")
+    @RequestMapping("/contractors/view")
     public ContractorsResponse contractors() {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<Contractor> contractors = new ArrayList<Contractor>();
