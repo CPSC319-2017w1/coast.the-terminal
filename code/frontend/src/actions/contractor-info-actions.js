@@ -44,6 +44,7 @@ function viewContractorFailed(error) {
   };
 }
 
+// TODO
 export function addContractor(data) {
   return dispatch => {
     dispatch(isLoading());
@@ -65,6 +66,7 @@ export function addContractor(data) {
   };
 }
 
+// TODO
 export function editContractor(data) {
   return dispatch => {
     dispatch(isLoading());
@@ -97,7 +99,7 @@ export function viewContractors() {
           throw new Error(body.errorMessage);
         }
         dispatch(hasStoppedLoading());
-        dispatch(viewContractorSuccessful(body.data));
+        dispatch(viewContractorSuccessful(body.contractors));
       }).catch((err) => {
         dispatch(hasStoppedLoading());
         dispatch(viewContractorFailed(err.message));
