@@ -26,10 +26,10 @@ class AddContractorContainer extends React.Component{
           projectname: '',
           reportingmanagers: ['harry potter', 'luna luvgood'],
           hrpositions: ['professor', 'dark arts teacher'],
-          ratetype: '',
+          ratetypes: [],
           hourlyrate: '',
-          paygrade: '',
-          refno: ''
+          paygrades: [],
+          refnos: []
         }
       ]
 
@@ -46,6 +46,7 @@ class AddContractorContainer extends React.Component{
   }
 
   handleDropdownInput(){
+
 
   }
 
