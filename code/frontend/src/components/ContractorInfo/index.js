@@ -26,10 +26,10 @@ class AddContractorContainer extends React.Component{
           projectname: '',
           reportingmanagers: ['harry potter', 'luna luvgood'],
           hrpositions: ['professor', 'dark arts teacher'],
-          ratetypes: [],
+          ratetypes: ['Type A', 'Type B'],
           hourlyrate: '',
-          paygrades: [],
-          refnos: []
+          paygrades: ['A', 'B'],
+          refnos: ['1', '2', '3']
         }
       ]
 
@@ -41,6 +41,7 @@ class AddContractorContainer extends React.Component{
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleTextInput(){
 
   }

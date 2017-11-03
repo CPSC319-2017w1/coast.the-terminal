@@ -17,17 +17,6 @@ const contractorfields = [
   }
 ];
 
-const projectTextFields = [
-  {
-    text: 'Project Name',
-    key: 'projectname'
-  },
-  {
-    text: 'Est. Hourly Rate',
-    key: 'hourlyrate'
-  }
-];
-
 function getField(data, object, type, func) {
   return <p key={data.key}>
     {data.text}
@@ -37,6 +26,15 @@ function getField(data, object, type, func) {
       value={object[data.key]}
       onChange={func}/>
   </p>;
+}
+
+function getOptions(items) {
+  return items.map((item) => {
+    return <option key={item.text}
+      value={item.text}>
+      {item}
+    </option>;
+  });
 }
 
 function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCurrencyInput){
@@ -56,6 +54,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
           name="reportingmanagers"
           type="text"
           onChange={handleDropdownInput}>
+          {getOptions(project.reportingmanagers)}
         </select>
       </p>
       <p>
@@ -80,6 +79,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
           name="hrpositions"
           type="text"
           onChange={handleDropdownInput}>
+          {getOptions(project.hrpositions)}
         </select>
       </p>
       <p>
@@ -88,6 +88,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
           name="ratetypes"
           type="text"
           onChange={handleDropdownInput}>
+          {getOptions(project.ratetypes)}
         </select>
       </p>
       <p>
@@ -104,6 +105,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
           name="paygrades"
           type="text"
           onChange={handleDropdownInput}>
+          {getOptions(project.paygrades)}
         </select>
       </p>
       <p>
@@ -112,6 +114,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
           name="refnos"
           type="text"
           onChange={handleDropdownInput}>
+          {getOptions(project.refnos)}
         </select>
       </p>
       <p>
@@ -155,18 +158,6 @@ function AddContractorComponent({Contractor, Projects, handleTextInput, handleSt
           {
             getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCurrencyInput)
           }
-          {/*Project Name <input className={css.txtfield} type="text" value={Projects[0].projectname} onChange={handleTextInput}/>*/}
-          {/*Reporting Manager <Dropdown className={css.txtfield} list = {Projects[0].reportingmanagers} onChange={handleDropdownInput}/>*/}
-          {/*Start Date*/}
-          {/*End Date*/}
-          {/*/!*Use react JS datepicker or google other alternatives*!/*/}
-          {/*HR Position <Dropdown className={css.txtfield} list = {Projects[0].hrpositions} onChange={handleDropdownInput}/>*/}
-          {/*Rate Type <Dropdown className={css.txtfield} list = {Projects[0].ratetype}  onChange={handleDropdownInput}/>*/}
-          {/*Est. Hourly Rate <input className={css.txtfield} type="text" value={Projects[0].hourlyrate} onChange={handleTextInput}/>*/}
-          {/*HR Pay Grade <Dropdown className={css.txtfield} list = {Projects[0].paygrade}  onChange={handleDropdownInput}/>*/}
-          {/*PO Reference Number <Dropdown className={css.txtfield} list={Projects[0].refno} onChange={handleDropdownInput}/>*/}
-          {/*Currency <input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/> USD*/}
-          {/*<input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/> CAD*/}
         </form>
       </div>
       <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
