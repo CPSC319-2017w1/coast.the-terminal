@@ -29,7 +29,7 @@ const projectTextFields = [
 ];
 
 function getField(data, object, type, func) {
-  return <p>
+  return <p key={data.key}>
     {data.text}
     <input className={css.txtfield}
       name={data.key}
@@ -40,10 +40,10 @@ function getField(data, object, type, func) {
 }
 
 function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCurrencyInput){
-  return Projects.map((project) => {
-    return <div className={css.projectInfo}>
+  return Projects.map((project, index) => {
+    return <div key={index} className={css.projectInfo}>
       <p>
-      Project Name
+        Project Name
         <input className={css.txtfield}
           name="projectname"
           type="text"
@@ -51,7 +51,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
           onChange={handleTextInput}/>
       </p>
       <p>
-      Reporting Manager
+        Reporting Manager
         <select className={css.txtfield}
           name="reportingmanagers"
           type="text"
@@ -59,7 +59,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
         </select>
       </p>
       <p>
-      Start Date
+        Start Date
         <select className={css.txtfield}
           name="startdates"
           type="text"
@@ -67,7 +67,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
         </select>
       </p>
       <p>
-      End Date
+        End Date
         <select className={css.txtfield}
           name="enddates"
           type="text"
@@ -75,7 +75,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
         </select>
       </p>
       <p>
-      HR Position
+        HR Position
         <select className={css.txtfield}
           name="hrpositions"
           type="text"
@@ -83,7 +83,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
         </select>
       </p>
       <p>
-      Rate Type
+        Rate Type
         <select className={css.txtfield}
           name="ratetypes"
           type="text"
@@ -106,21 +106,22 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
           onChange={handleDropdownInput}>
         </select>
       </p>
-      PO Reference Number
-      <select className={css.txtfield}
-        name="refnos"
-        type="text"
-        onChange={handleDropdownInput}>
-      </select>
       <p>
-      Currency
+        PO Reference Number
+        <select className={css.txtfield}
+          name="refnos"
+          type="text"
+          onChange={handleDropdownInput}>
+        </select>
+      </p>
+      <p>
+        Currency
         <input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/>
         USD
         <input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/>
         CAD
       </p>
     </div>;
-
   });
 }
 
@@ -137,15 +138,15 @@ function AddContractorComponent({Contractor, Projects, handleTextInput, handleSt
             contractorfields.map((field) => { return getField(field, Contractor, 'text', handleTextInput); })
           }
           <p>
-                    Status
+            Status
             <input className={css.radiobutton}
               type="radio"
               onChange={handleStatusInput('active')}/>
-                    Active
+            Active
             <input className={css.radiobutton}
               type="radio"
               onChange={handleStatusInput('inactive')}/>
-                    Inactive
+            Inactive
           </p>
         </form>
       </div>
@@ -154,7 +155,6 @@ function AddContractorComponent({Contractor, Projects, handleTextInput, handleSt
           {
             getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCurrencyInput)
           }
-
           {/*Project Name <input className={css.txtfield} type="text" value={Projects[0].projectname} onChange={handleTextInput}/>*/}
           {/*Reporting Manager <Dropdown className={css.txtfield} list = {Projects[0].reportingmanagers} onChange={handleDropdownInput}/>*/}
           {/*Start Date*/}

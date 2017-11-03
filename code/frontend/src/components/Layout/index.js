@@ -20,9 +20,9 @@ const mapStateToProps = (state) => {
 };
 
 function LayoutContainer({tab, isLoggedIn}) {
-  // if (!isLoggedIn) {
-  //   return <Login />;
-  // }
+  if (!isLoggedIn) {
+    return <Login />;
+  }
   let child = null;
   switch (tab) {
     case TABS.ADMIN_PANEL:
