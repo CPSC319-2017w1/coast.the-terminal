@@ -36,6 +36,7 @@ class AddContractorContainer extends React.Component{
     };
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleDropdownInput = this.handleDropdownInput.bind(this);
+    this.handleDateInput = this.handleDateInput.bind(this);
     this.handleStatusInput = this.handleStatusInput.bind(this);
     this.handleCurrencyInput = this.handleCurrencyInput.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
@@ -48,6 +49,10 @@ class AddContractorContainer extends React.Component{
 
   handleDropdownInput(){
 
+
+  }
+
+  handleDateInput(){
 
   }
 
@@ -74,6 +79,7 @@ class AddContractorContainer extends React.Component{
       handleTextInput={this.handleTextInput}
       handleStatusInput={this.handleStatusInput}
       handleDropdownInput={this.handleDropdownInput}
+      handleDateInput={this.handleDateInput()}
       handleCurrencyInput={this.handleCurrencyInput}
       handleAdd={this.handleAdd}
       handleSubmit={this.handleSubmit}

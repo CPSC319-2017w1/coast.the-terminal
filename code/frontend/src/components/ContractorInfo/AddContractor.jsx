@@ -37,7 +37,7 @@ function getOptions(items) {
   });
 }
 
-function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCurrencyInput){
+function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleDateInput, handleCurrencyInput){
   return Projects.map((project, index) => {
     return <div key={index} className={css.projectInfo}>
       <p>
@@ -60,17 +60,37 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
       <p>
         Start Date
         <select className={css.txtfield}
-          name="startdates"
+          name="startday"
           type="text"
-          onChange={handleDropdownInput}>
+          onChange={handleDateInput}>
+        </select>
+        <select className={css.txtfield}
+          name="startmonth"
+          type="text"
+          onChange={handleDateInput}>
+        </select>
+        <select className={css.txtfield}
+          name="startyear"
+          type="text"
+          onChange={handleDateInput}>
         </select>
       </p>
       <p>
         End Date
         <select className={css.txtfield}
-          name="enddates"
+          name="endday"
           type="text"
-          onChange={handleDropdownInput}>
+          onChange={handleDateInput}>
+        </select>
+        <select className={css.txtfield}
+          name="endmonth"
+          type="text"
+          onChange={handleDateInput}>
+        </select>
+        <select className={css.txtfield}
+          name="endyear"
+          type="text"
+          onChange={handleDateInput}>
         </select>
       </p>
       <p>
@@ -129,7 +149,7 @@ function getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCu
 }
 
 function AddContractorComponent({Contractor, Projects, handleTextInput, handleStatusInput,
-  handleDropdownInput, handleCurrencyInput,
+  handleDropdownInput, handleDateInput, handleCurrencyInput,
   handleAdd, handleSubmit}) {
   return (
     <div className={css.wrapper}>
@@ -156,7 +176,7 @@ function AddContractorComponent({Contractor, Projects, handleTextInput, handleSt
       <div className={css.projectInfo}>
         <form>
           {
-            getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleCurrencyInput)
+            getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleDateInput, handleCurrencyInput)
           }
         </form>
       </div>
@@ -173,6 +193,7 @@ AddContractorComponent.propTypes = {
   handleTextInput: PropTypes.func.isRequired,
   handleStatusInput: PropTypes.func.isRequired,
   handleDropdownInput: PropTypes.func.isRequired,
+  handleDateInput: PropTypes.func.isRequired,
   handleCurrencyInput: PropTypes.func.isRequired,
   handleAdd: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired
