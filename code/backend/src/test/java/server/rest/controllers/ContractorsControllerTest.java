@@ -30,7 +30,7 @@ class ContractorsControllerTest {
     @Test
     public void addContractorsTest() {
         Contractor contractor = new Contractor(UUID.randomUUID().toString(), "Test first name", "test last name", "ex agency source", "active", true);
-        Response response = contractorController.addContractor(contractor);
+        Response response = contractorController.addContractor("Test first name" , "testSurname", "agency source");
         assertFalse(response.isError());
     }
 

@@ -69,4 +69,12 @@ public class DatabaseConnection {
         return dbConnection.prepareStatement(query);
     }
 
+    /**
+     * Commits a SQL transaction to the database (used for updates and inserts)
+     * @throws SQLException If the transaction was unsuccessful.
+     */
+    public void commitTransaction() throws SQLException {
+        dbConnection.commit();
+    }
+
 }

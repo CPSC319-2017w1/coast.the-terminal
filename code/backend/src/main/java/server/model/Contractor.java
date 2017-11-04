@@ -1,5 +1,8 @@
 package server.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vaast on 31/10/2017.
  */
@@ -10,6 +13,7 @@ public class Contractor {
     private String agencySource;
     private String status;
     private boolean rehire;
+    private List<EngagementContract> contracts;
 
     /**
      * Creates a Contractor Object
@@ -27,6 +31,7 @@ public class Contractor {
         this.agencySource = agencySource;
         this.status = status;
         this.rehire = rehire;
+        this.contracts = new ArrayList<>();
     }
 
     /**
@@ -79,5 +84,21 @@ public class Contractor {
 
     public void setAgencySource(String agencySource) {
         this.agencySource = agencySource;
+    }
+
+    /**
+     * Gets all the engagement contracts for this contractor.
+     * @return All the engagement contracts for this contractor.
+     */
+    public List<EngagementContract> getContracts(){
+        return this.contracts;
+    }
+
+    /**
+     * Adds an EngagementContract to this contractor.
+     * @param contract The engagement contract to add to the contractor.
+     */
+    public void addEngagementContract(EngagementContract contract) {
+        contracts.add(contract);
     }
 }
