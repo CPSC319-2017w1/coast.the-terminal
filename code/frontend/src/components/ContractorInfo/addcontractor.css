@@ -1,9 +1,25 @@
 .wrapper{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    padding: 24px;
+}
+
+.wrapper {
 
 }
 
-.contractor-info{
+.contractorform {
+    display: grid;
+    grid-template-columns: 36px 400px 24px 400px 24px 250px 36px;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    padding: 1em;
+}
 
+.contractorform p{
+
+}
+
+.contractorform input{
+    float: right;
 }
 
 .project-info{

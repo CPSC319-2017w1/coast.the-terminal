@@ -156,7 +156,7 @@ function AddContractorComponent({Contractor, Projects, handleTextInput, handleSt
       <h1>Contractor Information</h1>
       <p>Use the form below to add contractor information into the system.</p>
       <div className={css.contractorInfo}>
-        <form>
+        <form className={css.contractorform}>
           {
             contractorfields.map((field) => { return getField(field, Contractor, 'text', handleTextInput); })
           }
@@ -174,7 +174,7 @@ function AddContractorComponent({Contractor, Projects, handleTextInput, handleSt
         </form>
       </div>
       <div className={css.projectInfo}>
-        <form>
+        <form className={css.projectform}>
           {
             getProjectInfo(Projects, handleTextInput, handleDropdownInput, handleDateInput, handleCurrencyInput)
           }
