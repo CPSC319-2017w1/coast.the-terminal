@@ -9,25 +9,26 @@
 
 .contractorform {
     display: grid;
-    grid-template-columns: 36px 400px 24px 400px 24px 250px 36px;
-    grid-template-rows: auto auto auto auto auto auto auto;
-    padding: 1em;
+    grid-template-columns: 250px 250px 250px 250px;
+    padding: 24px;
 }
 
 .contractorform p{
-
 }
 
 .contractorform input{
-    float: right;
 }
 
 .project-info{
 
 }
 
-.txtfield{
+.projectform {
+}
 
+.txtfield{
+    margin-left: 10px;
+    margin-right: 5px;
 }
 
 .radiobutton{
