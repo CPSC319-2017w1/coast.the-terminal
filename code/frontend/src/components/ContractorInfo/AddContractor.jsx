@@ -5,21 +5,27 @@ import css from './addcontractor.css';
 const contractorfields = [
   {
     text: 'First Name',
-    key: 'firstname'
+    key: 'firstname',
+    className: css.firstname
   },
   {
     text: 'Last Name',
-    key: 'lastname'
+    key: 'lastname',
+    className: css.lastname
   },
   {
     text: 'Company',
-    key: 'company'
+    key: 'company',
+    className: css.company
   }
 ];
 
 function getField(data, object, type, func) {
-  return <p key={data.key}>
-    {data.text}
+  return <p key={data.key}
+    className={data.className}>
+    <p>
+      {data.text}
+    </p>
     <input className={css.txtfield}
       name={data.key}
       type={type}
