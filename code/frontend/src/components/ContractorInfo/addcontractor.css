@@ -4,17 +4,22 @@
 }
 
 .firstname{
-
+    padding: 0;
+    margin: 0;
 }
 
+.firstname p{
+    margin-bottom: 2px;
+}
 
 .contractorform {
     display: grid;
-    grid-template-columns: 250px 250px 250px 250px;
+    grid-template-columns: 200px 200px 200px 200px;
     padding: 24px;
 }
 
 .contractorform p{
+    margin-top: 0;
 }
 
 .contractorform input{
@@ -28,8 +33,7 @@
 }
 
 .txtfield{
-    margin-left: 10px;
-    margin-right: 5px;
+
 }
 
 .radiobutton{
