@@ -1,19 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import DashboardComponent from './Dashboard.jsx';
 
 const mapStateToProps = state => {
   return {
-    isAdmin: state.user.isAdmin
+    user: state.user
   };
 };
 
-function DashboardContainer({ isAdmin }) {
-  return <div>Logged in as a user <strong>{isAdmin ? 'with' : 'without'}</strong> admin privileges.</div>;
+class DashboardContainer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render(){
+    const {props} = this;
+    return <DashboardComponent
+      isAdmin={props.user.isAdmin}
+    />;
+  }
 }
 
 DashboardContainer.propTypes = {
-  isAdmin: PropTypes.bool.isRequired
+  user: PropTypes.object.isRequired
 };
 
 const Dashboard = connect(
