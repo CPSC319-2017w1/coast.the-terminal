@@ -1,7 +1,35 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import ReportsComponent from './Reports.jsx';
 
-function Reports() {
-  return <div>Welcome to the Reports</div>;
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    tab: state.main.tab
+  };
+};
+
+class ReportsContainer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render(){
+    const {props} = this;
+    return <ReportsComponent
+      username={props.user.username}
+    />;
+  }
 }
+
+ReportsContainer.propTypes= {
+  user: PropTypes.object.isRequired
+};
+
+const Reports = connect(
+  mapStateToProps,
+  null
+)(ReportsContainer);
 
 export default Reports;
