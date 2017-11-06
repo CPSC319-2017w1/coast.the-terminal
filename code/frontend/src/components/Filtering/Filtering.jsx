@@ -2,16 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './filtering.css';
 
-function FilteringComponent({username}) {
+function renderTable(table) {
+  return table;
+}
+
+
+function FilteringComponent({table, handleFilter}) {
   return (
     <div className={css.wrapper}>
-      Welcome to Filtering, <strong>{username}</strong>
+      <div className={css.heading}>
+        <h1>Data Filtering System</h1>
+        <p>Use the Filter Table button to extract relevant to you from the contractor database.</p>
+        <button className={css.filterbutton}
+          onClick={handleFilter}>
+          Filter Table
+        </button>
+      </div>
+      <div className={css.filtertable}>
+        {renderTable(table)}
+      </div>
     </div>
   );
 }
 
 FilteringComponent.propTypes = {
-  username: PropTypes.string.isRequired
+  table: PropTypes.object.isRequired,
+  handleFilter: PropTypes.func.isRequired
 };
 
 export default FilteringComponent;

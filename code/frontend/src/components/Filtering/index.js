@@ -13,18 +13,27 @@ const mapStateToProps = state => {
 class FilteringContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      table: null
+    };
+    this.handleFilter = this.handleFilter.bind(this);
+  }
+
+  handleFilter(){
+
   }
 
   render(){
-    const {props} = this;
+    const {state} = this;
     return <FilteringComponent
-      username={props.user.username}
+      table={state.table}
+      handleFilter={this.handleFilter}
     />;
   }
 }
 
 FilteringContainer.propTypes = {
-  username: PropTypes.string.isRequired
+  user: PropTypes.object.isRequired
 };
 
 const Filtering = connect(
