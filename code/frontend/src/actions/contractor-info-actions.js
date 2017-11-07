@@ -46,7 +46,7 @@ export function addContractor(data, callback) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .post('http://localhost:8080/contractors/add')
+      .post('http://theterminal-env.us-west-2.elasticbeanstalk.com/contractors/add')
       .query(data)
       .then((res) => {
         const body = res.body;
@@ -68,7 +68,7 @@ export function editContractor(data) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .post('http://localhost:8080/contractors/edit')
+      .post('http://theterminal-env.us-west-2.elasticbeanstalk.com/contractors/edit')
       .query(data)
       .then((res) => {
         const body = res.body;
@@ -88,7 +88,7 @@ export function viewContractors() {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .get('http://localhost:8080/contractors/view')
+      .get('http://theterminal-env.us-west-2.elasticbeanstalk.com/contractors/view')
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
