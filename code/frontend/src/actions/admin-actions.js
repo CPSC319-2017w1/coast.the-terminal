@@ -9,13 +9,6 @@ function skillsFailed(error) {
   };
 }
 
-function skillsSuccessful(skills) {
-  return {
-    type: ACTIONS.VIEW_SKILLS;
-    skills,
-  };
-}
-
 function fxratesFailed(error) {
   return {
     type: ACTIONS.VIEW_FXRATES_FAILED,
@@ -23,10 +16,31 @@ function fxratesFailed(error) {
   };
 }
 
+function usersFailed(error) {
+  return {
+    type: ACTIONS.VIEW_USERS_FAILED,
+    error
+  };
+}
+
+function skillsSuccessful(skills) {
+  return {
+    type: ACTIONS.VIEW_SKILLS;
+    skills,
+  };
+}
+
 function fxratesSuccessful(fxrates) {
   return {
     type: ACTIONS.VIEW_FXRATES,
     fxrates
+  };
+}
+
+function usersSuccessful(users) {
+  return {
+    type: ACTIONS.VIEW_USERS,
+    users
   };
 }
 
@@ -66,6 +80,26 @@ export function viewFxRates() {
       }).catch(err) => {
         dispatch(hasStoppedLoading());
         dispatch(fxratesFailed(err.message));
+      });
+  };
+}
+
+export function viewUsers() {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .get('http://theterminal-env.us-west-2.elasticbeanstalk.com/users/view')
+      .query()
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        dispatch(hasStoppedLoading());
+        dispatch(usersSuccessful(body.rates);
+      }).catch(err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(usersFailed(err.message));
       });
   };
 }
