@@ -37,6 +37,13 @@ function positionRolesFailed(error) {
   };
 }
 
+function hiringManagersFailed(error) {
+  return {
+    type: ACTIONS.VIEW_HIRINGMANAGERS_FAILED,
+    error
+  };
+}
+
 function skillsSuccessful(skills) {
   return {
     type: ACTIONS.VIEW_SKILLS;
@@ -69,6 +76,13 @@ function positionRolesSuccessful(positionRoles) {
   return {
     type: ACTIONS.VIEW_POSITIONROLES,
     positionRoles
+  };
+}
+
+function hiringManagersSuccessful(hiringManagers) {
+  return {
+    type: ACTIONS.VIEW_HIRINGMANAGERS,
+    hiringManagers
   };
 }
 
@@ -168,6 +182,26 @@ export function viewPositionRoles() {
       }).catch(err) => {
         dispatch(hasStoppedLoading());
         dispatch(positionRolesFailed(err.message));
+      });
+  };
+}
+
+export function viewHiringManagers() {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .get('http://theterminal-env.us-west-2.elasticbeanstalk.com/hiringmanagers/view')
+      .query()
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        dispatch(hasStoppedLoading());
+        dispatch(hiringManagersSuccessful(body.hiringManagers);
+      }).catch(err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(hiringManagersFailed(err.message));
       });
   };
 }
