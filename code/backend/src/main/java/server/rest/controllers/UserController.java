@@ -1,9 +1,6 @@
 package server.rest.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import server.database.DatabaseConnection;
 import server.model.User;
 import server.rest.responses.LoginResponse;
@@ -17,7 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com/"})
+@CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"}, methods = {RequestMethod.GET})
 @RestController
 public class UserController extends Controller {
     private static final String loginQuery = "select * from User where username=? and password=?";
@@ -80,7 +77,6 @@ public class UserController extends Controller {
         }
         return new UsersResponse(users);
     }
-
     @RequestMapping("/users/edit")
     public Response editUser(User user) {
         //TODO
