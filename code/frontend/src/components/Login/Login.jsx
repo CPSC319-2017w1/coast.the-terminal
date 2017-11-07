@@ -7,8 +7,8 @@ function LoginComponent({username, password, error, handleUsernameInput, handleP
     <div className={css.wrapper}>
       {error ? <div>{error}</div> : null}
       <form>
-        <input className={css.username} type="text" value={username} onChange={handleUsernameInput} />
-        <input className={css.password} type="password" value={password} onChange={handlePasswordInput} />
+        <input className={css.username} type="text" value={username} onChange={handleUsernameInput} placeholder="username"/>
+        <input className={css.password} type="password" value={password} onChange={handlePasswordInput} placeholder="password" />
         <input className={css.submit} type="submit" onClick={handleSubmit} value="Login" />
       </form>
     </div>

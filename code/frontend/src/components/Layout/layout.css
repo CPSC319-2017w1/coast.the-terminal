@@ -1,8 +1,7 @@
 .wrapper {
-
+    display: flex;
 }
 
 .content {
-    width: 80%;
-    display: inline-block;
+
 }
