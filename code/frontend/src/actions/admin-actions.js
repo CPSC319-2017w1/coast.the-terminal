@@ -23,6 +23,13 @@ function usersFailed(error) {
   };
 }
 
+function paygradesFailed(error) {
+  return {
+    type: ACTIONS.VIEW_PAYGRADES_FAILED,
+    error
+  };
+}
+
 function skillsSuccessful(skills) {
   return {
     type: ACTIONS.VIEW_SKILLS;
@@ -41,6 +48,13 @@ function usersSuccessful(users) {
   return {
     type: ACTIONS.VIEW_USERS,
     users
+  };
+}
+
+function paygradesSuccessful(paygrades) {
+  return {
+    type: ACTIONS.VIEW_PAYGRADES,
+    paygrades
   };
 }
 
@@ -96,10 +110,30 @@ export function viewUsers() {
           throw new Error(body.errorMessage);
         }
         dispatch(hasStoppedLoading());
-        dispatch(usersSuccessful(body.rates);
+        dispatch(usersSuccessful(body.users);
       }).catch(err) => {
         dispatch(hasStoppedLoading());
         dispatch(usersFailed(err.message));
+      });
+  };
+}
+
+export function viewPaygrades() {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .get('http://theterminal-env.us-west-2.elasticbeanstalk.com/paygrades/view')
+      .query()
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        dispatch(hasStoppedLoading());
+        dispatch(paygradesSuccessful(body.payGrades);
+      }).catch(err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(paygradesFailed(err.message));
       });
   };
 }
