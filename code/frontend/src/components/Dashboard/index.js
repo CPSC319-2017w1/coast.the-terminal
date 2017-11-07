@@ -12,12 +12,15 @@ const mapStateToProps = state => {
 class DashboardContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.onClick = this.onClick.bind(this);
+  }
+  onClick(){
+
   }
 
   render(){
-    const {props} = this;
     return <DashboardComponent
-      isAdmin={props.user.isAdmin}
+      onClick={this.onClick}
     />;
   }
 }

@@ -13,12 +13,16 @@ const mapStateToProps = state => {
 class AdminPanelContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(){
+
   }
 
   render(){
-    const {props} = this;
     return <AdminPanelComponent
-      username={props.user.username}
+      onClick={this.onClick}
     />;
   }
 }
