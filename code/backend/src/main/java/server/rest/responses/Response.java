@@ -22,4 +22,11 @@ public class Response {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
+    public static Response createErrorResponse(String errorMessage) {
+        Response res = new Response();
+        res.setErrorMessage(errorMessage);
+        res.setError(true);
+        return res;
+    }
 }
