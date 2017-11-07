@@ -2,10 +2,9 @@ import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
-function addContractorSuccessful(data) {
+function addContractorSuccessful() {
   return {
-    type: ACTIONS.ADD_CONTRACTOR,
-    data
+    type: ACTIONS.ADD_CONTRACTOR
   };
 }
 
@@ -16,10 +15,9 @@ function addContractorFailed(error) {
   };
 }
 
-function editContractorSuccessful(data) {
+function editContractorSuccessful() {
   return {
-    type: ACTIONS.EDIT_CONTRACTOR,
-    data
+    type: ACTIONS.EDIT_CONTRACTOR
   };
 }
 
@@ -44,43 +42,41 @@ function viewContractorFailed(error) {
   };
 }
 
-// TODO
-export function addContractor(data) {
+export function addContractor(data, callback) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .post('https://localhost:8443/contractors/add')
-      .type('application/json')
-      .send(data)
+      .post('http://localhost:8080/contractors/add')
+      .query(data)
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
         dispatch(hasStoppedLoading());
-        dispatch(addContractorSuccessful(body.data));
+        dispatch(addContractorSuccessful());
+        callback();
       }).catch((err) => {
         dispatch(hasStoppedLoading());
         dispatch(addContractorFailed(err.message));
+        callback();
       });
   };
 }
 
-// TODO
 export function editContractor(data) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .post('https://localhost:8443/contractors/edit')
-      .type('application/json')
-      .send(data)
+      .post('http://localhost:8080/contractors/edit')
+      .query(data)
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
         dispatch(hasStoppedLoading());
-        dispatch(editContractorSuccessful(body.data));
+        dispatch(editContractorSuccessful());
       }).catch((err) => {
         dispatch(hasStoppedLoading());
         dispatch(editContractorFailed(err.message));
@@ -92,7 +88,7 @@ export function viewContractors() {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .get('https://localhost:8443/contractors/view')
+      .get('http://localhost:8080/contractors/view')
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
