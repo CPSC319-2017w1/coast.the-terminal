@@ -14,20 +14,40 @@ class FilteringContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      table: null
+      data: [
+        {
+          name: 'onion',
+          price: '.99',
+          id: 1
+        }, {
+          name: 'pepper',
+          price: '1.25',
+          id: 2
+        }, {
+          name: 'broccoli',
+          price: '3.00',
+          id: 3
+        }
+      ]
     };
     this.handleFilter = this.handleFilter.bind(this);
+    this.handleEditContractor = this.handleEditContractor.bind(this);
   }
 
   handleFilter(){
 
   }
 
+  handleEditContractor(){
+
+  }
+
   render(){
     const {state} = this;
     return <FilteringComponent
-      table={state.table}
+      tabledata={state.data}
       handleFilter={this.handleFilter}
+      handleEditContractor={this.handleEditContractor}
     />;
   }
 }
