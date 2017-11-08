@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './filtering.css';
-
-function renderTable(table) {
-  return table;
-}
+import Table from './Table.jsx';
 
 
-function FilteringComponent({table, handleFilter}) {
+function FilteringComponent({tabledata, handleFilter, handleEditContractor}) {
   return (
     <div className={css.wrapper}>
       <div className={css.heading}>
@@ -19,15 +16,18 @@ function FilteringComponent({table, handleFilter}) {
         </button>
       </div>
       <div className={css.filtertable}>
-        {renderTable(table)}
+        <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>
       </div>
     </div>
   );
 }
 
+
+
 FilteringComponent.propTypes = {
-  table: PropTypes.object.isRequired,
-  handleFilter: PropTypes.func.isRequired
+  tabledata: PropTypes.array.isRequired,
+  handleFilter: PropTypes.func.isRequired,
+  handleEditContractor: PropTypes.func.isRequired
 };
 
 export default FilteringComponent;
