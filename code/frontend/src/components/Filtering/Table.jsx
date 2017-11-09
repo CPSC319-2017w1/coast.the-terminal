@@ -11,9 +11,8 @@ function Table({tabledata, handleEditContractor}) {
 function getRows(data, func) {
   return data.map((i) =>
     <tr key={i.name} className={css.tablerow}>
-      <td key={i.name}><button className={css.editbtn} onClick={func}>EDIT</button></td>
+      <td key={i.id}><p>{i.id}</p><button className={css.editbtn} onClick={func}>EDIT</button></td>
       <td key={i.name}>{i.name}</td>
-      <td key={i.id}>{i.id}</td>
       <td key={i.price}>{i.price}</td>
     </tr>
   );
