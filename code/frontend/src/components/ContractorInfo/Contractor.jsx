@@ -5,13 +5,13 @@ import css from './addcontractor.css';
 function Contractor({contractor, handleTextInput, handleStatusInput}) {
   return <div className={css.contractorInfo}>
     <div className={css.contractorform}>
-      <form>
+      <form className={css.words}>
         <p className={css.firstname}>
           <span>First Name</span>
           <input className={css.txtfield} name="firstName" type="text" value={contractor.firstName} onChange={handleTextInput}/>
         </p>
         <p className={css.surname}>
-          <span>Surname</span>
+          <span>Last Name</span>
           <input className={css.txtfield} name="surname" type="text" value={contractor.surname} onChange={handleTextInput}/>
         </p>
         <p className={css.agency}>
@@ -19,7 +19,7 @@ function Contractor({contractor, handleTextInput, handleStatusInput}) {
           <input className={css.txtfield} name="agencySource" type="text" value={contractor.agencySource} onChange={handleTextInput}/>
         </p>
       </form>
-      <form onChange={handleStatusInput}>
+      <form onChange={handleStatusInput} className={css.status}>
         <span>Status</span>
         <input className={css.radiobutton} type="radio" name="active" value="active" />
         <span>Active</span>

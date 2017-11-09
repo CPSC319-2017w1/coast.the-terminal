@@ -3,27 +3,35 @@
     padding: 24px;
 }
 
-.firstname{
-    padding: 0;
-    margin: 0;
-}
+ /*css for contractor form */
 
-.firstname p{
-    margin-bottom: 2px;
-}
-
-.contractorform {
+.contractorform .words {
     display: grid;
-    grid-template-columns: 200px 200px 200px 200px;
-    padding: 24px;
+    grid-template-columns: 290px 20px 290px 20px 290px;
+    grid-template-rows: 50px auto;
 }
 
-.contractorform p{
-    margin-top: 0;
+.contractorform .words .firstname{
+    grid-column: 1;
+    grid-row: 1;
 }
 
-.contractorform input{
+.contractorform .words .surname {
+    grid-column: 3;
+    grid-row: 1;
 }
+
+.contractorform .words .agency {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.words .txtfield{
+    padding: 0;
+    width: 250px;
+}
+
+ /*css for project form */
 
 .project-info{
 
@@ -32,9 +40,7 @@
 .projectform {
 }
 
-.txtfield{
 
-}
 
 .radiobutton{
 
