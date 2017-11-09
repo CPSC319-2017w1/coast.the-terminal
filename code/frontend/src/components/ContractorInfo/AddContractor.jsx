@@ -6,7 +6,7 @@ import Contractor from './Contractor.jsx';
 import Projects from './Projects.jsx';
 
 function AddContractorComponent({contractor, projects, handleTextInput, handleStatusInput, handleDropdownInput,
-  handleDateInput, handleCurrencyInput, handleAdd, handleSubmit, message}) {
+  handleDateInput, handleCurrencyInput, handleAdd, handleSubmit, message, handleChargeTypeInput}) {
   return (
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
@@ -14,10 +14,9 @@ function AddContractorComponent({contractor, projects, handleTextInput, handleSt
       <p> Use the form below to add contractor information into the system.</p>
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleStatusInput={handleStatusInput} />
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
-        handleDateInput={handleDateInput} handleCurrencyInput={handleCurrencyInput} />
-      {/* TODO: remove css.disabled from classes */}
-      <input className={cx(css.disabled, css.btnstyle)} type="submit" onClick={handleAdd} value="Add Additional Contract" />
-      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Submit Contractor" />
+        handleDateInput={handleDateInput} handleCurrencyInput={handleCurrencyInput} handleChargeTypeInput={handleChargeTypeInput} />
+      <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
+      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
     </div>
 
   );
@@ -33,7 +32,8 @@ AddContractorComponent.propTypes = {
   handleCurrencyInput: PropTypes.func.isRequired,
   handleAdd: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired
+  message: PropTypes.string.isRequired,
+  handleChargeTypeInput: PropTypes.func.isRequired
 };
 
 export default AddContractorComponent;

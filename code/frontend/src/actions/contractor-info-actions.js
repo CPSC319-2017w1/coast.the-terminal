@@ -65,6 +65,33 @@ export function addContractor(data, callback) {
   };
 }
 
+export function addEngagementContract(data, callback) {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .post('http://localhost:8080/contractors/add/engagementContract')
+      .query(data)
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        dispatch(hasStoppedLoading());
+        dispatch(addContractorSuccessful());
+        callback();
+      }).catch((err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(addContractorFailed(err.message));
+      });
+  }
+}
+
+export function getSkills(data, callback) {
+    return dispatch => {
+
+    };
+}
+
 export function editContractor(data) {
   return dispatch => {
     dispatch(isLoading());

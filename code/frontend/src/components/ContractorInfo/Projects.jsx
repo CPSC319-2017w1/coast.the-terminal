@@ -3,7 +3,7 @@ import Proptypes from 'prop-types';
 import css from './addcontractor.css';
 import 'date-input-polyfill';
 
-function Projects({projects, handleTextInput, handleDropdownInput, handleDateInput, handleCurrencyInput}) {
+function Projects({projects, handleTextInput, handleDropdownInput, handleDateInput, handleCurrencyInput, handleChargeTypeInput}) {
   return <div className={css.projectInfo}>
     {
       projects.map((project, index) =>
@@ -52,6 +52,15 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.hrpositions)}
             </select>
           </p>
+          <p>
+            Cost Center
+            <select className={css.txtField}
+              name="costCenter"
+              type="text"
+              onChange={handleDropdownInput}>
+            {getOptions(project.costCenters)}
+            </select>
+          </p>
           <p className={css.rate}>
             Rate Type
             <select className={css.txtfield}
@@ -94,6 +103,50 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             USD
             <input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/>
             CAD
+          </p>
+          <p>
+            Time and Material Terms ($)
+            <input className={css.txtField}
+              name="timeAndMaterialTerms"
+              type="number"
+              onChange={handleTextInput}/>
+          </p>
+          <p>
+            Allowance expense daily per deem
+            <input className={css.txtField}
+                   name="allowanceExpense"
+                   type="number"
+                   onChange={handleTextInput}/>
+          </p>
+          <p>
+            Charge Type
+            <input className={css.radiobutton} type="radio" onChange={handleChargeTypeInput}/>
+            Capital - Depreciated
+            <input className={css.radiobutton} type="radio" onChange={handleChargeTypeInput}/>
+            Operating Costs
+          </p>
+          <p>
+            Main Skill for Engagement
+            <select className={css.txtField}
+              name="mainSkills"
+              type="text"
+              onChange={handleDropdownInput}>
+                {getOptions(project.mainSkills)}
+            </select>
+          </p>
+          <p>
+            Original Documentation
+            <input
+              className={css.txtField}
+              type="text"
+              name="originalDoc"/>
+          </p>
+          <p>
+            Notification for contract termination
+            <input
+              className={css.txtField}
+              type="number"
+              name="notifcationTermination"/>
           </p>
         </div>
       )

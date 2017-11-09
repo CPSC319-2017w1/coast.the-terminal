@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AddContractorComponent from './AddContractor.jsx';
-import { addContractor } from '../../actions/contractor-info-actions.js';
+import { addContractor, getSkills, addEngagementContract } from '../../actions/contractor-info-actions.js';
 
 const mapStateToProps = state => {
   return {
@@ -15,6 +15,14 @@ const mapDispatchToProps = dispatch => {
   return {
     onSubmit: (data, callback) => {
       dispatch(addContractor(data, callback));
+    },
+    getMainSkills: (data, callback) => {
+      dispatch(getSkills(data, callback));
+    },
+    onSubmitEngagementContract: (data, callback) => {
+      for (let project of data) {
+        dispatch(addEngagementContract(project, callback));
+      }
     }
   };
 };
@@ -37,7 +45,9 @@ class AddContractorContainer extends React.Component{
           ratetypes: ['Type A', 'Type B'],
           hourlyrate: '',
           paygrades: ['A', 'B'],
-          refnos: ['1', '2', '3']
+          refnos: ['1', '2', '3'],
+          mainSkills: ['Databases', 'Languages'],
+          costCenters: ["Vancouver", "Calgary"]
         }
       ],
       message: ''
@@ -80,10 +90,16 @@ class AddContractorContainer extends React.Component{
     event.preventDefault();
   }
 
+  handleChargeTypeInput(event) {
+    event.preventDefault();
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const { contractor } = this.state;
+    const { projects } = this.state;
     this.props.onSubmit(contractor, this.resetState);
+    this.props.onSubmitEngagementContract(projects, this.resetState);
   }
 
   resetState() {
@@ -105,7 +121,9 @@ class AddContractorContainer extends React.Component{
             ratetypes: ['Type A', 'Type B'],
             hourlyrate: '',
             paygrades: ['A', 'B'],
-            refnos: ['1', '2', '3']
+            refnos: ['1', '2', '3'],
+            mainSkills: ["Database", "Languages"],
+            costCenters: ["Vancouver", "Calgary"]
           }
         ],
         message: 'Contractor added successfully.'
@@ -125,6 +143,7 @@ class AddContractorContainer extends React.Component{
       handleAdd={this.handleAdd}
       handleSubmit={this.handleSubmit}
       message={this.state.message}
+      handleChargeTypeInput={this.handleChargeTypeInput}
     />;
   }
 }

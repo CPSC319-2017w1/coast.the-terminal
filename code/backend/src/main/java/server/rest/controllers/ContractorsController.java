@@ -135,7 +135,8 @@ public class ContractorsController extends Controller {
                                           @RequestParam("costCenterId") String costCenterId,
                                           @RequestParam("reportingManagerId") String reportingManagerId,
                                           @RequestParam("currencyCode") String currencyCode,
-                                          @RequestParam("mainSkillId") String mainSkillId) {
+                                          @RequestParam("mainSkillId") String mainSkillId,
+                                          @RequestParam("timeMaterialTerms") int timeMaterialTerms) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         try {
             connection.openConnection();
@@ -166,6 +167,7 @@ public class ContractorsController extends Controller {
             st.setString(i++, reportingManagerId);
             st.setString(i++, currencyCode);
             st.setString(i++, mainSkillId);
+            st.setInt(i++, timeMaterialTerms);
 
             int success = st.executeUpdate();
             connection.commitTransaction();
