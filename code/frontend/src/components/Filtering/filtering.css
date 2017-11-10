@@ -6,6 +6,14 @@
 
 }
 
+.tablerow{
+    border-bottom: 1px solid grey;
+}
+
+.tableholder{
+
+}
+
 .filterbutton{
 
 }
