@@ -7,7 +7,7 @@
 
 .contractorform .words {
     display: grid;
-    grid-template-columns: 300px 40px 300px;
+    grid-template-columns: 340px 90px 340px;
     grid-template-rows: 50px auto;
 }
 
@@ -27,15 +27,14 @@
 }
 
 .words .txtfield{
-    padding: 0;
-    width: 250px;
+    width: 340px;
 }
 
  /*css for project form */
 
 .projectInfo{
     display: grid;
-    grid-template-columns: 140px 20px 140px 40px 170px 20px 110px;
+    grid-template-columns: 120px 100px 120px 90px 190px 20px 150px;
     grid-template-rows: 50px 10px 50px 10px 50px 10px 50px;
 }
 
@@ -90,18 +89,66 @@
 }
 
 .projectInfo .currency {
-    grid-column: 1;
+    grid-column: 1/3;
     grid-row: 7;
 }
 
-.projectInfo .txtfield{
+.projectInfo .projname .txtfield{
+    width: 340px;
+}
 
+.projectInfo .rm .txtfield {
+    width: 175px;
+}
+
+.projectInfo .costcen .txtfield {
+    width: 130px;
+}
+
+.projectInfo .hrpos .txtfield {
+    width: 340px;
+}
+
+.projectInfo .rate .txtfield {
+    width: 175px;
+}
+
+.projectInfo .hourrate .txtfield {
+    width: 120px;
+}
+
+.projectInfo .hrpay .txtfield {
+    width: 175px;
+}
+
+.projectInfo .poref .txtfield {
+    width: 130px;
+}
+
+.projectInfo .start .txtfield {
+    width: 40px;
+}
+
+.projectInfo .end .txtfield {
+    width: 40px;
 }
 
 .radiobutton{
-
+    margin-left: 20px;
 }
 
 .btnstyle{
+    padding: 5px 10px;
+    margin-right: 20px;
+    background-color: #0067c6;
+    color: white;
+    opacity: 0.8;
+    border: none;
+    border-radius: 4px;
+}
 
+.btnstyle:hover {
+    background-color: #0067c6;
+    opacity: 0.2;
+    color: white;
 }

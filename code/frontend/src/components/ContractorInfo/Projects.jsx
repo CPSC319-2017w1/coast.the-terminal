@@ -24,19 +24,18 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.reportingmanagers)}
             </select>
           </p>
-
-          /*NOTE: forgot cost centre!! might need to change this elsewhere as well*/
-
+          {/*NOTE: forgot cost centre!! might need to change this elsewhere as well*/}
           <p className={css.costcen}>
             Cost Centre
             <input className={css.txtfield}
                    name="costcentre"
                    type="text"
                    value={project.costcentre}
-                   onChange={handleTextInput} />
+                   onChange={handleTextInput}/>
           </p>
           <p className={css.start}>
             Start Date
+            <br/>
             <select className={css.txtfield}
               name="startday"
               type="text"
@@ -55,6 +54,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           </p>
           <p className={css.end}>
             End Date
+            <br/>
             <select className={css.txtfield}
               name="endday"
               type="text"
@@ -99,6 +99,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           </p>
           <p className={css.hrpay}>
             HR Pay Grade
+            <br/>
             <select className={css.txtfield}
               name="paygrades"
               type="text"
@@ -107,7 +108,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             </select>
           </p>
           <p className={css.poref}>
-            PO Reference Number
+            P.O. Reference #
             <select className={css.txtfield}
               name="refnos"
               type="text"
