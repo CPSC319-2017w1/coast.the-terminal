@@ -15,7 +15,7 @@ function FilteringComponent({tabledata, handleFilter, handleEditContractor}) {
           Filter Table
         </button>
       </div>
-      <div className={css.filtertable}>
+      <div className={css.tableholder}>
         <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>
       </div>
     </div>
