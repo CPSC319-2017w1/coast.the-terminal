@@ -32,6 +32,7 @@ class AddContractorContainer extends React.Component{
         {
           projectname: '',
           reportingmanagers: ['harry potter', 'luna luvgood'],
+          costcentre: '',
           hrpositions: ['professor', 'dark arts teacher'],
           ratetypes: ['Type A', 'Type B'],
           hourlyrate: '',
