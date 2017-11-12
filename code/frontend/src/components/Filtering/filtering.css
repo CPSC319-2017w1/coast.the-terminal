@@ -6,8 +6,12 @@
 
 }
 
+.tableheader{
+    background-color: lightgrey;
+}
+
 .tablerow{
-    border-bottom: 1px solid grey;
+
 }
 
 .tableholder{
@@ -19,5 +23,6 @@
 }
 
 .filtertable{
+    padding-top: 20px;
 
 }
