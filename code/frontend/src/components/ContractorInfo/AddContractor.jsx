@@ -10,7 +10,7 @@ function AddContractorComponent({contractor, projects, handleTextInput, handleSt
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
       <h1>Contractor Information</h1>
-      <p>Use the form below to add contractor information into the system.</p>
+      <p> Use the form below to add contractor information into the system.</p>
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleStatusInput={handleStatusInput} />
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
         handleDateInput={handleDateInput} handleCurrencyInput={handleCurrencyInput} />

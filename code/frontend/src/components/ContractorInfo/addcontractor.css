@@ -3,43 +3,152 @@
     padding: 24px;
 }
 
-.firstname{
-    padding: 0;
-    margin: 0;
-}
+ /*css for contractor form */
 
-.firstname p{
-    margin-bottom: 2px;
-}
-
-.contractorform {
+.contractorform .words {
     display: grid;
-    grid-template-columns: 200px 200px 200px 200px;
-    padding: 24px;
+    grid-template-columns: 340px 90px 340px;
+    grid-template-rows: 50px auto;
 }
 
-.contractorform p{
-    margin-top: 0;
+.contractorform .words .firstname{
+    grid-column: 1;
+    grid-row: 1;
 }
 
-.contractorform input{
+.contractorform .words .surname {
+    grid-column: 3;
+    grid-row: 1;
 }
 
-.project-info{
-
+.contractorform .words .agency {
+    grid-column: 1;
+    grid-row: 2;
 }
 
-.projectform {
+.words .txtfield{
+    width: 340px;
 }
 
-.txtfield{
+ /*css for project form */
 
+.projectInfo{
+    display: grid;
+    grid-template-columns: 120px 100px 120px 90px 190px 20px 150px;
+    grid-template-rows: 50px 10px 50px 10px 50px 10px 50px;
+}
+
+.projectInfo .projname {
+    grid-column: 1 / 3;
+    grid-row: 1;
+}
+
+.projectInfo .rm {
+    grid-column: 5;
+    grid-row: 1;
+}
+
+.projectInfo .costcen {
+    grid-column: 7;
+    grid-row: 1;
+}
+
+.projectInfo .start {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.projectInfo .end {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.projectInfo .hrpos {
+    grid-column: 5 / 7;
+    grid-row: 3;
+}
+
+.projectInfo .rate {
+    grid-column: 1;
+    grid-row: 5;
+}
+
+.projectInfo .hourrate {
+    grid-column: 3;
+    grid-row: 5;
+}
+
+.projectInfo .hrpay {
+    grid-column: 5;
+    grid-row: 5;
+}
+
+.projectInfo .poref {
+    grid-column: 7;
+    grid-row: 5;
+}
+
+.projectInfo .currency {
+    grid-column: 1/3;
+    grid-row: 7;
+}
+
+.projectInfo .projname .txtfield{
+    width: 340px;
+}
+
+.projectInfo .rm .txtfield {
+    width: 175px;
+}
+
+.projectInfo .costcen .txtfield {
+    width: 130px;
+}
+
+.projectInfo .hrpos .txtfield {
+    width: 340px;
+}
+
+.projectInfo .rate .txtfield {
+    width: 175px;
+}
+
+.projectInfo .hourrate .txtfield {
+    width: 120px;
+}
+
+.projectInfo .hrpay .txtfield {
+    width: 175px;
+}
+
+.projectInfo .poref .txtfield {
+    width: 130px;
+}
+
+.projectInfo .start .txtfield {
+    width: 40px;
+}
+
+.projectInfo .end .txtfield {
+    width: 40px;
 }
 
 .radiobutton{
-
+    margin-left: 20px;
 }
 
 .btnstyle{
+    padding: 5px 10px;
+    margin-right: 20px;
+    background-color: #0067c6;
+    color: white;
+    opacity: 0.8;
+    border: none;
+    border-radius: 4px;
+}
 
+.btnstyle:hover {
+    background-color: #0067c6;
+    opacity: 0.2;
+    color: white;
 }

@@ -7,7 +7,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
     {
       projects.map((project, index) =>
         <div key={index} className={css.projectInfo}>
-          <p>
+          <p className={css.projname}>
             Project Name
             <input className={css.txtfield}
               name="projectname"
@@ -15,7 +15,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               value={project.projectname}
               onChange={handleTextInput}/>
           </p>
-          <p>
+          <p className={css.rm}>
             Reporting Manager
             <select className={css.txtfield}
               name="reportingmanagers"
@@ -24,8 +24,18 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.reportingmanagers)}
             </select>
           </p>
-          <p>
+          {/*NOTE: forgot cost centre!! might need to change this elsewhere as well*/}
+          <p className={css.costcen}>
+            Cost Centre
+            <input className={css.txtfield}
+                   name="costcentre"
+                   type="text"
+                   value={project.costcentre}
+                   onChange={handleTextInput}/>
+          </p>
+          <p className={css.start}>
             Start Date
+            <br/>
             <select className={css.txtfield}
               name="startday"
               type="text"
@@ -42,8 +52,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               onChange={handleDateInput}>
             </select>
           </p>
-          <p>
+          <p className={css.end}>
             End Date
+            <br/>
             <select className={css.txtfield}
               name="endday"
               type="text"
@@ -60,7 +71,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               onChange={handleDateInput}>
             </select>
           </p>
-          <p>
+          <p className={css.hrpos}>
             HR Position
             <select className={css.txtfield}
               name="hrpositions"
@@ -69,7 +80,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.hrpositions)}
             </select>
           </p>
-          <p>
+          <p className={css.rate}>
             Rate Type
             <select className={css.txtfield}
               name="ratetypes"
@@ -78,7 +89,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.ratetypes)}
             </select>
           </p>
-          <p>
+          <p className={css.hourrate}>
             Est. Hourly Rate
             <input className={css.txtfield}
               name="hourlyrate"
@@ -86,8 +97,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               value={project.hourlyrate}
               onChange={handleTextInput}/>
           </p>
-          <p>
+          <p className={css.hrpay}>
             HR Pay Grade
+            <br/>
             <select className={css.txtfield}
               name="paygrades"
               type="text"
@@ -95,8 +107,8 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.paygrades)}
             </select>
           </p>
-          <p>
-            PO Reference Number
+          <p className={css.poref}>
+            P.O. Reference #
             <select className={css.txtfield}
               name="refnos"
               type="text"
@@ -104,7 +116,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.refnos)}
             </select>
           </p>
-          <p>
+          <p className={css.currency}>
             Currency
             <input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/>
             USD
