@@ -15,14 +15,17 @@ class FilteringContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: items
+      data: items,
+      showFilter: false
     };
     this.handleFilter = this.handleFilter.bind(this);
     this.handleEditContractor = this.handleEditContractor.bind(this);
   }
 
   handleFilter(){
-
+    this.setState({
+      showFilter: !this.state.showFilter
+    });
   }
 
   handleEditContractor(){
@@ -32,6 +35,7 @@ class FilteringContainer extends React.Component {
   render(){
     const {state} = this;
     return <FilteringComponent
+      filterStatus={this.state.showFilter}
       tabledata={state.data}
       handleFilter={this.handleFilter}
       handleEditContractor={this.handleEditContractor}

@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './filtering.css';
 import Table from './Table.jsx';
+import FilterPanel from './FilterPanel.jsx';
 
 
-function FilteringComponent({tabledata, handleFilter, handleEditContractor}) {
+function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditContractor}) {
   return (
     <div className={css.wrapper}>
       <div className={css.heading}>
@@ -15,6 +16,9 @@ function FilteringComponent({tabledata, handleFilter, handleEditContractor}) {
           Filter Table
         </button>
       </div>
+      {filterStatus
+        ? <FilterPanel/>
+        : null}
       <div className={css.tableholder}>
         <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>
       </div>
@@ -25,6 +29,7 @@ function FilteringComponent({tabledata, handleFilter, handleEditContractor}) {
 
 
 FilteringComponent.propTypes = {
+  filterStatus: PropTypes.bool.isRequired,
   tabledata: PropTypes.array.isRequired,
   handleFilter: PropTypes.func.isRequired,
   handleEditContractor: PropTypes.func.isRequired

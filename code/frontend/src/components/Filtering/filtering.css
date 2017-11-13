@@ -2,7 +2,17 @@
 
 }
 
+
 .heading{
+
+}
+
+.filterbutton{
+
+}
+
+.filtertable{
+    padding-top: 20px;
 
 }
 
@@ -18,11 +28,6 @@
 
 }
 
-.filterbutton{
-
-}
-
-.filtertable{
-    padding-top: 20px;
-
+.filterpanel{
+    background-color: lightpink;
 }
