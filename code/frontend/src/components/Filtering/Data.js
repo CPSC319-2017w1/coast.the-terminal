@@ -1,3 +1,5 @@
+//DELETE WHEN FIGURE OUT HOW TO GET DATA FROM BACKEND
+
 let items = [
   {
     'id': 1,

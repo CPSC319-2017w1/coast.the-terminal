@@ -15,11 +15,12 @@ class FilteringContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: items,
-      showFilter: false
+      data: items, //sample data to test rendering needs to be changed to data received from back-end
+      showFilter: false //boolean created for pop-up
     };
-    this.handleFilter = this.handleFilter.bind(this);
+    this.handleFilter = this.handleFilter.bind(this); //this deals with the popup
     this.handleEditContractor = this.handleEditContractor.bind(this);
+    this.applyFilter = this.applyFilter.bind(this); //this deals with the actual filter
   }
 
   handleFilter(){
@@ -32,13 +33,19 @@ class FilteringContainer extends React.Component {
 
   }
 
+  applyFilter(){
+
+  }
+
   render(){
     const {state} = this;
     return <FilteringComponent
+      filters={null}
       filterStatus={this.state.showFilter}
-      tabledata={state.data}
+      tabledata={state.data} //note to backend: needs to be an array of objects
       handleFilter={this.handleFilter}
       handleEditContractor={this.handleEditContractor}
+      applyFilter={this.applyFilter}
     />;
   }
 }

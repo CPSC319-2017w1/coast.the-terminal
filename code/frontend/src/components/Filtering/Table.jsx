@@ -5,6 +5,7 @@ import css from './filtering.css';
 function Table({tabledata, handleEditContractor}) {
   return <table className={css.filtertable}>
     <thead className={css.tableheader}>
+      {/*Main header, will dynamically change based on filter*/}
       <tr>
         <th>ID</th>
         <th>First Name</th>
@@ -27,6 +28,7 @@ function getRows(data, func) {
         <p>{i.id}</p>
         <button className={css.editbtn} onClick={func}>EDIT</button>
       </td>
+      {/*This also will dynamically change based on filter*/}
       <td key={i.fname}>{i.fname}</td>
       <td key={i.lname}>{i.lname}</td>
       <td key={i.company}>{i.company}</td>
