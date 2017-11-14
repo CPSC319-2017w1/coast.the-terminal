@@ -1,3 +1,52 @@
 .wrapper{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    padding: 24px;
+    position: relative;
+}
 
+.adminpanelbtn {
+    display: grid;
+    grid-template-columns: 200px 70px 200px;
+    grid-template-rows: auto 40px auto 40px auto 40px;
+}
+
+.adminpanelbtn button {
+    padding: 20px;
+    width: 200px;
+    color: white;
+    background-color: #0067c6;
+    opacity: 0.6;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.adminpanelbtn .contractorrecords {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.adminpanelbtn .skills {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.adminpanelbtn .fxtable {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.adminpanelbtn .hrtables {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.adminpanelbtn .hrmanagers {
+    grid-column: 1;
+    grid-row: 5;
+}
+
+.adminpanelbtn .userpermissions {
+    grid-column: 3;
+    grid-row: 5;
 }

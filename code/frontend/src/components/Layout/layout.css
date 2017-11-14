@@ -3,5 +3,8 @@
 }
 
 .content {
-    margin-left: 50px;
+    position: relative;
+    top: 60%;
+    left: 20%;
+    margin-left: -150px;
 }
