@@ -70,6 +70,7 @@ public class UserController extends Controller {
                                      set.getString("permissions"));
                 users.add(user);
             }
+            connection.closeConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get users failed: " + e.getMessage());
@@ -99,6 +100,7 @@ public class UserController extends Controller {
                 return UsersEditResponse.usersEditFailure("Failed to edit user");
             }
             connection.commitTransaction();
+            connection.closeConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit user failed: " + e.getMessage());
@@ -129,6 +131,7 @@ public class UserController extends Controller {
                 return UsersAddResponse.addUserFailure("Add user failed");
             }
             connection.commitTransaction();
+            connection.closeConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Add user failed: " + e.getMessage());

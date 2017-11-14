@@ -42,6 +42,7 @@ public class HRPayGradeController extends Controller {
                                                      set.getInt("endAmount"));
                 payGrades.add(payGrade);
             }
+            connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get HRPayGrades Failed: " + e.getMessage());
@@ -72,6 +73,7 @@ public class HRPayGradeController extends Controller {
                 return HRAddEditPayGradeResponse.payGradeFailure("Failed to add Pay Grade");
             }
             connection.commitTransaction();
+            connection.closeConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Add Paygrades failed" + e.getMessage());
@@ -102,6 +104,7 @@ public class HRPayGradeController extends Controller {
                 return HRAddEditPayGradeResponse.payGradeFailure("Failed to edit Paygrade");
             }
             connection.commitTransaction();
+            connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit Paygrade failed" + e.getMessage());

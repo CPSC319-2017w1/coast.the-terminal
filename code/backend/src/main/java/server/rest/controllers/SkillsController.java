@@ -44,6 +44,7 @@ public class SkillsController extends Controller {
                                     set.getString("type"));
                 skills.add(s);
             }
+            connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get Skills Failed: " + e.getMessage());
@@ -73,10 +74,11 @@ public class SkillsController extends Controller {
             st.setString(i++, skill.getDescription());
             st.setString(i++, skill.getType());
             int success = st.executeUpdate();
-            connection.commitTransaction();
             if (success == 0) {
                 SkillsAddResponse.addSkillsFailure("Failed to add skill");
             }
+            connection.commitTransaction();
+            connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Add skill failed: " + e.getMessage());
@@ -104,7 +106,12 @@ public class SkillsController extends Controller {
             st.setString(i++, skill.getDescription());
             st.setString(i++, skill.getType());
             st.setString(i++, skill.getId());
-            st.executeQuery();
+            int success = st.executeUpdate();
+            if (success == 0) {
+                SkillsEditResponse.editSkillFailure("Edit skill failed");
+            }
+            connection.commitTransaction();
+            connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit skill failed: " + e.getMessage());

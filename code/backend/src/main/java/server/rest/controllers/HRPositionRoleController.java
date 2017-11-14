@@ -42,6 +42,7 @@ public class HRPositionRoleController extends Controller {
                                                          set.getString("description"));
                 roles.add(role);
             }
+            connection.closeConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get HRPositionRoles Failed: " + e.getMessage());
@@ -72,6 +73,7 @@ public class HRPositionRoleController extends Controller {
                 return HRRolesResponse.roleFailure("Failed to add HRPositioRole");
             }
             connection.commitTransaction();
+            connection.closeConnection();
         } catch(SQLException e){
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Add HRPositionRole failed: " + e.getMessage());
@@ -102,6 +104,7 @@ public class HRPositionRoleController extends Controller {
                 return HRRolesResponse.roleFailure("Failed to add HRPositionRole");
             }
             connection.commitTransaction();
+            connection.closeConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit HRPositionRole Failed: " + e.getMessage());
