@@ -2,6 +2,7 @@
 
 }
 
+
 .heading{
 
 }
@@ -11,5 +12,22 @@
 }
 
 .filtertable{
+    padding-top: 20px;
 
+}
+
+.tableheader{
+    background-color: lightgrey;
+}
+
+.tablerow{
+
+}
+
+.tableholder{
+
+}
+
+.filterpanel{
+    background-color: lightpink;
 }
