@@ -36,12 +36,12 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           <p className={css.start}>
             Start Date
             <br/>
-            <input type="date" date-format="mm/dd/yyyy" />
+            <input type="date" date-format="mm/dd/yyyy" onChange={handleDateInput}/>
           </p>
           <p className={css.end}>
             End Date
             <br/>
-            <input type="date" date-format="mm/dd/yyyy" />
+            <input type="date" date-format="mm/dd/yyyy" onChange={handleDateInput}/>
           </p>
           <p className={css.hrpos}>
             HR Position
@@ -104,21 +104,21 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/>
             CAD
           </p>
-          <p>
+          <p className={css.timeMaterial}>
             Time and Material Terms ($)
             <input className={css.txtField}
               name="timeAndMaterialTerms"
               type="number"
               onChange={handleTextInput}/>
           </p>
-          <p>
+          <p className={css.allowanceExpense}>
             Allowance expense daily per deem
             <input className={css.txtField}
                    name="allowanceExpense"
                    type="number"
                    onChange={handleTextInput}/>
           </p>
-          <p>
+          <p className={css.chargeType}>
             Charge Type
             <input className={css.radiobutton} type="radio" onChange={handleChargeTypeInput}/>
             Capital - Depreciated

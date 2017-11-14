@@ -41,10 +41,7 @@
 .projectInfo{
     display: grid;
     grid-template-columns: 120px 100px 120px 90px 190px 20px 150px;
-    grid-template-rows: 50px 10px 50px 10px 50px 10px 50px;
-    /* TODO: remove following attributes - disable inputs until endpoint is working */
-    pointer-events: none;
-    background-color: lightgrey;
+    grid-template-rows: 50px 10px 50px 10px 50px 10px 50px 50px 50px;
 }
 
 .projectInfo .projname {
@@ -102,6 +99,26 @@
     grid-row: 7;
 }
 
+.projectInfo .timeMaterial {
+    grid-column: 3;
+    grid-row: 7;
+}
+
+.projectInfo .allowanceExpense {
+    grid-column: 5;
+    grid-row: 7;
+}
+
+.projectInfo .chargeType {
+    grid-column: 1;
+    grid-row: 9;
+}
+
+.projectInfo .mainSkill {
+    grid-column: 5;
+    grid-row: 9;
+}
+
 .projectInfo .projname .txtfield{
     width: 340px;
 }
@@ -140,6 +157,14 @@
 
 .projectInfo .end .txtfield {
     width: 40px;
+}
+
+.projectInfo .timeMaterial .txtField {
+    width: 130px;
+}
+
+.projectInfo .allowanceExpense .txtField {
+    width: 130px;
 }
 
 .radiobutton{
