@@ -24,14 +24,13 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.reportingmanagers)}
             </select>
           </p>
-          {/*NOTE: forgot cost centre!! might need to change this elsewhere as well*/}
           <p className={css.costcen}>
             Cost Centre
             <input className={css.txtfield}
-                   name="costcentre"
-                   type="text"
-                   value={project.costcentre}
-                   onChange={handleTextInput}/>
+              name="costcentre"
+              type="text"
+              value={project.costcentre}
+              onChange={handleTextInput}/>
           </p>
           <p className={css.start}>
             Start Date
