@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class ContractorsController extends Controller {
-    private static String getQuery = "select * from Contractor;";
+    private static String getQuery = "select * from Contractor";
     private static String insertContractorQuery = "INSERT INTO Contractor(id, firstName, surname, agencySource, status, rehire) VALUES (?,?,?,?,?,?)";
 
     @RequestMapping("/contractors/view")
