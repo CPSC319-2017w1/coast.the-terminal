@@ -9,7 +9,7 @@ public class SkillsEditResponse extends Response {
     Skill skill;
 
     public static SkillsEditResponse editSkillFailure(String msg) {
-        Skill skill = new Skill(0, "NA", "NA", "NA");
+        Skill skill = new Skill("", "NA", "NA", "NA");
         SkillsEditResponse response = new SkillsEditResponse(skill);
         response.setError(true);
         response.setErrorMessage(msg);

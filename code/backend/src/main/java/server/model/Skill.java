@@ -4,7 +4,7 @@ package server.model;
  * Created by vaast on 31/10/2017.
  */
 public class Skill {
-    private int id;
+    private String id;
     public String name;
     public String description;
     public String type;
@@ -16,7 +16,7 @@ public class Skill {
      * @param description Description of the skill
      * @param type Type of the skill
      */
-    public Skill(int id, String name, String description, String type) {
+    public Skill(String id, String name, String description, String type) {
         this.id = id;
         this.description = description;
         this.name = name;
@@ -27,7 +27,7 @@ public class Skill {
      * Gets the id of the skill
      * @return the id of the skill
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
