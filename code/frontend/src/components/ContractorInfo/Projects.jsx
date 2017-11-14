@@ -1,6 +1,7 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import css from './addcontractor.css';
+import 'date-input-polyfill';
 
 function Projects({projects, handleTextInput, handleDropdownInput, handleDateInput, handleCurrencyInput}) {
   return <div className={css.projectInfo}>
@@ -35,40 +36,12 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           <p className={css.start}>
             Start Date
             <br/>
-            <select className={css.txtfield}
-              name="startday"
-              type="text"
-              onChange={handleDateInput}>
-            </select>
-            <select className={css.txtfield}
-              name="startmonth"
-              type="text"
-              onChange={handleDateInput}>
-            </select>
-            <select className={css.txtfield}
-              name="startyear"
-              type="text"
-              onChange={handleDateInput}>
-            </select>
+            <input type="date" date-format="mm/dd/yyyy" />
           </p>
           <p className={css.end}>
             End Date
             <br/>
-            <select className={css.txtfield}
-              name="endday"
-              type="text"
-              onChange={handleDateInput}>
-            </select>
-            <select className={css.txtfield}
-              name="endmonth"
-              type="text"
-              onChange={handleDateInput}>
-            </select>
-            <select className={css.txtfield}
-              name="endyear"
-              type="text"
-              onChange={handleDateInput}>
-            </select>
+            <input type="date" date-format="mm/dd/yyyy" />
           </p>
           <p className={css.hrpos}>
             HR Position
