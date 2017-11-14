@@ -16,9 +16,9 @@ import java.util.logging.Logger;
 @RestController
 public class UserController extends Controller {
     private static final String loginQuery = "select * from User where username=? and password=?";
-    private static final String usersQuery = "select * from User;";
+    private static final String usersQuery = "select * from User";
     private static String updateQuery = "update User set password=?, permissions=? where username=?";
-    private static String addQuery = "insert into User values(?, ?, ?);";
+    private static String addQuery = "insert into User values(?, ?, ?)";
 
     @RequestMapping("/login")
     public LoginResponse login(@RequestParam("username") String username,

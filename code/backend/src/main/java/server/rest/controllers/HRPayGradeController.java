@@ -21,9 +21,9 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class HRPayGradeController extends Controller {
-    private static String getQuery = "select * from HRPayGrade;";
-    private static String addQuery = "insert into HRPayGrade values(?, ?, ?);";
-    private static String editQuery = "update HRPayGrade set startAmount=?, endAmount=? where id=?;";
+    private static String getQuery = "select * from HRPayGrade";
+    private static String addQuery = "insert into HRPayGrade values(?, ?, ?)";
+    private static String editQuery = "update HRPayGrade set startAmount=?, endAmount=? where id=?";
 
     @RequestMapping("/paygrades/view")
     public HRPayGradeResponse paygrades() {

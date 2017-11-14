@@ -20,9 +20,9 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class HRPositionRoleController extends Controller {
-    private static String getQuery = "select * from HRPositionRole;";
-    private static String addQuery = "insert into HRPositionRole values(? ,? ,?);";
-    private static String editQuery = "update HRPositionRole set roleName=?, description=? where id=?;";
+    private static String getQuery = "select * from HRPositionRole";
+    private static String addQuery = "insert into HRPositionRole values(? ,? ,?)";
+    private static String editQuery = "update HRPositionRole set roleName=?, description=? where id=?";
 
     @RequestMapping("/hrroles/view")
     public HRPositionRoleResponse hrroles() {

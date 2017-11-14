@@ -20,8 +20,8 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class HiringManagersController extends Controller{
-    private static String getQuery = "select * from HiringManager;";
-    private static String addQuery = "insert into HiringManager values(?, ?, ?);";
+    private static String getQuery = "select * from HiringManager";
+    private static String addQuery = "insert into HiringManager values(?, ?, ?)";
     private static String editQuery = "update HiringManager set firstName=?, lastName=? where userId=?";
 
     @RequestMapping("/hiringmanagers/view")

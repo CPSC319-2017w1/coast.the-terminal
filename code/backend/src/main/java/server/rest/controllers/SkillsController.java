@@ -22,8 +22,8 @@ import java.util.logging.Logger;
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class SkillsController extends Controller {
-    private static String getQuery = "select * from Skill;";
-    private static String insertQuery = "insert into Skill values(?, ?, ?, ?);";
+    private static String getQuery = "select * from Skill";
+    private static String insertQuery = "insert into Skill values(?, ?, ?, ?)";
     private static String updateQuery = "update Skill set name=?, description=?, type=? where id=?";
 
     @RequestMapping("/skills/view")
