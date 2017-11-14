@@ -43,21 +43,30 @@ function viewContractorFailed(error) {
   };
 }
 
-export function addContractor(data, callback) {
+export function addContractor(contractorData, projectData, callback) {
   return dispatch => {
     dispatch(isLoading());
     return request
       .post(`${LIVE_SITE}contractors/add`)
-      .query(data)
+      .query(contractorData)
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
+
+        let contractorId = body.contractors[0].id;
+        return contractorId;
+      })
+      .then((contractorId) => {
+        return addEngagementContract(projectData, contractorId);
+      })
+      .then(() => {
         dispatch(hasStoppedLoading());
         dispatch(addContractorSuccessful());
         callback();
-      }).catch((err) => {
+      })
+      .catch((err) => {
         dispatch(hasStoppedLoading());
         dispatch(addContractorFailed(err.message));
         callback();
@@ -65,25 +74,17 @@ export function addContractor(data, callback) {
   };
 }
 
-export function addEngagementContract(data, callback) {
-  return dispatch => {
-    dispatch(isLoading());
-    return request
-      .post('http://localhost:8080/contractors/add/engagementContract')
-      .query(data)
-      .then((res) => {
-        const body = res.body;
-        if (!res.ok || body.error) {
-          throw new Error(body.errorMessage);
-        }
-        dispatch(hasStoppedLoading());
-        dispatch(addContractorSuccessful());
-        callback();
-      }).catch((err) => {
-        dispatch(hasStoppedLoading());
-        dispatch(addContractorFailed(err.message));
-      });
-  }
+function addEngagementContract(projectData, contractorId) {
+   let allEngagementPromises = [];
+   for(let project of projectData) {
+       project["contractorId"] = contractorId;
+       let req = request
+        .post('http://localhost:8080/contractors/add/engagementContract')
+        .query(project);
+       allEngagementPromises.push(req);
+   }
+
+   return Promise.all(allEngagementPromises);
 }
 
 export function getSkills(data, callback) {

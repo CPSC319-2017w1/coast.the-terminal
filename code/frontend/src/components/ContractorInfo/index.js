@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AddContractorComponent from './AddContractor.jsx';
-import { addContractor, getSkills, addEngagementContract } from '../../actions/contractor-info-actions.js';
+import { addContractor } from '../../actions/contractor-info-actions.js';
 
 const mapStateToProps = state => {
   return {
@@ -13,16 +13,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (data, callback) => {
-      dispatch(addContractor(data, callback));
-    },
-    getMainSkills: (data, callback) => {
-      dispatch(getSkills(data, callback));
-    },
-    onSubmitEngagementContract: (data, callback) => {
-      for (let project of data) {
-        dispatch(addEngagementContract(project, callback));
-      }
+    onSubmit: (contractorData, projectData, callback) => {
+      dispatch(addContractor(contractorData, projectData, callback));
     }
   };
 };
@@ -37,18 +29,7 @@ class AddContractorContainer extends React.Component{
         agencySource: ''
       },
       projects: [
-        {
-          projectname: '',
-          reportingmanagers: ['harry potter', 'luna luvgood'],
-          costcentre: '',
-          hrpositions: ['professor', 'dark arts teacher'],
-          ratetypes: ['Type A', 'Type B'],
-          hourlyrate: '',
-          paygrades: ['A', 'B'],
-          refnos: ['1', '2', '3'],
-          mainSkills: ['Databases', 'Languages'],
-          costCenters: ["Vancouver", "Calgary"]
-        }
+        AddContractorContainer.createDefaultProjectObject()
       ],
       message: ''
     };
@@ -76,6 +57,7 @@ class AddContractorContainer extends React.Component{
 
   handleDateInput(event) {
     event.preventDefault();
+
   }
 
   handleStatusInput(event) {
@@ -88,6 +70,9 @@ class AddContractorContainer extends React.Component{
 
   handleAdd(event) {
     event.preventDefault();
+    let projectState = this.state.projects;
+    projectState.push(AddContractorContainer.createDefaultProjectObject());
+    this.setState({projects: projectState})
   }
 
   handleChargeTypeInput(event) {
@@ -98,8 +83,22 @@ class AddContractorContainer extends React.Component{
     event.preventDefault();
     const { contractor } = this.state;
     const { projects } = this.state;
-    this.props.onSubmit(contractor, this.resetState);
-    this.props.onSubmitEngagementContract(projects, this.resetState);
+    this.props.onSubmit(contractor, projects, this.resetState);
+  }
+
+  static createDefaultProjectObject() {
+    return {
+        projectname: '',
+        reportingmanagers: ['harry potter', 'luna luvgood'],
+        costcentre: '',
+        hrpositions: ['professor', 'dark arts teacher'],
+        ratetypes: ['Type A', 'Type B'],
+        hourlyrate: '',
+        paygrades: ['A', 'B'],
+        refnos: ['1', '2', '3'],
+        mainSkills: ['Databases', 'Languages'],
+        costCenters: ["Vancouver", "Calgary"]
+    };
   }
 
   resetState() {
@@ -114,17 +113,7 @@ class AddContractorContainer extends React.Component{
           agencySource: ''
         },
         projects: [
-          {
-            projectname: '',
-            reportingmanagers: ['harry potter', 'luna luvgood'],
-            hrpositions: ['professor', 'dark arts teacher'],
-            ratetypes: ['Type A', 'Type B'],
-            hourlyrate: '',
-            paygrades: ['A', 'B'],
-            refnos: ['1', '2', '3'],
-            mainSkills: ["Database", "Languages"],
-            costCenters: ["Vancouver", "Calgary"]
-          }
+          AddContractorContainer.createDefaultProjectObject()
         ],
         message: 'Contractor added successfully.'
       });

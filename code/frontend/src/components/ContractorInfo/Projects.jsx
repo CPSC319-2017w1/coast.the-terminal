@@ -4,14 +4,14 @@ import css from './addcontractor.css';
 import 'date-input-polyfill';
 
 function Projects({projects, handleTextInput, handleDropdownInput, handleDateInput, handleCurrencyInput, handleChargeTypeInput}) {
-  return <div className={css.projectInfo}>
+  return <div>
     {
       projects.map((project, index) =>
         <div key={index} className={css.projectInfo}>
           <p className={css.projname}>
             Project Name
             <input className={css.txtfield}
-              name="projectname"
+              name="projectName"
               type="text"
               value={project.projectname}
               onChange={handleTextInput}/>
@@ -19,7 +19,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           <p className={css.rm}>
             Reporting Manager
             <select className={css.txtfield}
-              name="reportingmanagers"
+              name="reportingManagerId"
               type="text"
               onChange={handleDropdownInput}>
               {getOptions(project.reportingmanagers)}
