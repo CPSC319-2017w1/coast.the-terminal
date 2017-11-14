@@ -1,5 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
+import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
 function loginFailed(error) {
@@ -21,7 +22,7 @@ export function loginUser(username, password) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .get('http://theterminal-env.us-west-2.elasticbeanstalk.com/login')
+      .get(`${LIVE_SITE}login`)
       .query({ username, password })
       .then((res) => {
         const body = res.body;

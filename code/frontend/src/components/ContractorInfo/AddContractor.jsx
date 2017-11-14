@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import css from './addcontractor.css';
 import Contractor from './Contractor.jsx';
 import Projects from './Projects.jsx';
@@ -14,8 +15,9 @@ function AddContractorComponent({contractor, projects, handleTextInput, handleSt
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleStatusInput={handleStatusInput} />
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
         handleDateInput={handleDateInput} handleCurrencyInput={handleCurrencyInput} />
-      <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
-      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
+      {/* TODO: remove css.disabled from classes */}
+      <input className={cx(css.disabled, css.btnstyle)} type="submit" onClick={handleAdd} value="Add Additional Contract" />
+      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Submit Contractor" />
     </div>
 
   );

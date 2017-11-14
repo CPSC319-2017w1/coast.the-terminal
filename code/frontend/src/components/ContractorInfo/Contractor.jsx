@@ -19,11 +19,12 @@ function Contractor({contractor, handleTextInput, handleStatusInput}) {
           <input className={css.txtfield} name="agencySource" type="text" value={contractor.agencySource} onChange={handleTextInput}/>
         </p>
       </form>
-      <form onChange={handleStatusInput} className={css.status}>
+      {/* TODO: remove disabled=true tag */}
+      <form onChange={handleStatusInput} className={css.status} disabled={true}>
         <span>Status</span>
-        <input className={css.radiobutton} type="radio" name="active" value="active" />
+        <input className={css.radiobutton} checked={true} disabled={true} type="radio" name="active" value="active" />
         <span>Active</span>
-        <input className={css.radiobutton} type="radio" name="inactive" value="inactive" />
+        <input className={css.radiobutton} disabled={true} type="radio" name="inactive" value="inactive" />
         <span>Inactive</span>
       </form>
     </div>
