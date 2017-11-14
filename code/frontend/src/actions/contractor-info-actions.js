@@ -1,5 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
+import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
 function addContractorSuccessful() {
@@ -46,7 +47,7 @@ export function addContractor(data, callback) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .post('http://theterminal-env.us-west-2.elasticbeanstalk.com/contractors/add')
+      .post(`${LIVE_SITE}contractors/add`)
       .query(data)
       .then((res) => {
         const body = res.body;
@@ -68,7 +69,7 @@ export function editContractor(data) {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .post('http://theterminal-env.us-west-2.elasticbeanstalk.com/contractors/edit')
+      .post(`${LIVE_SITE}contractors/edit`)
       .query(data)
       .then((res) => {
         const body = res.body;
@@ -88,7 +89,7 @@ export function viewContractors() {
   return dispatch => {
     dispatch(isLoading());
     return request
-      .get('http://theterminal-env.us-west-2.elasticbeanstalk.com/contractors/view')
+      .get(`${LIVE_SITE}contractors/view`)
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
