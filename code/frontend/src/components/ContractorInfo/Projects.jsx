@@ -36,12 +36,12 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           <p className={css.start}>
             Start Date
             <br/>
-            <input type="date" date-format="mm/dd/yyyy" onChange={handleDateInput}/>
+            <input className={css.startinput} type="date" date-format="mm/dd/yyyy" onChange={handleDateInput}/>
           </p>
           <p className={css.end}>
             End Date
             <br/>
-            <input type="date" date-format="mm/dd/yyyy" onChange={handleDateInput}/>
+            <input className={css.endinput} type="date" date-format="mm/dd/yyyy" onChange={handleDateInput}/>
           </p>
           <p className={css.hrpos}>
             HR Position
@@ -125,7 +125,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input className={css.radiobutton} type="radio" onChange={handleChargeTypeInput}/>
             Operating Costs
           </p>
-          <p>
+          <p className={css.mainSkill}>
             Main Skill for Engagement
             <select className={css.txtField}
               name="mainSkills"
@@ -134,14 +134,14 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
                 {getOptions(project.mainSkills)}
             </select>
           </p>
-          <p>
+          <p className={css.origindoc}>
             Original Documentation
             <input
               className={css.txtField}
               type="text"
               name="originalDoc"/>
           </p>
-          <p>
+          <p className={css.termination}>
             Notification for contract termination
             <input
               className={css.txtField}
