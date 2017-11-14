@@ -13,6 +13,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input className={css.txtfield}
               name="projectName"
               type="text"
+              data-index={index}
               value={project.projectname}
               onChange={handleTextInput}/>
           </p>
@@ -21,7 +22,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <select className={css.txtfield}
               name="reportingManagerId"
               type="text"
-              onChange={handleDropdownInput}>
+              onChange={handleDropdownInput}
+              data-index={index}
+              >
               {getOptions(project.reportingmanagers)}
             </select>
           </p>
@@ -31,23 +34,34 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="costcentre"
               type="text"
               value={project.costcentre}
-              onChange={handleTextInput}/>
+              onChange={handleTextInput}
+              data-index={index}
+            />
           </p>
           <p className={css.start}>
             Start Date
             <br/>
-            <input className={css.startinput} type="date" date-format="mm/dd/yyyy" onChange={handleDateInput}/>
+            <input className={css.startinput}
+              data-index={index}
+              type="date"
+              date-format="mm/dd/yyyy"
+              onChange={handleDateInput}/>
           </p>
           <p className={css.end}>
             End Date
             <br/>
-            <input className={css.endinput} type="date" date-format="mm/dd/yyyy" onChange={handleDateInput}/>
+            <input className={css.endinput}
+              data-index={index}
+              type="date"
+              date-format="mm/dd/yyyy"
+              onChange={handleDateInput}/>
           </p>
           <p className={css.hrpos}>
             HR Position
             <select className={css.txtfield}
               name="hrpositions"
               type="text"
+              data-index={index}
               onChange={handleDropdownInput}>
               {getOptions(project.hrpositions)}
             </select>
@@ -66,6 +80,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <select className={css.txtfield}
               name="ratetypes"
               type="text"
+              data-index={index}
               onChange={handleDropdownInput}>
               {getOptions(project.ratetypes)}
             </select>
@@ -75,6 +90,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input className={css.txtfield}
               name="hourlyrate"
               type="text"
+              data-index={index}
               value={project.hourlyrate}
               onChange={handleTextInput}/>
           </p>
@@ -84,6 +100,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <select className={css.txtfield}
               name="paygrades"
               type="text"
+              data-index={index}
               onChange={handleDropdownInput}>
               {getOptions(project.paygrades)}
             </select>
@@ -93,15 +110,16 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <select className={css.txtfield}
               name="refnos"
               type="text"
+              data-index={index}
               onChange={handleDropdownInput}>
               {getOptions(project.refnos)}
             </select>
           </p>
           <p className={css.currency}>
             Currency
-            <input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/>
+            <input name="currency" className={css.radiobutton} data-index={index} type="radio" onChange={handleCurrencyInput}/>
             USD
-            <input className={css.radiobutton} type="radio" onChange={handleCurrencyInput}/>
+            <input name="currency" className={css.radiobutton} data-index={index} type="radio" onChange={handleCurrencyInput}/>
             CAD
           </p>
           <p className={css.timeMaterial}>
@@ -109,20 +127,22 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input className={css.txtField}
               name="timeAndMaterialTerms"
               type="number"
+              data-index={index}
               onChange={handleTextInput}/>
           </p>
           <p className={css.allowanceExpense}>
             Allowance expense daily per deem
             <input className={css.txtField}
-                   name="allowanceExpense"
-                   type="number"
-                   onChange={handleTextInput}/>
+              name="allowanceExpense"
+              type="number"
+              data-index={index}
+              onChange={handleTextInput}/>
           </p>
           <p className={css.chargeType}>
             Charge Type
-            <input className={css.radiobutton} type="radio" onChange={handleChargeTypeInput}/>
+            <input name="chargeType" className={css.radiobutton} data-index={index} type="radio" onChange={handleChargeTypeInput}/>
             Capital - Depreciated
-            <input className={css.radiobutton} type="radio" onChange={handleChargeTypeInput}/>
+            <input name="chargeType" className={css.radiobutton} data-index={index} type="radio" onChange={handleChargeTypeInput}/>
             Operating Costs
           </p>
           <p className={css.mainSkill}>
@@ -130,6 +150,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <select className={css.txtField}
               name="mainSkills"
               type="text"
+              data-index={index}
               onChange={handleDropdownInput}>
                 {getOptions(project.mainSkills)}
             </select>
@@ -139,6 +160,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input
               className={css.txtField}
               type="text"
+              data-index={index}
               name="originalDoc"/>
           </p>
           <p className={css.termination}>
@@ -146,6 +168,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input
               className={css.txtField}
               type="number"
+              data-index={index}
               name="notifcationTermination"/>
           </p>
         </div>
