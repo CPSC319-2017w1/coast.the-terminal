@@ -38,7 +38,7 @@ public class SkillsController extends Controller {
             PreparedStatement st = connection.getPreparedStatement(getQuery);
             ResultSet set = st.executeQuery();
             while(set.next()) {
-                Skill s = new Skill(set.getInt("id"),
+                Skill s = new Skill(set.getString("id"),
                                     set.getString("name"),
                                     set.getString("description"),
                                     set.getString("type"));
@@ -59,8 +59,8 @@ public class SkillsController extends Controller {
             @RequestParam("description") String description,
             @RequestParam("type") String type) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
-        int index = ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE);
-        Skill skill = new Skill(index, name, description, type);
+        String id = UUID.randomUUID().toString();
+        Skill skill = new Skill(id, name, description, type);
         try {
             connection.openConnection();
             if (!connection.isConnected()) {
@@ -68,7 +68,7 @@ public class SkillsController extends Controller {
             }
             PreparedStatement st = connection.getPreparedStatement(insertQuery);
             int i = 1;
-            st.setInt(i++, skill.getId());
+            st.setString(i++, skill.getId());
             st.setString(i++, skill.getName());
             st.setString(i++, skill.getDescription());
             st.setString(i++, skill.getType());
@@ -87,7 +87,7 @@ public class SkillsController extends Controller {
 
     @RequestMapping("/skills/edit")
     public SkillsEditResponse editSkill(
-            @RequestParam("id") int id,
+            @RequestParam("id") String id,
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("type") String type) {
@@ -103,7 +103,7 @@ public class SkillsController extends Controller {
             st.setString(i++, skill.getName());
             st.setString(i++, skill.getDescription());
             st.setString(i++, skill.getType());
-            st.setInt(i++, skill.getId());
+            st.setString(i++, skill.getId());
             st.executeQuery();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();

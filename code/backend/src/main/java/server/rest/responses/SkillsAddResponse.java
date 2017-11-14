@@ -10,7 +10,7 @@ public class SkillsAddResponse extends Response {
     Skill s;
 
     public static SkillsAddResponse addSkillsFailure(String msg) {
-        Skill s = new Skill(0, "NA", "NA", "NA");
+        Skill s = new Skill("", "NA", "NA", "NA");
         SkillsAddResponse response = new SkillsAddResponse(s);
         response.setError(true);
         response.setErrorMessage(msg);
