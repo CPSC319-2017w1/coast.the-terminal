@@ -51,7 +51,7 @@ class UserControllerTest {
     @Test
     void addUserTest() {
         User user = new User("testUsername", "testPassword", "none");
-        Response response = controller.addUser(user);
+        Response response = controller.addUser(user.getUsername(), user.getPassword(), user.getPermissions());
         assertFalse(response.isError());
         assertTrue(controller.users().getUsers().contains(user));
     }
@@ -62,7 +62,7 @@ class UserControllerTest {
         List<User> allUsers = controller.users().getUsers();
         User user = allUsers.get(FIRST);
         user.setPermissions("write");
-        Response response = controller.editUser(user);
+        Response response = controller.editUser(user.getUsername(), user.getPassword(), user.getPermissions());
         assertFalse(response.isError());
         assertEquals(controller.users().getUsers().get(FIRST), user);
     }

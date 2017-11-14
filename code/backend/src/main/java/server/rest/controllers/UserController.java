@@ -3,9 +3,7 @@ package server.rest.controllers;
 import org.springframework.web.bind.annotation.*;
 import server.database.DatabaseConnection;
 import server.model.User;
-import server.rest.responses.LoginResponse;
-import server.rest.responses.Response;
-import server.rest.responses.UsersResponse;
+import server.rest.responses.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +17,8 @@ import java.util.logging.Logger;
 public class UserController extends Controller {
     private static final String loginQuery = "select * from User where username=? and password=?";
     private static final String usersQuery = "select * from User;";
+    private static String updateQuery = "update User set password=?, permissions=? where username=?";
+    private static String addQuery = "insert into User values(?, ?, ?);";
 
     @RequestMapping("/login")
     public LoginResponse login(@RequestParam("username") String username,
@@ -78,15 +78,62 @@ public class UserController extends Controller {
         return new UsersResponse(users);
     }
     @RequestMapping("/users/edit")
-    public Response editUser(User user) {
-        //TODO
-        return new Response();
+    public UsersEditResponse editUser(
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam("permissions") String permissions) {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        User user = new User(username, password, permissions);
+        try {
+            connection.openConnection();
+            if (!connection.isConnected()) {
+                return UsersEditResponse.usersEditFailure("Failed to connect to database");
+            }
+            PreparedStatement st = connection.getPreparedStatement(updateQuery);
+            int index = 1;
+            st.setString(index++, user.getPassword());
+            st.setString(index++, user.getPermissions());
+            st.setString(index++, user.getUsername());
+            int success = st.executeUpdate();
+            if (success == 0) {
+                return UsersEditResponse.usersEditFailure("Failed to edit user");
+            }
+            connection.commitTransaction();
+        } catch(SQLException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.log(Level.INFO, "Edit user failed: " + e.getMessage());
+            return UsersEditResponse.usersEditFailure("Edit user failed: " + e.getMessage());
+        }
+        return new UsersEditResponse(user);
     }
 
     @RequestMapping("/users/add")
-    public Response addUser(User user) {
-        //TODO
-        return new Response();
+    public UsersAddResponse addUser(
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam("permissions") String permissions) {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        User user = new User(username, password, permissions);
+        try {
+            connection.openConnection();
+            if (!connection.isConnected()) {
+                return UsersAddResponse.addUserFailure("Failed to add user");
+            }
+            PreparedStatement st = connection.getPreparedStatement(addQuery);
+            int index = 1;
+            st.setString(index++, username);
+            st.setString(index++, password);
+            st.setString(index++, permissions);
+            int success = st.executeUpdate();
+            if (success == 0) {
+                return UsersAddResponse.addUserFailure("Add user failed");
+            }
+            connection.commitTransaction();
+        } catch(SQLException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.log(Level.INFO, "Add user failed: " + e.getMessage());
+        }
+        return new UsersAddResponse(user);
     }
 
     @RequestMapping("/users/delete")
