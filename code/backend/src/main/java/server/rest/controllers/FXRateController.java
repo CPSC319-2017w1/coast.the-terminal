@@ -37,6 +37,7 @@ public class FXRateController extends Controller {
                                            set.getDouble("rate"));
                 fxRates.add(fxRate);
             }
+            connection.closeConnection();
         } catch (SQLException e)
         {
             Logger logger = Logger.getAnonymousLogger();

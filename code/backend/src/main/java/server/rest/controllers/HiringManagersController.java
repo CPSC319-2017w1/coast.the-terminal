@@ -41,6 +41,7 @@ public class HiringManagersController extends Controller{
                                                      set.getString("lastName"));
                 hiringManagers.add(hm);
             }
+            connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get HiringManagers Failed: " + e.getMessage());
@@ -71,6 +72,7 @@ public class HiringManagersController extends Controller{
                 return HiringManagerResponse.hiringManagerFailure("Failed to add hiring manager");
             }
             connection.commitTransaction();
+            connection.closeConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Add Hiring Manager failed: " + e.getMessage());
@@ -102,6 +104,7 @@ public class HiringManagersController extends Controller{
                 return HiringManagerResponse.hiringManagerFailure("Failed to edit Hiring Manager");
             }
             connection.commitTransaction();
+            connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit HiringManager Failed" + e.getMessage());

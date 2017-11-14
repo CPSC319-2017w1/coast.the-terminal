@@ -45,6 +45,7 @@ public class ContractorsController extends Controller {
                                               set.getBoolean("rehire"));
                 contractors.add(c);
             }
+            connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get Contractors Failed: " + e.getMessage());
@@ -86,6 +87,7 @@ public class ContractorsController extends Controller {
 
             Contractor contractor = new Contractor(newContractorId, firstName, surName, agencySource, status, false);
             newContractor.add(contractor);
+            connection.closeConnection();
         } catch (SQLException e) {
 
             Logger logger = Logger.getAnonymousLogger();
