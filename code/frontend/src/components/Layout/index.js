@@ -15,13 +15,17 @@ import css from './layout.css';
 const mapStateToProps = (state) => {
   return {
     tab: state.main.tab,
+    isLoading: state.main.isLoading,
     isLoggedIn: state.user.isLoggedIn
   };
 };
 
-function LayoutContainer({tab, isLoggedIn}) {
+function LayoutContainer({tab, isLoggedIn, isLoading}) {
   if (!isLoggedIn) {
-    return <Login />;
+    return <div>
+      {isLoading ? <div className={css.spinner}></div> : null}
+      <Login />
+    </div>;
   }
   let child = null;
   switch (tab) {
@@ -47,6 +51,7 @@ function LayoutContainer({tab, isLoggedIn}) {
   }
   return (
     <div className={css.wrapper}>
+      {isLoading ? <div className={css.spinner}></div> : null}
       <Navbar />
       <div className={css.content}>
         {child}
@@ -56,6 +61,7 @@ function LayoutContainer({tab, isLoggedIn}) {
 
 LayoutContainer.propTypes = {
   tab: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 };
 

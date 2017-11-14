@@ -21,6 +21,10 @@
     border-radius: 5px;
 }
 
+.adminpanelbtn button:hover {
+    cursor: pointer;
+}
+
 .adminpanelbtn .contractorrecords {
     grid-column: 1;
     grid-row: 1;
@@ -36,7 +40,7 @@
     grid-row: 3;
 }
 
-.adminpanelbtn .hrtables {
+.adminpanelbtn .paygrades {
     grid-column: 3;
     grid-row: 3;
 }
@@ -46,7 +50,7 @@
     grid-row: 5;
 }
 
-.adminpanelbtn .userpermissions {
+.adminpanelbtn .users {
     grid-column: 3;
     grid-row: 5;
 }

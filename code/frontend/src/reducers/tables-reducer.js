@@ -20,6 +20,10 @@ const mainInitialState = {
   fxrates: {
     data: [],
     error: false
+  },
+  users: {
+    data: [],
+    error: false
   }
 };
 
@@ -45,6 +49,10 @@ export default function tables(state = mainInitialState, action) {
       return Object.assign({}, state, {
         fxrates: { data: action.data, error: false }
       });
+    case ACTIONS.VIEW_USERS:
+      return Object.assign({}, state, {
+        users: { data: action.data, error: false }
+      });
     case ACTIONS.VIEW_SKILLS_FAILED:
       return Object.assign({}, state, {
         skills: { error: action.error, data: [] }
@@ -64,6 +72,10 @@ export default function tables(state = mainInitialState, action) {
     case ACTIONS.VIEW_FXRATES_FAILED:
       return Object.assign({}, state, {
         fxrates: { error: action.error, data: [] }
+      });
+    case ACTIONS.VIEW_USERS_FAILED:
+      return Object.assign({}, state, {
+        users: { error: action.error, data: [] }
       });
     default:
       return state;
