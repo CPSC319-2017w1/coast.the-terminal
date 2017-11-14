@@ -5,7 +5,7 @@ import Table from './Table.jsx';
 import FilterPanel from './FilterPanel.jsx';
 
 
-function FilteringComponent({filters, filterStatus, tabledata, handleFilter, handleEditContractor, applyFilter}) {
+function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditContractor, applyFilter}) {
   return (
     <div className={css.wrapper}>
       <div className={css.heading}>
@@ -17,7 +17,7 @@ function FilteringComponent({filters, filterStatus, tabledata, handleFilter, han
         </button>
       </div>
       {filterStatus
-        ? <FilterPanel filters={filters} applyFilter={applyFilter}/>
+        ? <FilterPanel applyFilter={applyFilter}/>
         : null}
       <div className={css.tableholder}>
         <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>

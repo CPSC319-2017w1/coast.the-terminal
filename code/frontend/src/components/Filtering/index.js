@@ -40,7 +40,6 @@ class FilteringContainer extends React.Component {
   render(){
     const {state} = this;
     return <FilteringComponent
-      filters={null}
       filterStatus={this.state.showFilter}
       tabledata={state.data} //note to backend: needs to be an array of objects
       handleFilter={this.handleFilter}
