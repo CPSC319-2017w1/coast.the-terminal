@@ -23,7 +23,7 @@ public class CurrencyConverter {
             rate = rates.getDouble(curID2);
         } catch (Exception e) {
             Logger logger = Logger.getAnonymousLogger();
-            logger.log(Level.INFO, "Failed to update rate: " + e.getMessage());
+            logger.log(Level.INFO, "Failed to obtain rate: " + e.getMessage());
         }
         return rate;
     }
@@ -32,13 +32,14 @@ public class CurrencyConverter {
         FXRateController controller = new FXRateController();
         FXRatesResponse response = controller.fxrates();
         ArrayList<FXRate> rates = response.getRates();
+        Logger.getAnonymousLogger().log(Level.INFO, "Updating Rates");
         for( int i = 0; i < rates.size(); ++i) {
             double rate = getRate(rates.get(i).getCur1ID(), rates.get(i).getCur2ID(), rates.get(i).getRate());
             FXRate newRate = new FXRate(rates.get(i).getCur1ID(), rates.get(i).getCur2ID(), rate);
             boolean status = controller.updateFXRates(newRate);
             if (!status) {
                 Logger logger = Logger.getAnonymousLogger();
-                logger.log(Level.INFO, "Failed tp update rate");
+                logger.log(Level.INFO, "Failed tp get updated rate");
             }
         }
     }

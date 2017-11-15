@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class FXRateController extends Controller {
     private static final String fxrateQuery = "select * from FXRate";
     private static final String addQuery = "insert into FXRate values(?, ?, ?)";
-    private static final String editQuery = "update FXRate set rate=? where curCode1=? and curCode=?";
+    private static final String editQuery = "update FXRate set rate=? where curCode1=? and curCode2=?";
 
     @RequestMapping("/fxrates/view")
     public FXRatesResponse fxrates() {
