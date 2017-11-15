@@ -28,8 +28,9 @@ module.exports = (env) => {
           use: [
             {
               loader: 'file-loader',
-              options: {
-                name: '../dist/images/[hash].[ext]'
+              query: {
+                outputPath: 'images/',
+                name: '[hash].[ext]'
               }
             }
           ]
