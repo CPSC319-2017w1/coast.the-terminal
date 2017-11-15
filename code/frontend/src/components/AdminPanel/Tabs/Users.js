@@ -33,20 +33,15 @@ function getInitialState() {
       permissions: {
         title: 'Permissions',
         type: TYPES.DROPDOWN,
-        selected: '',
+        selected: 'write',
         value: [
           {
-            title: 'Read',
-            value: 'read',
-            selected: false
-          },
-          {
-            title: 'Write',
+            title: 'Normal User',
             value: 'write',
-            selected: false
+            selected: true
           },
           {
-            title: 'Admin',
+            title: 'Administrator',
             value: 'admin',
             selected: false
           }
