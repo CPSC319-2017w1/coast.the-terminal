@@ -9,7 +9,6 @@ import AdminPanel from '../AdminPanel';
 import AddContractor from '../ContractorInfo';
 import Filtering from '../Filtering';
 import Reports from '../Reports';
-import Settings from '../Settings';
 import css from './layout.css';
 
 const mapStateToProps = (state) => {
@@ -40,9 +39,6 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
       break;
     case TABS.REPORTS:
       child = <Reports />;
-      break;
-    case TABS.SETTINGS:
-      child = <Settings />;
       break;
     case TABS.DASHBOARD:
     default: // TODO: error page for default
