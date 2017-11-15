@@ -2,7 +2,7 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import css from './addcontractor.css';
 
-function Contractor({contractor, handleTextInput, handleStatusInput}) {
+function Contractor({contractor, handleTextInput, handleRadioInput}) {
   return <div className={css.contractorInfo}>
     <div className={css.contractorform}>
       <form className={css.words}>
@@ -19,12 +19,11 @@ function Contractor({contractor, handleTextInput, handleStatusInput}) {
           <input className={css.txtfield} name="agencySource" type="text" value={contractor.agencySource} onChange={handleTextInput}/>
         </p>
       </form>
-      {/* TODO: remove disabled=true tag */}
-      <form onChange={handleStatusInput} className={css.status} disabled={true}>
+      <form className={css.status}>
         <span>Status</span>
-        <input className={css.radiobutton} checked={true} disabled={true} type="radio" name="active" value="active" />
+        <input className={css.radiobutton} type="radio" name="status" value="active" onChange={handleRadioInput}/>
         <span>Active</span>
-        <input className={css.radiobutton} disabled={true} type="radio" name="inactive" value="inactive" />
+        <input className={css.radiobutton} type="radio" name="status" value="inactive" onChange={handleRadioInput}/>
         <span>Inactive</span>
       </form>
     </div>

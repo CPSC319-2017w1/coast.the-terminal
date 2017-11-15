@@ -41,8 +41,10 @@ public class ContractorsController extends Controller {
             "costCenterId," +
             "reportingManagerUserId," +
             "currencyCode," +
-            "mainSkillId)" +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "mainSkillId," +
+            "timeAndMaterialTerms," +
+            "poNum)" +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     @RequestMapping("/contractors/view")
     public ContractorsResponse contractors() {
@@ -136,7 +138,8 @@ public class ContractorsController extends Controller {
                                           @RequestParam("reportingManagerId") String reportingManagerId,
                                           @RequestParam("currencyCode") String currencyCode,
                                           @RequestParam("mainSkillId") String mainSkillId,
-                                          @RequestParam("timeMaterialTerms") int timeMaterialTerms) {
+                                          @RequestParam("timeMaterialTerms") int timeMaterialTerms,
+                                          @RequestParam("poNum") int poNum) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         try {
             connection.openConnection();
@@ -168,6 +171,7 @@ public class ContractorsController extends Controller {
             st.setString(i++, currencyCode);
             st.setString(i++, mainSkillId);
             st.setInt(i++, timeMaterialTerms);
+            st.setInt(i++, poNum);
 
             int success = st.executeUpdate();
             connection.commitTransaction();

@@ -78,6 +78,7 @@ function addEngagementContract(projectData, contractorId) {
    let allEngagementPromises = [];
    for(let project of projectData) {
        project["contractorId"] = contractorId;
+       project["resourceId"] = "";
        let req = request
         .post('http://localhost:8080/contractors/add/engagementContract')
         .query(project);

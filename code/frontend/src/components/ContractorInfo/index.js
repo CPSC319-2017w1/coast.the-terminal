@@ -26,7 +26,8 @@ class AddContractorContainer extends React.Component{
       contractor: {
         firstName: '',
         surname: '',
-        agencySource: ''
+        agencySource: '',
+        status: 'active'
       },
       projects: [
         this.createDefaultProjectObject()
@@ -36,19 +37,10 @@ class AddContractorContainer extends React.Component{
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleDropdownInput = this.handleDropdownInput.bind(this);
     this.handleDateInput = this.handleDateInput.bind(this);
-    this.handleStatusInput = this.handleStatusInput.bind(this);
-    this.handleCurrencyInput = this.handleCurrencyInput.bind(this);
+    this.handleRadioInput = this.handleRadioInput.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
-
-    this.getReportingManagersOptions = this.getReportingManagersOptions.bind(this);
-    this.getCostCenterOptions = this.getCostCenterOptions.bind(this);
-    this.getMainSkillsOptions = this.getMainSkillsOptions.bind(this);
-    this.getRefNosOptions = this.getRefNosOptions.bind(this);
-    this.getPayGradeOptions = this.getPayGradeOptions.bind(this);
-    this.getRateTypeOptions = this.getRateTypeOptions.bind(this);
-    this.getHrPositionOptions = this.getHrPositionOptions.bind(this);
   }
 
   handleTextInput(event) {
@@ -69,19 +61,42 @@ class AddContractorContainer extends React.Component{
 
   handleDropdownInput(event) {
     event.preventDefault();
+    const { state } = this;
+    if (!event.target.hasAttribute('data-index')) {
+      const {contractor} = state;
+      contractor[event.target.getAttribute('name')] = event.target.value;
+    } else {
+      const { projects } = state;
+      let dataIndex = parseInt(event.target.getAttribute('data-index'));
+      let project = projects[dataIndex];
+      project[event.target.getAttribute('name')] = event.target.value;
+      this.setState(Object.assign(state, {projects}));
+    }
   }
 
   handleDateInput(event) {
     event.preventDefault();
-
+    const { state } = this;
+    const { projects } = state;
+    let dataIndex = parseInt(event.target.getAttribute('data-index'));
+    let project = projects[dataIndex];
+    project[event.target.getAttribute('name')] = event.target.value;
+    this.setState(Object.assign(state, {projects}));
   }
 
-  handleStatusInput(event) {
-    event.preventDefault();
-  }
-
-  handleCurrencyInput(event) {
-    event.preventDefault();
+  handleRadioInput(event) {
+    const { state } = this;
+    if (!event.target.hasAttribute('data-index')) {
+      const { contractor } = state;
+      contractor[event.target.getAttribute('name')] = event.target.value;
+      this.setState(Object.assign(state, {contractor}));
+    } else {
+      const { projects } = state;
+      let dataIndex = event.target.getAttribute('data-index');
+      let project = projects[dataIndex];
+      project[event.target.getAttribute('name')] = event.target.value;
+      this.setState(Object.assign(state, {projects}));
+    }
   }
 
   handleAdd(event) {
@@ -89,10 +104,6 @@ class AddContractorContainer extends React.Component{
     let projectState = this.state.projects;
     projectState.push(this.createDefaultProjectObject());
     this.setState({projects: projectState})
-  }
-
-  handleChargeTypeInput(event) {
-    event.preventDefault();
   }
 
   handleSubmit(event) {
@@ -104,7 +115,7 @@ class AddContractorContainer extends React.Component{
 
   createDefaultProjectObject() {
     return {
-        projectname: '',
+        projectName: '',
         reportingmanagers: this.getReportingManagersOptions(),
         hrpositions: this.getHrPositionOptions(),
         ratetypes: this.getRateTypeOptions(),
@@ -112,8 +123,31 @@ class AddContractorContainer extends React.Component{
         paygrades: this.getPayGradeOptions(),
         refnos: this.getRefNosOptions(),
         mainSkills: this.getMainSkillsOptions(),
-        costCenters: this.getCostCenterOptions()
+        costCenters: this.getCostCenterOptions(),
+        originalDocumentation: '',
+        terminationNum: '',
     };
+  }
+
+  getDropdownOptions (optionName) {
+    switch  (optionName) {
+      case "reportingManager":
+        return this.getReportingManagersOptions();
+      case "hrPosition":
+        return this.getHrPositionOptions();
+      case "rateType":
+        return this.getRateTypeOptions();
+      case "payGrade":
+        return this.getPayGradeOptions();
+      case "refNos":
+        return this.getRefNosOptions();
+      case "mainSkills":
+        return this.getMainSkillsOptions();
+      case "costCenters":
+        return this.getCostCenterOptions();
+      default:
+        return [];
+    }
   }
 
   getReportingManagersOptions() {
@@ -128,7 +162,7 @@ class AddContractorContainer extends React.Component{
 
   getRateTypeOptions() {
     //todo db call
-    return ['Type A', 'Type B'];
+    return ['Monthly', 'Hourly', 'Daily'];
   }
 
   getPayGradeOptions() {
@@ -163,7 +197,7 @@ class AddContractorContainer extends React.Component{
           agencySource: ''
         },
         projects: [
-          AddContractorContainer.createDefaultProjectObject()
+          this.createDefaultProjectObject()
         ],
         message: 'Contractor added successfully.'
       });
@@ -175,14 +209,12 @@ class AddContractorContainer extends React.Component{
       contractor={this.state.contractor}
       projects={this.state.projects}
       handleTextInput={this.handleTextInput}
-      handleStatusInput={this.handleStatusInput}
       handleDropdownInput={this.handleDropdownInput}
       handleDateInput={this.handleDateInput}
-      handleCurrencyInput={this.handleCurrencyInput}
+      handleRadioInput={this.handleRadioInput}
       handleAdd={this.handleAdd}
       handleSubmit={this.handleSubmit}
       message={this.state.message}
-      handleChargeTypeInput={this.handleChargeTypeInput}
     />;
   }
 }
