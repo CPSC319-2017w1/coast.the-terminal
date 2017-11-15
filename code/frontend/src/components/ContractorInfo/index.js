@@ -29,7 +29,7 @@ class AddContractorContainer extends React.Component{
         agencySource: ''
       },
       projects: [
-        AddContractorContainer.createDefaultProjectObject()
+        this.createDefaultProjectObject()
       ],
       message: ''
     };
@@ -41,14 +41,30 @@ class AddContractorContainer extends React.Component{
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
+
+    this.getReportingManagersOptions = this.getReportingManagersOptions.bind(this);
+    this.getCostCenterOptions = this.getCostCenterOptions.bind(this);
+    this.getMainSkillsOptions = this.getMainSkillsOptions.bind(this);
+    this.getRefNosOptions = this.getRefNosOptions.bind(this);
+    this.getPayGradeOptions = this.getPayGradeOptions.bind(this);
+    this.getRateTypeOptions = this.getRateTypeOptions.bind(this);
+    this.getHrPositionOptions = this.getHrPositionOptions.bind(this);
   }
 
   handleTextInput(event) {
     event.preventDefault();
     const { state } = this;
-    const { contractor } = state;
-    contractor[event.target.getAttribute('name')] = event.target.value;
-    this.setState(Object.assign(state, { contractor }));
+    if (!event.target.hasAttribute('data-index')) {
+      const {contractor} = state;
+      contractor[event.target.getAttribute('name')] = event.target.value;
+      this.setState(Object.assign(state, {contractor}));
+    } else {
+      const { projects } = state;
+      let dataIndex = parseInt(event.target.getAttribute('data-index'));
+      let project = projects[dataIndex];
+      project[event.target.getAttribute('name')] = event.target.value;
+      this.setState(Object.assign(state, {projects}));
+    }
   }
 
   handleDropdownInput(event) {
@@ -71,7 +87,7 @@ class AddContractorContainer extends React.Component{
   handleAdd(event) {
     event.preventDefault();
     let projectState = this.state.projects;
-    projectState.push(AddContractorContainer.createDefaultProjectObject());
+    projectState.push(this.createDefaultProjectObject());
     this.setState({projects: projectState})
   }
 
@@ -86,19 +102,53 @@ class AddContractorContainer extends React.Component{
     this.props.onSubmit(contractor, projects, this.resetState);
   }
 
-  static createDefaultProjectObject() {
+  createDefaultProjectObject() {
     return {
         projectname: '',
-        reportingmanagers: ['harry potter', 'luna luvgood'],
-        costcentre: '',
-        hrpositions: ['professor', 'dark arts teacher'],
-        ratetypes: ['Type A', 'Type B'],
+        reportingmanagers: this.getReportingManagersOptions(),
+        hrpositions: this.getHrPositionOptions(),
+        ratetypes: this.getRateTypeOptions(),
         hourlyrate: '',
-        paygrades: ['A', 'B'],
-        refnos: ['1', '2', '3'],
-        mainSkills: ['Databases', 'Languages'],
-        costCenters: ["Vancouver", "Calgary"]
+        paygrades: this.getPayGradeOptions(),
+        refnos: this.getRefNosOptions(),
+        mainSkills: this.getMainSkillsOptions(),
+        costCenters: this.getCostCenterOptions()
     };
+  }
+
+  getReportingManagersOptions() {
+    //TODO change to DB call
+    return ['harry potter', 'luna luvgood'];
+  }
+
+  getHrPositionOptions() {
+    //todo db call
+    return ['professor', 'dark arts teacher'];
+  }
+
+  getRateTypeOptions() {
+    //todo db call
+    return ['Type A', 'Type B'];
+  }
+
+  getPayGradeOptions() {
+    //todo change to DB call
+    return ['A', 'B'];
+  }
+
+  getRefNosOptions() {
+    //todo db call
+    return ['1', '2', '3'];
+  }
+
+  getMainSkillsOptions() {
+    //todo db call
+    return ['Databases', 'Languages'];
+  }
+
+  getCostCenterOptions() {
+    //todo db call
+    return ["Vancouver", "Calgary"];
   }
 
   resetState() {

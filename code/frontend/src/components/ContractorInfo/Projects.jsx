@@ -29,14 +29,14 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             </select>
           </p>
           <p className={css.costcen}>
-            Cost Centre
-            <input className={css.txtfield}
+          Cost Centre
+            <select className={css.txtfield}
               name="costcentre"
               type="text"
               value={project.costcentre}
-              onChange={handleTextInput}
-              data-index={index}
-            />
+              onChange={handleDropdownInput}>
+              {getOptions(project.costCenters)}
+            </select>
           </p>
           <p className={css.start}>
             Start Date
