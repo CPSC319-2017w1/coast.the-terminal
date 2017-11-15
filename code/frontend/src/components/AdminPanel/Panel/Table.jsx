@@ -9,7 +9,7 @@ function Table({ table, addNew }) {
 }
 
 Table.propTypes = {
-  table: PropTypes.object.isRequired,
+  table: PropTypes.array.isRequired,
   addNew: PropTypes.func.isRequired
 };
 
