@@ -18,19 +18,13 @@ const mapDispatchToProps = dispatch => {
 function getInitialState() {
   return {
     inputs: {
-      userID: {
-        title: 'User ID',
-        type: TYPES.TEXT,
-        value: '',
-        selected: ''
-      },
       firstName: {
         title: 'First Name',
         type: TYPES.TEXT,
         value: '',
         selected: ''
       },
-      LastName: {
+      lastName: {
         title: 'Last Name',
         type: TYPES.TEXT,
         selected: '',

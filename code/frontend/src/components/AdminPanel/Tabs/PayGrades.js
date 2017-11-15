@@ -18,13 +18,19 @@ const mapDispatchToProps = dispatch => {
 function getInitialState() {
   return {
     inputs: {
-      startAmt: {
+      id: {
+        title: 'Tier ID',
+        type: TYPES.TEXT,
+        value: '',
+        selected: ''
+      },
+      startAmount: {
         title: 'Start Amount',
         type: TYPES.NUMBER,
         value: 0,
         selected: 0
       },
-      endAmt: {
+      endAmount: {
         title: 'End Amount',
         type: TYPES.NUMBER,
         value: 0,

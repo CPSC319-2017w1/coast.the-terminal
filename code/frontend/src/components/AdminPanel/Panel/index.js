@@ -39,6 +39,9 @@ class PanelWrapperContainer extends React.Component {
       case TYPES.TEXT:
         state.inputs[name].value = target.value;
         break;
+      case TYPES.NUMBER:
+        state.inputs[name].value = parseFloat(target.value);
+        break;
       case TYPES.DROPDOWN:
         state.inputs[name].value.forEach(element => element.selected = element.value === value);
         break;
