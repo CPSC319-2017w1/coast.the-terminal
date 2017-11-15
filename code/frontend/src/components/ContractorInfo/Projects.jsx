@@ -68,15 +68,6 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               {getOptions(project.hrpositions)}
             </select>
           </p>
-          <p>
-            Cost Center
-            <select className={css.txtField}
-              name="costCenter"
-              type="text"
-              onChange={handleDropdownInput}>
-            {getOptions(project.costCenters)}
-            </select>
-          </p>
           <p className={css.rate}>
             Rate Type
             <select className={css.txtfield}
@@ -154,7 +145,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               type="text"
               data-index={index}
               onChange={handleDropdownInput}>
-                {getOptions(project.mainSkills)}
+              {getOptions(project.mainSkills)}
             </select>
           </p>
           <p className={css.origindoc}>
