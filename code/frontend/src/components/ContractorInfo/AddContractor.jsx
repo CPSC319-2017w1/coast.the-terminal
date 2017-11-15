@@ -5,19 +5,18 @@ import css from './addcontractor.css';
 import Contractor from './Contractor.jsx';
 import Projects from './Projects.jsx';
 
-function AddContractorComponent({contractor, projects, handleTextInput, handleStatusInput, handleDropdownInput,
-  handleDateInput, handleCurrencyInput, handleAdd, handleSubmit, message}) {
+function AddContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
+  handleDateInput, handleRadioInput, handleAdd, handleSubmit, message}) {
   return (
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
       <h1>Contractor Information</h1>
       <p> Use the form below to add contractor information into the system.</p>
-      <Contractor contractor={contractor} handleTextInput={handleTextInput} handleStatusInput={handleStatusInput} />
+      <Contractor contractor={contractor} handleTextInput={handleTextInput} handleRadioInput={handleRadioInput}/>
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
-        handleDateInput={handleDateInput} handleCurrencyInput={handleCurrencyInput} />
-      {/* TODO: remove css.disabled from classes */}
-      <input className={cx(css.disabled, css.btnstyle)} type="submit" onClick={handleAdd} value="Add Additional Contract" />
-      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Submit Contractor" />
+        handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} />
+      <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
+      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
     </div>
 
   );
@@ -33,7 +32,8 @@ AddContractorComponent.propTypes = {
   handleCurrencyInput: PropTypes.func.isRequired,
   handleAdd: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired
+  message: PropTypes.string.isRequired,
+  handleChargeTypeInput: PropTypes.func.isRequired
 };
 
 export default AddContractorComponent;
