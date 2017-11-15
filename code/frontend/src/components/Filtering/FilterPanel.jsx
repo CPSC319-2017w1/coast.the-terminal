@@ -115,12 +115,51 @@ const filters = [
   }
 ];
 
+function getMainFields(fields) {
+  return fields.map((field) =>
+    <p key={field.key}>
+      <input type="checkbox" name={field.name} value={field.name}/>
+      {field.name}
+    </p>
+
+  );
+}
 
 function FilterPanel({applyFilter}) {
-  return <div className={css.filterpanel}>
-    <p>Please select your filters</p>
+  return <div className={css.filterPanel}>
     <form>
-      {/*TODO: add checkboxes and figure out a function to dynamically change options in the four filters as the selected options change.*/}
+      <p>
+      Fields
+      </p>
+      <div className={css.fieldsForm}>
+        {getMainFields(filters)}
+      </div>
+    </form>
+    <form>
+      <p>
+        Filter
+      </p>
+      <div className={css.filterForm}>
+        Options for filter to be added
+      </div>
+      <p>
+        Values
+      </p>
+      <div className={css.valuesForm}>
+        Options for Values to be added
+      </div>
+      <p>
+        Row
+      </p>
+      <div className={css.rowForm}>
+        Options for Row to be added
+      </div>
+      <p>
+        Column
+      </p>
+      <div className={css.columnForm}>
+        Options for Column to be added
+      </div>
       <input className={css.filterbutton} type="submit" onClick={applyFilter} value="Apply Filter" />
     </form>
   </div>;
