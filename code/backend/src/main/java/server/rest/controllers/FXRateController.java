@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 @RestController
 public class FXRateController extends Controller {
     private static final String fxrateQuery = "select * from FXRate";
+    private static final String addQuery = "insert into FXRate values(?, ?, ?)";
+    private static final String editQuery = "update FXRate set rate=? where curCode1=? and curCode=?";
 
     @RequestMapping("/fxrates/view")
     public FXRatesResponse fxrates() {
@@ -45,5 +47,32 @@ public class FXRateController extends Controller {
             return FXRatesResponse.fxRatesFailure(e.getMessage());
         }
         return new FXRatesResponse(fxRates);
+    }
+
+    public boolean updateFXRates(FXRate rate) {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        boolean success = true;
+        try {
+            connection.openConnection();
+            if (!connection.isConnected()) {
+                return false;
+            }
+            PreparedStatement st = connection.getPreparedStatement(editQuery);
+            int index=1;
+            st.setDouble(index++, rate.getRate());
+            st.setString(index++, rate.getCur1ID());
+            st.setString(index++, rate.getCur2ID());
+            int status = st.executeUpdate();
+            if (status == 0) {
+                return false;
+            }
+            connection.commitTransaction();
+            connection.closeConnection();
+        } catch(SQLException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.log(Level.INFO, "Update FxRate failed: " + e.getMessage());
+            success = false;
+        }
+        return success;
     }
 }
