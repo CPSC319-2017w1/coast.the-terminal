@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DashboardComponent from './Dashboard.jsx';
 import { isLoading, hasStoppedLoading } from '../../actions/main-actions.js';
-import { viewSkills, viewFxRates, viewPaygrades, viewPositionRoles, viewHiringManagers } from '../../actions/admin-actions.js';
+import { viewSkills, viewFxRates, viewPaygrades, viewPositionRoles, viewHiringManagers } from '../../actions/view-tables-actions.js';
 
 const mapStateToProps = state => {
   return {

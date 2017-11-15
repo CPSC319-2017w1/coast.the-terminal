@@ -8,7 +8,8 @@ import HiringManagers from './Panel/HiringManagers.jsx';
 import PayGrades from './Panel/PayGrades.jsx';
 import Skills from './Panel/Skills.jsx';
 import Users from './Panel/Users.jsx';
-import { viewUsers } from '../../actions/admin-actions.js';
+import PositionRoles from './Panel/PositionRoles.jsx';
+import { viewUsers } from '../../actions/view-tables-actions.js';
 
 const mapStateToProps = state => {
   return {
@@ -62,6 +63,8 @@ class AdminPanelContainer extends React.Component {
         return <Skills table={tables.skills} onReturn={this.onReturn} />;
       case TABS.USERS:
         return <Users table={tables.users} onReturn={this.onReturn} />;
+      case TABS.POSITION_ROLES:
+        return <PositionRoles onReturn={this.onReturn()} />;
       case TABS.MAIN:
       default:
         return <AdminPanelComponent onClick={this.onClick} />;

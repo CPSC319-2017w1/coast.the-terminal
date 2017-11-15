@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PanelWrapper from './PanelWrapper.js';
 import * as TYPES from '../../../constants/input-types.js';
 
-function PayGrades({ onReturn }) {
+function PositionRoles({ onReturn }) {
   const initialState = {
     inputs: {
       username: {
@@ -42,11 +42,11 @@ function PayGrades({ onReturn }) {
       }
     }
   };
-  return <PanelWrapper initialState={initialState} header={'Pay Grades'} submitButtonText={'Add New Pay Grade'} tableName={'paygrades'} onReturn={onReturn} />;
+  return <PanelWrapper initialState={initialState} header={'Position Roles'} submitButtonText={'Add New Position Role'} tableName={'positionRoles'} onReturn={onReturn} />;
 }
 
-PayGrades.propTypes = {
+PositionRoles.propTypes = {
   onReturn: PropTypes.func.isRequired
 };
 
-export default PayGrades;
+export default PositionRoles;

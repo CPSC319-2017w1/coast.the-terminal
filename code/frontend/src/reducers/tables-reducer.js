@@ -51,7 +51,7 @@ export default function tables(state = mainInitialState, action) {
       });
     case ACTIONS.VIEW_USERS:
       return Object.assign({}, state, {
-        users: { data: action.data, error: false }
+        fxrates: { data: action.data, error: false }
       });
     case ACTIONS.VIEW_SKILLS_FAILED:
       return Object.assign({}, state, {

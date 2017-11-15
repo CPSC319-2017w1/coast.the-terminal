@@ -1,16 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PanelWrapper from './PanelWrapper.js';
+import * as TYPES from '../../../constants/input-types.js';
 
-function Skills({table, onReturn}) {
-  return <div>
-    <button onClick={onReturn}>Return to main admin panel page</button>
-    <p>Skills</p>
-    <div>{table.error ? table.error : JSON.stringify(table.data)}</div>
-  </div>;
+function Skills({ onReturn }) {
+  const initialState = {
+    inputs: {
+      username: {
+        title: 'Username',
+        type: TYPES.TEXT,
+        value: '',
+        selected: ''
+      },
+      password: {
+        title: 'Password',
+        type: TYPES.TEXT,
+        value: '',
+        selected: ''
+      },
+      permissions: {
+        title: 'Permissions',
+        type: TYPES.DROPDOWN,
+        selected: '',
+        value: [
+          {
+            title: 'Read',
+            value: 'read',
+            selected: false
+          },
+          {
+            title: 'Write',
+            value: 'write',
+            selected: false
+          },
+          {
+            title: 'Admin',
+            value: 'admin',
+            selected: false
+          }
+        ]
+      }
+    }
+  };
+  return <PanelWrapper initialState={initialState} header={'Skills'} submitButtonText={'Add New Skill'} tableName={'skills'} onReturn={onReturn} />;
 }
 
 Skills.propTypes = {
-  table: PropTypes.object.isRequired,
   onReturn: PropTypes.func.isRequired
 };
 
