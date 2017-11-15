@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Form from '../Form/Form.jsx';
+import Form from './Form.jsx';
+import Table from './Table.jsx';
 import * as TYPES from '../../../constants/input-types.js';
 
 const mapStateToProps = (state, ownProps) => {
@@ -10,58 +11,21 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    submitForm: () => {
-      dispatch();
-    }
-  };
-};
-
 class PanelWrapperContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props.initialState;
-    // this.state = {
-    //   inputs: {
-    //     username: {
-    //       title: 'Username',
-    //       type: TYPES.TEXT,
-    //       value: '',
-    //       selected: ''
-    //     },
-    //     password: {
-    //       title: 'Password',
-    //       type: TYPES.TEXT,
-    //       value: '',
-    //       selected: ''
-    //     },
-    //     permissions: {
-    //       title: 'Permissions',
-    //       type: TYPES.DROPDOWN,
-    //       selected: '',
-    //       value: [
-    //         {
-    //           title: 'Read',
-    //           value: 'read',
-    //           selected: false
-    //         },
-    //         {
-    //           title: 'Write',
-    //           value: 'write',
-    //           selected: false
-    //         },
-    //         {
-    //           title: 'Admin',
-    //           value: 'admin',
-    //           selected: false
-    //         }
-    //       ]
-    //     }
-    //   }
-    // };
+    this.state = Object.assign({ toggleAdd: false }, props.getInitialState());
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getContent = this.getContent.bind(this);
+    this.toggleAddNew = this.toggleAddNew.bind(this);
+    this.clearAll = this.clearAll.bind(this);
+  }
+
+  toggleAddNew(event) {
+    event.preventDefault();
+    const toggleAdd = !this.state.toggleAdd;
+    this.setState({ toggleAdd });
   }
 
   handleInputChange(event) {
@@ -86,8 +50,29 @@ class PanelWrapperContainer extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // dispatch action to add item
-    console.log(this.state.inputs);
+    const { inputs } = this.state;
+    let data = {};
+    for(let key in inputs) {
+      if (inputs.hasOwnProperty(key)) {
+        data[key] = inputs[key].selected;
+      }
+    }
+    this.props.handleAddNew(data);
+    this.toggleAddNew(event);
+  }
+
+  clearAll(event) {
+    event.preventDefault();
+    this.setState(this.props.getInitialState());
+  }
+
+  getContent() {
+    const { props, state } = this;
+    if (state.toggleAdd) {
+      return <Form inputs={state.inputs} onChange={this.handleInputChange} onSubmit={this.handleSubmit} submitText={props.submitButtonText} clearAll={this.clearAll} />;
+    } else {
+      return <Table table={props.table.data} addNew={this.toggleAddNew} />;
+    }
   }
 
   render() {
@@ -95,8 +80,8 @@ class PanelWrapperContainer extends React.Component {
     return <div>
       <button onClick={props.onReturn}>Return to main admin panel page</button>
       <p>{props.header}</p>
-      {props.table.error ? <div>{props.table.error}</div>
-        : <Form inputs={state.inputs} onChange={this.handleInputChange} onSubmit={this.handleSubmit} submitText={props.submitButtonText} />}
+      {props.table.error ? <div>{props.table.error}</div> : null}
+      {this.getContent(state.inputs, props.submitButtonText)}
     </div>;
   }
 }
@@ -104,16 +89,17 @@ class PanelWrapperContainer extends React.Component {
 PanelWrapperContainer.propTypes = {
   table: PropTypes.object.isRequired,
   onReturn: PropTypes.func.isRequired,
-  initialState: PropTypes.object.isRequired,
+  getInitialState: PropTypes.func.isRequired,
   header: PropTypes.string.isRequired,
   submitButtonText: PropTypes.string.isRequired,
-  tableName: PropTypes.string.isRequired
+  tableName: PropTypes.string.isRequired,
+  handleAddNew: PropTypes.func.isRequired
 };
 
 
 const PanelWrapper = connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(PanelWrapperContainer);
 
 export default PanelWrapper;

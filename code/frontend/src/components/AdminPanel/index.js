@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as TABS from '../../constants/admin-tabs.js';
 import AdminPanelComponent from './AdminPanel.jsx';
-import FXTable from './Panel/FXTable.jsx';
-import HiringManagers from './Panel/HiringManagers.jsx';
-import PayGrades from './Panel/PayGrades.jsx';
-import Skills from './Panel/Skills.jsx';
-import Users from './Panel/Users.jsx';
-import HRRoles from './Panel/HRRoles.jsx';
-import { viewUsers } from '../../actions/view-tables-actions.js';
+import FXTable from './Tabs/FXTable.jsx';
+import HiringManagers from './Tabs/HiringManagers.js';
+import PayGrades from './Tabs/PayGrades.js';
+import Skills from './Tabs/Skills.js';
+import Users from './Tabs/Users.js';
+import HRRoles from './Tabs/HRRoles.js';
+import { viewTableRows } from '../../actions/view-tables-actions.js';
 
 const mapStateToProps = state => {
   return {
     user: state.user,
-    tables: state.tables
+    fxrates: state.tables.fxrates
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getUsers: () => {
-      dispatch(viewUsers());
+      dispatch(viewTableRows('users', 'users'));
     }
   };
 };
@@ -51,20 +51,19 @@ class AdminPanelContainer extends React.Component {
   }
 
   render(){
-    const {tables} = this.props;
     switch (this.state.tab) {
       case TABS.FX_TABLE:
-        return <FXTable table={tables.fxrates} onReturn={this.onReturn} />;
+        return <FXTable table={this.props.fxrates} onReturn={this.onReturn} />;
       case TABS.HIRING_MANAGERS:
-        return <HiringManagers table={tables.hiringManagers} onReturn={this.onReturn} />;
+        return <HiringManagers onReturn={this.onReturn} />;
       case TABS.PAY_GRADES:
-        return <PayGrades table={tables.paygrades} onReturn={this.onReturn} />;
+        return <PayGrades onReturn={this.onReturn} />;
       case TABS.SKILLS:
-        return <Skills table={tables.skills} onReturn={this.onReturn} />;
+        return <Skills onReturn={this.onReturn} />;
       case TABS.USERS:
-        return <Users table={tables.users} onReturn={this.onReturn} />;
+        return <Users onReturn={this.onReturn} />;
       case TABS.HR_ROLES:
-        return <HRRoles table={tables.hrRoles} onReturn={this.onReturn} />;
+        return <HRRoles onReturn={this.onReturn} />;
       case TABS.MAIN:
       default:
         return <AdminPanelComponent onClick={this.onClick} />;
@@ -74,7 +73,7 @@ class AdminPanelContainer extends React.Component {
 
 AdminPanelContainer.propTypes= {
   user: PropTypes.object.isRequired,
-  tables: PropTypes.object.isRequired,
+  fxrates: PropTypes.object.isRequired,
   getUsers: PropTypes.func.isRequired
 };
 

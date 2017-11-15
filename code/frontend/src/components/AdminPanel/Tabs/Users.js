@@ -1,10 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PanelWrapper from './PanelWrapper.js';
+import { connect } from 'react-redux';
+import PanelWrapper from '../Panel';
 import * as TYPES from '../../../constants/input-types.js';
+import { addNewRow } from '../../../actions/add-tables-actions.js';
 
-function Users({ onReturn }) {
-  const initialState = {
+const tableName = 'users';
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleAddNew: (data) => {
+      dispatch(addNewRow(tableName, 'user', data));
+    }
+  };
+};
+
+function getInitialState() {
+  return {
     inputs: {
       username: {
         title: 'Username',
@@ -42,11 +54,26 @@ function Users({ onReturn }) {
       }
     }
   };
-  return <PanelWrapper initialState={initialState} header={'Users'} submitButtonText={'Add New User'} tableName={'users'} onReturn={onReturn} />;
 }
 
-Users.propTypes = {
-  onReturn: PropTypes.func.isRequired
+function UsersContainer({ onReturn, handleAddNew }) {
+  return <PanelWrapper
+    getInitialState={getInitialState}
+    header={'Users'}
+    submitButtonText={'Add New User'}
+    tableName={tableName}
+    onReturn={onReturn}
+    handleAddNew={handleAddNew} />;
+}
+
+UsersContainer.propTypes = {
+  onReturn: PropTypes.func.isRequired,
+  handleAddNew: PropTypes.func.isRequired
 };
+
+const Users = connect(
+  null,
+  mapDispatchToProps
+)(UsersContainer);
 
 export default Users;

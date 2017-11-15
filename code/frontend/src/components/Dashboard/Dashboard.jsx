@@ -36,11 +36,11 @@ function getPlaceholderTableList(tables) {
     {tables.paygrades.error ? <p>paygrades table error: {tables.paygrades.error}</p>
       : <div><p>Fetching paygrades table successful</p>{tables.paygrades.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}
     <hr/>
-    {tables.hrRoles.error ? <p>hrRoles table error: {tables.hrRoles.error}</p>
-      : <div><p>Fetching hrRoles table successful</p>{tables.hrRoles.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}
+    {tables.hrroles.error ? <p>hrRoles table error: {tables.hrroles.error}</p>
+      : <div><p>Fetching hrRoles table successful</p>{tables.hrroles.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}
     <hr/>
-    {tables.hiringManagers.error ? <p>hiringManagers table error: {tables.hiringManagers.error}</p>
-      : <div><p>Fetching hiringManagers table successful</p>{tables.hiringManagers.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}
+    {tables.hiringmanagers.error ? <p>hiringManagers table error: {tables.hiringmanagers.error}</p>
+      : <div><p>Fetching hiringManagers table successful</p>{tables.hiringmanagers.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}
     <hr/>
     {tables.fxrates.error ? <p>fxrates table error: {tables.fxrates.error}</p>
       : <div><p>Fetching fxrates table successful</p>{tables.fxrates.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}

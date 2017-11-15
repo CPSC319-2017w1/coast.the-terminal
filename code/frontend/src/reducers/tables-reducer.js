@@ -9,11 +9,11 @@ const mainInitialState = {
     data: [],
     error: false
   },
-  hrRoles: {
+  hrroles: {
     data: [],
     error: false
   },
-  hiringManagers: {
+  hiringmanagers: {
     data: [],
     error: false
   },
@@ -29,53 +29,19 @@ const mainInitialState = {
 
 export default function tables(state = mainInitialState, action) {
   switch (action.type) {
-    case ACTIONS.VIEW_SKILLS:
+    case ACTIONS.VIEW_TABLES:
       return Object.assign({}, state, {
-        skills: { data: action.data, error: false }
+        [action.tableName]: { data: action.data, error: false }
       });
-    case ACTIONS.VIEW_PAYGRADES:
+    case ACTIONS.VIEW_TABLES_FAILED:
+    case ACTIONS.ADD_NEW_ROW_FAILED:
       return Object.assign({}, state, {
-        paygrades: { data: action.data, error: false }
+        [action.tableName]: { error: action.error, data: state[action.tableName].data }
       });
-    case ACTIONS.VIEW_HRROLES:
+    case ACTIONS.ADD_NEW_ROW:
+      const newData = [].push(state[action.tableName].data);
       return Object.assign({}, state, {
-        hrRoles: { data: action.data, error: false }
-      });
-    case ACTIONS.VIEW_HIRINGMANAGERS:
-      return Object.assign({}, state, {
-        hiringManagers: { data: action.data, error: false }
-      });
-    case ACTIONS.VIEW_FXRATES:
-      return Object.assign({}, state, {
-        fxrates: { data: action.data, error: false }
-      });
-    case ACTIONS.VIEW_USERS:
-      return Object.assign({}, state, {
-        fxrates: { data: action.data, error: false }
-      });
-    case ACTIONS.VIEW_SKILLS_FAILED:
-      return Object.assign({}, state, {
-        skills: { error: action.error, data: [] }
-      });
-    case ACTIONS.VIEW_PAYGRADES_FAILED:
-      return Object.assign({}, state, {
-        paygrades: { error: action.error, data: [] }
-      });
-    case ACTIONS.VIEW_HRROLES_FAILED:
-      return Object.assign({}, state, {
-        hrRoles: { error: action.error, data: [] }
-      });
-    case ACTIONS.VIEW_HIRINGMANAGERS_FAILED:
-      return Object.assign({}, state, {
-        hiringManagers: { error: action.error, data: [] }
-      });
-    case ACTIONS.VIEW_FXRATES_FAILED:
-      return Object.assign({}, state, {
-        fxrates: { error: action.error, data: [] }
-      });
-    case ACTIONS.VIEW_USERS_FAILED:
-      return Object.assign({}, state, {
-        users: { error: action.error, data: [] }
+        [action.tableName]: { data: newData.push(action.data), error: false }
       });
     default:
       return state;

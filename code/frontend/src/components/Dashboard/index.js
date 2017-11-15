@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DashboardComponent from './Dashboard.jsx';
-import { isLoading, hasStoppedLoading } from '../../actions/main-actions.js';
-import { viewSkills, viewFxRates, viewPaygrades, viewHrRoles, viewHiringManagers } from '../../actions/view-tables-actions.js';
+import { viewTableRows } from '../../actions/view-tables-actions.js';
 
 const mapStateToProps = state => {
   return {
@@ -15,13 +14,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     viewTables: () => {
-      dispatch(isLoading());
-      dispatch(viewSkills());
-      dispatch(viewFxRates());
-      dispatch(viewPaygrades());
-      dispatch(viewHrRoles());
-      dispatch(viewHiringManagers());
-      dispatch(hasStoppedLoading());
+      dispatch(viewTableRows('skills', 'skills'));
+      dispatch(viewTableRows('fxrates', 'rates'));
+      dispatch(viewTableRows('paygrades', 'payGrades'));
+      dispatch(viewTableRows('hrroles', 'hrPositionRoles'));
+      dispatch(viewTableRows('hiringmanagers', 'hiringManagers'));
     },
     logout: () => {
       // TODO - dispatch action to change isLoggedIn to false in state
