@@ -6,39 +6,23 @@ import * as TYPES from '../../../constants/input-types.js';
 function HiringManagers({ onReturn }) {
   const initialState = {
     inputs: {
-      username: {
-        title: 'Username',
+      userID: {
+        title: 'User ID',
         type: TYPES.TEXT,
         value: '',
         selected: ''
       },
-      password: {
-        title: 'Password',
+      firstName: {
+        title: 'First Name',
         type: TYPES.TEXT,
         value: '',
         selected: ''
       },
-      permissions: {
-        title: 'Permissions',
-        type: TYPES.DROPDOWN,
+      LastName: {
+        title: 'Last Name',
+        type: TYPES.TEXT,
         selected: '',
-        value: [
-          {
-            title: 'Read',
-            value: 'read',
-            selected: false
-          },
-          {
-            title: 'Write',
-            value: 'write',
-            selected: false
-          },
-          {
-            title: 'Admin',
-            value: 'admin',
-            selected: false
-          }
-        ]
+        value: ''
       }
     }
   };

@@ -6,39 +6,17 @@ import * as TYPES from '../../../constants/input-types.js';
 function PayGrades({ onReturn }) {
   const initialState = {
     inputs: {
-      username: {
-        title: 'Username',
-        type: TYPES.TEXT,
-        value: '',
-        selected: ''
+      startAmt: {
+        title: 'Start Amount',
+        type: TYPES.NUMBER,
+        value: 0,
+        selected: 0
       },
-      password: {
-        title: 'Password',
-        type: TYPES.TEXT,
-        value: '',
-        selected: ''
-      },
-      permissions: {
-        title: 'Permissions',
-        type: TYPES.DROPDOWN,
-        selected: '',
-        value: [
-          {
-            title: 'Read',
-            value: 'read',
-            selected: false
-          },
-          {
-            title: 'Write',
-            value: 'write',
-            selected: false
-          },
-          {
-            title: 'Admin',
-            value: 'admin',
-            selected: false
-          }
-        ]
+      endAmt: {
+        title: 'End Amount',
+        type: TYPES.NUMBER,
+        value: 0,
+        selected: 0
       }
     }
   };

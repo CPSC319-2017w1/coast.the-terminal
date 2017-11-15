@@ -10,10 +10,10 @@ function AdminPanelComponent({onClick}) {
         <h1>Admin Panel</h1>
       </div>
       <div className={css.adminpanelbtn}>
-        <button className={css.positionroles}
-          name={TABS.POSITION_ROLES}
+        <button className={css.hrRoles}
+          name={TABS.HR_ROLES}
           onClick={onClick}>
-          Position Roles
+          HR Roles
         </button>
         <button className={css.skills}
           name={TABS.SKILLS}

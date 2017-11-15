@@ -30,9 +30,9 @@ function paygradesFailed(error) {
   };
 }
 
-function positionRolesFailed(error) {
+function hrRolesFailed(error) {
   return {
-    type: ACTIONS.VIEW_POSITIONROLES_FAILED,
+    type: ACTIONS.VIEW_HRROLES_FAILED,
     error
   };
 }
@@ -72,9 +72,9 @@ function paygradesSuccessful(data) {
   };
 }
 
-function positionRolesSuccessful(data) {
+function hrRolesSuccessful(data) {
   return {
-    type: ACTIONS.VIEW_POSITIONROLES,
+    type: ACTIONS.VIEW_HRROLES,
     data
   };
 }
@@ -154,7 +154,7 @@ export function viewPaygrades() {
   };
 }
 
-export function viewPositionRoles() {
+export function viewHrRoles() {
   return dispatch => {
     return request
       .get(`${LIVE_SITE}hrroles/view`)
@@ -164,9 +164,9 @@ export function viewPositionRoles() {
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
-        dispatch(positionRolesSuccessful(body.hrPositionRoles));
+        dispatch(hrRolesSuccessful(body.hrPositionRoles));
       }).catch((err) => {
-        dispatch(positionRolesFailed(err.message));
+        dispatch(hrRolesFailed(err.message));
       });
   };
 }

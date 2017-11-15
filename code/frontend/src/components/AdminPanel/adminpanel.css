@@ -25,7 +25,7 @@
     cursor: pointer;
 }
 
-.adminpanelbtn .positionroles {
+.adminpanelbtn .hrRoles {
     grid-column: 1;
     grid-row: 1;
 }

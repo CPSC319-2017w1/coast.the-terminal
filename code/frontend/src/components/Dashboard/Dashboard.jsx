@@ -36,8 +36,8 @@ function getPlaceholderTableList(tables) {
     {tables.paygrades.error ? <p>paygrades table error: {tables.paygrades.error}</p>
       : <div><p>Fetching paygrades table successful</p>{tables.paygrades.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}
     <hr/>
-    {tables.positionRoles.error ? <p>positionRoles table error: {tables.positionRoles.error}</p>
-      : <div><p>Fetching positionRoles table successful</p>{tables.positionRoles.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}
+    {tables.hrRoles.error ? <p>hrRoles table error: {tables.hrRoles.error}</p>
+      : <div><p>Fetching hrRoles table successful</p>{tables.hrRoles.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}
     <hr/>
     {tables.hiringManagers.error ? <p>hiringManagers table error: {tables.hiringManagers.error}</p>
       : <div><p>Fetching hiringManagers table successful</p>{tables.hiringManagers.data.map((item, index) => <p key={index}>{JSON.stringify(item)}</p>)}</div>}

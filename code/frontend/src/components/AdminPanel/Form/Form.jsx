@@ -3,12 +3,6 @@ import PropTypes from 'prop-types';
 import * as TYPES from '../../../constants/input-types.js';
 
 // todo: input validations
-/*
-* key: {
-*   title: '',
-*   value:''
-* }
-* */
 
 function Form({inputs, onChange, onSubmit, submitText}) {
   let children = [];
@@ -17,7 +11,8 @@ function Form({inputs, onChange, onSubmit, submitText}) {
       const item = inputs[key];
       switch (item.type) {
         case TYPES.TEXT:
-          children.push(getTextField(item, key, onChange));
+        case TYPES.NUMBER:
+          children.push(getTextOrNumberField(item, key, onChange));
           break;
         case TYPES.DROPDOWN:
           children.push(getDropdownField(item, key, onChange));
@@ -33,7 +28,7 @@ function Form({inputs, onChange, onSubmit, submitText}) {
   </div>;
 }
 
-function getTextField(item, key, onChange) {
+function getTextOrNumberField(item, key, onChange) {
   return <div key={key}>
     <span>{item.title}</span>
     <input name={key} onChange={onChange} value={item.value} type={item.type} />

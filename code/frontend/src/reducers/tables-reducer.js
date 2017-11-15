@@ -9,7 +9,7 @@ const mainInitialState = {
     data: [],
     error: false
   },
-  positionRoles: {
+  hrRoles: {
     data: [],
     error: false
   },
@@ -37,9 +37,9 @@ export default function tables(state = mainInitialState, action) {
       return Object.assign({}, state, {
         paygrades: { data: action.data, error: false }
       });
-    case ACTIONS.VIEW_POSITIONROLES:
+    case ACTIONS.VIEW_HRROLES:
       return Object.assign({}, state, {
-        positionRoles: { data: action.data, error: false }
+        hrRoles: { data: action.data, error: false }
       });
     case ACTIONS.VIEW_HIRINGMANAGERS:
       return Object.assign({}, state, {
@@ -61,9 +61,9 @@ export default function tables(state = mainInitialState, action) {
       return Object.assign({}, state, {
         paygrades: { error: action.error, data: [] }
       });
-    case ACTIONS.VIEW_POSITIONROLES_FAILED:
+    case ACTIONS.VIEW_HRROLES_FAILED:
       return Object.assign({}, state, {
-        positionRoles: { error: action.error, data: [] }
+        hrRoles: { error: action.error, data: [] }
       });
     case ACTIONS.VIEW_HIRINGMANAGERS_FAILED:
       return Object.assign({}, state, {
