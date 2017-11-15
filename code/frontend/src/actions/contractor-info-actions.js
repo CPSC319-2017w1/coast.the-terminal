@@ -79,6 +79,7 @@ function addEngagementContract(projectData, contractorId) {
    for(let project of projectData) {
        project["contractorId"] = contractorId;
        project["resourceId"] = "";
+       project = conformDropdownValuesToDefault(project);
        let req = request
         .post('http://localhost:8080/contractors/add/engagementContract')
         .query(project);
@@ -87,6 +88,25 @@ function addEngagementContract(projectData, contractorId) {
 
    return Promise.all(allEngagementPromises);
 }
+
+function conformDropdownValuesToDefault (project) {
+  //todo change this to less hacky fix
+  const REQUIRED_FIELDS = {"hrPositionId": "hrpositions",
+                          "hrPayGradeId": "paygrades",
+                          "costCenterId": "costCenters",
+                          "reportingManagerId": "reportingmanagers",
+                          "mainSkillId": "mainSkills",
+                          "poNum": "refnos",
+                          "rateType": "ratetypes"};
+  for(let reqField in REQUIRED_FIELDS) {
+    if(!project.hasOwnProperty(reqField)){
+      project[reqField] = project[REQUIRED_FIELDS[reqField]][0];
+    }
+  }
+
+  return project;
+}
+
 
 export function getSkills(data, callback) {
     return dispatch => {
