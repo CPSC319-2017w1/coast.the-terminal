@@ -21,7 +21,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getUsers: () => {
-      dispatch(viewTableRows('users', 'users'));
+      dispatch(viewTableRows('users'));
     }
   };
 };

@@ -1,6 +1,7 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE } from '../constants/urls.js';
+import { viewTableRows } from './view-tables-actions.js';
 
 function addNewRowFailed(error, tableName) {
   return {
@@ -10,15 +11,7 @@ function addNewRowFailed(error, tableName) {
   };
 }
 
-function addNewRowSuccessful(data, tableName) {
-  return {
-    type: ACTIONS.ADD_NEW_ROW,
-    data,
-    tableName
-  };
-}
-
-export function addNewRow(tableName, bodyName, data) {
+export function addNewRow(tableName, data) {
   return dispatch => {
     return request
       .post(`${LIVE_SITE}${tableName}/add`)
@@ -28,7 +21,7 @@ export function addNewRow(tableName, bodyName, data) {
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
-        dispatch(addNewRowSuccessful(body[bodyName], tableName));
+        dispatch(viewTableRows(tableName));
       }).catch((err) => {
         dispatch(addNewRowFailed(err.message, tableName));
       });

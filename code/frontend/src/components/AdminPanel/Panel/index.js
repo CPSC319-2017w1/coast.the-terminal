@@ -100,7 +100,11 @@ class PanelWrapperContainer extends React.Component {
         return response;
       } else if (key.indexOf('start') > -1) {
         const end = keys.find(item => item.indexOf('end') > -1);
-        if (end && inputs[key] >= inputs[end]) {
+        if (end && (inputs[key] < 0 || inputs[end] < 0)) {
+          response.isValid = false;
+          response.message = 'Values cannot be negative.';
+          return response;
+        } else if (end && inputs[key] >= inputs[end]) {
           response.isValid = false;
           response.message = 'End value cannot be smaller than or equal to start value.';
           return response;

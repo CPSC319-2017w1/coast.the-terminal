@@ -18,7 +18,7 @@ function viewTableFailed(tableName, error) {
   };
 }
 
-export function viewTableRows(tableName, bodyName) {
+export function viewTableRows(tableName) {
   return dispatch => {
     return request
       .get(`${LIVE_SITE}${tableName}/view`)
@@ -27,7 +27,7 @@ export function viewTableRows(tableName, bodyName) {
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
-        dispatch(viewTableSuccessful(tableName, body[bodyName]));
+        dispatch(viewTableSuccessful(tableName, body.data));
       }).catch((err) => {
         dispatch(viewTableFailed(tableName, err.message));
       });
