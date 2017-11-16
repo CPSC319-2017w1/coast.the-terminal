@@ -11,7 +11,7 @@ const tableName = 'paygrades';
 const mapDispatchToProps = dispatch => {
   return {
     handleAddNew: (data) => {
-      dispatch(addNewRow(tableName, 'payGrade', data));
+      dispatch(addNewRow(tableName, data));
     }
   };
 };

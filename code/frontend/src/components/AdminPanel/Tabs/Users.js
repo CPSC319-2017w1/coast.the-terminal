@@ -11,7 +11,7 @@ const tableName = 'users';
 const mapDispatchToProps = dispatch => {
   return {
     handleAddNew: (data) => {
-      dispatch(addNewRow(tableName, 'user', data));
+      dispatch(addNewRow(tableName, data));
     }
   };
 };
