@@ -43,7 +43,7 @@ function viewContractorFailed(error) {
   };
 }
 
-export function addContractor(contractorData, projectData, tableData,callback) {
+export function addContractor(contractorData, projectData, callback) {
   return dispatch => {
     dispatch(isLoading());
     return request
@@ -59,7 +59,7 @@ export function addContractor(contractorData, projectData, tableData,callback) {
         return contractorId;
       })
       .then((contractorId) => {
-        return addEngagementContract(projectData, contractorId, tableData);
+        return addEngagementContract(projectData, contractorId);
       })
       .then(() => {
         dispatch(hasStoppedLoading());
@@ -74,12 +74,12 @@ export function addContractor(contractorData, projectData, tableData,callback) {
   };
 }
 
-function addEngagementContract(projectData, contractorId, tableData) {
+function addEngagementContract(projectData, contractorId) {
    let allEngagementPromises = [];
    for(let project of projectData) {
        project["contractorId"] = contractorId;
        project["resourceId"] = "";
-       project = conformDropdownValuesToDefault(project, tableData);
+       project = conformDropdownValuesToDefault(project);
        let req = request
         .post(`${LOCALHOST}contractors/add/engagementContract`)
         .query(project);
