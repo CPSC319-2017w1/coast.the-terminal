@@ -5,8 +5,8 @@ package server.model;
  */
 public class HRPayGrade {
     private String id;
-    private int startAmt;
-    private int endAmt;
+    private int startAmount;
+    private int endAmount;
 
     /**
      * Creates a user object
@@ -16,8 +16,8 @@ public class HRPayGrade {
      */
     public HRPayGrade(String id, int startAmt, int endAmt) {
         this.id = id;
-        this.startAmt = startAmt;
-        this.endAmt = endAmt;
+        this.startAmount = startAmt;
+        this.endAmount = endAmt;
     }
 
     /**
@@ -32,15 +32,15 @@ public class HRPayGrade {
      * Gets the end amount for the pay grade
      * @return The end amount of the HR PayGrade
      */
-    public int getEndAmt() {
-        return endAmt;
+    public int getEndAmount() {
+        return endAmount;
     }
 
     /**
      * Gets the start amount for the pay grade
      * @return The start amount of the HR PayGrade
      */
-    public int getStartAmt() {
-        return startAmt;
+    public int getStartAmount() {
+        return startAmount;
     }
 }
