@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CostCentersResponse extends Response {
-    private List<CostCenter>  costCenters;
+    private List<CostCenter>  data;
 
     public static CostCentersResponse costCenterFailure(String msg) {
         List<CostCenter> costCenters = Collections.emptyList();
@@ -17,8 +17,8 @@ public class CostCentersResponse extends Response {
         return response;
     }
 
-    public CostCentersResponse(List<CostCenter> costCenters) { this.costCenters = costCenters; }
+    public CostCentersResponse(List<CostCenter> costCenters) { this.data = costCenters; }
 
-    public List<CostCenter> getCostCenters() { return costCenters; }
+    public List<CostCenter> getData() { return data; }
 
 }
