@@ -19,15 +19,9 @@ function viewTableFailed(tableName, error) {
 }
 
 export function viewTableRows(tableName) {
-  //todo remove once cost center endpoint deployed
-  let urlToUse = LIVE_SITE;
-  if(tableName === 'costcenters') {
-    urlToUse = LOCALHOST;
-  }
-  //end todo
   return dispatch => {
     return request
-      .get(`${urlToUse}${tableName}/view`)
+      .get(`${LIVE_SITE}${tableName}/view`)
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
