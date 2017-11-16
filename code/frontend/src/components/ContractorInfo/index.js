@@ -19,12 +19,12 @@ const mapDispatchToProps = dispatch => {
       dispatch(addContractor(contractorData, projectData, callback));
     },
     viewTables: () => {
-      dispatch(viewTableRows('skills', 'skills'));
-      dispatch(viewTableRows('fxrates', 'rates'));
-      dispatch(viewTableRows('paygrades', 'payGrades'));
-      dispatch(viewTableRows('hrroles', 'hrPositionRoles'));
-      dispatch(viewTableRows('hiringmanagers', 'hiringManagers'));
-      dispatch(viewTableRows('costcenters', 'costCenters'));
+      dispatch(viewTableRows('skills'));
+      dispatch(viewTableRows('fxrates'));
+      dispatch(viewTableRows('paygrades'));
+      dispatch(viewTableRows('hrroles'));
+      dispatch(viewTableRows('hiringmanagers'));
+      dispatch(viewTableRows('costcenters'));
     }
   };
 };
