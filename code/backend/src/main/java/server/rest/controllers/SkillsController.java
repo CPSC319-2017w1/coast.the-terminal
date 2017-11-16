@@ -71,8 +71,8 @@ public class SkillsController extends Controller {
             int i = 1;
             st.setString(i++, skill.getId());
             st.setString(i++, skill.getName());
-            st.setString(i++, skill.getDescription());
             st.setString(i++, skill.getType());
+            st.setString(i++, skill.getDescription());
             int success = st.executeUpdate();
             if (success == 0) {
                 SkillsAddResponse.addSkillsFailure("Failed to add skill");
