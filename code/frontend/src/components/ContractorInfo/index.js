@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AddContractorComponent from './AddContractor.jsx';
 import { addContractor } from '../../actions/contractor-info-actions.js';
+import { viewTableRows } from '../../actions/view-tables-actions.js';
 
 const mapStateToProps = state => {
   return {
     error: state.contractors.error,
-    isLoading: state.main.isLoading
+    isLoading: state.main.isLoading,
+    tables: state.tables
   };
 };
 
@@ -15,6 +17,14 @@ const mapDispatchToProps = dispatch => {
   return {
     onSubmit: (contractorData, projectData, callback) => {
       dispatch(addContractor(contractorData, projectData, callback));
+    },
+    viewTables: () => {
+      dispatch(viewTableRows('skills', 'skills'));
+      dispatch(viewTableRows('fxrates', 'rates'));
+      dispatch(viewTableRows('paygrades', 'payGrades'));
+      dispatch(viewTableRows('hrroles', 'hrPositionRoles'));
+      dispatch(viewTableRows('hiringmanagers', 'hiringManagers'));
+      dispatch(viewTableRows('costcenters', 'costCenters'));
     }
   };
 };
@@ -32,7 +42,8 @@ class AddContractorContainer extends React.Component{
       projects: [
         this.createDefaultProjectObject()
       ],
-      message: ''
+      message: '',
+      tables: {}
     };
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleDropdownInput = this.handleDropdownInput.bind(this);
@@ -41,6 +52,11 @@ class AddContractorContainer extends React.Component{
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
+
+  }
+
+  componentDidMount() {
+    this.props.viewTables();
   }
 
   handleTextInput(event) {
@@ -151,37 +167,37 @@ class AddContractorContainer extends React.Component{
   }
 
   getReportingManagersOptions() {
-    //TODO change to DB call
+    //fallbacks
     return ['harry potter', 'luna luvgood'];
   }
 
   getHrPositionOptions() {
-    //todo db call
+    //fallbacks
     return ['professor', 'dark arts teacher'];
   }
 
   getRateTypeOptions() {
-    //todo db call
+    //fallbacks
     return ['Monthly', 'Hourly', 'Daily'];
   }
 
   getPayGradeOptions() {
-    //todo change to DB call
+    //fallbacks
     return ['A', 'B'];
   }
 
   getRefNosOptions() {
-    //todo db call
+    //fallbacks
     return ['1', '2', '3'];
   }
 
   getMainSkillsOptions() {
-    //todo db call
+    //fall backs
     return ['Databases', 'Languages'];
   }
 
   getCostCenterOptions() {
-    //todo db call
+    //fallbacks
     return ["Vancouver", "Calgary"];
   }
 
@@ -215,6 +231,7 @@ class AddContractorContainer extends React.Component{
       handleAdd={this.handleAdd}
       handleSubmit={this.handleSubmit}
       message={this.state.message}
+      tables={this.props.tables}
     />;
   }
 }

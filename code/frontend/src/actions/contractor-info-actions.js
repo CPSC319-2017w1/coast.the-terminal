@@ -1,6 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
-import { LIVE_SITE } from '../constants/urls.js';
+import { LIVE_SITE, LOCALHOST } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
 function addContractorSuccessful() {
@@ -43,7 +43,7 @@ function viewContractorFailed(error) {
   };
 }
 
-export function addContractor(contractorData, projectData, callback) {
+export function addContractor(contractorData, projectData, tableData,callback) {
   return dispatch => {
     dispatch(isLoading());
     return request
@@ -59,7 +59,7 @@ export function addContractor(contractorData, projectData, callback) {
         return contractorId;
       })
       .then((contractorId) => {
-        return addEngagementContract(projectData, contractorId);
+        return addEngagementContract(projectData, contractorId, tableData);
       })
       .then(() => {
         dispatch(hasStoppedLoading());
@@ -74,14 +74,14 @@ export function addContractor(contractorData, projectData, callback) {
   };
 }
 
-function addEngagementContract(projectData, contractorId) {
+function addEngagementContract(projectData, contractorId, tableData) {
    let allEngagementPromises = [];
    for(let project of projectData) {
        project["contractorId"] = contractorId;
        project["resourceId"] = "";
-       project = conformDropdownValuesToDefault(project);
+       project = conformDropdownValuesToDefault(project, tableData);
        let req = request
-        .post(`${LIVE_SITE}contractors/add/engagementContract`)
+        .post(`${LOCALHOST}contractors/add/engagementContract`)
         .query(project);
        allEngagementPromises.push(req);
    }
@@ -105,13 +105,6 @@ function conformDropdownValuesToDefault (project) {
   }
 
   return project;
-}
-
-
-export function getSkills(data, callback) {
-    return dispatch => {
-
-    };
 }
 
 export function editContractor(data) {

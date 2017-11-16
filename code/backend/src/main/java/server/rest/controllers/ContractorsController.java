@@ -179,9 +179,6 @@ public class ContractorsController extends Controller {
                 return Response.createErrorResponse("Add Engagement Contract failed. SQL Update failed");
             }
             connection.closeConnection();
-
-            connection.closeConnection();
-
         } catch (SQLException e) {
 
             Logger logger = Logger.getAnonymousLogger();

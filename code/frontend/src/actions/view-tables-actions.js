@@ -1,6 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
-import { LIVE_SITE } from '../constants/urls.js';
+import { LIVE_SITE, LOCALHOST } from '../constants/urls.js';
 
 function viewTableSuccessful(tableName, data) {
   return {
@@ -19,9 +19,15 @@ function viewTableFailed(tableName, error) {
 }
 
 export function viewTableRows(tableName) {
+  //todo remove once cost center endpoint deployed
+  let urlToUse = LIVE_SITE;
+  if(tableName === 'costcenters') {
+    urlToUse = LOCALHOST;
+  }
+  //end todo
   return dispatch => {
     return request
-      .get(`${LIVE_SITE}${tableName}/view`)
+      .get(`${urlToUse}${tableName}/view`)
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
