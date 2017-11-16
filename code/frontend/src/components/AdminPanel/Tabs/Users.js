@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PanelWrapper from '../Panel';
 import * as TYPES from '../../../constants/input-types.js';
 import { addNewRow } from '../../../actions/add-tables-actions.js';
+import { DISPLAY_NAME } from '../../../constants/admin-tables-headers.js';
 
 const tableName = 'users';
 
@@ -19,19 +20,19 @@ function getInitialState() {
   return {
     inputs: {
       username: {
-        title: 'Username',
+        title: DISPLAY_NAME.username,
         type: TYPES.TEXT,
         value: '',
         selected: ''
       },
       password: {
-        title: 'Password',
+        title: DISPLAY_NAME.password,
         type: TYPES.TEXT,
         value: '',
         selected: ''
       },
       permissions: {
-        title: 'Permissions',
+        title: DISPLAY_NAME.permissions,
         type: TYPES.DROPDOWN,
         selected: 'write',
         value: [
