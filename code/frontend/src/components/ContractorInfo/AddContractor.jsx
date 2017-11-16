@@ -6,7 +6,7 @@ import Contractor from './Contractor.jsx';
 import Projects from './Projects.jsx';
 
 function AddContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
-  handleDateInput, handleRadioInput, handleAdd, handleSubmit, message}) {
+  handleDateInput, handleRadioInput, handleAdd, handleSubmit, message, tables}) {
   return (
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
@@ -14,7 +14,7 @@ function AddContractorComponent({contractor, projects, handleTextInput, handleDr
       <p> Use the form below to add contractor information into the system.</p>
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleRadioInput={handleRadioInput}/>
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
-        handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} />
+        handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} tables={tables} />
       <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
       <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
     </div>
@@ -26,14 +26,13 @@ AddContractorComponent.propTypes = {
   contractor: PropTypes.object.isRequired,
   projects: PropTypes.array.isRequired,
   handleTextInput: PropTypes.func.isRequired,
-  handleStatusInput: PropTypes.func.isRequired,
   handleDropdownInput: PropTypes.func.isRequired,
   handleDateInput: PropTypes.func.isRequired,
-  handleCurrencyInput: PropTypes.func.isRequired,
   handleAdd: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleRadioInput: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
-  handleChargeTypeInput: PropTypes.func.isRequired
+  tables: PropTypes.object.isRequired
 };
 
 export default AddContractorComponent;
