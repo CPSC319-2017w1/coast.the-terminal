@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Table from '../Panel/Table.jsx';
 
 function FXTable({table, onReturn}) {
   return <div>
     <button onClick={onReturn}>Return to main admin panel page</button>
     <p>FX Table</p>
-    <div>{table.error ? table.error : JSON.stringify(table.data)}</div>
+    {table.error ? <div>table.error</div> : null}
+    <Table table={table.data} />
   </div>;
 }
 

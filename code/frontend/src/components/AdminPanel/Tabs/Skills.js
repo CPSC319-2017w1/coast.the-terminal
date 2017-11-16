@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PanelWrapper from '../Panel';
 import * as TYPES from '../../../constants/input-types.js';
 import { addNewRow } from '../../../actions/add-tables-actions.js';
+import { DISPLAY_NAME } from '../../../constants/admin-tables-headers.js';
 
 const tableName = 'skills';
 
@@ -19,19 +20,19 @@ function getInitialState() {
   return {
     inputs: {
       name: {
-        title: 'Name',
+        title: DISPLAY_NAME.name,
         type: TYPES.TEXT,
         value: '',
         selected: ''
       },
       description: {
-        title: 'Description',
+        title: DISPLAY_NAME.description,
         type: TYPES.TEXT,
         value: '',
         selected: ''
       },
       type: {
-        title: 'Type',
+        title: DISPLAY_NAME.type,
         type: TYPES.TEXT,
         selected: '',
         value: ''
