@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class FXRatesResponse extends Response {
 
-    private ArrayList<FXRate> rates;
+    private ArrayList<FXRate> data;
 
     public static FXRatesResponse fxRatesFailure(String msg) {
         ArrayList<FXRate> fxRates = new ArrayList<FXRate>();
@@ -20,10 +20,10 @@ public class FXRatesResponse extends Response {
     }
 
     public FXRatesResponse(ArrayList<FXRate> fxRates) {
-        this.rates = fxRates;
+        this.data = fxRates;
     }
 
-    public ArrayList<FXRate> getRates() {
-        return rates;
+    public ArrayList<FXRate> getData() {
+        return data;
     }
 }

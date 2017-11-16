@@ -19,13 +19,13 @@ class HRPayGradeControllerTest {
     @Test
     void viewPayGradesTest(){
         HRPayGradeResponse response = hrPayGradeController.paygrades();
-        assertFalse(response.getPayGrades().isEmpty());
+        assertFalse(response.getData().isEmpty());
     }
 
     @Test
     void addPayGradeTest() {
         HRPayGrade payGrade = new HRPayGrade("newPayGrade", 0, 100);
-        Response response = hrPayGradeController.addPayGrade(payGrade.getId(), payGrade.getStartAmt(), payGrade.getEndAmt());
+        Response response = hrPayGradeController.addPayGrade(payGrade.getId(), payGrade.getStartAmount(), payGrade.getEndAmount());
         assertFalse(response.isError());
     }
 

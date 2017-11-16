@@ -66,8 +66,8 @@ public class HRPayGradeController extends Controller {
             PreparedStatement st = connection.getPreparedStatement(addQuery);
             int index = 1;
             st.setString(index++, payGrade.getId());
-            st.setInt(index++, payGrade.getStartAmt());
-            st.setInt(index++, payGrade.getEndAmt());
+            st.setInt(index++, payGrade.getStartAmount());
+            st.setInt(index++, payGrade.getEndAmount());
             int success = st.executeUpdate();
             if (success == 0) {
                 return HRAddEditPayGradeResponse.payGradeFailure("Failed to add Pay Grade");
@@ -96,8 +96,8 @@ public class HRPayGradeController extends Controller {
             }
             PreparedStatement st = connection.getPreparedStatement(editQuery);
             int index = 1;
-            st.setInt(index++, payGrade.getStartAmt());
-            st.setInt(index++, payGrade.getEndAmt());
+            st.setInt(index++, payGrade.getStartAmount());
+            st.setInt(index++, payGrade.getEndAmount());
             st.setString(index++, payGrade.getId());
             int success = st.executeUpdate();
             if (success == 0) {

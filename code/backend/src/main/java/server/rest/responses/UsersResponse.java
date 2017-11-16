@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class UsersResponse extends Response {
 
-    private ArrayList<User> users;
+    private ArrayList<User> data;
 
     public static UsersResponse usersResponseFailure(String msg) {
         ArrayList<User> users = new ArrayList<User>();
@@ -21,10 +21,10 @@ public class UsersResponse extends Response {
     }
 
     public UsersResponse(ArrayList<User> users) {
-        this.users = users;
+        this.data = users;
     }
 
-    public List<User> getUsers() {
-        return this.users;
+    public List<User> getData() {
+        return this.data;
     }
 }

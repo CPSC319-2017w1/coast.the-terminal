@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class HRPositionRoleResponse extends Response {
 
-    private ArrayList<HRPositionRole> hrPositionRoles;
+    private ArrayList<HRPositionRole> data;
 
     public static HRPositionRoleResponse positionRoleFailure(String msg) {
         ArrayList<HRPositionRole> roles = new ArrayList<HRPositionRole>();
@@ -20,10 +20,10 @@ public class HRPositionRoleResponse extends Response {
     }
 
     public HRPositionRoleResponse(ArrayList<HRPositionRole> roles) {
-        this.hrPositionRoles = roles;
+        this.data = roles;
     }
 
-    public ArrayList<HRPositionRole> getHrPositionRoles() {
-        return hrPositionRoles;
+    public ArrayList<HRPositionRole> getData() {
+        return data;
     }
 }

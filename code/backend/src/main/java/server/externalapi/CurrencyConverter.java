@@ -31,7 +31,7 @@ public class CurrencyConverter {
     public static void updateRates() {
         FXRateController controller = new FXRateController();
         FXRatesResponse response = controller.fxrates();
-        ArrayList<FXRate> rates = response.getRates();
+        ArrayList<FXRate> rates = response.getData();
         Logger.getAnonymousLogger().log(Level.INFO, "Updating Rates");
         for( int i = 0; i < rates.size(); ++i) {
             double rate = getRate(rates.get(i).getCur1ID(), rates.get(i).getCur2ID(), rates.get(i).getRate());

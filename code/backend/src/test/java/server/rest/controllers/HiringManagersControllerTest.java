@@ -18,6 +18,6 @@ public class HiringManagersControllerTest {
     void viewHiringManagersTest() {
         HiringManagersResponse response = hiringManagersController.hiringmanagers();
         assertFalse(response.isError());
-        assertFalse(response.getHiringManagers().isEmpty());
+        assertFalse(response.getData().isEmpty());
     }
 }

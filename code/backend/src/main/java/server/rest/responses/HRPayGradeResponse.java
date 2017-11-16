@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class HRPayGradeResponse extends Response {
 
-    ArrayList<HRPayGrade> payGrades;
+    ArrayList<HRPayGrade> data;
 
     public static HRPayGradeResponse hrPayGradeFailure(String msg) {
         ArrayList<HRPayGrade> hrPayGrades = new ArrayList<HRPayGrade>();
@@ -20,10 +20,10 @@ public class HRPayGradeResponse extends Response {
     }
 
     public HRPayGradeResponse(ArrayList<HRPayGrade> payGrades) {
-        this.payGrades = payGrades;
+        this.data = payGrades;
     }
 
-    public ArrayList<HRPayGrade> getPayGrades() {
-        return payGrades;
+    public ArrayList<HRPayGrade> getData() {
+        return data;
     }
 }

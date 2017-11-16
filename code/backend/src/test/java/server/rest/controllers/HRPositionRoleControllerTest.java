@@ -20,7 +20,7 @@ class HRPositionRoleControllerTest {
     void viewHRPositionsTest(){
         HRPositionRoleResponse response =  hrPositionRoleController.hrroles();
         assertFalse(response.isError());
-        assertFalse(response.getHrPositionRoles().isEmpty());
+        assertFalse(response.getData().isEmpty());
     }
 
 }
