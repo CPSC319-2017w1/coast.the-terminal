@@ -40,11 +40,6 @@ function NavbarComponent({username, isAdmin, tab, onClick}) {
               </li>
               : null
           }
-          <li className={getClassName(tab, TABS.SETTINGS)}
-            name={TABS.SETTINGS}
-            onClick={onClick}>
-            Settings
-          </li>
         </ul>
       </div>
     </div>
