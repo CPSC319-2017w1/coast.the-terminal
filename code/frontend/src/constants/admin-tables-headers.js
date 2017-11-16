@@ -3,7 +3,6 @@ export const DISPLAY_NAME = {
   lastName: 'Last Name',
   roleName: 'Role Name',
   description: 'Description',
-  id: 'Tier ID',
   startAmount: 'Start Amount',
   endAmount: 'End Amount',
   name: 'Name',
@@ -13,5 +12,6 @@ export const DISPLAY_NAME = {
   permissions: 'Permissions',
   cur1ID: 'First Currency',
   cur2ID: 'Second Currency',
-  rate: 'Rate'
+  rate: 'Rate',
+  userID: 'User ID'
 };

@@ -19,12 +19,6 @@ const mapDispatchToProps = dispatch => {
 function getInitialState() {
   return {
     inputs: {
-      id: {
-        title: DISPLAY_NAME.id,
-        type: TYPES.TEXT,
-        value: '',
-        selected: ''
-      },
       startAmount: {
         title: DISPLAY_NAME.startAmount,
         type: TYPES.NUMBER,

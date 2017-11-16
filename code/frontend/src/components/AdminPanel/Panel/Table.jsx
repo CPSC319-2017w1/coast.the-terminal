@@ -9,18 +9,23 @@ function Table({ table, addNew }) {
     <table>
       <thead>
         <tr>
-          {keys.map((key, index) => <th key={index}>{DISPLAY_NAME[key]}</th>)}
+          {keys.map((key, index) => isId(key) ? null : <th key={index}>{DISPLAY_NAME[key]}</th>)}
         </tr>
       </thead>
       <tbody>
         {table.map((row, rowIndex) => {
           return <tr key={rowIndex}>
-            {keys.map((column, columnIndex) => <td key={`${rowIndex}_${columnIndex}`}>{row[column]}</td>)}
+            {keys.map((column, columnIndex) => isId(column) ? null : <td key={`${rowIndex}_${columnIndex}`}>{row[column]}</td>)}
           </tr>;
         })}
       </tbody>
     </table>
   </div>;
+}
+
+function isId(key) {
+  const lowerKey = key.toLowerCase();
+  return lowerKey === 'id' || lowerKey === 'userid';
 }
 
 Table.defaultProps = {
