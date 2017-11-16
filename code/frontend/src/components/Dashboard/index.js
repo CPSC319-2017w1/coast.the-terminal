@@ -14,11 +14,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     viewTables: () => {
-      dispatch(viewTableRows('skills', 'skills'));
-      dispatch(viewTableRows('fxrates', 'rates'));
-      dispatch(viewTableRows('paygrades', 'payGrades'));
-      dispatch(viewTableRows('hrroles', 'hrPositionRoles'));
-      dispatch(viewTableRows('hiringmanagers', 'hiringManagers'));
+      dispatch(viewTableRows('skills'));
+      dispatch(viewTableRows('fxrates'));
+      dispatch(viewTableRows('paygrades'));
+      dispatch(viewTableRows('hrroles'));
+      dispatch(viewTableRows('hiringmanagers'));
     },
     logout: () => {
       // TODO - dispatch action to change isLoggedIn to false in state

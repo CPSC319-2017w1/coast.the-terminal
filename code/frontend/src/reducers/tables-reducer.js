@@ -38,13 +38,6 @@ export default function tables(state = mainInitialState, action) {
       return Object.assign({}, state, {
         [action.tableName]: { error: action.error, data: state[action.tableName].data }
       });
-    case ACTIONS.ADD_NEW_ROW:
-      const data = [];
-      data.push(state[action.tableName].data);
-      data.push(action.data);
-      return Object.assign({}, state, {
-        [action.tableName]: { data, error: false }
-      });
     default:
       return state;
   }

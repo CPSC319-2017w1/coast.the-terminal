@@ -11,8 +11,10 @@ function Form({inputs, onChange, onSubmit, submitText, clearAll}) {
       const item = inputs[key];
       switch (item.type) {
         case TYPES.TEXT:
+          children.push(getTextField(item, key, onChange));
+          break;
         case TYPES.NUMBER:
-          children.push(getTextOrNumberField(item, key, onChange));
+          children.push(getNumberField(item, key, onChange));
           break;
         case TYPES.DROPDOWN:
           children.push(getDropdownField(item, key, onChange));
@@ -29,7 +31,14 @@ function Form({inputs, onChange, onSubmit, submitText, clearAll}) {
   </div>;
 }
 
-function getTextOrNumberField(item, key, onChange) {
+function getNumberField(item, key, onChange) {
+  return <div key={key}>
+    <span>{item.title}</span>
+    <input name={key} onChange={onChange} value={item.value} type={item.type} min={0} />
+  </div>;
+}
+
+function getTextField(item, key, onChange) {
   return <div key={key}>
     <span>{item.title}</span>
     <input name={key} onChange={onChange} value={item.value} type={item.type} />
