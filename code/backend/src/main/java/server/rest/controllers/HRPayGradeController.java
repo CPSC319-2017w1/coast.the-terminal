@@ -53,10 +53,10 @@ public class HRPayGradeController extends Controller {
 
     @RequestMapping("/paygrades/add")
     public Response addPayGrade(
-            @RequestParam("id") String id,
             @RequestParam("startAmount") int startAmt,
             @RequestParam("endAmount") int endAmt){
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        String id = UUID.randomUUID().toString();
         HRPayGrade payGrade = new HRPayGrade(id, startAmt, endAmt);
         try {
             connection.openConnection();
