@@ -25,7 +25,7 @@ class HRPayGradeControllerTest {
     @Test
     void addPayGradeTest() {
         HRPayGrade payGrade = new HRPayGrade("newPayGrade", 0, 100);
-        Response response = hrPayGradeController.addPayGrade(payGrade.getId(), payGrade.getStartAmount(), payGrade.getEndAmount());
+        Response response = hrPayGradeController.addPayGrade(payGrade.getStartAmount(), payGrade.getEndAmount());
         assertFalse(response.isError());
     }
 
