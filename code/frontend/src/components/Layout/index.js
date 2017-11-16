@@ -52,7 +52,8 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
       <div className={css.content}>
         {child}
       </div>
-    </div>);
+    </div>
+  );
 }
 
 LayoutContainer.propTypes = {
