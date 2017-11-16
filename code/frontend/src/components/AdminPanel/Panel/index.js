@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Form from './Form.jsx';
 import Table from './Table.jsx';
 import * as TYPES from '../../../constants/input-types.js';
+import {DISPLAY_NAME} from '../../../constants/admin-tables';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -16,19 +17,40 @@ class PanelWrapperContainer extends React.Component {
     super(props);
     this.state = Object.assign({
       toggleAdd: false,
+      toggleEdit: false,
       inputValidationMessage: ''
     }, props.getInitialState());
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.getContent = this.getContent.bind(this);
-    this.toggleAddNew = this.toggleAddNew.bind(this);
+    this.toggleAdd = this.toggleAdd.bind(this);
+    this.toggleEdit = this.toggleEdit.bind(this);
     this.clearAll = this.clearAll.bind(this);
   }
 
-  toggleAddNew(event) {
+  toggleAdd(event) {
     event.preventDefault();
     const toggleAdd = !this.state.toggleAdd;
-    this.setState({ toggleAdd });
+    this.setState({ toggleAdd, toggleEdit: false });
+  }
+
+  toggleEdit(event) {
+    event.preventDefault();
+    let inputs = Object.assign({}, this.state.inputs);
+    const toggleEdit = !this.state.toggleEdit;
+    if (toggleEdit) {
+      const children = event.target.parentNode.parentNode.childNodes;
+      for(let i = 1; i < children.length; i++) { //starting from 1 because 0 is the edit button
+        const name = children[i].getAttribute('name');
+        const value = children[i].innerText;
+        inputs[name].value = value;
+        inputs[name].selected = value;
+      }
+    } else {
+      inputs = this.props.getInitialState().inputs;
+    }
+    this.setState({ toggleEdit, toggleAdd: false, inputs });
   }
 
   handleInputChange(event) {
@@ -54,7 +76,7 @@ class PanelWrapperContainer extends React.Component {
     this.setState(state);
   }
 
-  handleSubmit(event) {
+  handleAdd(event) {
     event.preventDefault();
     const { inputs } = this.state;
     let data = {};
@@ -67,7 +89,27 @@ class PanelWrapperContainer extends React.Component {
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: '' });
       this.props.handleAddNew(data);
-      this.toggleAddNew(event);
+      this.toggleAdd(event);
+    } else {
+      this.setState({ inputValidationMessage: inputValidation.message });
+    }
+  }
+
+  handleEdit(event) {
+    event.preventDefault();
+    const { inputs } = this.state;
+    let data = {};
+    for(let key in inputs) {
+      if (inputs.hasOwnProperty(key)) {
+        data[key] = inputs[key].selected;
+      }
+    }
+    const inputValidation = this.areInputsValid(data);
+    if (inputValidation.isValid) {
+      this.setState({ inputValidationMessage: '' });
+      //this.props.handleEditRow(data);
+      console.log('editing submit selected');
+      this.toggleEdit(event);
     } else {
       this.setState({ inputValidationMessage: inputValidation.message });
     }
@@ -80,11 +122,19 @@ class PanelWrapperContainer extends React.Component {
 
   getContent() {
     const { props, state } = this;
-    if (state.toggleAdd) {
-      return <Form inputs={state.inputs} onChange={this.handleInputChange} onSubmit={this.handleSubmit} submitText={props.submitButtonText} clearAll={this.clearAll} />;
-    } else {
-      return <Table table={props.table.data} addNew={this.toggleAddNew} />;
-    }
+    return (
+      <div>
+        {
+          state.toggleAdd || state.toggleEdit
+            ? <Form inputs={state.inputs}
+              onChange={this.handleInputChange}
+              onSubmit={state.toggleAdd ? this.handleAdd : this.handleEdit}
+              clearAll={this.clearAll} />
+            : null
+        }
+        <Table table={props.table.data} addNew={this.toggleAdd} edit={this.toggleEdit} />
+      </div>
+    );
   }
 
   areInputsValid(inputs) {
@@ -121,7 +171,7 @@ class PanelWrapperContainer extends React.Component {
       <p>{props.header}</p>
       {state.inputValidationMessage === '' ? null : <div>{state.inputValidationMessage}</div>}
       {props.table.error ? <div>{props.table.error}</div> : null}
-      {this.getContent(state.inputs, props.submitButtonText)}
+      {this.getContent()}
     </div>;
   }
 }
@@ -131,9 +181,9 @@ PanelWrapperContainer.propTypes = {
   onReturn: PropTypes.func.isRequired,
   getInitialState: PropTypes.func.isRequired,
   header: PropTypes.string.isRequired,
-  submitButtonText: PropTypes.string.isRequired,
   tableName: PropTypes.string.isRequired,
-  handleAddNew: PropTypes.func.isRequired
+  handleAddNew: PropTypes.func.isRequired,
+  handleEditRow: PropTypes.func.isRequired
 };
 
 
