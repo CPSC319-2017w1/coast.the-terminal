@@ -14,7 +14,10 @@ const mapStateToProps = (state, ownProps) => {
 class PanelWrapperContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = Object.assign({ toggleAdd: false }, props.getInitialState());
+    this.state = Object.assign({
+      toggleAdd: false,
+      inputValidationMessage: ''
+    }, props.getInitialState());
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getContent = this.getContent.bind(this);
@@ -60,13 +63,19 @@ class PanelWrapperContainer extends React.Component {
         data[key] = inputs[key].selected;
       }
     }
-    this.props.handleAddNew(data);
-    this.toggleAddNew(event);
+    const inputValidation = this.areInputsValid(data);
+    if (inputValidation.isValid) {
+      this.setState({ inputValidationMessage: '' });
+      this.props.handleAddNew(data);
+      this.toggleAddNew(event);
+    } else {
+      this.setState({ inputValidationMessage: inputValidation.message });
+    }
   }
 
   clearAll(event) {
     event.preventDefault();
-    this.setState(this.props.getInitialState());
+    this.setState(Object.assign({ inputValidationMessage: '' }, this.props.getInitialState()));
   }
 
   getContent() {
@@ -78,11 +87,35 @@ class PanelWrapperContainer extends React.Component {
     }
   }
 
+  areInputsValid(inputs) {
+    const response = {
+      isValid: true,
+      message: ''
+    };
+    const keys = Object.keys(inputs);
+    keys.forEach(key => {
+      if (typeof inputs[key] === 'undefined' || inputs[key] === '') {
+        response.isValid = false;
+        response.message = 'Please make sure all fields have been filled in.';
+        return response;
+      } else if (key.indexOf('start') > -1) {
+        const end = keys.find(item => item.indexOf('end') > -1);
+        if (end && inputs[key] >= inputs[end]) {
+          response.isValid = false;
+          response.message = 'End value cannot be smaller than or equal to start value.';
+          return response;
+        }
+      }
+    });
+    return response;
+  }
+
   render() {
     const { props, state } = this;
     return <div>
       <button onClick={props.onReturn}>Return to main admin panel page</button>
       <p>{props.header}</p>
+      {state.inputValidationMessage === '' ? null : <div>{state.inputValidationMessage}</div>}
       {props.table.error ? <div>{props.table.error}</div> : null}
       {this.getContent(state.inputs, props.submitButtonText)}
     </div>;
