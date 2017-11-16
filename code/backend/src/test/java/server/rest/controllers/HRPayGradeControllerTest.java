@@ -19,7 +19,7 @@ class HRPayGradeControllerTest {
     @Test
     void viewPayGradesTest(){
         HRPayGradeResponse response = hrPayGradeController.paygrades();
-        assertFalse(response.getPayGrades().isEmpty());
+        assertFalse(response.getData().isEmpty());
     }
 
     @Test

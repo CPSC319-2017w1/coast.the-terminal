@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by vaast on 31/10/2017.
  */
 public class SkillsResponse extends Response {
-    private ArrayList<Skill> skills;
+    private ArrayList<Skill> data;
 
     public static SkillsResponse skillsFailure(String msg) {
         ArrayList<Skill> skills = new ArrayList<Skill>();
@@ -19,10 +19,10 @@ public class SkillsResponse extends Response {
     }
 
     public SkillsResponse(ArrayList<Skill> skills) {
-        this.skills = skills;
+        this.data = skills;
     }
 
-    public ArrayList<Skill> getSkills() {
-        return skills;
+    public ArrayList<Skill> getData() {
+        return data;
     }
 }

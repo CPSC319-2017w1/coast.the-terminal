@@ -53,27 +53,27 @@ class UserControllerTest {
         User user = new User("testUsername", "testPassword", "none");
         Response response = controller.addUser(user.getUsername(), user.getPassword(), user.getPermissions());
         assertFalse(response.isError());
-        assertTrue(controller.users().getUsers().contains(user));
+        assertTrue(controller.users().getData().contains(user));
     }
 
     @Test
     void editUserTest() {
         final int FIRST = 0;
-        List<User> allUsers = controller.users().getUsers();
+        List<User> allUsers = controller.users().getData();
         User user = allUsers.get(FIRST);
         user.setPermissions("write");
         Response response = controller.editUser(user.getUsername(), user.getPassword(), user.getPermissions());
         assertFalse(response.isError());
-        assertEquals(controller.users().getUsers().get(FIRST), user);
+        assertEquals(controller.users().getData().get(FIRST), user);
     }
 
     @Test
     void deleteUserTest() {
         final int FIRST = 0;
-        List<User> allUsers = controller.users().getUsers();
+        List<User> allUsers = controller.users().getData();
         User user = allUsers.get(FIRST);
         Response response = controller.deleteUser(user);
         assertFalse(response.isError());
-        assertFalse(controller.users().getUsers().contains(user));
+        assertFalse(controller.users().getData().contains(user));
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by vaast on 06/11/2017.
  */
 public class HiringManagersResponse extends Response {
-    ArrayList<HiringManager> hiringManagers;
+    ArrayList<HiringManager> data;
 
     public static HiringManagersResponse hiringManagersFailure(String msg) {
         ArrayList<HiringManager> hiringManagers = new ArrayList<HiringManager>();
@@ -19,10 +19,10 @@ public class HiringManagersResponse extends Response {
     }
 
     public HiringManagersResponse(ArrayList<HiringManager> hiringManagers) {
-        this.hiringManagers = hiringManagers;
+        this.data = hiringManagers;
     }
 
-    public ArrayList<HiringManager> getHiringManagers() {
-        return hiringManagers;
+    public ArrayList<HiringManager> getData() {
+        return data;
     }
 }
