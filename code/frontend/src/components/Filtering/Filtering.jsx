@@ -5,7 +5,7 @@ import Table from './Table.jsx';
 import FilterPanel from './FilterPanel.jsx';
 
 
-function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditContractor, applyFilter}) {
+function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditContractor, fields, applyFilter, toggleCheckedFields}) {
   return (
     <div className={css.wrapper}>
       <div className={css.heading}>
@@ -17,7 +17,7 @@ function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditCo
         </button>
       </div>
       {filterStatus
-        ? <FilterPanel applyFilter={applyFilter}/>
+        ? <FilterPanel fields={fields} applyFilter={applyFilter} toggleCheckedFields={toggleCheckedFields}/>
         : null}
       <div className={css.tableholder}>
         <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>
@@ -29,12 +29,13 @@ function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditCo
 
 
 FilteringComponent.propTypes = {
-  filters: PropTypes.array.isRequired,
   filterStatus: PropTypes.bool.isRequired,
   tabledata: PropTypes.array.isRequired,
   handleFilter: PropTypes.func.isRequired,
   handleEditContractor: PropTypes.func.isRequired,
-  applyFilter: PropTypes.func.isRequired
+  fields: PropTypes.array.isRequired,
+  applyFilter: PropTypes.func.isRequired,
+  toggleCheckedFields: PropTypes.func.isRequired
 };
 
 export default FilteringComponent;
