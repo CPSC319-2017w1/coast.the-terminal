@@ -32,8 +32,7 @@ function Contractor({contractor, handleTextInput, handleRadioInput}) {
 
 Contractor.propTypes = {
   contractor: Proptypes.object.isRequired,
-  handleTextInput: Proptypes.func.isRequired,
-  handleStatusInput: Proptypes.func.isRequired
+  handleTextInput: Proptypes.func.isRequired
 };
 
 export default Contractor;

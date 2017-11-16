@@ -1,6 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
-import { LIVE_SITE } from '../constants/urls.js';
+import { LIVE_SITE, LOCALHOST } from '../constants/urls.js';
 
 function viewTableSuccessful(tableName, data) {
   return {

@@ -3,7 +3,7 @@ import Proptypes from 'prop-types';
 import css from './addcontractor.css';
 import 'date-input-polyfill';
 
-function Projects({projects, handleTextInput, handleDropdownInput, handleDateInput, handleRadioInput}) {
+function Projects({projects, handleTextInput, handleDropdownInput, handleDateInput, handleRadioInput, tables}) {
   return <div>
     {
       projects.map((project, index) =>
@@ -24,7 +24,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               type="text"
               onChange={handleDropdownInput}
               data-index={index}>
-              {getOptions(project.reportingmanagers)}
+              {getDataOptions(tables, 'hiringmanagers')}
             </select>
           </p>
           <p className={css.costcen}>
@@ -35,7 +35,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               value={project.costcentre}
               onChange={handleDropdownInput}
               data-index={index}>
-              {getOptions(project.costCenters)}
+              {getDataOptions(tables, 'costcenters')}
             </select>
           </p>
           <p className={css.start}>
@@ -65,7 +65,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               type="text"
               data-index={index}
               onChange={handleDropdownInput}>
-              {getOptions(project.hrpositions)}
+              {getDataOptions(tables, 'hrroles')}
             </select>
           </p>
           <p className={css.rate}>
@@ -95,7 +95,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               type="text"
               data-index={index}
               onChange={handleDropdownInput}>
-              {getOptions(project.paygrades)}
+              {getDataOptions(tables, 'paygrades')}
             </select>
           </p>
           <p className={css.poref}>
@@ -146,6 +146,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               data-index={index}
               onChange={handleDropdownInput}>
               {getOptions(project.mainSkills)}
+              {getDataOptions(tables, 'skills')}
             </select>
           </p>
           <p className={css.origindoc}>
@@ -172,6 +173,49 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
       )
     }
   </div>;
+}
+
+function getDataOptions(tables, tableName) {
+  let desiredTable = tables[tableName];
+  if(typeof desiredTable === typeof undefined) {
+    return;
+  }
+  let desiredTableData = desiredTable.data;
+  let displayField = getDisplayField(tableName);
+  let idField = getIdField(tableName);
+  return desiredTableData.map((item, index) =>
+    <option key={index}
+            value={item[idField]}>
+      {item[displayField]}
+    </option>
+  );
+}
+
+function getIdField(tableName) {
+  switch(tableName) {
+    case "hiringmanagers":
+      return "userID";
+    default:
+      return "id";
+  }
+}
+
+function getDisplayField(tableName) {
+  switch(tableName) {
+    case "skills":
+       return "name";
+    case 'paygrades':
+      //todo change this so it makes more sense?
+      return "endAmt";
+    case 'hiringmanagers':
+      return "firstName";
+    case 'hrroles':
+      return "roleName";
+    case 'costcenters':
+      return 'location';
+    default:
+      return "id";
+  }
 }
 
 function getOptions(items) {

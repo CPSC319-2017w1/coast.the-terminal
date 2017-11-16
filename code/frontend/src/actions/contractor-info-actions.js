@@ -1,6 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
-import { LIVE_SITE } from '../constants/urls.js';
+import { LIVE_SITE, LOCALHOST } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
 function addContractorSuccessful() {
@@ -105,13 +105,6 @@ function conformDropdownValuesToDefault (project) {
   }
 
   return project;
-}
-
-
-export function getSkills(data, callback) {
-    return dispatch => {
-
-    };
 }
 
 export function editContractor(data) {
