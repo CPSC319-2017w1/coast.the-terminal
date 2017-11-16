@@ -81,7 +81,7 @@ function addEngagementContract(projectData, contractorId) {
        project["resourceId"] = "";
        project = conformDropdownValuesToDefault(project);
        let req = request
-        .post('http://localhost:8080/contractors/add/engagementContract')
+        .post(`${LIVE_SITE}contractors/add/engagementContract`)
         .query(project);
        allEngagementPromises.push(req);
    }
