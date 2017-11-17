@@ -140,7 +140,8 @@ class PanelWrapperContainer extends React.Component {
               onChange={this.handleInputChange}
               onSubmit={state.toggleAdd ? this.handleAdd : this.handleEdit}
               clearAll={this.clearAll}
-              itemId={state.itemId} />
+              itemId={state.itemId}
+              isEdit={state.toggleEdit} />
             : null
         }
         <Table table={props.table.data}

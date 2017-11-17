@@ -4,14 +4,14 @@ import * as TYPES from '../../../constants/input-types.js';
 
 // todo: input validations
 
-function Form({inputs, onChange, onSubmit, clearAll, itemId}) {
+function Form({inputs, onChange, onSubmit, clearAll, itemId, isEdit}) {
   let children = [];
   for (let key in inputs) {
     if (inputs.hasOwnProperty(key)) {
       const item = inputs[key];
       switch (item.type) {
         case TYPES.TEXT:
-          children.push(getTextField(item, key, onChange));
+          children.push(getTextField(item, key, onChange, isEdit));
           break;
         case TYPES.NUMBER:
           children.push(getNumberField(item, key, onChange));
@@ -38,10 +38,10 @@ function getNumberField(item, key, onChange) {
   </div>;
 }
 
-function getTextField(item, key, onChange) {
+function getTextField(item, key, onChange, isEdit) {
   return <div key={key}>
     <span>{item.title}</span>
-    <input name={key} onChange={onChange} value={item.value} type={item.type} />
+    <input name={key} onChange={onChange} disabled={isEdit && item.title === 'Username'} value={item.value} type={item.type} />
   </div>;
 }
 
@@ -59,7 +59,8 @@ Form.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   clearAll: PropTypes.func.isRequired,
-  itemId: PropTypes.string.isRequired
+  itemId: PropTypes.string.isRequired,
+  isEdit: PropTypes.bool.isRequired
 };
 
 export default Form;
