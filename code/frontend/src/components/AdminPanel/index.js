@@ -10,18 +10,29 @@ import Skills from './Tabs/Skills.js';
 import Users from './Tabs/Users.js';
 import HRRoles from './Tabs/HRRoles.js';
 import { viewTableRows } from '../../actions/view-tables-actions.js';
+import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
+import { TABLE_NAMES } from '../../constants/admin-tables.js';
 
 const mapStateToProps = state => {
   return {
     user: state.user,
-    fxrates: state.tables.fxrates
+    tables: state.tables
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUsers: () => {
-      dispatch(viewTableRows('users'));
+    getTables: () => {
+      dispatch(isLoading());
+      dispatch(viewTableRows(TABLE_NAMES.USERS));
+      dispatch(viewTableRows(TABLE_NAMES.FX_RATES));
+      dispatch(viewTableRows(TABLE_NAMES.HIRING_MANAGERS));
+      dispatch(viewTableRows(TABLE_NAMES.HR_ROLES));
+      dispatch(viewTableRows(TABLE_NAMES.PAY_GRADES));
+      dispatch(viewTableRows(TABLE_NAMES.SKILLS));
+    },
+    stopLoading: () => {
+      dispatch(hasStoppedLoading());
     }
   };
 };
@@ -46,14 +57,30 @@ class AdminPanelContainer extends React.Component {
     this.setState({ tab: TABS.MAIN });
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {tables} = nextProps;
+    let tablesCalled = 0;
+    for (const tableName in tables) {
+      if (tables.hasOwnProperty(tableName)) {
+        const table = tables[tableName];
+        if (table.data.length > 0 || table.error) {
+          tablesCalled++;
+        }
+      }
+    }
+    if (tablesCalled === 6) {
+      this.props.stopLoading();
+    }
+  }
+
   componentDidMount() {
-    this.props.getUsers();
+    this.props.getTables();
   }
 
   render(){
     switch (this.state.tab) {
       case TABS.FX_TABLE:
-        return <FXTable table={this.props.fxrates} onReturn={this.onReturn} />;
+        return <FXTable table={this.props.tables.fxrates} onReturn={this.onReturn} />;
       case TABS.HIRING_MANAGERS:
         return <HiringManagers onReturn={this.onReturn} />;
       case TABS.PAY_GRADES:
@@ -73,8 +100,9 @@ class AdminPanelContainer extends React.Component {
 
 AdminPanelContainer.propTypes= {
   user: PropTypes.object.isRequired,
-  fxrates: PropTypes.object.isRequired,
-  getUsers: PropTypes.func.isRequired
+  tables: PropTypes.object.isRequired,
+  getTables: PropTypes.func.isRequired,
+  stopLoading: PropTypes.func.isRequired
 };
 
 const AdminPanel = connect(

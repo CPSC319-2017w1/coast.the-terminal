@@ -9,18 +9,20 @@ function Table({ table, addNew, edit, editingRow, isAddingNew }) {
     <table>
       <thead>
         <tr>
-          <th>Edit</th>
+          {edit === null ? null : <th>Edit</th>}
           {keys.map((key, index) => key === 'id' ? null : <th key={index}>{DISPLAY_NAME[key]}</th>)}
         </tr>
       </thead>
       <tbody>
         {table.map((row, rowIndex) => {
-          let button = <button onClick={edit}>Edit</button>;;
+          let button = null;
           if (editingRow !== '') {
             button = editingRow === row.id ? <button onClick={edit}>Cancel</button> : <span></span>;
+          } else if (edit !== null) {
+            button = <button onClick={edit}>Edit</button>;
           }
           return <tr key={rowIndex} name={row.id}>
-            <td>{button}</td>
+            {edit === null ? null : <td>{button}</td>}
             {keys.map((column, columnIndex) => column === 'id' ? null
               : <td key={`${rowIndex}_${columnIndex}`} name={column}>{row[column]}</td>)}
           </tr>;
@@ -32,15 +34,17 @@ function Table({ table, addNew, edit, editingRow, isAddingNew }) {
 
 Table.defaultProps = {
   addNew: null,
-  edit: null
+  edit: null,
+  isAddingNew: false,
+  editingRow: ''
 };
 
 Table.propTypes = {
   table: PropTypes.array.isRequired,
   addNew: PropTypes.func,
   edit: PropTypes.func,
-  editingRow: PropTypes.string.isRequired,
-  isAddingNew: PropTypes.bool.isRequired
+  editingRow: PropTypes.string,
+  isAddingNew: PropTypes.bool
 };
 
 export default Table;
