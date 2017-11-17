@@ -15,3 +15,11 @@ export const DISPLAY_NAME = {
   rate: 'Rate',
   userID: 'User ID'
 };
+
+export const TABLE_NAMES = {
+  HIRING_MANAGERS: 'hiringmanagers',
+  HR_ROLES: 'hrroles',
+  PAY_GRADES: 'paygrades',
+  SKILLS: 'skills',
+  USERS: 'users'
+};

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import PanelWrapper from '../Panel';
 import * as TYPES from '../../../constants/input-types.js';
 import { addNewRow } from '../../../actions/add-tables-actions.js';
-import { DISPLAY_NAME } from '../../../constants/admin-tables-headers.js';
+import { DISPLAY_NAME, TABLE_NAMES } from '../../../constants/admin-tables.js';
 
-const tableName = 'hiringmanagers';
+const tableName = TABLE_NAMES.HIRING_MANAGERS;
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -39,7 +39,6 @@ function HiringManagersContainer({ onReturn, handleAddNew }) {
   return <PanelWrapper
     getInitialState={getInitialState}
     header={'Hiring Managers'}
-    submitButtonText={'Add New Hiring Manager'}
     tableName={tableName}
     onReturn={onReturn}
     handleAddNew={handleAddNew} />;
