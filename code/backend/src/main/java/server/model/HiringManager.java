@@ -4,18 +4,18 @@ package server.model;
  * Created by vaast on 06/11/2017.
  */
 public class HiringManager {
-    String userID;
+    String id;
     String firstName;
     String lastName;
 
     /**
      * Creates a userID object
-     * @param userID ID of the current user
+     * @param id ID of the current user
      * @param firstName First Name of the current user
      * @param lastName Last Name of the current user
      */
-    public HiringManager(String userID, String firstName, String lastName) {
-        this.userID = userID;
+    public HiringManager(String id, String firstName, String lastName) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -40,7 +40,7 @@ public class HiringManager {
      * Gets the user ID of the current user
      * @return the user ID of the user
      */
-    public String getUserID() {
-        return userID;
+    public String getId() {
+        return id;
     }
 }

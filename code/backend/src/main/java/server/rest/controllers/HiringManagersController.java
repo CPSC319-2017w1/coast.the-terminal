@@ -64,7 +64,7 @@ public class HiringManagersController extends Controller{
             }
             PreparedStatement st = connection.getPreparedStatement(addQuery);
             int index = 1;
-            st.setString(index++, manager.getUserID());
+            st.setString(index++, manager.getId());
             st.setString(index++, manager.getFirstName());
             st.setString(index++, manager.getLastName());
             int success = st.executeUpdate();
@@ -98,7 +98,7 @@ public class HiringManagersController extends Controller{
             int index = 1;
             st.setString(index++, manager.getFirstName());
             st.setString(index++, manager.getLastName());
-            st.setString(index++, manager.getUserID());
+            st.setString(index++, manager.getId());
             int success = st.executeUpdate();
             if (success == 0) {
                 return HiringManagerResponse.hiringManagerFailure("Failed to edit Hiring Manager");
