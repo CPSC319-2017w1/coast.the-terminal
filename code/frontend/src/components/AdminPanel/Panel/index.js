@@ -18,7 +18,8 @@ class PanelWrapperContainer extends React.Component {
     this.state = Object.assign({
       toggleAdd: false,
       toggleEdit: false,
-      inputValidationMessage: ''
+      inputValidationMessage: '',
+      itemId: '',
     }, props.getInitialState());
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
@@ -32,25 +33,32 @@ class PanelWrapperContainer extends React.Component {
   toggleAdd(event) {
     event.preventDefault();
     const toggleAdd = !this.state.toggleAdd;
-    this.setState({ toggleAdd, toggleEdit: false });
+    this.setState({ toggleAdd, toggleEdit: false, itemId: '' });
   }
 
   toggleEdit(event) {
     event.preventDefault();
     let inputs = Object.assign({}, this.state.inputs);
     const toggleEdit = !this.state.toggleEdit;
+    let itemId = '';
     if (toggleEdit) {
-      const children = event.target.parentNode.parentNode.childNodes;
+      const parent = event.target.parentNode.parentNode;
+      const children = parent.childNodes;
       for(let i = 1; i < children.length; i++) { //starting from 1 because 0 is the edit button
         const name = children[i].getAttribute('name');
         const value = children[i].innerText;
-        inputs[name].value = value;
         inputs[name].selected = value;
+        if (Array.isArray(inputs[name].value)) {
+          inputs[name].value.forEach(element => element.selected = element.value === value);
+        } else {
+          inputs[name].value = value;
+        }
       }
+      itemId = parent.getAttribute('name');
     } else {
       inputs = this.props.getInitialState().inputs;
     }
-    this.setState({ toggleEdit, toggleAdd: false, inputs });
+    this.setState({ toggleEdit, toggleAdd: false, inputs, itemId });
   }
 
   handleInputChange(event) {
@@ -104,6 +112,9 @@ class PanelWrapperContainer extends React.Component {
         data[key] = inputs[key].selected;
       }
     }
+    if (Object.keys(data).indexOf('username') === -1) { // this means the table is users and uses usernames as ids
+      data.id = event.target.parentNode.getAttribute('name');
+    }
     const inputValidation = this.areInputsValid(data);
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: '' });
@@ -129,7 +140,8 @@ class PanelWrapperContainer extends React.Component {
             ? <Form inputs={state.inputs}
               onChange={this.handleInputChange}
               onSubmit={state.toggleAdd ? this.handleAdd : this.handleEdit}
-              clearAll={this.clearAll} />
+              clearAll={this.clearAll}
+              itemId={state.itemId} />
             : null
         }
         <Table table={props.table.data} addNew={this.toggleAdd} edit={this.toggleEdit} />

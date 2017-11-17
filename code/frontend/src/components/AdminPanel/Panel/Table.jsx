@@ -15,7 +15,7 @@ function Table({ table, addNew, edit }) {
       </thead>
       <tbody>
         {table.map((row, rowIndex) => {
-          return <tr key={rowIndex}>
+          return <tr key={rowIndex} name={row.id}>
             <td><button onClick={edit}>Edit</button></td>
             {keys.map((column, columnIndex) => isId(column) ? null
               : <td key={`${rowIndex}_${columnIndex}`} name={column}>{row[column]}</td>)}
