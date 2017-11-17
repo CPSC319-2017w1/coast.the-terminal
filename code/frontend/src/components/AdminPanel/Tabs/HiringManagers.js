@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PanelWrapper from '../Panel';
 import * as TYPES from '../../../constants/input-types.js';
 import { addNewRow } from '../../../actions/add-tables-actions.js';
+import { editRow } from '../../../actions/edit-tables-actions.js';
 import { DISPLAY_NAME, TABLE_NAMES } from '../../../constants/admin-tables.js';
 
 const tableName = TABLE_NAMES.HIRING_MANAGERS;
@@ -12,6 +13,9 @@ const mapDispatchToProps = dispatch => {
   return {
     handleAddNew: (data) => {
       dispatch(addNewRow(tableName, data));
+    },
+    handleEditRow: (data) => {
+      dispatch(editRow(tableName, data));
     }
   };
 };
@@ -35,18 +39,20 @@ function getInitialState() {
   };
 }
 
-function HiringManagersContainer({ onReturn, handleAddNew }) {
+function HiringManagersContainer({ onReturn, handleAddNew, handleEditRow }) {
   return <PanelWrapper
     getInitialState={getInitialState}
     header={'Hiring Managers'}
     tableName={tableName}
     onReturn={onReturn}
-    handleAddNew={handleAddNew} />;
+    handleAddNew={handleAddNew}
+    handleEditRow={handleEditRow} />;
 }
 
 HiringManagersContainer.propTypes = {
   onReturn: PropTypes.func.isRequired,
-  handleAddNew: PropTypes.func.isRequired
+  handleAddNew: PropTypes.func.isRequired,
+  handleEditRow: PropTypes.func.isRequired
 };
 
 const HiringManagers = connect(

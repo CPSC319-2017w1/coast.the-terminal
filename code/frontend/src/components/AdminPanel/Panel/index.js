@@ -118,7 +118,7 @@ class PanelWrapperContainer extends React.Component {
     const inputValidation = this.areInputsValid(data);
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: '' });
-      //this.props.handleEditRow(data);
+      this.props.handleEditRow(data);
       this.toggleEdit(event);
     } else {
       this.setState({ inputValidationMessage: inputValidation.message });
