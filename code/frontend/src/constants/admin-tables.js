@@ -21,5 +21,6 @@ export const TABLE_NAMES = {
   HR_ROLES: 'hrroles',
   PAY_GRADES: 'paygrades',
   SKILLS: 'skills',
+  FX_RATES: 'fxrates',
   USERS: 'users'
 };
