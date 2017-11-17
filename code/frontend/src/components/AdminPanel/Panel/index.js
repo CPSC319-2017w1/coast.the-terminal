@@ -5,6 +5,7 @@ import Form from './Form.jsx';
 import Table from './Table.jsx';
 import * as TYPES from '../../../constants/input-types.js';
 import {DISPLAY_NAME} from '../../../constants/admin-tables';
+import css from '../../../components/AdminPanel/Tabs/table.css';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -183,8 +184,8 @@ class PanelWrapperContainer extends React.Component {
   render() {
     const { props, state } = this;
     return <div>
-      <button onClick={props.onReturn}>Return to main admin panel page</button>
-      <p>{props.header}</p>
+      <button className={css.returnbtn} onClick={props.onReturn}>Return to main admin panel page</button>
+      <p className={css.titlename}>{props.header}</p>
       {state.inputValidationMessage === '' ? null : <div>{state.inputValidationMessage}</div>}
       {props.table.error ? <div>{props.table.error}</div> : null}
       {this.getContent()}

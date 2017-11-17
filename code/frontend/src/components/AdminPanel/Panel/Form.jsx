@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as TYPES from '../../../constants/input-types.js';
+import css from '../../../components/AdminPanel/Tabs/table.css';
 
 // todo: input validations
 
