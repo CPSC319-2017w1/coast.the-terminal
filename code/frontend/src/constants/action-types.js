@@ -17,3 +17,6 @@ export const ADD_NEW_ROW_FAILED = 'ADD_NEW_ROW_FAILED';
 
 export const VIEW_TABLES = 'VIEW_TABLES';
 export const VIEW_TABLES_FAILED = 'VIEW_TABLES_FAILED';
+
+export const EDIT_ROW = 'EDIT_ROW';
+export const EDIT_ROW_FAILED = 'EDIT_ROW_FAILED';

@@ -17,11 +17,11 @@ function Table({ table, addNew, edit, editingRow, isAddingNew }) {
         {table.map((row, rowIndex) => {
           let button = null;
           if (editingRow !== '') {
-            button = editingRow === row.id ? <button onClick={edit}>Cancel</button> : <span></span>;
+            button = editingRow === row.id || editingRow === row.username ? <button onClick={edit}>Cancel</button> : <span></span>;
           } else if (edit !== null) {
             button = <button onClick={edit}>Edit</button>;
           }
-          return <tr key={rowIndex} name={row.id}>
+          return <tr key={rowIndex} name={row.username ? row.username : row.id}>
             {edit === null ? null : <td>{button}</td>}
             {keys.map((column, columnIndex) => column === 'id' ? null
               : <td key={`${rowIndex}_${columnIndex}`} name={column}>{row[column]}</td>)}
