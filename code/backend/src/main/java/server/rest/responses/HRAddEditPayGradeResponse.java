@@ -10,7 +10,7 @@ public class HRAddEditPayGradeResponse extends Response {
     HRPayGrade payGrade;
 
     public static HRAddEditPayGradeResponse payGradeFailure(String msg) {
-        HRPayGrade payGrade = new HRPayGrade("", 0, 0);
+        HRPayGrade payGrade = new HRPayGrade("", 0, 0, "");
         HRAddEditPayGradeResponse response = new HRAddEditPayGradeResponse(payGrade);
         response.setError(true);
         response.setErrorMessage(msg);

@@ -7,6 +7,7 @@ public class HRPayGrade {
     private String id;
     private int startAmount;
     private int endAmount;
+    private String name;
 
     /**
      * Creates a user object
@@ -14,10 +15,11 @@ public class HRPayGrade {
      * @param startAmt the start amount of the pay grade
      * @param endAmt the ending amount of the pay grade
      */
-    public HRPayGrade(String id, int startAmt, int endAmt) {
+    public HRPayGrade(String id, int startAmt, int endAmt, String name) {
         this.id = id;
         this.startAmount = startAmt;
         this.endAmount = endAmt;
+        this.name = name;
     }
 
     /**
@@ -43,4 +45,6 @@ public class HRPayGrade {
     public int getStartAmount() {
         return startAmount;
     }
+
+    public String getName() { return name; }
 }

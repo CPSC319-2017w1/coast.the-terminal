@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 @RestController
 public class HRPayGradeController extends Controller {
     private static String getQuery = "select * from HRPayGrade";
-    private static String addQuery = "insert into HRPayGrade values(?, ?, ?)";
+    private static String addQuery = "insert into HRPayGrade values(?, ?, ?, ?)";
     private static String editQuery = "update HRPayGrade set startAmount=?, endAmount=? where id=?";
 
     @RequestMapping("/paygrades/view")
@@ -39,7 +39,8 @@ public class HRPayGradeController extends Controller {
             while(set.next()) {
                 HRPayGrade payGrade = new HRPayGrade(set.getString("id"),
                                                      set.getInt("startAmount"),
-                                                     set.getInt("endAmount"));
+                                                     set.getInt("endAmount"),
+                                                     set.getString("name"));
                 payGrades.add(payGrade);
             }
             connection.closeConnection();
@@ -54,10 +55,11 @@ public class HRPayGradeController extends Controller {
     @RequestMapping("/paygrades/add")
     public Response addPayGrade(
             @RequestParam("startAmount") int startAmt,
-            @RequestParam("endAmount") int endAmt){
+            @RequestParam("endAmount") int endAmt,
+            @RequestParam("name") String name){
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         String id = UUID.randomUUID().toString();
-        HRPayGrade payGrade = new HRPayGrade(id, startAmt, endAmt);
+        HRPayGrade payGrade = new HRPayGrade(id, startAmt, endAmt, name);
         try {
             connection.openConnection();
             if (!connection.isConnected()) {
@@ -68,6 +70,7 @@ public class HRPayGradeController extends Controller {
             st.setString(index++, payGrade.getId());
             st.setInt(index++, payGrade.getStartAmount());
             st.setInt(index++, payGrade.getEndAmount());
+            st.setString(index++, payGrade.getName());
             int success = st.executeUpdate();
             if (success == 0) {
                 return HRAddEditPayGradeResponse.payGradeFailure("Failed to add Pay Grade");
@@ -86,9 +89,10 @@ public class HRPayGradeController extends Controller {
     public HRAddEditPayGradeResponse editPayGrade(
             @RequestParam("id") String id,
             @RequestParam("startAmount") int startAmt,
-            @RequestParam("endAmount") int endAmt){
+            @RequestParam("endAmount") int endAmt,
+            @RequestParam("name") String name){
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
-        HRPayGrade payGrade = new HRPayGrade(id, startAmt, endAmt);
+        HRPayGrade payGrade = new HRPayGrade(id, startAmt, endAmt, name);
         try {
             connection.openConnection();
             if (!connection.isConnected()) {
