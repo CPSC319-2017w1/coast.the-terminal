@@ -119,7 +119,6 @@ class PanelWrapperContainer extends React.Component {
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: '' });
       //this.props.handleEditRow(data);
-      console.log('editing submit selected');
       this.toggleEdit(event);
     } else {
       this.setState({ inputValidationMessage: inputValidation.message });
@@ -144,7 +143,11 @@ class PanelWrapperContainer extends React.Component {
               itemId={state.itemId} />
             : null
         }
-        <Table table={props.table.data} addNew={this.toggleAdd} edit={this.toggleEdit} />
+        <Table table={props.table.data}
+          addNew={this.toggleAdd}
+          edit={this.toggleEdit}
+          editingRow={state.itemId}
+          isAddingNew={state.toggleAdd} />
       </div>
     );
   }
