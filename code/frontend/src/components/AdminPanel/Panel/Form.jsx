@@ -4,7 +4,7 @@ import * as TYPES from '../../../constants/input-types.js';
 
 // todo: input validations
 
-function Form({inputs, onChange, onSubmit, clearAll}) {
+function Form({inputs, onChange, onSubmit, clearAll, itemId}) {
   let children = [];
   for (let key in inputs) {
     if (inputs.hasOwnProperty(key)) {
@@ -24,7 +24,7 @@ function Form({inputs, onChange, onSubmit, clearAll}) {
       }
     }
   }
-  return <div>
+  return <div name={itemId}>
     {children}
     <button type="submit" onClick={onSubmit}>Submit</button>
     <button onClick={clearAll}>Clear Fields</button>
@@ -58,7 +58,8 @@ Form.propTypes = {
   inputs: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  clearAll: PropTypes.func.isRequired
+  clearAll: PropTypes.func.isRequired,
+  itemId: PropTypes.string.isRequired
 };
 
 export default Form;
