@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import DashboardComponent from './Dashboard.jsx';
+import PivotTableUI from 'react-pivottable/PivotTableUI';
+import 'react-pivottable/pivottable.css';
+import TableRenderers from 'react-pivottable/TableRenderers';
 
 const mapStateToProps = state => {
   return {
@@ -19,18 +21,19 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const data = [ ['attribute', 'attribute2'], ['value1', 'value2'] ];
+
 class DashboardContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-
+    this.state = props;
   }
 
   render() {
-    return <DashboardComponent onClick={this.onClick} />;
+    return <PivotTableUI
+      data={data} onChange={s => this.setState(s)}
+      renderers={Object.assign({}, TableRenderers)}
+    />;
   }
 }
 
