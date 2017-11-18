@@ -2,6 +2,7 @@ package server.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import server.database.DatabaseConnectionConfig;
+import server.session.AuthenticationController;
 
 /**
  * Created by vaast on 30/10/2017.
@@ -16,5 +17,9 @@ public class Controller {
         dbConnectionUrl = dbConfig.getDbConnectionURL();
         dbUsername = dbConfig.getDbUsername();
         dbPassword = dbConfig.getDbPassword();
+    }
+
+    protected static boolean isUserLoggedIn(String token) {
+        return AuthenticationController.isUserLoggedIn(token);
     }
 }

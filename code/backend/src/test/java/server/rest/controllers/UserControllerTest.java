@@ -6,6 +6,7 @@ import server.model.User;
 import server.rest.responses.LoginResponse;
 import server.rest.responses.Response;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,29 +52,26 @@ class UserControllerTest {
     @Test
     void addUserTest() {
         User user = new User("testUsername", "testPassword", "none");
-        Response response = controller.addUser(user.getUsername(), user.getPassword(), user.getPermissions());
-        assertFalse(response.isError());
-        assertTrue(controller.users().getData().contains(user));
+        try {
+            User user1 = controller.addUser(user.getUsername(), user.getPassword(), user.getPermissions());
+            assertTrue(controller.getUsers().contains(user));
+        } catch (SQLException e) {
+            fail(e.getMessage());
+        }
     }
 
     @Test
     void editUserTest() {
         final int FIRST = 0;
-        List<User> allUsers = controller.users().getData();
-        User user = allUsers.get(FIRST);
-        user.setPermissions("write");
-        Response response = controller.editUser(user.getUsername(), user.getPassword(), user.getPermissions());
-        assertFalse(response.isError());
-        assertEquals(controller.users().getData().get(FIRST), user);
+        try {
+            List<User> allUsers = controller.getUsers();
+            User user = allUsers.get(FIRST);
+            user.setPermissions("write");
+            User user1 = controller.editUser(user.getUsername(), user.getPassword(), user.getPermissions());
+            assertEquals(controller.getUsers().get(FIRST), user);
+        } catch (SQLException e) {
+            fail(e.getMessage());
+        }
     }
 
-    @Test
-    void deleteUserTest() {
-        final int FIRST = 0;
-        List<User> allUsers = controller.users().getData();
-        User user = allUsers.get(FIRST);
-        Response response = controller.deleteUser(user);
-        assertFalse(response.isError());
-        assertFalse(controller.users().getData().contains(user));
-    }
 }

@@ -2,6 +2,7 @@ package server.rest.controllers;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.database.DatabaseConnection;
 import server.model.FXRate;
@@ -21,32 +22,41 @@ public class FXRateController extends Controller {
     private static final String addQuery = "insert into FXRate values(?, ?, ?)";
     private static final String editQuery = "update FXRate set rate=? where curCode1=? and curCode2=?";
 
-    @RequestMapping("/fxrates/view")
-    public FXRatesResponse fxrates() {
+    public ArrayList<FXRate> getRates() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<FXRate> fxRates = new ArrayList<FXRate>();
+        connection.openConnection();
+        if (!connection.isConnected())
+        {
+            return null;
+        }
+        PreparedStatement st = connection.getPreparedStatement(fxrateQuery);
+        ResultSet set = st.executeQuery();
+        while(set.next()) {
+             FXRate fxRate = new FXRate(set.getString("curCode1"),
+                    set.getString("curCode2"),
+                    set.getDouble("rate"));
+             fxRates.add(fxRate);
+        }
+        connection.closeConnection();
+        return fxRates;
+    }
+
+    @RequestMapping("/fxrates/view")
+    public FXRatesResponse fxrates(@RequestParam("token") String token) {
+        if (!isUserLoggedIn(token)) {
+            return FXRatesResponse.fxRatesFailure("User is not logged in");
+        }
+            ArrayList<FXRate> rates;
         try {
-            connection.openConnection();
-            if (!connection.isConnected())
-            {
-                return FXRatesResponse.fxRatesFailure("Failed to connect to the database");
-            }
-            PreparedStatement st = connection.getPreparedStatement(fxrateQuery);
-            ResultSet set = st.executeQuery();
-            while(set.next()) {
-                FXRate fxRate = new FXRate(set.getString("curCode1"),
-                                           set.getString("curCode2"),
-                                           set.getDouble("rate"));
-                fxRates.add(fxRate);
-            }
-            connection.closeConnection();
+            rates = this.getRates();
         } catch (SQLException e)
         {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get FxRates Failed: " + e.getMessage());
             return FXRatesResponse.fxRatesFailure(e.getMessage());
         }
-        return new FXRatesResponse(fxRates);
+        return new FXRatesResponse(rates);
     }
 
     public boolean updateFXRates(FXRate rate) {
