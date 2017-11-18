@@ -171,8 +171,8 @@ public class AuthenticationController extends Controller{
         return false;
     }
 
-    public List<Login> getLogins() {
-        List<Login> logins = new ArrayList<Login>();
+    public static ArrayList<Login> getLogins() {
+        ArrayList<Login> logins = new ArrayList<Login>();
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         try {
             connection.openConnection();
