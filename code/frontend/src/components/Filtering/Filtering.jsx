@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './filtering.css';
-import Table from './Table.jsx';
-import FilterPanel from './FilterPanel.jsx';
+
+import PivotTable from './PivotTable.js';
 
 
 function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditContractor, fields, applyFilter, toggleCheckedFields}) {
@@ -16,12 +16,7 @@ function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditCo
           Filter Table
         </button>
       </div>
-      {filterStatus
-        ? <FilterPanel fields={fields} applyFilter={applyFilter} toggleCheckedFields={toggleCheckedFields}/>
-        : null}
-      <div className={css.tableholder}>
-        <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>
-      </div>
+      <PivotTable/>
     </div>
   );
 }
