@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import PivotTableUI from 'react-pivottable/PivotTableUI';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
-import 'react-pivottable/pivottable.css';
+import '../Filtering/pivottable.css';
 import TableRenderers from 'react-pivottable/TableRenderers';
 import items from '../Filtering/Data.js'
 
