@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => {
 
 const data = items;
 
-class PivotTableContainer extends React.Component {
+class ReportBuilderContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = { pivotState: props };
@@ -44,7 +44,7 @@ class PivotTableContainer extends React.Component {
       filename: "Contractor Data",
       pivotState: {
         data: items,
-        rendererName: "Table",
+        rendererName: "Stacked Column Chart",
         plotlyOptions: {width: 900, height: 500}
       }
     });
@@ -60,14 +60,14 @@ class PivotTableContainer extends React.Component {
   }
 }
 
-PivotTableContainer.propTypes = {
+ReportBuilderContainer.propTypes = {
   user: PropTypes.object.isRequired,
   tables: PropTypes.object.isRequired
 };
 
-const PivotTable = connect(
+const ReportBuilder = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PivotTableContainer);
+)(ReportBuilderContainer);
 
-export default PivotTable;
+export default ReportBuilder;

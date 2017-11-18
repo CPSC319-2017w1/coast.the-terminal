@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './filtering.css';
-
 import PivotTable from './PivotTable.js';
 
 
-function FilteringComponent({filterStatus, tabledata, handleFilter, handleEditContractor, fields, applyFilter, toggleCheckedFields}) {
+function FilteringComponent() {
   return (
     <div className={css.wrapper}>
       <div className={css.heading}>
         <h1>Data Filtering System</h1>
         <p>Use the Filter Table button to extract relevant to you from the contractor database.</p>
-        <button className={css.filterbutton}
-          onClick={handleFilter}>
-          Filter Table
-        </button>
       </div>
       <PivotTable/>
     </div>
