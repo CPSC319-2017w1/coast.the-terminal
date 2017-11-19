@@ -1,28 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import css from './addcontractor.css';
-import Contractor from './Contractor.jsx';
-import Projects from './Projects.jsx';
+import css from '../AddContractor/addcontractor.css';
+import Contractor from '../AddContractor/Contractor.jsx';
+import Projects from '../AddContractor/Projects.jsx';
 
-function AddContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
+function EditContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
   handleDateInput, handleRadioInput, handleAdd, handleSubmit, message, tables}) {
   return (
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
-      <h1>Contractor Information</h1>
-      <p> Use the form below to add contractor information into the system.</p>
+      <h1>Edit Contractor</h1>
+      <p> Use the form below to edit contractor information stored in the system.</p>
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleRadioInput={handleRadioInput}/>
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
         handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} tables={tables} />
       <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
-      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
+      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Save Contractor" />
     </div>
-
   );
 }
 
-AddContractorComponent.propTypes = {
+EditContractorComponent.propTypes = {
   contractor: PropTypes.object.isRequired,
   projects: PropTypes.array.isRequired,
   handleTextInput: PropTypes.func.isRequired,
@@ -35,4 +33,4 @@ AddContractorComponent.propTypes = {
   tables: PropTypes.object.isRequired
 };
 
-export default AddContractorComponent;
+export default EditContractorComponent;

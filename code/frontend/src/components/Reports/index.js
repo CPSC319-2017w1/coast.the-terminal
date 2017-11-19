@@ -16,10 +16,7 @@ class ReportsContainer extends React.Component {
   }
 
   render(){
-    const {props} = this;
-    return <ReportsComponent
-      username={props.user.username}
-    />;
+    return <ReportsComponent/>;
   }
 }
 
