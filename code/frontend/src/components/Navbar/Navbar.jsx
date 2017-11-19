@@ -21,6 +21,11 @@ function NavbarComponent({username, isAdmin, tab, onClick}) {
             onClick={onClick}>
             Data Filtering System
           </li>
+          <li className={getClassName(tab, TABS.ADD_CONTRACTOR)}
+            name={TABS.ADD_CONTRACTOR}
+            onClick={onClick}>
+            Add Contractor
+          </li>
           <li className={getClassName(tab, TABS.CONTRACTOR_INFO)}
             name={TABS.CONTRACTOR_INFO}
             onClick={onClick}>

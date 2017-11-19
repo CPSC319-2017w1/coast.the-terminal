@@ -6,7 +6,7 @@ import Login from '../Login';
 import Navbar from '../Navbar';
 import Dashboard from '../Dashboard';
 import AdminPanel from '../AdminPanel';
-import AddContractor from '../ContractorInfo';
+import AddContractor from '../AddContractor';
 import Filtering from '../Filtering';
 import Reports from '../Reports';
 import css from './layout.css';
@@ -30,6 +30,9 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
   switch (tab) {
     case TABS.ADMIN_PANEL:
       child = <AdminPanel />;
+      break;
+    case TABS.ADD_CONTRACTOR:
+      child = <AddContractor />;
       break;
     case TABS.CONTRACTOR_INFO:
       child = <AddContractor />;
