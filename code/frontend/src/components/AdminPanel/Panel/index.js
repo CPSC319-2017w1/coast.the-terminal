@@ -183,9 +183,9 @@ class PanelWrapperContainer extends React.Component {
 
   render() {
     const { props, state } = this;
-    return <div>
-      <button className={css.returnbtn} onClick={props.onReturn}>Return to main admin panel page</button>
-      <p className={css.titlename}>{props.header}</p>
+    return <div className={css.topoftable}>
+      <h1 className={css.titlename}>{props.header}</h1>
+      <button className= {css.returnbtn} onClick={props.onReturn}>Return to main admin panel page</button>
       {state.inputValidationMessage === '' ? null : <div>{state.inputValidationMessage}</div>}
       {props.table.error ? <div>{props.table.error}</div> : null}
       {this.getContent()}

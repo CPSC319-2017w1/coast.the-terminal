@@ -6,7 +6,7 @@ import css from '../../../components/AdminPanel/Tabs/table.css';
 function Table({ table, addNew, edit, editingRow, isAddingNew }) {
   const keys = Object.keys(table[0]);
   return <div>
-    {addNew === null ? null : <button className={css.returnbtn} onClick={addNew}>{isAddingNew ? 'Cancel' : 'Add New Row'}</button>}
+    {addNew === null ? null : <button className={css.addnewrow} onClick={addNew}>{isAddingNew ? 'Cancel' : 'Add New Row'}</button>}
     <table className={css.table}>
       <thead className={css.tableheader}>
         <tr className={css.tablerow}>
@@ -18,9 +18,9 @@ function Table({ table, addNew, edit, editingRow, isAddingNew }) {
         {table.map((row, rowIndex) => {
           let button = null;
           if (editingRow !== '') {
-            button = editingRow === row.id || editingRow === row.username ? <button onClick={edit}>Cancel</button> : <span></span>;
+            button = editingRow === row.id || editingRow === row.username ? <button className={css.editbtn} onClick={edit}>Cancel</button> : <span></span>;
           } else if (edit !== null) {
-            button = <button onClick={edit}>Edit</button>;
+            button = <button className={css.editbtn} onClick={edit}>Edit</button>;
           }
           return <tr key={rowIndex} name={row.username ? row.username : row.id}>
             {edit === null ? null : <td>{button}</td>}

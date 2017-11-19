@@ -25,29 +25,29 @@ function Form({inputs, onChange, onSubmit, clearAll, itemId, isEdit}) {
       }
     }
   }
-  return <div name={itemId}>
+  return <div className={css.form} name={itemId}>
     {children}
-    <button type="submit" onClick={onSubmit}>Submit</button>
-    <button onClick={clearAll}>Clear Fields</button>
+    <button className={css.returnbtn} type="submit" onClick={onSubmit}>Submit</button>
+    <button className={css.returnbtn} onClick={clearAll}>Clear Fields</button>
   </div>;
 }
 
 function getNumberField(item, key, onChange) {
-  return <div key={key}>
+  return <div className={css.formfield} key={key}>
     <span>{item.title}</span>
     <input name={key} onChange={onChange} value={item.value} type={item.type} min={0} />
   </div>;
 }
 
 function getTextField(item, key, onChange, isEdit) {
-  return <div key={key}>
+  return <div className={css.formfield} key={key}>
     <span>{item.title}</span>
     <input name={key} onChange={onChange} disabled={isEdit && item.title === 'Username'} value={item.value} type={item.type} />
   </div>;
 }
 
 function getDropdownField(items, key, onChange) {
-  return <div key={key}>
+  return <div className={css.formfield} key={key}>
     <span>{items.title}</span>
     <select onChange={onChange} type={items.type} value={items.selected} name={key}>
       {items.value.map(item => <option key={`${key}_${item.value}`} value={item.value}>{item.title}</option>)}
