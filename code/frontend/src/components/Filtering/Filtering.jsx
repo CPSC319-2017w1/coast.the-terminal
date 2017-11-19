@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import css from './filtering.css';
 import PivotTable from './PivotTable.js';
 
@@ -9,23 +8,15 @@ function FilteringComponent() {
     <div className={css.wrapper}>
       <div className={css.heading}>
         <h1>Data Filtering System</h1>
-        <p>Use the Filter Table button to extract relevant to you from the contractor database.</p>
+        <p>Use the Pivot Table to extract relevant to you from the contractor database.</p>
       </div>
-      <PivotTable/>
+      <div className={css.tableholder}>
+        <PivotTable/>
+      </div>
     </div>
   );
 }
 
 
-
-FilteringComponent.propTypes = {
-  filterStatus: PropTypes.bool.isRequired,
-  tabledata: PropTypes.array.isRequired,
-  handleFilter: PropTypes.func.isRequired,
-  handleEditContractor: PropTypes.func.isRequired,
-  fields: PropTypes.array.isRequired,
-  applyFilter: PropTypes.func.isRequired,
-  toggleCheckedFields: PropTypes.func.isRequired
-};
 
 export default FilteringComponent;

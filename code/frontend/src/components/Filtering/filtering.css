@@ -7,50 +7,7 @@
 
 }
 
-.filterbutton{
-
-}
-
-.filtertable{
-    padding-top: 20px;
-
-}
-
-.tableheader{
-    background-color: lightgrey;
-}
-
-.tablerow{
-
-}
-
 .tableholder{
-
-}
-
-.filterPanel{
-    background-color: #f2f2f2;
-}
-
-.fieldsForm{
-    height: 200px;
-    width: 30%;
+    width: 1000px;
     overflow: scroll;
-    border: 1px solid #000;
-}
-
-.filterForm{
-    border: 1px solid #000;
-}
-
-.valuesForm{
-    border: 1px solid #000;
-}
-
-.rowForm{
-    border: 1px solid #000;
-}
-
-.columnForm{
-    border: 1px solid #000;
 }

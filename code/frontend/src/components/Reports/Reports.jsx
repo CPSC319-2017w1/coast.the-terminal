@@ -1,19 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import css from './reports.css';
 import ReportBuilder from './ReportBuilder.js';
 
-function ReportsComponent({username}) {
+function ReportsComponent() {
   return (
     <div className={css.wrapper}>
-      Welcome to Reports, <strong>{username}</strong>
-      <ReportBuilder/>
+      <div className={css.heading}>
+        <h1>Trending Reports</h1>
+        <p>Use the Reports generator to view trending reports</p>
+      </div>
+      <div className={css.reportholder}>
+        <ReportBuilder/>
+      </div>
     </div>
   );
 }
-
-ReportsComponent.propTypes = {
-  username: PropTypes.string.isRequired
-};
 
 export default ReportsComponent;
