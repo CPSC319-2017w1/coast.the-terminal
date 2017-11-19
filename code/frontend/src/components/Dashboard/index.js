@@ -45,3 +45,4 @@ const Dashboard = connect(
 )(DashboardContainer);
 
 export default Dashboard;
+
