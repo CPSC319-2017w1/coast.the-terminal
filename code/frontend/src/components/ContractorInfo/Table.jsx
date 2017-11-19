@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import css from './filtering.css';
+import css from '../Filtering/filtering.css';
 
 function Table({tabledata, handleEditContractor}) {
   return <table className={css.filtertable}>
