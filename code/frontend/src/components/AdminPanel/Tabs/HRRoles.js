@@ -6,6 +6,7 @@ import * as TYPES from '../../../constants/input-types.js';
 import { addNewRow } from '../../../actions/add-tables-actions.js';
 import { editRow } from '../../../actions/edit-tables-actions.js';
 import { DISPLAY_NAME, TABLE_NAMES } from '../../../constants/admin-tables.js';
+import css from './table.css';
 
 const tableName = TABLE_NAMES.HR_ROLES;
 
@@ -40,7 +41,7 @@ function getInitialState() {
 }
 
 function HRRolesContainer({ onReturn, handleAddNew, handleEditRow }) {
-  return <PanelWrapper
+  return <PanelWrapper className={css.panelwrapper}
     getInitialState={getInitialState}
     header={'HR Roles'}
     tableName={tableName}
