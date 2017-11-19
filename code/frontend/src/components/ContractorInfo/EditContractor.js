@@ -101,7 +101,7 @@ class EditContractorContainer extends React.Component {
     event.preventDefault();
     let projectState = this.state.projects;
     projectState.push(this.createDefaultProjectObject());
-    this.setState({projects: projectState})
+    this.setState({projects: projectState});
   }
 
   handleSubmit(event) {
@@ -124,25 +124,25 @@ class EditContractorContainer extends React.Component {
       mainSkills: this.getMainSkillsOptions(),
       costCenters: this.getCostCenterOptions(),
       originalDocumentation: '',
-      terminationNum: '',
+      terminationNum: ''
     };
   }
 
   getDropdownOptions (optionName) {
     switch  (optionName) {
-      case "reportingManager":
+      case 'reportingManager':
         return this.getReportingManagersOptions();
-      case "hrPosition":
+      case 'hrPosition':
         return this.getHrPositionOptions();
-      case "rateType":
+      case 'rateType':
         return this.getRateTypeOptions();
-      case "payGrade":
+      case 'payGrade':
         return this.getPayGradeOptions();
-      case "refNos":
+      case 'refNos':
         return this.getRefNosOptions();
-      case "mainSkills":
+      case 'mainSkills':
         return this.getMainSkillsOptions();
-      case "costCenters":
+      case 'costCenters':
         return this.getCostCenterOptions();
       default:
         return [];
@@ -150,38 +150,38 @@ class EditContractorContainer extends React.Component {
   }
 
   getReportingManagersOptions() {
-    //fallbacks
+    //to be replaced with calls from the database
     return ['harry potter', 'luna luvgood'];
   }
 
   getHrPositionOptions() {
-    //fallbacks
+    //to be replaced with calls from the database
     return ['professor', 'dark arts teacher'];
   }
 
   getRateTypeOptions() {
-    //fallbacks
+    //to be replaced with calls from the database
     return ['Monthly', 'Hourly', 'Daily'];
   }
 
   getPayGradeOptions() {
-    //fallbacks
+    //to be replaced with calls from the database
     return ['A', 'B'];
   }
 
   getRefNosOptions() {
-    //fallbacks
+    //to be replaced with calls from the database
     return ['1', '2', '3'];
   }
 
   getMainSkillsOptions() {
-    //fall backs
+    //to be replaced with calls from the database
     return ['Databases', 'Languages'];
   }
 
   getCostCenterOptions() {
-    //fallbacks
-    return ["Vancouver", "Calgary"];
+    //to be replaced with calls from the database
+    return ['Vancouver', 'Calgary'];
   }
 
   resetState() {
