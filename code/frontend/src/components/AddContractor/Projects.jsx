@@ -193,8 +193,6 @@ function getDataOptions(tables, tableName) {
 
 function getIdField(tableName) {
   switch(tableName) {
-    case "hiringmanagers":
-      return "userID";
     default:
       return "id";
   }
