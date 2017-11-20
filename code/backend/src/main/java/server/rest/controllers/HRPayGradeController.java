@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class HRPayGradeController extends Controller {
     private static String getQuery = "select * from HRPayGrade";
     private static String addQuery = "insert into HRPayGrade values(?, ?, ?, ?)";
-    private static String editQuery = "update HRPayGrade set startAmount=?, endAmount=? where id=?";
+    private static String editQuery = "update HRPayGrade set startAmount=?, endAmount=?, name=? where id=?";
 
     @RequestMapping("/paygrades/view")
     public HRPayGradeResponse paygrades() {
@@ -102,6 +102,7 @@ public class HRPayGradeController extends Controller {
             int index = 1;
             st.setInt(index++, payGrade.getStartAmount());
             st.setInt(index++, payGrade.getEndAmount());
+            st.setString(index++, payGrade.getName());
             st.setString(index++, payGrade.getId());
             int success = st.executeUpdate();
             if (success == 0) {
