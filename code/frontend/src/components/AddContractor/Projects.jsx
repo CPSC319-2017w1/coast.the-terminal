@@ -205,8 +205,7 @@ function getDisplayField(tableName) {
     case "skills":
        return "name";
     case 'paygrades':
-      //todo change this so it makes more sense?
-      return "endAmount";
+      return "name";
     case 'hiringmanagers':
       return "firstName";
     case 'hrroles':
