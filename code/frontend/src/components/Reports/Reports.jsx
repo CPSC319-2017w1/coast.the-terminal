@@ -9,9 +9,7 @@ function ReportsComponent() {
         <h1>Trending Reports</h1>
         <p>Use the Reports generator to view trending reports</p>
       </div>
-      <div className={css.reportholder}>
-        <ReportBuilder/>
-      </div>
+      <ReportBuilder/>
     </div>
   );
 }

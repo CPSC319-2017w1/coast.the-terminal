@@ -10,9 +10,7 @@ function FilteringComponent() {
         <h1>Data Filtering System</h1>
         <p>Use the Pivot Table to extract relevant to you from the contractor database.</p>
       </div>
-      <div className={css.tableholder}>
-        <PivotTable/>
-      </div>
+      <PivotTable/>
     </div>
   );
 }
