@@ -45,6 +45,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               data-index={index}
               type="date"
               name="startDate"
+              value={project.startDate}
               date-format="mm/dd/yyyy"
               onChange={handleDateInput}/>
           </p>
@@ -55,6 +56,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               data-index={index}
               type="date"
               name="endDate"
+              value={project.endDate}
               date-format="mm/dd/yyyy"
               onChange={handleDateInput}/>
           </p>
@@ -84,7 +86,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="hourlyrate"
               type="text"
               data-index={index}
-              value={project.hourlyrate}
+              value={project.hourlyRate}
               onChange={handleTextInput}/>
           </p>
           <p className={css.hrpay}>
@@ -120,6 +122,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input className={css.txtField}
               name="timeMaterialTerms"
               type="number"
+              value={project.timeMaterialTerms}
               data-index={index}
               onChange={handleTextInput}/>
           </p>
@@ -128,6 +131,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <input className={css.txtField}
               name="dailyAllowance"
               type="number"
+              value={project.dailyAllowance}
               data-index={index}
               onChange={handleTextInput}/>
           </p>
@@ -145,7 +149,6 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               type="text"
               data-index={index}
               onChange={handleDropdownInput}>
-              {getOptions(project.mainSkills)}
               {getDataOptions(tables, 'skills')}
             </select>
           </p>

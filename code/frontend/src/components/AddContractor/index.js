@@ -15,8 +15,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (contractorData, projectData, callback) => {
-      dispatch(addContractor(contractorData, projectData, callback));
+    onSubmit: (contractorData, projectData, tableData, callback) => {
+      dispatch(addContractor(contractorData, projectData, tableData, callback));
     },
     viewTables: () => {
       dispatch(viewTableRows('skills'));
@@ -126,7 +126,7 @@ class AddContractorContainer extends React.Component{
     event.preventDefault();
     const { contractor } = this.state;
     const { projects } = this.state;
-    this.props.onSubmit(contractor, projects, this.resetState);
+    this.props.onSubmit(contractor, projects, this.props.tables, this.resetState);
   }
 
   createDefaultProjectObject() {
@@ -135,13 +135,17 @@ class AddContractorContainer extends React.Component{
         reportingmanagers: this.getReportingManagersOptions(),
         hrpositions: this.getHrPositionOptions(),
         ratetypes: this.getRateTypeOptions(),
-        hourlyrate: '',
         paygrades: this.getPayGradeOptions(),
         refnos: this.getRefNosOptions(),
         mainSkills: this.getMainSkillsOptions(),
         costCenters: this.getCostCenterOptions(),
         originalDocumentation: '',
-        terminationNum: '',
+        terminationNum: 0,
+        startDate: "2017-01-01",
+        endDate: "2017-01-02",
+        dailyAllowance:0,
+        timeMaterialTerms:0,
+        hourlyRate:0
     };
   }
 

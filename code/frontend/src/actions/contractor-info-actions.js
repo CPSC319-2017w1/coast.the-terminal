@@ -43,7 +43,7 @@ function viewContractorFailed(error) {
   };
 }
 
-export function addContractor(contractorData, projectData, callback) {
+export function addContractor(contractorData, projectData, tableData, callback) {
   return dispatch => {
     dispatch(isLoading());
     return request
@@ -59,9 +59,15 @@ export function addContractor(contractorData, projectData, callback) {
         return contractorId;
       })
       .then((contractorId) => {
-        return addEngagementContract(projectData, contractorId);
+        return addEngagementContract(projectData, contractorId, tableData);
       })
-      .then(() => {
+      .then((responses) => {
+        for(let res of responses) {
+          let body = res.body;
+          if(!res.ok || body.error) {
+            throw new Error(body.errorMessage);
+          }
+        }
         dispatch(hasStoppedLoading());
         dispatch(addContractorSuccessful());
         callback();
@@ -74,14 +80,14 @@ export function addContractor(contractorData, projectData, callback) {
   };
 }
 
-function addEngagementContract(projectData, contractorId) {
+function addEngagementContract(projectData, contractorId, tableData) {
    let allEngagementPromises = [];
    for(let project of projectData) {
        project["contractorId"] = contractorId;
        project["resourceId"] = "";
-       project = conformDropdownValuesToDefault(project);
+       project = conformDropdownValuesToDefault(project, tableData);
        let req = request
-        .post(`${LIVE_SITE}contractors/add/engagementContract`)
+        .post(`${LOCALHOST}contractors/add/engagementContract`)
         .query(project);
        allEngagementPromises.push(req);
    }
@@ -89,18 +95,23 @@ function addEngagementContract(projectData, contractorId) {
    return Promise.all(allEngagementPromises);
 }
 
-function conformDropdownValuesToDefault (project) {
+function conformDropdownValuesToDefault (project, tableData) {
   //todo change this to less hacky fix
-  const REQUIRED_FIELDS = {"hrPositionId": "hrpositions",
+  const REQUIRED_FIELDS = {"hrPositionId": "hrroles",
                           "hrPayGradeId": "paygrades",
-                          "costCenterId": "costCenters",
-                          "reportingManagerId": "reportingmanagers",
-                          "mainSkillId": "mainSkills",
+                          "costCenterId": "costcenters",
+                          "reportingManagerId": "hiringmanagers",
+                          "mainSkillId": "skills",
                           "poNum": "refnos",
                           "rateType": "ratetypes"};
   for(let reqField in REQUIRED_FIELDS) {
+    let actualFieldName = REQUIRED_FIELDS[reqField];
     if(!project.hasOwnProperty(reqField)){
-      project[reqField] = project[REQUIRED_FIELDS[reqField]][0];
+      if(tableData.hasOwnProperty(actualFieldName)) {
+        project[reqField] = tableData[actualFieldName].data[0].id;
+      } else {
+        project[reqField] = project[actualFieldName][0];
+      }
     }
   }
 

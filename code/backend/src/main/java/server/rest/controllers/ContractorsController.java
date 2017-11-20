@@ -70,11 +70,11 @@ public class ContractorsController extends Controller {
             ResultSet set = st.executeQuery();
             while(set.next()) {
                 Contractor c = new Contractor(set.getString("id"),
-                        set.getString("firstName"),
-                        set.getString("surname"),
-                        set.getString("agencySource"),
-                        set.getString("status"),
-                        set.getBoolean("rehire"));
+                                              set.getString("firstName"),
+                                              set.getString("surname"),
+                                              set.getString("agencySource"),
+                                              set.getString("status"),
+                                              set.getBoolean("rehire"));
                 contractors.add(c);
             }
             connection.closeConnection();
