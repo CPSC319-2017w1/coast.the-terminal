@@ -10,6 +10,7 @@ export default function contractors(state = initialState, action) {
     case ACTIONS.ADD_CONTRACTOR:
     case ACTIONS.EDIT_CONTRACTOR:
     case ACTIONS.VIEW_CONTRACTORS:
+    case ACTIONS.VIEW_ALL_DATA:
       return Object.assign({}, state, {
         error: false,
         data: action.data
@@ -17,6 +18,7 @@ export default function contractors(state = initialState, action) {
     case ACTIONS.ADD_CONTRACTOR_FAILED:
     case ACTIONS.EDIT_CONTRACTOR_FAILED:
     case ACTIONS.VIEW_CONTRACTORS_FAILED:
+    case ACTIONS.VIEW_ALL_DATA_FAILED:
       return Object.assign({}, state, {
         error: action.error
       });

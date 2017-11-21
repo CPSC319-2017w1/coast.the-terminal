@@ -43,6 +43,20 @@ function viewContractorFailed(error) {
   };
 }
 
+function viewAllDataFailed(error) {
+  return {
+    type: ACTIONS.VIEW_ALL_DATA_FAILED,
+    error
+  };
+}
+
+function viewAllData(data) {
+  return {
+    type: ACTIONS.VIEW_ALL_DATA,
+    data
+  };
+}
+
 export function addContractor(contractorData, projectData, tableData, callback) {
   return dispatch => {
     dispatch(isLoading());
@@ -155,4 +169,48 @@ export function viewContractors() {
         dispatch(viewContractorFailed(err.message));
       });
   };
+}
+
+export function viewAllContractorData() {
+  return dispatch => {
+    return request
+      .get(`${LOCALHOST}contractors/viewAllData`)
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        let contractors = body.contractors.map(c => {return flattenData(c)});
+        dispatch(viewAllData(contractors));
+      })
+      .catch((err) => {
+        dispatch(viewAllDataFailed(err.message));
+      });
+  };
+}
+
+
+//taken from https://stackoverflow.com/questions/19098797/fastest-way-to-flatten-un-flatten-nested-json-objects/19101235#19101235
+function flattenData(data) {
+  var result = {};
+  function recurse (cur, prop) {
+    if (Object(cur) !== cur) {
+      result[prop] = cur;
+    } else if (Array.isArray(cur)) {
+      for(var i=0, l=cur.length; i<l; i++)
+        recurse(cur[i], prop + "_");
+      if (l == 0)
+        result[prop] = [];
+    } else {
+      var isEmpty = true;
+      for (var p in cur) {
+        isEmpty = false;
+        recurse(cur[p], prop ? prop +p : p);
+      }
+      if (isEmpty && prop)
+        result[prop] = {};
+    }
+  }
+  recurse(data, "");
+  return result;
 }
