@@ -2,7 +2,7 @@ package server.rest.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import server.database.DatabaseConnection;
-import server.model.Contractor;
+import server.model.*;
 import server.rest.responses.ContractorsResponse;
 import server.rest.responses.Response;
 
@@ -43,8 +43,18 @@ public class ContractorsController extends Controller {
             "currencyCode," +
             "mainSkillId," +
             "timeAndMaterialTerms," +
-            "poNum)" +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "poNum," +
+            "hourlyRate)" +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    private final static String viewAllContractorDataQuery = "SELECT * FROM Contractor c\n" +
+            "INNER JOIN EngagementContract e ON e.contractorId=c.id\n" +
+            "INNER JOIN HRPositionRole p ON p.id=e.hrPositionId\n" +
+            "INNER JOIN HRPayGrade pg ON pg.id=e.hrPayGradeId\n" +
+            "INNER JOIN CostCenter cc on cc.id=e.costCenterId\n" +
+            "INNER JOIN Skill s on s.id=e.mainSkillId\n" +
+            "INNER JOIN HiringManager rp on rp.userId=e.reportingManagerUserId\n" +
+            "ORDER BY c.id";
 
     @RequestMapping("/contractors/view")
     public ContractorsResponse contractors() {
@@ -60,11 +70,11 @@ public class ContractorsController extends Controller {
             ResultSet set = st.executeQuery();
             while(set.next()) {
                 Contractor c = new Contractor(set.getString("id"),
-                                              set.getString("firstName"),
-                                              set.getString("surname"),
-                                              set.getString("agencySource"),
-                                              set.getString("status"),
-                                              set.getBoolean("rehire"));
+                        set.getString("firstName"),
+                        set.getString("surname"),
+                        set.getString("agencySource"),
+                        set.getString("status"),
+                        set.getBoolean("rehire"));
                 contractors.add(c);
             }
             connection.closeConnection();
@@ -81,7 +91,8 @@ public class ContractorsController extends Controller {
     public ContractorsResponse addContractor(
             @RequestParam("firstName") String firstName,
             @RequestParam("surname") String surName,
-            @RequestParam("agencySource") String agencySource) {
+            @RequestParam("agencySource") String agencySource,
+            @RequestParam("status") String status) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         List<Contractor> newContractor = new ArrayList<>();
 
@@ -91,7 +102,6 @@ public class ContractorsController extends Controller {
                 return ContractorsResponse.contractorsFailure("Failed to connect to database");
             }
             String newContractorId = UUID.randomUUID().toString();
-            final String status = "active";
             final boolean rehire = false;
             PreparedStatement st = connection.getPreparedStatement(insertContractorQuery);
             int i =1;
@@ -139,7 +149,9 @@ public class ContractorsController extends Controller {
                                           @RequestParam("currencyCode") String currencyCode,
                                           @RequestParam("mainSkillId") String mainSkillId,
                                           @RequestParam("timeMaterialTerms") int timeMaterialTerms,
-                                          @RequestParam("poNum") int poNum) {
+                                          @RequestParam("poNum") int poNum,
+                                          @RequestParam("hourlyrate") int hourlyRate) {
+
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         try {
             connection.openConnection();
@@ -203,4 +215,92 @@ public class ContractorsController extends Controller {
         //TODO
         return new Response();
     }
+
+    @RequestMapping("/contractors/viewAllData")
+    public Response viewAllContractorData() {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        List<Contractor> allContractorData = new ArrayList<>();
+
+        try {
+            connection.openConnection();
+            if (!connection.isConnected()) {
+                return ContractorsResponse.createErrorResponse("View All Data Failed: Error opening database connection");
+            }
+
+            PreparedStatement st = connection.getPreparedStatement(viewAllContractorDataQuery);
+            ResultSet set = st.executeQuery();
+            Contractor lastContractor = null;
+            while(set.next()) {
+                String contractorId = set.getString("c.id");
+                if(lastContractor == null || !lastContractor.getId().equals(contractorId)) {
+                    //get contractor data
+                    lastContractor = new Contractor(contractorId,
+                            set.getString("c.firstName"),
+                            set.getString("c.surname"),
+                            set.getString("agencySource"),
+                            set.getString("status"),
+                            set.getBoolean("rehire"));
+
+                    allContractorData.add(lastContractor);
+                }
+
+                CostCenter costCenter = new CostCenter(
+                        set.getString("cc.id"),
+                        set.getString("location")
+                );
+
+                HRPositionRole positionRole = new HRPositionRole(
+                        set.getString("p.id"),
+                        set.getString("roleName"),
+                        set.getString("p.description")
+                );
+
+                HRPayGrade payGrade = new HRPayGrade(
+                        set.getString("pg.id"),
+                        set.getInt("startAmount"),
+                        set.getInt("endAmount"),
+                        set.getString("pg.name")
+                );
+
+                Skill mainSkill = new Skill(
+                        set.getString("s.id"),
+                        set.getString("s.name"),
+                        set.getString("type"),
+                        set.getString("s.description")
+                );
+
+
+                EngagementContract newContract = new EngagementContract(
+                        set.getString("e.id"),
+                        set.getDate("startDate"),
+                        set.getDate("endDate"),
+                        set.getString("rateType"),
+                        set.getString("projectName"),
+                        set.getString("chargeType"),
+                        set.getInt("dailyAllowance"),
+                        set.getString("originalDocumentation"),
+                        set.getInt("terminationNum"),
+                        costCenter,
+                        set.getString("currencyCode"),
+                        set.getInt("timeAndMaterialTerms"),
+                        set.getInt("poNum"),
+                        set.getInt("hourlyRate"),
+                        positionRole,
+                        payGrade,
+                        mainSkill,
+                        set.getBoolean("rehire")
+                );
+
+                lastContractor.addEngagementContract(newContract);
+            }
+            connection.closeConnection();
+        } catch (SQLException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.log(Level.INFO, "View all contractor data failed: " + e.getMessage());
+            return ContractorsResponse.createErrorResponse("View all contractor data failed: " + e.getMessage());
+        }
+
+        return new ContractorsResponse(allContractorData);
+    }
 }
+
