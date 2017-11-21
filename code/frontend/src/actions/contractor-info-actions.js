@@ -198,7 +198,7 @@ function flattenData(data) {
       result[prop] = cur;
     } else if (Array.isArray(cur)) {
       for(var i=0, l=cur.length; i<l; i++)
-        recurse(cur[i], prop + "_");
+        recurse(cur[i], prop + '_');
       if (l == 0)
         result[prop] = [];
     } else {
