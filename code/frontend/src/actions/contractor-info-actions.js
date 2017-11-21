@@ -174,7 +174,7 @@ export function viewContractors() {
 export function viewAllContractorData() {
   return dispatch => {
     return request
-      .get(`${LOCALHOST}contractors/viewAllData`)
+      .get(`${LIVE_SITE}contractors/viewAllData`)
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
