@@ -12,14 +12,16 @@ public class EngagementContract {
     private int dailyAllowance;
     private String originalDocumentation;
     private int terminationNum;
-    private String contractorId;
-    private String resourceId;
-    private String hrPositionId;
-    private String hrPayGradeId;
-    private String costCenterId;
-    private String reportingManagerUserId;
+    private CostCenter costCenter;
     private String currencyCode;
-    private String mainSkillId;
+    private int timeMaterialTerms;
+    private int poRefNum;
+    private int hourlyRate;
+    private HRPositionRole hrPositionRole;
+    private HRPayGrade hrPayGrade;
+    private Skill mainSkill;
+    private boolean rehire;
+
 
     /**
      * Creates an engagement contract with the given fields.
@@ -32,7 +34,24 @@ public class EngagementContract {
      * @param dailyAllowance The daily allowance received for this contract.
      * @param originalDocumentation A reference to the original documentation for this contract.
      */
-    public EngagementContract(String id, Date startDate, Date endDate, String rateType, String projectName, String chargeType, int dailyAllowance, String originalDocumentation) {
+    public EngagementContract(String id,
+                              Date startDate,
+                              Date endDate,
+                              String rateType,
+                              String projectName,
+                              String chargeType,
+                              int dailyAllowance,
+                              String originalDocumentation,
+                              int terminationNum,
+                              CostCenter costCenter,
+                              String currencyCode,
+                              int timeMaterialTerms,
+                              int poRefNum,
+                              int hourlyRate,
+                              HRPositionRole hrPositionRole,
+                              HRPayGrade hrPayGrade,
+                              Skill mainSkill,
+                              boolean rehire) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -41,6 +60,16 @@ public class EngagementContract {
         this.chargeType = chargeType;
         this.dailyAllowance = dailyAllowance;
         this.originalDocumentation = originalDocumentation;
+        this.terminationNum = terminationNum;
+        this.costCenter = costCenter;
+        this.currencyCode = currencyCode;
+        this.timeMaterialTerms = timeMaterialTerms;
+        this.poRefNum = poRefNum;
+        this.hourlyRate = hourlyRate;
+        this.hrPositionRole = hrPositionRole;
+        this.hrPayGrade = hrPayGrade;
+        this.mainSkill = mainSkill;
+        this.rehire = rehire;
     }
 
     public String getId() {
@@ -79,71 +108,39 @@ public class EngagementContract {
         return terminationNum;
     }
 
-    public void setTerminationNum(int terminationNum) {
-        this.terminationNum = terminationNum;
-    }
-
-    public String getContractorId() {
-        return contractorId;
-    }
-
-    public void setContractorId(String contractorId) {
-        this.contractorId = contractorId;
-    }
-
-    public String getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
-    public String getHrPositionId() {
-        return hrPositionId;
-    }
-
-    public void setHrPositionId(String hrPositionId) {
-        this.hrPositionId = hrPositionId;
-    }
-
-    public String getHrPayGradeId() {
-        return hrPayGradeId;
-    }
-
-    public void setHrPayGradeId(String hrPayGradeId) {
-        this.hrPayGradeId = hrPayGradeId;
-    }
-
-    public String getCostCenterId() {
-        return costCenterId;
-    }
-
-    public void setCostCenterId(String costCenterId) {
-        this.costCenterId = costCenterId;
-    }
-
-    public String getReportingManagerUserId() {
-        return reportingManagerUserId;
-    }
-
-    public void setReportingManagerUserId(String reportingManagerUserId) {
-        this.reportingManagerUserId = reportingManagerUserId;
+    public CostCenter getCostCenter() {
+        return costCenter;
     }
 
     public String getCurrencyCode() {
         return currencyCode;
     }
 
-    public void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
+    public int getTimeMaterialTerms() {
+        return timeMaterialTerms;
     }
 
-    public String getMainSkillId() {
-        return mainSkillId;
+    public int getPoRefNum() {
+        return poRefNum;
     }
 
-    public void setMainSkillId(String mainSkillId) {
-        this.mainSkillId = mainSkillId;
+    public int getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public HRPositionRole getHrPositionRole() {
+        return hrPositionRole;
+    }
+
+    public HRPayGrade getHrPayGrade() {
+        return hrPayGrade;
+    }
+
+    public Skill getMainSkill() {
+        return mainSkill;
+    }
+
+    public boolean isRehire() {
+        return rehire;
     }
 }
