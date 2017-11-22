@@ -13,10 +13,31 @@ const mapStateToProps = state => {
 class FilteringContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showTutorial: false
+    };
+    this.handleTutorial = this.handleTutorial.bind(this);
+    this.closeTutorial = this.closeTutorial.bind(this);
+  }
+
+  handleTutorial() {
+    this.setState({
+      showTutorial: !this.state.showTutorial
+    });
+  }
+
+  closeTutorial(){
+    this.setState({
+      showTutorial: false
+    });
   }
 
   render(){
-    return <FilteringComponent/>;
+    return <FilteringComponent
+      showTutorial={this.state.showTutorial}
+      handleTutorial={this.handleTutorial}
+      closeTutorial={this.closeTutorial}
+    />;
   }
 }
 

@@ -30,7 +30,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(viewAllContractorData());
     },
     stopLoading: () => {
-      dispatch(hasStoppedLoading())
+      dispatch(hasStoppedLoading());
     }
   };
 };
@@ -56,11 +56,11 @@ class PivotTableContainer extends React.Component {
 
   componentWillMount() {
     this.setState({
-      mode: "demo",
-      filename: "Contractor Data",
+      mode: 'demo',
+      filename: 'Contractor Data',
       pivotState: {
         data: items,
-        rendererName: "Table",
+        rendererName: 'Table',
         plotlyOptions: {width: 900, height: 500}
       }
     });
