@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ContractorInfoComponent from './ContractorInfo.jsx';
+import EditContractor from './EditContractor.js';
 import items from '../Filtering/Data.js';
 
 const mapStateToProps = state => {
@@ -22,19 +23,29 @@ class ContractorInfoContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: items
+      data: items,
+      selectedContractorId: null
     };
     this.handleEditContractor = this.handleEditContractor.bind(this);
   }
 
-  handleEditContractor() {
-
+  handleEditContractor(event) {
+    event.preventDefault();
+    let id = event.target.getAttribute('name');
+    this.setState({
+      selectedContractorId: id
+    });
   }
 
   render() {
-    return <ContractorInfoComponent
-      tabledata={this.state.data}
-      handleEditContractor={this.handleEditContractor}/>;
+    if(this.state.selectedContractorId == null){
+      return <ContractorInfoComponent
+        tabledata={this.state.data}
+        handleEditContractor={this.handleEditContractor}/>;
+    } else {
+      return <EditContractor/>;
+    }
+
   }
 }
 

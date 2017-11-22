@@ -26,7 +26,7 @@ function getRows(data, func) {
     <tr key={i.id} className={css.tablerow}>
       <td key={i.id}>
         <p>{i.id}</p>
-        <button className={css.editbtn} onClick={func}>EDIT</button>
+        <button name={i.id} className={css.editbtn} onClick={func}>EDIT</button>
       </td>
       {/*This also will dynamically change based on filter*/}
       <td key={i.fname}>{i.fname}</td>

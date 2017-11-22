@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import EditContractorComponent from './EditPage';
+import EditContractorComponent from './EditPage.jsx';
 
 
 const mapStateToProps = state => {
