@@ -39,7 +39,7 @@ class ContractorsControllerTest {
         final int FIRST = 0;
         Contractor contractor = contractorController.contractors().getContractors().get(FIRST);
         contractor.setAgencySource("Test New Agency Source");
-        Response response = contractorController.editContractor(contractor);
+        Response response = contractorController.editContractor(contractor.getId(), contractor.getFirstName(), contractor.getLastName(), contractor.getAgencySource(), contractor.getStatus());
         assertFalse(response.isError());
     }
 }
