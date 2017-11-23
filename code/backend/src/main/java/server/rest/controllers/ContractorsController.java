@@ -48,6 +48,28 @@ public class ContractorsController extends Controller {
             "hourlyRate)" +
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+    private final static String editEngagementContractorQuery = "UPDATE EngagementContract SET " +
+            "startDate=?, " +
+            "endDate=?, " +
+            "rateType=?, " +
+            "projectName=?, " +
+            "chargeType=?, " +
+            "dailyAllowance=?, " +
+            "originalDocumentation=?, " +
+            "terminationNum=?, " +
+            "contractorId=?, " +
+            "resourceId=?, " +
+            "hrPositionId=?, " +
+            "hrPayGradeId=?, " +
+            "costCenterId=?, " +
+            "reportingManagerUserId=?, " +
+            "currencyCode=?, " +
+            "mainSkillId=?, " +
+            "timeAndMaterialTerms=?, " +
+            "poNum=?, " +
+            "hourlyRate=? " +
+            "WHERE id=?";
+
     private final static String viewAllContractorDataQuery = "SELECT * FROM Contractor c\n" +
             "INNER JOIN EngagementContract e ON e.contractorId=c.id\n" +
             "INNER JOIN HRPositionRole p ON p.id=e.hrPositionId\n" +
@@ -157,6 +179,77 @@ public class ContractorsController extends Controller {
     }
 
     @CrossOrigin("*")
+    @RequestMapping(value = "/contractors/edit/engagementContract", method={RequestMethod.POST})
+    public Response editEngagementContract(
+            @RequestParam("id") String id,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("rateType") String rateType,
+            @RequestParam("projectName") String projectName,
+            @RequestParam("chargeType") String chargeType,
+            @RequestParam("dailyAllowance") int dailyAllowance,
+            @RequestParam("originalDocumentation") String originalDocumentation,
+            @RequestParam("terminationNum") int terminationNum,
+            @RequestParam("contractorId") String contractorId,
+            @RequestParam("resourceId") String resourceId,
+            @RequestParam("hrPositionId") String hrPositionId,
+            @RequestParam("hrPayGradeId") String hrPayGradeId,
+            @RequestParam("costCenterId") String costCenterId,
+            @RequestParam("reportingManagerId") String reportingManagerId,
+            @RequestParam("currencyCode") String currencyCode,
+            @RequestParam("mainSkillId") String mainSkillId,
+            @RequestParam("timeMaterialTerms") int timeMaterialTerms,
+            @RequestParam("poNum") int poNum,
+            @RequestParam("hourlyrate") int hourlyRate
+    ) {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        try {
+            connection.openConnection();
+            if (!connection.isConnected()) {
+                return Response.createErrorResponse("Edit engagement Contract: Failed to open database");
+            }
+            java.sql.Date startDateSQL = getSQLDate(startDate);
+            java.sql.Date endDateSQL = getSQLDate(endDate);
+
+            PreparedStatement st = connection.getPreparedStatement(editEngagementContractorQuery);
+            int i = 1;
+            st.setDate(i++, startDateSQL);
+            st.setDate(i++, endDateSQL);
+            st.setString(i++, rateType);
+            st.setString(i++, projectName);
+            st.setString(i++, chargeType);
+            st.setInt(i++, dailyAllowance);
+            st.setString(i++, originalDocumentation);
+            st.setInt(i++, terminationNum);
+            st.setString(i++, contractorId);
+            st.setString(i++, resourceId);
+            st.setString(i++, hrPositionId);
+            st.setString(i++, hrPayGradeId);
+            st.setString(i++, costCenterId);
+            st.setString(i++, reportingManagerId);
+            st.setString(i++, currencyCode);
+            st.setString(i++, mainSkillId);
+            st.setInt(i++, timeMaterialTerms);
+            st.setInt(i++, poNum);
+            st.setInt(i++, hourlyRate);
+            st.setString(i++, id);
+            int success = st.executeUpdate();
+            if(success == 0) {
+                return Response.createErrorResponse("Add Engagement Contract failed. SQL Update failed");
+            }
+            connection.commitTransaction();
+            connection.closeConnection();
+        } catch (SQLException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+            Response.createErrorResponse("Edit engagement Contract: " + e.getMessage());
+        } catch (ParseException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+            Response.createErrorResponse("Edit engagement Contract: " + e.getMessage());
+        }
+        return new Response();
+    }
+
+    @CrossOrigin("*")
     @RequestMapping(value = "/contractors/add/engagementContract", method={RequestMethod.POST})
     public Response addEngagementContract(@RequestParam("startDate") String startDate,
                                           @RequestParam("endDate") String endDate,
@@ -212,10 +305,10 @@ public class ContractorsController extends Controller {
             st.setInt(i++, poNum);
 
             int success = st.executeUpdate();
-            connection.commitTransaction();
             if(success == 0) {
                 return Response.createErrorResponse("Add Engagement Contract failed. SQL Update failed");
             }
+            connection.commitTransaction();
             connection.closeConnection();
         } catch (SQLException e) {
 
