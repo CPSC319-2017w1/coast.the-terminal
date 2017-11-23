@@ -16,7 +16,8 @@ import { TABLE_NAMES } from '../../constants/admin-tables.js';
 const mapStateToProps = state => {
   return {
     user: state.user,
-    tables: state.tables
+    tables: state.tables,
+    isLoading: state.main.isLoading
   };
 };
 
@@ -58,17 +59,7 @@ class AdminPanelContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {tables} = nextProps;
-    let tablesCalled = 0;
-    for (const tableName in tables) {
-      if (tables.hasOwnProperty(tableName)) {
-        const table = tables[tableName];
-        if (table.data.length > 0 || table.error) {
-          tablesCalled++;
-        }
-      }
-    }
-    if (tablesCalled === 6) {
+    if (nextProps.isLoading) {
       this.props.stopLoading();
     }
   }
@@ -102,7 +93,8 @@ AdminPanelContainer.propTypes= {
   user: PropTypes.object.isRequired,
   tables: PropTypes.object.isRequired,
   getTables: PropTypes.func.isRequired,
-  stopLoading: PropTypes.func.isRequired
+  stopLoading: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 const AdminPanel = connect(
