@@ -15,6 +15,10 @@ function DashboardComponent({onClick}) {
           onClick={onClick}>
           Data Filtering System
         </button>
+        <button className={css.addcontractor}
+        onClick={onClick}>
+          Add Contractor
+        </button>
         <button className={css.contractorinfo}
           name={CONTRACTOR_INFO}
           onClick={onClick}>

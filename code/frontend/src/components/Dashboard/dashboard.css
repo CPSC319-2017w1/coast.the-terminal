@@ -6,8 +6,11 @@
 
 .dashboardbtn {
     display: grid;
-    grid-template-columns: 200px 70px 200px 70px 200px;
-    grid-template-rows: auto;
+    display: -ms-grid;
+    grid-template-columns: 200px 70px 200px;
+    -ms-grid-columns: 200px 70px 200px;
+    grid-template-rows: auto 50px auto;
+    -ms-grid-rows:  auto 50px auto;
     margin-top: 50px;
 }
 
@@ -25,15 +28,28 @@
 
 .dashboardbtn .datafiltering {
     grid-column: 1;
+    -ms-grid-column: 1;
     grid-row: 1;
+    -ms-grid-row: 1;
 }
 
 .dashboardbtn .contractorinfo {
-    grid-column: 3;
-    grid-row: 1;
+    grid-column: 1;
+    -ms-grid-column: 1;
+    grid-row: 3;
+    -ms-grid-row: 3;
 }
 
 .dashboardbtn .reports {
-    grid-column: 5;
+    grid-column: 3;
+    -ms-grid-column: 3;
     grid-row: 1;
+    -ms-grid-row: 1;
+}
+
+.dashboardbtn .addcontractor {
+    grid-column: 3;
+    grid-row: 3;
+    -ms-grid-row: 3;
+    -ms-grid-column: 3;
 }
