@@ -24,6 +24,7 @@ public class ContractorsController extends Controller {
     private final static String DATE_FORMAT = "yyyy-MM-dd";
     private final static String getQuery = "select * from Contractor";
     private final static String insertContractorQuery = "INSERT INTO Contractor(id, firstName, surname, agencySource, status, rehire) VALUES (?,?,?,?,?,?)";
+    private static final String editContractorQuery = "UPDATE Contractor SET firstName=?, surname=?, agencySource=?, status=? WHERE id=?";
     private final static String insertEngagementContractQuery = "INSERT INTO EngagementContract(" +
             "id," +
             "startDate," +
@@ -55,6 +56,31 @@ public class ContractorsController extends Controller {
             "INNER JOIN Skill s on s.id=e.mainSkillId\n" +
             "INNER JOIN HiringManager rp on rp.userId=e.reportingManagerUserId\n" +
             "ORDER BY c.id";
+
+    public ArrayList<Contractor> editContractorImpl(String id, String firstName, String lastName, String agencySource, String status) throws SQLException {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        ArrayList<Contractor> contractors = new ArrayList<Contractor>();
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Failed to connect to database");
+        }
+        PreparedStatement st = connection.getPreparedStatement(editContractorQuery);
+        int index=1;
+        st.setString(index++, firstName);
+        st.setString(index++, lastName);
+        st.setString(index++, agencySource);
+        st.setString(index++, status);
+        st.setString(index++, id);
+        int success = st.executeUpdate();
+        if (success == 0) {
+            throw new SQLException("Failed to update Contractor data");
+        }
+        connection.commitTransaction();
+        connection.closeConnection();
+        Contractor c = new Contractor(id, firstName, lastName, agencySource, status, true);
+        contractors.add(c);
+        return contractors;
+    }
 
     @RequestMapping("/contractors/view")
     public ContractorsResponse contractors() {
@@ -211,9 +237,21 @@ public class ContractorsController extends Controller {
     }
 
     @RequestMapping("/contractors/edit")
-    public Response editContractor(Contractor contractor) {
-        //TODO
-        return new Response();
+    public ContractorsResponse editContractor(
+            @RequestParam("id") String id,
+            @RequestParam("firstName") String firstName,
+            @RequestParam("surname") String surname,
+            @RequestParam("agencySource") String agencySource,
+            @RequestParam("status") String status) {
+
+        ArrayList<Contractor> contractors;
+        try {
+            contractors = editContractorImpl(id, firstName, surname, agencySource, status);
+        } catch (SQLException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+            return ContractorsResponse.contractorsFailure(e.getMessage());
+        }
+        return new ContractorsResponse(contractors);
     }
 
     @RequestMapping("/contractors/viewAllData")
