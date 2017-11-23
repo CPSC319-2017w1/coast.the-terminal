@@ -1,8 +1,11 @@
 package server.session;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import server.database.DatabaseConnection;
 import server.model.Login;
 import server.rest.controllers.Controller;
+import server.rest.responses.RefreshResponse;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,12 +28,37 @@ public class AuthenticationController extends Controller{
     private static final String getQuery = "select * from Login where username=?";
     private static final String getTokenQuery = "select * from Login where token=?";
     private static final String updateQuery = "update Login set timestamp=? where token=?";
+    private static final String refreshQuery = "select * from Login where token=? and username=?";
 
     public static String getCurrentDateTime() {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(date);
         return currentTime;
+    }
+
+    @RequestMapping("/refresh")
+    public RefreshResponse refresh(
+            @RequestParam("username") String username,
+            @RequestParam("token") String token) {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        try {
+            connection.openConnection();
+            if (!connection.isConnected()) {
+                return RefreshResponse.errorResponse("Failed to connect to database");
+            }
+            PreparedStatement st = connection.getPreparedStatement(refreshQuery);
+            st.setString(1, token);
+            st.setString(2, username);
+            ResultSet set = st.executeQuery();
+            if (!set.next()) {
+                return RefreshResponse.errorResponse("Failed to find token");
+            }
+            connection.closeConnection();
+        } catch (SQLException e) {
+            return RefreshResponse.errorResponse(e.getMessage());
+        }
+        return new RefreshResponse();
     }
 
     public static boolean isLoggedInToken(String token) {

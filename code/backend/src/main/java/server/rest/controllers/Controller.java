@@ -20,6 +20,6 @@ public class Controller {
     }
 
     protected static boolean isUserLoggedIn(String token) {
-        return AuthenticationController.isUserLoggedIn(token);
+        return AuthenticationController.isLoggedInToken(token);
     }
 }
