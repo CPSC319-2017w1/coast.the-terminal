@@ -116,7 +116,6 @@ function conformDropdownValuesToDefault (project, tableData) {
                           "costCenterId": "costcenters",
                           "reportingManagerId": "hiringmanagers",
                           "mainSkillId": "skills",
-                          "poNum": "refnos",
                           "rateType": "ratetypes"};
   for(let reqField in REQUIRED_FIELDS) {
     let actualFieldName = REQUIRED_FIELDS[reqField];
@@ -171,7 +170,17 @@ export function viewContractors() {
   };
 }
 
-export function viewAllContractorData() {
+export function viewAllContractorDataSeparateRows() {
+  return viewAllContractorData(generateContractorRows);
+}
+
+export function viewAllContractorDataKeepOriginal() {
+  return viewAllContractorData(keepOriginalAndGenerateRows);
+}
+
+
+
+function viewAllContractorData(parsingFunc) {
   return dispatch => {
     return request
       .get(`${LIVE_SITE}contractors/viewAllData`)
@@ -180,7 +189,7 @@ export function viewAllContractorData() {
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
-        let contractors = body.contractors.map(c => {return flattenData(c)});
+        let contractors = parsingFunc(body.contractors);
         dispatch(viewAllData(contractors));
       })
       .catch((err) => {
@@ -189,6 +198,101 @@ export function viewAllContractorData() {
   };
 }
 
+function keepOriginalAndGenerateRows(data) {
+  let parsedData = {};
+  parsedData["originalData"] = data;
+  parsedData["humanReadableData"] = generateContractorRows(data);
+  return parsedData;
+}
+
+
+function generateContractorRows(data) {
+  const CONTRACTS_FIELD = 'contracts';
+  let contractors = [];
+  const contractorFields = {
+    'id': 'id',
+    'firstName': 'First Name',
+    'lastName': 'Last Name',
+    'agencySource': 'Agency Source',
+    'status': 'Status',
+    'contracts': 'contracts'};
+
+  const contractFields = {'chargeType': 'Charge Type',
+                        'currencyCode': 'Currency Code',
+                        'dailyAllowance': 'Allowance Expense',
+                        'endDate': "End Date",
+                       //'id': 'engagement-id',
+                        'hourlyRate': 'Hourly Rate',
+                        'originalDocumentation': 'Original Documentation',
+                        'poRefNum': 'PO Reference Number',
+                        'projectName': 'Project Name',
+                        'rateType': 'Rate Type',
+                        'rehire': 'Rehire',
+                        'startDate': 'Start Date',
+                        'terminationNum': 'Termination Number',
+                        'timeMaterialTerms': 'Time And Material Terms'};
+
+  const contractObjectFields = {
+    "costCenter": {
+      //"id": "costcenter-id",
+      "location": "Location"
+    },
+    "hrPayGrade": {
+     // "id": "hrPayGrade-id",
+      "startAmount": "Pay Grade Start Amount",
+      "endAmount": "Pay Grade End Amount",
+      "name": "Pay Grade Name"
+    },
+    "hrPositionRole": {
+     // "id": "hrPosition-id",
+      "roleName": "HR Role Name",
+      "description": "HR Role Description",
+    },
+    "mainSkill": {
+     // "id": "skill-id",
+      "name": "Skill Name",
+      "description": "Skill Description",
+      "type": "Skill Type"
+    }
+  };
+
+  for(let contractor of data) {
+    let contractorParsed = {};
+    for(let contractorField in contractorFields) {
+      if(contractorField !== CONTRACTS_FIELD){
+        let humanReadableName = contractorFields[contractorField];
+        contractorParsed[humanReadableName] = contractor[contractorField];
+      } else {
+        //new row for each contract (even with same contractor data)
+        let saveContractorParsed = Object.assign({}, contractorParsed);
+        let contracts = contractor[CONTRACTS_FIELD];
+        for(let contract of contracts) {
+          //extract out string fields in each contract
+          for (let contractField in contractFields) {
+            let humanReadableName = contractFields[contractField];
+            contractorParsed[humanReadableName] = contract[contractField];
+          }
+          //extract out object type fields in each contract
+          for(let contractObjectFieldName in contractObjectFields){
+            let contractObjectValues = contract[contractObjectFieldName];
+            let contractObjectSchema = contractObjectFields[contractObjectFieldName];
+
+            for(let contractObjectFieldName in contractObjectSchema){
+              if(contractObjectSchema.hasOwnProperty(contractObjectFieldName)) {
+                let humanReadableName = contractObjectSchema[contractObjectFieldName];
+                contractorParsed[humanReadableName] = contractObjectValues[contractObjectFieldName];
+              }
+            }
+          }
+          contractors.push(contractorParsed);
+          contractorParsed = Object.assign({}, saveContractorParsed);
+        }
+      }
+    }
+  }
+
+  return contractors;
+}
 
 //taken from https://stackoverflow.com/questions/19098797/fastest-way-to-flatten-un-flatten-nested-json-objects/19101235#19101235
 function flattenData(data) {

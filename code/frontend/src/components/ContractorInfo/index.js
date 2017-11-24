@@ -8,7 +8,7 @@ import ContractorInfoComponent from './ContractorInfo.jsx';
 import EditContractor from './EditContractor.js';
 import items from '../Filtering/Data.js';
 import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
-import { viewAllContractorData } from '../../actions/contractor-info-actions';
+import { viewAllContractorDataKeepOriginal } from '../../actions/contractor-info-actions';
 
 const mapStateToProps = state => {
   return {
@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getData: () => {
       dispatch(isLoading());
-      dispatch(viewAllContractorData());
+      dispatch(viewAllContractorDataKeepOriginal());
     },
     stopLoading: () => {
       dispatch(hasStoppedLoading());
@@ -41,7 +41,7 @@ class ContractorInfoContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.contractors.data.length > 0) {
+    if(nextProps.contractors.data.humanReadableData.length > 0) {
       this.props.stopLoading();
     }
   }
@@ -59,9 +59,14 @@ class ContractorInfoContainer extends React.Component {
   }
 
   render() {
-    if(this.state.selectedContractorId == null){
+    const {props, state} = this;
+    let contractorData = props.contractors.data.humanReadableData;
+    if (typeof contractorData === typeof undefined) {
+      contractorData = [];
+    }
+    if(state.selectedContractorId == null){
       return <ContractorInfoComponent
-        tabledata={this.state.data}
+        tabledata={contractorData}
         handleEditContractor={this.handleEditContractor}/>;
     } else {
       return <EditContractor/>;

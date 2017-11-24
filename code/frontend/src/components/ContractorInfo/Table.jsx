@@ -7,35 +7,52 @@ function Table({tabledata, handleEditContractor}) {
     <thead className={css.tableheader}>
       {/*Main header, will dynamically change based on filter*/}
       <tr>
-        <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Company</th>
-        <th>Reporting Manager</th>
-        <th>PO Reference</th>
+        {getHeaders(tabledata)}
       </tr>
     </thead>
     <tbody className={css.tablebody}>
-      {getRows(tabledata, handleEditContractor)}
+    {getRows(tabledata, handleEditContractor)}
     </tbody>
   </table>;
 }
 
+function getHeaders(data) {
+  var headers = [];
+  headers.push(<th></th>);
+  if(data.length > 0) {
+    let firstRow = data[0];
+    for(let fieldName in firstRow) {
+      if(firstRow.hasOwnProperty(fieldName)) {
+        headers.push((
+          <th>{fieldName}</th>
+        ));
+      }
+    }
+  }
+  return headers;
+}
+
 function getRows(data, func) {
-  return data.map((i) =>
-    <tr key={i.id} className={css.tablerow}>
-      <td key={i.id}>
-        <p>{i.id}</p>
-        <button name={i.id} className={css.editbtn} onClick={func}>EDIT</button>
-      </td>
-      {/*This also will dynamically change based on filter*/}
-      <td key={i.fname}>{i.fname}</td>
-      <td key={i.lname}>{i.lname}</td>
-      <td key={i.company}>{i.company}</td>
-      <td key={i.reporting_manager}>{i.reporting_manager}</td>
-      <td key={i.po_ref}>{i.po_ref}</td>
-    </tr>
+  return data.map((contractor) =>
+      <tr key={contractor.id} className={css.tablerow}>
+        <td key={contractor.id}>
+          <button name={contractor.id} className={css.editbtn} onClick={func}>EDIT</button>
+        </td>
+        {getColumns(contractor)}
+      </tr>
   );
+}
+
+function getColumns(contractorData) {
+  let cols = [];
+  for(let contractorField in contractorData) {
+    if(contractorData.hasOwnProperty(contractorField)) {
+      cols.push((
+        <td key={contractorField}>{contractorData[contractorField]}</td>
+      ));
+    }
+  }
+  return cols;
 }
 
 Table.propTypes = {
