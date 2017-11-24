@@ -9,7 +9,7 @@ import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
 import '../Filtering/pivottable.css';
 import TableRenderers from 'react-pivottable/TableRenderers';
-import items from '../Filtering/Data.js';
+import {reportinfo} from '../Filtering/Data.js';
 import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
 import { viewAllContractorDataSeparateRows } from '../../actions/contractor-info-actions';
 
@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const data = items;
+const data = reportinfo;
 
 class PivotTableContainer extends React.Component {
   constructor(props) {
@@ -59,7 +59,7 @@ class PivotTableContainer extends React.Component {
       mode: 'demo',
       filename: 'Contractor Data',
       pivotState: {
-        data: items,
+        data: reportinfo,
         rendererName: 'Table',
         plotlyOptions: {width: 900, height: 500}
       }
@@ -70,7 +70,7 @@ class PivotTableContainer extends React.Component {
   render() {
     const { props, state }  = this;
     return <PivotTableUI
-      data={props.contractors.data} onChange={s => this.setState({pivotState: s})}
+      data={reportinfo} onChange={s => this.setState({pivotState: s})}
       renderers={Object.assign({}, TableRenderers, createPlotlyRenderers(Plot))}
       {...this.state.pivotState} unusedOrientationCutoff={Infinity}
     />;
