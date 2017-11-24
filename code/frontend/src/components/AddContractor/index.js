@@ -145,7 +145,7 @@ class AddContractorContainer extends React.Component{
         endDate: "2017-01-02",
         dailyAllowance:0,
         timeMaterialTerms:0,
-        hourlyRate:0
+        hourlyrate:0
     };
   }
 

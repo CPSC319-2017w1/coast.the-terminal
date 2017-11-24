@@ -84,9 +84,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             Est. Hourly Rate
             <input className={css.txtfield}
               name="hourlyrate"
-              type="text"
+              type="number"
               data-index={index}
-              value={project.hourlyRate}
+              value={project.hourlyrate}
               onChange={handleTextInput}/>
           </p>
           <p className={css.hrpay}>
