@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import css from './navbar.css';
 import * as TABS from '../../constants/tabs.js';
 
-function NavbarComponent({username, isAdmin, tab, onClick}) {
+function NavbarComponent({isAdmin, tab, onClick}) {
   return (
     <div className={css.wrapper}>
       <div className={css.usertype}>
@@ -14,43 +14,58 @@ function NavbarComponent({username, isAdmin, tab, onClick}) {
           <li className={getClassName(tab, TABS.DASHBOARD)}
             name={TABS.DASHBOARD}
             onClick={onClick}>
-            <img className={css.dash} src={require('../../../../../design/home.png')} alt="home"/>
-            <p> Dashboard
-            </p>
+            <img name={TABS.DASHBOARD}
+              className={css.dash}
+              src={require('../../../../../design/home.png')}
+              alt="home"/>
+            <p name={TABS.DASHBOARD}>Dashboard</p>
           </li>
           <li className={getClassName(tab, TABS.FILTERING)}
             name={TABS.FILTERING}
             onClick={onClick}>
-              <img className={css.filter} src={require('../../../../../design/filter.png')} alt="home"/>
-            <p>Data Filtering System</p>
+            <img name={TABS.FILTERING}
+              className={css.filter}
+              src={require('../../../../../design/filter.png')}
+              alt="home"/>
+            <p name={TABS.FILTERING}>Data Filtering System</p>
           </li>
           <li className={getClassName(tab, TABS.ADD_CONTRACTOR)}
             name={TABS.ADD_CONTRACTOR}
             onClick={onClick}>
-              <img className={css.add} src={require('../../../../../design/add.png')} alt="home"/>
-            <p>Add Contractor</p>
+            <img name={TABS.ADD_CONTRACTOR}
+              className={css.add}
+              src={require('../../../../../design/add.png')}
+              alt="home"/>
+            <p name={TABS.ADD_CONTRACTOR}>Add Contractor</p>
           </li>
           <li className={getClassName(tab, TABS.CONTRACTOR_INFO)}
             name={TABS.CONTRACTOR_INFO}
             onClick={onClick}>
-              <img className={css.info} src={require('../../../../../design/info.png')} alt="home"/>
-            <p>Contractor Information</p>
+            <img name={TABS.CONTRACTOR_INFO}
+              className={css.info}
+              src={require('../../../../../design/info.png')}
+              alt="home"/>
+            <p name={TABS.CONTRACTOR_INFO}>Contractor Information</p>
           </li>
           <li className={getClassName(tab, TABS.REPORTS)}
             name={TABS.REPORTS}
             onClick={onClick}>
-              <img className={css.rep} src={require('../../../../../design/repoorts.png')} alt="home"/>
-            <p>Reports
-            </p>
+            <img name={TABS.REPORTS}
+              className={css.rep}
+              src={require('../../../../../design/repoorts.png')}
+              alt="home"/>
+            <p name={TABS.REPORTS}>Reports</p>
           </li>
           {
             isAdmin
               ? <li className={getClassName(tab, TABS.ADMIN_PANEL)}
                 name={TABS.ADMIN_PANEL}
                 onClick={onClick}>
-                  <img className={css.admin} src={require('../../../../../design/admin.png')} alt="home"/>
-                <p>Admin Panel
-                </p>
+                <img name={TABS.ADMIN_PANEL}
+                  className={css.admin}
+                  src={require('../../../../../design/admin.png')}
+                  alt="home"/>
+                <p name={TABS.ADMIN_PANEL}>Admin Panel</p>
               </li>
               : null
           }
@@ -65,7 +80,6 @@ function getClassName(selectedTab, currentTab) {
 }
 
 NavbarComponent.propTypes = {
-  username: PropTypes.string.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   tab: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired

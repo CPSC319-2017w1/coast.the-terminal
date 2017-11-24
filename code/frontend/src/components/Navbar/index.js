@@ -6,7 +6,7 @@ import NavbarComponent from './Navbar.jsx';
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    isAdmin: state.user.isAdmin,
     tab: state.main.tab
   };
 };
@@ -33,15 +33,14 @@ class NavbarContainer extends React.Component{
   render() {
     const {props} = this;
     return <NavbarComponent
-      username={props.user.username}
-      isAdmin={props.user.isAdmin}
+      isAdmin={props.isAdmin}
       tab={props.tab}
       onClick={this.onClick} />;
   }
 }
 
 NavbarContainer.propTypes = {
-  user: PropTypes.object.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   tab: PropTypes.string.isRequired,
   handleTabClick: PropTypes.func.isRequired
 };
