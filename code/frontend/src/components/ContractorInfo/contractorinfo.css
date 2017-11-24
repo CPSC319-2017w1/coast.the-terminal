@@ -1,3 +1,27 @@
 .wrapper{
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
 
+.filtertable {
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    border-collapse: collapse;
+}
+
+.tableheader {
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    text-align: left;
+    background-color: #0050A1;
+    color: white;
+    border: 1px solid #ddd
+}
+
+.filtertable tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+.tablerow {
+    padding: 8px;
 }
