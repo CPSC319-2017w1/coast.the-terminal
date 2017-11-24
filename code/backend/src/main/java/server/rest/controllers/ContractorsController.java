@@ -303,6 +303,7 @@ public class ContractorsController extends Controller {
             st.setString(i++, mainSkillId);
             st.setInt(i++, timeMaterialTerms);
             st.setInt(i++, poNum);
+            st.setInt(i++, hourlyRate);
 
             int success = st.executeUpdate();
             if(success == 0) {
