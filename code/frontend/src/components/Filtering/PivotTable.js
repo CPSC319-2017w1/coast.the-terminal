@@ -11,7 +11,7 @@ import '../Filtering/pivottable.css';
 import TableRenderers from 'react-pivottable/TableRenderers';
 import items from '../Filtering/Data.js';
 import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
-import { viewAllContractorData } from '../../actions/contractor-info-actions';
+import { viewAllContractorDataSeparateRows } from '../../actions/contractor-info-actions';
 
 const mapStateToProps = state => {
   return {
@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getData: () => {
       dispatch(isLoading());
-      dispatch(viewAllContractorData());
+      dispatch(viewAllContractorDataSeparateRows());
     },
     stopLoading: () => {
       dispatch(hasStoppedLoading());
