@@ -7,41 +7,50 @@ function NavbarComponent({username, isAdmin, tab, onClick}) {
   return (
     <div className={css.wrapper}>
       <div className={css.usertype}>
-        Logged in as <strong>{username}</strong>
+        <img className={css.logo} src={require('../../../../../design/Coast.png')} alt="logo"/>
       </div>
       <div>
         <ul>
           <li className={getClassName(tab, TABS.DASHBOARD)}
             name={TABS.DASHBOARD}
             onClick={onClick}>
-            Dashboard
+            <img className={css.dash} src={require('../../../../../design/home.png')} alt="home"/>
+            <p> Dashboard
+            </p>
           </li>
           <li className={getClassName(tab, TABS.FILTERING)}
             name={TABS.FILTERING}
             onClick={onClick}>
-            Data Filtering System
+              <img className={css.filter} src={require('../../../../../design/filter.png')} alt="home"/>
+            <p>Data Filtering System</p>
           </li>
           <li className={getClassName(tab, TABS.ADD_CONTRACTOR)}
             name={TABS.ADD_CONTRACTOR}
             onClick={onClick}>
-            Add Contractor
+              <img className={css.add} src={require('../../../../../design/add.png')} alt="home"/>
+            <p>Add Contractor</p>
           </li>
           <li className={getClassName(tab, TABS.CONTRACTOR_INFO)}
             name={TABS.CONTRACTOR_INFO}
             onClick={onClick}>
-            Contractor Information
+              <img className={css.info} src={require('../../../../../design/info.png')} alt="home"/>
+            <p>Contractor Information</p>
           </li>
           <li className={getClassName(tab, TABS.REPORTS)}
             name={TABS.REPORTS}
             onClick={onClick}>
-            Reports
+              <img className={css.rep} src={require('../../../../../design/repoorts.png')} alt="home"/>
+            <p>Reports
+            </p>
           </li>
           {
             isAdmin
               ? <li className={getClassName(tab, TABS.ADMIN_PANEL)}
                 name={TABS.ADMIN_PANEL}
                 onClick={onClick}>
-                Admin Panel
+                  <img className={css.admin} src={require('../../../../../design/admin.png')} alt="home"/>
+                <p>Admin Panel
+                </p>
               </li>
               : null
           }
