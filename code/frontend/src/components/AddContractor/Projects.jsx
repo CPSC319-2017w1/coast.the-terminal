@@ -102,13 +102,12 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           </p>
           <p className={css.poref}>
             P.O. Reference #
-            <select className={css.txtfield}
+            <input className={css.txtfield}
               name="poNum"
-              type="text"
+              type="number"
               data-index={index}
-              onChange={handleDropdownInput}>
-              {getOptions(project.refnos)}
-            </select>
+              onChange={handleTextInput}>
+            </input>
           </p>
           <p className={css.currency}>
             Currency

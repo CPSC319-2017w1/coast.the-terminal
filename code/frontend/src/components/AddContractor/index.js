@@ -136,7 +136,7 @@ class AddContractorContainer extends React.Component{
         hrpositions: this.getHrPositionOptions(),
         ratetypes: this.getRateTypeOptions(),
         paygrades: this.getPayGradeOptions(),
-        refnos: this.getRefNosOptions(),
+        refnos: 0,
         mainSkills: this.getMainSkillsOptions(),
         costCenters: this.getCostCenterOptions(),
         originalDocumentation: '',
@@ -188,11 +188,6 @@ class AddContractorContainer extends React.Component{
   getPayGradeOptions() {
     //fallbacks
     return ['A', 'B'];
-  }
-
-  getRefNosOptions() {
-    //fallbacks
-    return ['1', '2', '3'];
   }
 
   getMainSkillsOptions() {
