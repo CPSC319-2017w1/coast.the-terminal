@@ -8,7 +8,7 @@ import PivotTableUI from 'react-pivottable/PivotTableUI';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
 import TableRenderers from 'react-pivottable/TableRenderers';
-import items from '../Filtering/Data.js';
+import {reportinfo} from '../Filtering/Data.js';
 
 const mapStateToProps = state => {
   return {
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const data = items;
+const data = reportinfo;
 
 class ReportBuilderContainer extends React.Component {
   constructor(props) {
@@ -40,9 +40,11 @@ class ReportBuilderContainer extends React.Component {
   componentWillMount() {
     this.setState({
       mode: "demo",
-      filename: "Contractor Data",
+      filename: "Trending Reports",
       pivotState: {
-        data: items,
+        data: reportinfo,
+        cols:["Working Month"],
+        aggregatorName: "Count Unique Values", vals: ["Contractor Name"],
         rendererName: "Stacked Column Chart",
         plotlyOptions: {width: 900, height: 500}
       }

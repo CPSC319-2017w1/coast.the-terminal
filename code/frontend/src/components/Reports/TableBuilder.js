@@ -1,23 +1,16 @@
-/**
- * Created by steph on 2017-11-18.
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PivotTableUI from 'react-pivottable/PivotTableUI';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
-import '../Filtering/pivottable.css';
 import TableRenderers from 'react-pivottable/TableRenderers';
 import items from '../Filtering/Data.js';
-import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
-import { viewAllContractorData } from '../../actions/contractor-info-actions';
 
 const mapStateToProps = state => {
   return {
     user: state.user,
-    tables: state.tables,
-    contractors: state.contractors
+    tables: state.tables
   };
 };
 
@@ -25,19 +18,13 @@ const Plot = createPlotlyComponent(window.Plotly);
 
 const mapDispatchToProps = dispatch => {
   return {
-    getData: () => {
-      dispatch(isLoading());
-      dispatch(viewAllContractorData());
-    },
-    stopLoading: () => {
-      dispatch(hasStoppedLoading());
-    }
+
   };
 };
 
 const data = items;
 
-class PivotTableContainer extends React.Component {
+class ReportBuilderContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = { pivotState: props };
@@ -45,22 +32,15 @@ class PivotTableContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({pivotState: nextProps});
-    if(nextProps.contractors.data.length > 0) {
-      this.props.stopLoading();
-    }
-  }
-
-  componentDidMount() {
-    this.props.getData();
   }
 
   componentWillMount() {
     this.setState({
-      mode: 'demo',
-      filename: 'Contractor Data',
+      mode: "demo",
+      filename: "Contractor Data",
       pivotState: {
         data: items,
-        rendererName: 'Table',
+        rendererName: "Table",
         plotlyOptions: {width: 900, height: 500}
       }
     });
@@ -68,24 +48,22 @@ class PivotTableContainer extends React.Component {
 
 
   render() {
-    const { props, state }  = this;
     return <PivotTableUI
-      data={props.contractors.data} onChange={s => this.setState({pivotState: s})}
+      data={data} onChange={s => this.setState({pivotState: s})}
       renderers={Object.assign({}, TableRenderers, createPlotlyRenderers(Plot))}
       {...this.state.pivotState} unusedOrientationCutoff={Infinity}
     />;
   }
 }
 
-PivotTableContainer.propTypes = {
+ReportBuilderContainer.propTypes = {
   user: PropTypes.object.isRequired,
-  tables: PropTypes.object.isRequired,
-  getData: PropTypes.func.isRequired
+  tables: PropTypes.object.isRequired
 };
 
-const PivotTable = connect(
+const TableBuilder = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PivotTableContainer);
+)(ReportBuilderContainer);
 
-export default PivotTable;
+export default TableBuilder;

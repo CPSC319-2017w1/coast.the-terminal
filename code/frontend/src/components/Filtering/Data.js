@@ -284,3 +284,238 @@ let items = [
   }];
 
 export default items;
+
+export const reportinfo = [
+  {
+    'Contractor Name': 'Wayne Gretzky',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'April',
+    'Billing Month': 'May',
+    'Total Monthly Cost': 12645.83,
+    'Hiring Manager': 'Mark Messier',
+    'Start Date': '2017-4-3',
+    'End Date': '2017-9-30'
+  },
+  {
+    'Contractor Name': 'Wayne Gretzky',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'May',
+    'Billing Month': 'June',
+    'Total Monthly Cost': 12645.83,
+    'Hiring Manager': 'Mark Messier',
+    'Start Date': '2017-4-3',
+    'End Date': '2017-9-30'
+  },
+  {
+    'Contractor Name': 'Wayne Gretzky',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'June',
+    'Billing Month': 'July',
+    'Total Monthly Cost': 12645.83,
+    'Hiring Manager': 'Mark Messier',
+    'Start Date': '2017-4-3',
+    'End Date': '2017-9-30'
+  },
+  {
+    'Contractor Name': 'Wayne Gretzky',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'July',
+    'Billing Month': 'August',
+    'Total Monthly Cost': 12645.83,
+    'Hiring Manager': 'Mark Messier',
+    'Start Date': '2017-4-3',
+    'End Date': '2017-9-30'
+  },
+  {
+    'Contractor Name': 'Wayne Gretzky',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'August',
+    'Billing Month': 'September',
+    'Total Monthly Cost': 12645.83,
+    'Hiring Manager': 'Mark Messier',
+    'Start Date': '2017-4-3',
+    'End Date': '2017-9-30'
+  },
+  {
+    'Contractor Name': 'Wayne Gretzky',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'September',
+    'Billing Month': 'October',
+    'Total Monthly Cost': 12645.83,
+    'Hiring Manager': 'Mark Messier',
+    'Start Date': '2017-4-3',
+    'End Date': '2017-9-30'
+  },
+  {
+    'Contractor Name': 'Paul Coffey',
+    'Company': 'Delloite',
+    'Cost Centre': '742',
+    'Working Month': 'April',
+    'Billing Month': 'May',
+    'Total Monthly Cost': 15750.00,
+    'Hiring Manager': 'Glen Sather',
+    'Start Date': '2017-4-24',
+    'End Date': '2017-11-30'
+  },
+  {
+    'Contractor Name': 'Paul Coffey',
+    'Company': 'Delloite',
+    'Cost Centre': '742',
+    'Working Month': 'May',
+    'Billing Month': 'June',
+    'Total Monthly Cost': 15750.00,
+    'Hiring Manager': 'Glen Sather',
+    'Start Date': '2017-4-24',
+    'End Date': '2017-11-30'
+  },
+  {
+    'Contractor Name': 'Paul Coffey',
+    'Company': 'Delloite',
+    'Cost Centre': '742',
+    'Working Month': 'June',
+    'Billing Month': 'July',
+    'Total Monthly Cost': 15750.00,
+    'Hiring Manager': 'Glen Sather',
+    'Start Date': '2017-4-24',
+    'End Date': '2017-11-30'
+  },
+  {
+    'Contractor Name': 'Paul Coffey',
+    'Company': 'Delloite',
+    'Cost Centre': '742',
+    'Working Month': 'July',
+    'Billing Month': 'August',
+    'Total Monthly Cost': 15750.00,
+    'Hiring Manager': 'Glen Sather',
+    'Start Date': '2017-4-24',
+    'End Date': '2017-11-30'
+  },
+  {
+    'Contractor Name': 'Paul Coffey',
+    'Company': 'Delloite',
+    'Cost Centre': '742',
+    'Working Month': 'August',
+    'Billing Month': 'September',
+    'Total Monthly Cost': 15750.00,
+    'Hiring Manager': 'Glen Sather',
+    'Start Date': '2017-4-24',
+    'End Date': '2017-11-30'
+  },
+  {
+    'Contractor Name': 'Paul Coffey',
+    'Company': 'Delloite',
+    'Cost Centre': '742',
+    'Working Month': 'September',
+    'Billing Month': 'October',
+    'Total Monthly Cost': 15750.00,
+    'Hiring Manager': 'Glen Sather',
+    'Start Date': '2017-4-24',
+    'End Date': '2017-11-30'
+  },
+  {
+    'Contractor Name': 'Paul Coffey',
+    'Company': 'Delloite',
+    'Cost Centre': '742',
+    'Working Month': 'October',
+    'Billing Month': 'November',
+    'Total Monthly Cost': 15750.00,
+    'Hiring Manager': 'Glen Sather',
+    'Start Date': '2017-4-24',
+    'End Date': '2017-11-30'
+  },
+  {
+    'Contractor Name': 'Paul Coffey',
+    'Company': 'Delloite',
+    'Cost Centre': '742',
+    'Working Month': 'November',
+    'Billing Month': 'December',
+    'Total Monthly Cost': 15750.00,
+    'Hiring Manager': 'Glen Sather',
+    'Start Date': '2017-4-24',
+    'End Date': '2017-11-30'
+  },
+  {
+    'Contractor Name': 'Henrik Sedin',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'June',
+    'Billing Month': 'July',
+    'Total Monthly Cost': 18900.00,
+    'Hiring Manager': 'Willie Mitchell',
+    'Start Date': '2017-6-5',
+    'End Date': '2017-12-31'
+  },
+  {
+    'Contractor Name': 'Henrik Sedin',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'July',
+    'Billing Month': 'August',
+    'Total Monthly Cost': 18900.00,
+    'Hiring Manager': 'Willie Mitchell',
+    'Start Date': '2017-6-5',
+    'End Date': '2017-12-31'
+  },
+  {
+    'Contractor Name': 'Henrik Sedin',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'August',
+    'Billing Month': 'September',
+    'Total Monthly Cost': 18900.00,
+    'Hiring Manager': 'Willie Mitchell',
+    'Start Date': '2017-6-5',
+    'End Date': '2017-12-31'
+  },
+  {
+    'Contractor Name': 'Henrik Sedin',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'September',
+    'Billing Month': 'October',
+    'Total Monthly Cost': 18900.00,
+    'Hiring Manager': 'Willie Mitchell',
+    'Start Date': '2017-6-5',
+    'End Date': '2017-12-31'
+  },
+  {
+    'Contractor Name': 'Henrik Sedin',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'October',
+    'Billing Month': 'November',
+    'Total Monthly Cost': 18900.00,
+    'Hiring Manager': 'Willie Mitchell',
+    'Start Date': '2017-6-5',
+    'End Date': '2017-12-31'
+  },
+  {
+    'Contractor Name': 'Henrik Sedin',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'November',
+    'Billing Month': 'December',
+    'Total Monthly Cost': 18900.00,
+    'Hiring Manager': 'Willie Mitchell',
+    'Start Date': '2017-6-5',
+    'End Date': '2017-12-31'
+  },
+  {
+    'Contractor Name': 'Henrik Sedin',
+    'Company': 'PWC',
+    'Cost Centre': '742',
+    'Working Month': 'December',
+    'Billing Month': 'December',
+    'Total Monthly Cost': 18900.00,
+    'Hiring Manager': 'Willie Mitchell',
+    'Start Date': '2017-6-5',
+    'End Date': '2017-12-31'
+  }
+
+];
