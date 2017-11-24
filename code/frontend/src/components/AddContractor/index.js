@@ -110,7 +110,9 @@ class AddContractorContainer extends React.Component{
       const { projects } = state;
       let dataIndex = event.target.getAttribute('data-index');
       let project = projects[dataIndex];
-      project[event.target.getAttribute('name')] = event.target.value;
+      let nameWithIndex = event.target.getAttribute('name');
+      let name = nameWithIndex.split("-")[0];
+      project[name] = event.target.value;
       this.setState(Object.assign(state, {projects}));
     }
   }

@@ -111,9 +111,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           </p>
           <p className={css.currency}>
             Currency
-            <input name="currencyCode"  value="USD" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
+            <input name={`currencyCode-${index}`}  value="USD" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
             USD
-            <input name="currencyCode" value="CAD" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
+            <input name={`currencyCode-${index}`} value="CAD" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
             CAD
           </p>
           <p className={css.timeMaterial}>
@@ -136,9 +136,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           </p>
           <p className={css.chargeType}>
             Charge Type
-            <input name="chargeType" value="capital" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
+            <input name={`chargeType-${index}`} value="capital" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
             Capital - Depreciated
-            <input name="chargeType" value="opcost" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
+            <input name={`chargeType-${index}`} value="opcost" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
             Operating Costs
           </p>
           <p className={css.mainSkill}>
