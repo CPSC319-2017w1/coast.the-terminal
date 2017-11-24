@@ -28,9 +28,9 @@
 .wrapper li {
     display: block;
     color: white;
-    padding: 20px;
+    padding: 15px;
     box-shadow: 0 4px 2px -2px #383636;
-    text-align: left;
+    /*text-align: left;*/
     text-decoration: none;
     margin: 0 0 5px 0;
 }
@@ -48,4 +48,55 @@ li:hover {
 
     background-color: #524f4f;
     color: white;
+}
+
+
+.dash {
+    width: 37px;
+    height:37px;
+    float: left;
+    margin-right: 20px;
+}
+
+.filter {
+    width: 37px;
+    height:37px;
+    float: left;
+    margin-right: 20px;
+}
+
+.add{
+      width: 37px;
+      height:37px;
+      float: left;
+      margin-right: 20px;
+  }
+
+.info{
+      width: 37px;
+      height:37px;
+      float: left;
+      margin-right: 20px;
+  }
+
+.rep {
+    width: 37px;
+    height:37px;
+    float: left;
+    margin-right: 20px;
+}
+
+.admin {
+    width: 37px;
+    height:37px;
+    float: left;
+    margin-right: 20px;
+}
+
+p {
+    position: relative;
+}
+
+.logo {
+ width: 220px;
 }
