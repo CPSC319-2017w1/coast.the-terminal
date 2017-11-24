@@ -10,7 +10,7 @@ module.exports = {
     'host': '127.0.0.1',
     'port': 4445,
     'cli_args': {
-      'webdriver.chrome.driver': 'chromedriver',
+      'webdriver.chrome.driver': 'chromedriver.exe',
       'webdriver.ie.driver': ''
     }
   },
