@@ -1,6 +1,3 @@
-/**
- * Created by steph on 2017-11-18.
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,7 +5,7 @@ import PivotTableUI from 'react-pivottable/PivotTableUI';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
 import TableRenderers from 'react-pivottable/TableRenderers';
-import {reportinfo} from '../Filtering/Data.js';
+import items from '../Filtering/Data.js';
 
 const mapStateToProps = state => {
   return {
@@ -25,7 +22,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const data = reportinfo;
+const data = items;
 
 class ReportBuilderContainer extends React.Component {
   constructor(props) {
@@ -40,12 +37,10 @@ class ReportBuilderContainer extends React.Component {
   componentWillMount() {
     this.setState({
       mode: "demo",
-      filename: "Trending Reports",
+      filename: "Contractor Data",
       pivotState: {
-        data: reportinfo,
-        cols:["Working Month"],
-        aggregatorName: "Count Unique Values", vals: ["Contractor Name"],
-        rendererName: "Stacked Column Chart",
+        data: items,
+        rendererName: "Table",
         plotlyOptions: {width: 900, height: 500}
       }
     });
@@ -66,9 +61,9 @@ ReportBuilderContainer.propTypes = {
   tables: PropTypes.object.isRequired
 };
 
-const ReportBuilder = connect(
+const TableBuilder = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ReportBuilderContainer);
 
-export default ReportBuilder;
+export default TableBuilder;
