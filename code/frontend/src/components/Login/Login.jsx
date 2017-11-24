@@ -4,12 +4,12 @@ import css from './login.css';
 
 function LoginComponent({username, password, error, handleUsernameInput, handlePasswordInput, handleSubmit}) {
   return (
-    <div className={css.wrapper}>
-      {error ? <div>{error}</div> : null}
+    <div data-qa="login-wrapper" className={css.wrapper}>
+      {error ? <div data-qa="login-error">{error}</div> : null}
       <form>
         <input className={css.username} type="text" value={username} onChange={handleUsernameInput} placeholder="username"/>
         <input className={css.password} type="password" value={password} onChange={handlePasswordInput} placeholder="password" />
-        <input className={css.submit} type="submit" onClick={handleSubmit} value="Login" />
+        <input data-qa="login-button" className={css.submit} type="submit" onClick={handleSubmit} value="Login" />
       </form>
     </div>
   );
