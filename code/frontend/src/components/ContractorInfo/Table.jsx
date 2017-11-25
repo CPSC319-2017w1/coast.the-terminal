@@ -48,7 +48,7 @@ function getColumns(contractorData) {
   for(let contractorField in contractorData) {
     if(contractorData.hasOwnProperty(contractorField)) {
       cols.push((
-        <td key={contractorField}>{contractorData[contractorField]}</td>
+        <td className={css.columns} key={contractorField}>{contractorData[contractorField]}</td>
       ));
     }
   }

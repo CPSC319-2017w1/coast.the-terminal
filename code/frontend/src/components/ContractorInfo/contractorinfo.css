@@ -4,7 +4,6 @@
 
 .filtertable {
     font-family: 'Lato', Helvetica, Arial, sans-serif;
-    border-collapse: collapse;
 }
 
 .tableheader {
@@ -12,10 +11,16 @@
     padding-right: 5px;
     padding-left: 5px;
     padding-bottom: 5px;
-    text-align: left;
+    text-align: center;
     background-color: #0050A1;
     color: white;
     border: 1px solid #ddd
+}
+
+.tableheader th {
+    padding-right: 30px;
+    padding-left: 30px;
+    text-align: center;
 }
 
 .filtertable tr:nth-child(even){
@@ -24,4 +29,8 @@
 
 .tablerow {
     padding: 8px;
+}
+
+.tablebody td {
+    text-align: center;
 }
