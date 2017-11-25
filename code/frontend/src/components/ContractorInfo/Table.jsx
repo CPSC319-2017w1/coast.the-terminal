@@ -11,7 +11,7 @@ function Table({tabledata, handleEditContractor}) {
       </tr>
     </thead>
     <tbody className={css.tablebody}>
-    {getRows(tabledata, handleEditContractor)}
+      {getRows(tabledata, handleEditContractor)}
     </tbody>
   </table>;
 }
@@ -34,12 +34,12 @@ function getHeaders(data) {
 
 function getRows(data, func) {
   return data.map((contractor) =>
-      <tr key={contractor.id} className={css.tablerow}>
-        <td key={contractor.id}>
-          <button name={contractor.id} className={css.editbtn} onClick={func}>EDIT</button>
-        </td>
-        {getColumns(contractor)}
-      </tr>
+    <tr key={contractor.id} className={css.tablerow}>
+      <td key={contractor.id}>
+        <button name={contractor.id} className={css.editbtn} onClick={func}>EDIT</button>
+      </td>
+      {getColumns(contractor)}
+    </tr>
   );
 }
 
