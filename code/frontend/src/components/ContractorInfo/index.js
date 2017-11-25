@@ -78,15 +78,10 @@ class ContractorInfoContainer extends React.Component {
     if(state.searchvalue == ''){
       data = contractorData;
     } else {
-      contractorData.map(function (contractor) {
-        for(let contractorField in contractor) {
-          if (contractor.hasOwnProperty(contractorField)) {
-            if(contractor[contractorField].contains(state.searchvalue)){
-              data.push(contractor);
-            }
-          }
-        }
-      });
+      data = contractorData.filter(contractor => (
+        (contractor['First Name'].includes(state.searchvalue)) ||
+        (contractor['Last Name'].includes(state.searchvalue))));
+      console.log(data);
     }
 
     if(state.selectedContractorId == null){
