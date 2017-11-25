@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import css from '../Filtering/filtering.css';
+import css from './contractorinfo.css';
 
 function Table({tabledata, handleEditContractor}) {
   return <table className={css.filtertable}>
@@ -48,7 +48,7 @@ function getColumns(contractorData) {
   for(let contractorField in contractorData) {
     if(contractorData.hasOwnProperty(contractorField)) {
       cols.push((
-        <td key={contractorField}>{contractorData[contractorField]}</td>
+        <td className={css.columns} key={contractorField}>{contractorData[contractorField]}</td>
       ));
     }
   }
