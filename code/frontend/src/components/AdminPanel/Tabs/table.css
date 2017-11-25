@@ -6,7 +6,6 @@
     padding: 5px 10px;
     background-color: #0067c6;
     color: white;
-    opacity: 0.8;
     border: none;
     border-radius: 4px;
     margin-right: 20px;
@@ -16,7 +15,6 @@
     padding: 5px 10px;
     background-color: #0067c6;
     color: white;
-    opacity: 0.8;
     border: none;
     border-radius: 4px;
     margin-right: 20px;
@@ -43,16 +41,15 @@
     padding: 5px 10px;
     background-color: #0067c6;
     color: white;
-    opacity: 0.8;
     border: none;
     border-radius: 4px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     margin-top: 10px;
 }
 
 .addnewrow:hover {
     background-color: #0067c6;
-    opacity: 0.2;
+    opacity: 0.5;
     color: white;
 }
 
@@ -87,7 +84,7 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #0050A1;
+    background-color: #0067c6;
     color: white;
     border: 1px solid #ddd
 }
