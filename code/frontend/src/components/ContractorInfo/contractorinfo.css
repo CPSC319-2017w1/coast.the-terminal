@@ -3,7 +3,7 @@
 }
 
 .filtertable {
-    font-family: 'Lato', Helvetica, Arial, sans-serif;
+
 }
 
 .tableheader {
@@ -12,7 +12,8 @@
     padding-left: 5px;
     padding-bottom: 5px;
     text-align: center;
-    background-color: #0050A1;
+    background-color: #0067c6;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
     color: white;
     border: 1px solid #ddd
 }

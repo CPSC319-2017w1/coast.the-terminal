@@ -1,5 +1,5 @@
 .wrapper{
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
     padding: 24px;
     position: relative;
 }
@@ -7,21 +7,21 @@
 .dashboardbtn {
     display: grid;
     display: -ms-grid;
-    grid-template-columns: 200px 70px 200px;
-    -ms-grid-columns: 200px 70px 200px;
+    grid-template-columns: 300px 70px 300px;
+    -ms-grid-columns: 300px 70px 300px;
     grid-template-rows: auto 50px auto;
     -ms-grid-rows:  auto 50px auto;
-    margin-top: 50px;
+    margin-top: 105px;
 }
 
 .dashboardbtn button {
     padding: 20px;
-    width: 200px;
+    width: 300px;
     color: white;
     background-color: #0067c6;
-    opacity: 0.6;
+    opacity: 0.9;
     font-size: 15px;
-    height: 100px;
+    height: 105px;
     border: none;
     border-radius: 5px;
 }
