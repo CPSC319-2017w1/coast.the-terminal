@@ -33,8 +33,12 @@ function getHeaders(data) {
 }
 
 function getRows(data, func) {
+  console.log('Reached Rows');
+  console.log(data);
   return data.map((contractor) =>
     <tr key={contractor.id} className={css.tablerow}>
+      {console.log('Accepted rows:')}
+      {console.log(contractor.id)}
       <td key={contractor.id}>
         <button name={contractor.id} className={css.editbtn} onClick={func}>EDIT</button>
       </td>
