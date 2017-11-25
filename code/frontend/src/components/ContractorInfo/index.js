@@ -81,7 +81,7 @@ class ContractorInfoContainer extends React.Component {
       contractorData.map(function (contractor) {
         for(let contractorField in contractor) {
           if (contractor.hasOwnProperty(contractorField)) {
-            if(contractor[contractorField] == state.searchvalue){
+            if(contractor[contractorField].contains(state.searchvalue)){
               data.push(contractor);
             }
           }
