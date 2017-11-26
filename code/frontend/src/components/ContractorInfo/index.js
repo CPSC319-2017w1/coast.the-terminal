@@ -81,8 +81,6 @@ class ContractorInfoContainer extends React.Component {
       data = contractorData.filter(contractor => (
         (contractor['First Name'].toLowerCase().includes(state.searchvalue.toLowerCase())) ||
         (contractor['Last Name'].toLowerCase().includes(state.searchvalue.toLowerCase()))));
-      console.log('Filtered Data:');
-      console.log(data);
     }
 
     if(state.selectedContractorId == null){
