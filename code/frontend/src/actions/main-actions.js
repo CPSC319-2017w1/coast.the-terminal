@@ -20,9 +20,3 @@ export function hasStoppedLoading() {
     isLoading: false
   };
 }
-
-export function logout() {
-  return {
-    type: ACTIONS.LOGOUT
-  };
-}

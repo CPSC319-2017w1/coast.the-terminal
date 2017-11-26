@@ -2,19 +2,20 @@ import React from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
 import { withCookies, Cookies } from 'react-cookie';
-import { logout } from '../../actions/main-actions.js';
+import { logout } from '../../actions/login-actions.js';
 import UserComponent from './User.jsx';
 
 const mapStateToProps = state => {
   return {
-    username: state.user.username
+    username: state.user.username,
+    token: state.user.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => {
-      dispatch(logout());
+    logout: (username, token) => {
+      dispatch(logout(username, token));
     }
   };
 };
@@ -27,9 +28,10 @@ class UserContainer extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    this.props.cookies.remove('username');
-    this.props.cookies.remove('token');
-    this.props.logout();
+    const { props } = this;
+    props.cookies.remove('username');
+    props.cookies.remove('token');
+    props.logout(props.username, props.token);
   }
 
   render() {

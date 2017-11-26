@@ -64,3 +64,30 @@ export function validateSession(username, token, cookies) {
       });
   };
 }
+
+export function logoutUser() {
+  return {
+    type: ACTIONS.LOGOUT
+  };
+}
+
+export function logout(username, token) {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .get(`${LIVE_SITE}logout`)
+      .query({ username, token })
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        dispatch(hasStoppedLoading());
+        dispatch(logoutUser());
+      }).catch((err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(logoutUser());
+        dispatch(loginFailed(`Failed to remove session from backend: ${err.message}`));
+      });
+  };
+}
