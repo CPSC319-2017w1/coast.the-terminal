@@ -1,7 +1,6 @@
 package server.session;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import server.database.DatabaseConnection;
 import server.model.Login;
 import server.rest.controllers.Controller;
@@ -21,6 +20,8 @@ import java.util.logging.Logger;
 /**
  * Created by vaast on 17/11/2017.
  */
+@CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"}, methods = {RequestMethod.GET, RequestMethod.POST})
+@RestController
 public class AuthenticationController extends Controller{
     private static final String insertQuery = "insert into Login values(?, ?, ?)";
     private static final String deleteQuery = "delete from Login where username=?";
@@ -29,6 +30,7 @@ public class AuthenticationController extends Controller{
     private static final String getTokenQuery = "select * from Login where token=?";
     private static final String updateQuery = "update Login set timestamp=? where token=?";
     private static final String refreshQuery = "select * from Login where token=? and username=?";
+    private static final String permissionsQuery = "select * from User where username=?";
 
     public static String getCurrentDateTime() {
         Date date = new Date();
@@ -42,6 +44,7 @@ public class AuthenticationController extends Controller{
             @RequestParam("username") String username,
             @RequestParam("token") String token) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        String permissions = "";
         try {
             connection.openConnection();
             if (!connection.isConnected()) {
@@ -54,11 +57,19 @@ public class AuthenticationController extends Controller{
             if (!set.next()) {
                 return RefreshResponse.errorResponse("Failed to find token");
             }
+            st = connection.getPreparedStatement(permissionsQuery);
+            st.setString(1, username);
+            set = st.executeQuery();
+            if (set.next()) {
+                permissions = set.getString("permissions");
+            } else {
+                return RefreshResponse.errorResponse("Invalid User");
+            }
             connection.closeConnection();
         } catch (SQLException e) {
             return RefreshResponse.errorResponse(e.getMessage());
         }
-        return new RefreshResponse();
+        return new RefreshResponse(permissions);
     }
 
     public static boolean isLoggedInToken(String token) {
