@@ -60,7 +60,7 @@ export function validateSession(username, token, cookies) {
         cookies.remove('token');
         cookies.remove('username');
         dispatch(hasStoppedLoading());
-        dispatch(loginFailed(err.message));
+        dispatch(loginFailed(`${err.message} - Please sign in again.`));
       });
   };
 }
