@@ -18,10 +18,11 @@ function viewTableFailed(tableName, error) {
   };
 }
 
-export function viewTableRows(tableName) {
+export function viewTableRows(tableName, token) {
   return dispatch => {
     return request
       .get(`${LIVE_SITE}${tableName}/view`)
+      .query({token})
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {

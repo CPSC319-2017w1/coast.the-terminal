@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
 import Form from './Form.jsx';
 import Table from './Table.jsx';
 import * as TYPES from '../../../constants/input-types.js';
-import {DISPLAY_NAME} from '../../../constants/admin-tables';
+import { withCookies, Cookies } from 'react-cookie';
 import css from '../../../components/AdminPanel/Tabs/table.css';
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,7 +20,7 @@ class PanelWrapperContainer extends React.Component {
       toggleAdd: false,
       toggleEdit: false,
       inputValidationMessage: '',
-      itemId: '',
+      itemId: ''
     }, props.getInitialState());
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
@@ -97,6 +97,7 @@ class PanelWrapperContainer extends React.Component {
     const inputValidation = this.areInputsValid(data);
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: '' });
+      data.token = this.props.cookies.get('token');
       this.props.handleAddNew(data);
       this.toggleAdd(event);
     } else {
@@ -119,6 +120,7 @@ class PanelWrapperContainer extends React.Component {
     const inputValidation = this.areInputsValid(data);
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: '' });
+      data.token = this.props.cookies.get('token');
       this.props.handleEditRow(data);
       this.toggleEdit(event);
     } else {
@@ -200,7 +202,8 @@ PanelWrapperContainer.propTypes = {
   header: PropTypes.string.isRequired,
   tableName: PropTypes.string.isRequired,
   handleAddNew: PropTypes.func.isRequired,
-  handleEditRow: PropTypes.func.isRequired
+  handleEditRow: PropTypes.func.isRequired,
+  cookies: instanceOf(Cookies).isRequired
 };
 
 
@@ -209,4 +212,4 @@ const PanelWrapper = connect(
   null
 )(PanelWrapperContainer);
 
-export default PanelWrapper;
+export default withCookies(PanelWrapper);

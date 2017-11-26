@@ -4,7 +4,8 @@ const userInitialState = {
   isLoggedIn: false,
   isAdmin: false,
   username: '',
-  error: false
+  error: false,
+  token: ''
 };
 
 export default function user(state = userInitialState, action) {
@@ -14,18 +15,24 @@ export default function user(state = userInitialState, action) {
         isLoggedIn: true,
         isAdmin: action.isAdmin,
         username: action.username,
-        error: false
+        error: false,
+        token: action.token
       });
     case ACTIONS.LOGOUT:
       return Object.assign({}, state, {
         isLoggedIn: false,
         isAdmin: false,
         username: '',
-        error: false
+        error: false,
+        token: ''
       });
     case ACTIONS.LOGIN_FAILED:
       return Object.assign({}, state, {
-        error: action.error
+        error: action.error,
+        username: '',
+        isLoggedIn: false,
+        token: '',
+        isAdmin: false
       });
     default:
       return state;

@@ -95,28 +95,28 @@ export function addContractor(contractorData, projectData, tableData, callback) 
 }
 
 function addEngagementContract(projectData, contractorId, tableData) {
-   let allEngagementPromises = [];
-   for(let project of projectData) {
-       project["contractorId"] = contractorId;
-       project["resourceId"] = "";
-       project = conformDropdownValuesToDefault(project, tableData);
-       let req = request
-        .post(`${LIVE_SITE}contractors/add/engagementContract`)
-        .query(project);
-       allEngagementPromises.push(req);
-   }
+  let allEngagementPromises = [];
+  for(let project of projectData) {
+    project['contractorId'] = contractorId;
+    project['resourceId'] = '';
+    project = conformDropdownValuesToDefault(project, tableData);
+    let req = request
+      .post(`${LIVE_SITE}contractors/add/engagementContract`)
+      .query(project);
+    allEngagementPromises.push(req);
+  }
 
-   return Promise.all(allEngagementPromises);
+  return Promise.all(allEngagementPromises);
 }
 
 function conformDropdownValuesToDefault (project, tableData) {
   //todo change this to less hacky fix
-  const REQUIRED_FIELDS = {"hrPositionId": "hrroles",
-                          "hrPayGradeId": "paygrades",
-                          "costCenterId": "costcenters",
-                          "reportingManagerId": "hiringmanagers",
-                          "mainSkillId": "skills",
-                          "rateType": "ratetypes"};
+  const REQUIRED_FIELDS = {'hrPositionId': 'hrroles',
+    'hrPayGradeId': 'paygrades',
+    'costCenterId': 'costcenters',
+    'reportingManagerId': 'hiringmanagers',
+    'mainSkillId': 'skills',
+    'rateType': 'ratetypes'};
   for(let reqField in REQUIRED_FIELDS) {
     let actualFieldName = REQUIRED_FIELDS[reqField];
     if(!project.hasOwnProperty(reqField)){
@@ -200,8 +200,8 @@ function viewAllContractorData(parsingFunc) {
 
 function keepOriginalAndGenerateRows(data) {
   let parsedData = {};
-  parsedData["originalData"] = data;
-  parsedData["humanReadableData"] = generateContractorRows(data);
+  parsedData['originalData'] = data;
+  parsedData['humanReadableData'] = generateContractorRows(data);
   return parsedData;
 }
 
@@ -218,41 +218,41 @@ function generateContractorRows(data) {
     'contracts': 'contracts'};
 
   const contractFields = {'chargeType': 'Charge Type',
-                        'currencyCode': 'Currency Code',
-                        'dailyAllowance': 'Allowance Expense',
-                        'endDate': "End Date",
-                       //'id': 'engagement-id',
-                        'hourlyRate': 'Hourly Rate',
-                        'originalDocumentation': 'Original Documentation',
-                        'poRefNum': 'PO Reference Number',
-                        'projectName': 'Project Name',
-                        'rateType': 'Rate Type',
-                        'rehire': 'Rehire',
-                        'startDate': 'Start Date',
-                        'terminationNum': 'Termination Number',
-                        'timeMaterialTerms': 'Time And Material Terms'};
+    'currencyCode': 'Currency Code',
+    'dailyAllowance': 'Allowance Expense',
+    'endDate': 'End Date',
+    //'id': 'engagement-id',
+    'hourlyRate': 'Hourly Rate',
+    'originalDocumentation': 'Original Documentation',
+    'poRefNum': 'PO Reference Number',
+    'projectName': 'Project Name',
+    'rateType': 'Rate Type',
+    'rehire': 'Rehire',
+    'startDate': 'Start Date',
+    'terminationNum': 'Termination Number',
+    'timeMaterialTerms': 'Time And Material Terms'};
 
   const contractObjectFields = {
-    "costCenter": {
+    'costCenter': {
       //"id": "costcenter-id",
-      "location": "Location"
+      'location': 'Location'
     },
-    "hrPayGrade": {
-     // "id": "hrPayGrade-id",
-      "startAmount": "Pay Grade Start Amount",
-      "endAmount": "Pay Grade End Amount",
-      "name": "Pay Grade Name"
+    'hrPayGrade': {
+      // "id": "hrPayGrade-id",
+      'startAmount': 'Pay Grade Start Amount',
+      'endAmount': 'Pay Grade End Amount',
+      'name': 'Pay Grade Name'
     },
-    "hrPositionRole": {
-     // "id": "hrPosition-id",
-      "roleName": "HR Role Name",
-      "description": "HR Role Description",
+    'hrPositionRole': {
+      // "id": "hrPosition-id",
+      'roleName': 'HR Role Name',
+      'description': 'HR Role Description'
     },
-    "mainSkill": {
-     // "id": "skill-id",
-      "name": "Skill Name",
-      "description": "Skill Description",
-      "type": "Skill Type"
+    'mainSkill': {
+      // "id": "skill-id",
+      'name': 'Skill Name',
+      'description': 'Skill Description',
+      'type': 'Skill Type'
     }
   };
 
@@ -315,6 +315,6 @@ function flattenData(data) {
         result[prop] = {};
     }
   }
-  recurse(data, "");
+  recurse(data, '');
   return result;
 }

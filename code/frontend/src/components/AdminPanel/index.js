@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
+import { withCookies, Cookies } from 'react-cookie';
 import * as TABS from '../../constants/admin-tabs.js';
 import AdminPanelComponent from './AdminPanel.jsx';
 import FXTable from './Tabs/FXTable.jsx';
@@ -23,14 +24,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTables: () => {
+    getTables: (token) => {
       dispatch(isLoading());
-      dispatch(viewTableRows(TABLE_NAMES.USERS));
-      dispatch(viewTableRows(TABLE_NAMES.FX_RATES));
-      dispatch(viewTableRows(TABLE_NAMES.HIRING_MANAGERS));
-      dispatch(viewTableRows(TABLE_NAMES.HR_ROLES));
-      dispatch(viewTableRows(TABLE_NAMES.PAY_GRADES));
-      dispatch(viewTableRows(TABLE_NAMES.SKILLS));
+      dispatch(viewTableRows(TABLE_NAMES.USERS, token));
+      dispatch(viewTableRows(TABLE_NAMES.FX_RATES, token));
+      dispatch(viewTableRows(TABLE_NAMES.HIRING_MANAGERS, token));
+      dispatch(viewTableRows(TABLE_NAMES.HR_ROLES, token));
+      dispatch(viewTableRows(TABLE_NAMES.PAY_GRADES, token));
+      dispatch(viewTableRows(TABLE_NAMES.SKILLS, token));
     },
     stopLoading: () => {
       dispatch(hasStoppedLoading());
@@ -65,7 +66,7 @@ class AdminPanelContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getTables();
+    this.props.getTables(this.props.cookies.get('token'));
   }
 
   render(){
@@ -94,7 +95,8 @@ AdminPanelContainer.propTypes= {
   tables: PropTypes.object.isRequired,
   getTables: PropTypes.func.isRequired,
   stopLoading: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  cookies: instanceOf(Cookies).isRequired
 };
 
 const AdminPanel = connect(
@@ -102,4 +104,4 @@ const AdminPanel = connect(
   mapDispatchToProps
 )(AdminPanelContainer);
 
-export default AdminPanel;
+export default withCookies(AdminPanel);
