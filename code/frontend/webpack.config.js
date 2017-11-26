@@ -55,7 +55,11 @@ module.exports = (env) => {
         }
       ]
     },
-    plugins: isDev ? [] : [
+    plugins: isDev ? [
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('development')
+      })
+    ] : [
       new CleanWebpackPlugin(['dist']),
       new UglifyJSPlugin(),
       new webpack.DefinePlugin({
