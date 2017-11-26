@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import server.database.DatabaseConnection;
 import server.model.Login;
 import server.rest.controllers.Controller;
+import server.rest.responses.LogoutResponse;
 import server.rest.responses.RefreshResponse;
 
 import java.sql.PreparedStatement;
@@ -70,6 +71,14 @@ public class AuthenticationController extends Controller{
             return RefreshResponse.errorResponse(e.getMessage());
         }
         return new RefreshResponse(permissions);
+    }
+
+    @RequestMapping("/logout")
+    public LogoutResponse logout(@RequestParam("username") String username, @RequestParam("token") String token) {
+        if (!logout(username)) {
+            return LogoutResponse.errorResponse("Failed to logout");
+        }
+        return new LogoutResponse();
     }
 
     public static boolean isLoggedInToken(String token) {
