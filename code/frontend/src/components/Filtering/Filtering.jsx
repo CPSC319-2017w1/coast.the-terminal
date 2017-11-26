@@ -11,7 +11,7 @@ function FilteringComponent({showTutorial, handleTutorial, closeTutorial}) {
       <div className={css.heading}>
         <h1>Data Filtering System</h1>
         <p>Use the Pivot Table to extract relevant to you from the contractor database.</p>
-        <button onClick={handleTutorial}>How to use the table</button>
+        <button onClick={handleTutorial}>Show/hide tutorial for the pivot table</button>
       </div>
       {showTutorial
         ? <Tutorial closeTutorial={closeTutorial}/>

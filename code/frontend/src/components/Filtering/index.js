@@ -20,13 +20,15 @@ class FilteringContainer extends React.Component {
     this.closeTutorial = this.closeTutorial.bind(this);
   }
 
-  handleTutorial() {
+  handleTutorial(event) {
+    event.preventDefault();
     this.setState({
       showTutorial: !this.state.showTutorial
     });
   }
 
-  closeTutorial(){
+  closeTutorial(event){
+    event.preventDefault();
     this.setState({
       showTutorial: false
     });

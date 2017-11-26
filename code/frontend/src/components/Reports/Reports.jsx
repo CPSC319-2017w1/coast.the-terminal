@@ -11,14 +11,13 @@ function ReportsComponent({showTutorial, showTable, handleTable, handleReport, h
       <div className={css.heading}>
         <h1>Trending Reports</h1>
         <p>Use the Reports generator to view trending reports</p>
-        <button className={css.handletutorial} onClick={handleTutorial}>How to use the graph</button>
-      <br/>
-        <button className={css.tab} onClick={handleTable}>Contractor Report</button>
-        <button className={css.tab} onClick={handleReport}>Trending Report</button>
+        <button className={css.handletutorial} onClick={handleTutorial}>Show/hide tutorial for the graph</button>
       </div>
       {showTutorial
         ? <Tutorial closeTutorial={closeTutorial}/>
         : null}
+      <button className={css.tab} onClick={handleTable}>Contractor Report</button>
+      <button className={css.tab} onClick={handleReport}>Trending Report</button>
       <div className={css.reportholder}>
         {showTable
           ?<TableBuilder/>
