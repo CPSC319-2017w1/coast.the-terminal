@@ -6,7 +6,7 @@ require('babel-polyfill');
 module.exports = (env) => {
   var isDev = typeof env !== 'undefined' && typeof env.dev !== 'undefined' && env.dev;
   return {
-    devtool: isDev ? 'source-map' : 'eval',
+    devtool: isDev ? 'source-map' : '',
     entry: ['babel-polyfill', './index.js'],
     output: {
       path: __dirname + '/dist',
@@ -57,12 +57,10 @@ module.exports = (env) => {
     },
     plugins: isDev ? [] : [
       new CleanWebpackPlugin(['dist']),
+      new UglifyJSPlugin(),
       new webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify('production')
-        }
-      }),
-      new UglifyJSPlugin()
+        'process.env.NODE_ENV': JSON.stringify('production')
+      })
     ]
   };
 };
