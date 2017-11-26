@@ -5,7 +5,6 @@ import css from './contractorinfo.css';
 function Table({tabledata, handleEditContractor}) {
   return <table className={css.filtertable}>
     <thead className={css.tableheader}>
-      {/*Main header, will dynamically change based on filter*/}
       <tr>
         {getHeaders(tabledata)}
       </tr>
@@ -33,13 +32,9 @@ function getHeaders(data) {
 }
 
 function getRows(data, func) {
-  console.log('Reached Rows');
-  console.log(data);
-  return data.map((contractor) =>
-    <tr key={contractor.id} className={css.tablerow}>
-      {console.log('Accepted rows:')}
-      {console.log(contractor.id)}
-      <td key={contractor.id}>
+  return data.map((contractor, index) =>
+    <tr key={index} className={css.tablerow}>
+      <td>
         <button name={contractor.id} className={css.editbtn} onClick={func}>EDIT</button>
       </td>
       {getColumns(contractor)}
