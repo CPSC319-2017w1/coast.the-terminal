@@ -19,18 +19,14 @@ class EditContractorContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contractor: {
-        firstName: '',
-        surname: '',
-        agencySource: '',
-        status: 'active'
-      },
-      projects: [
-        this.createDefaultProjectObject()
-      ],
       message: '',
       tables: {}
     };
+    this.state.contractor = props.contractor;
+    this.state.projects = props.projects;
+    for(let project of this.state.projects) {
+      project['ratetypes'] = this.getRateTypeOptions();
+    }
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleDropdownInput = this.handleDropdownInput.bind(this);
     this.handleDateInput = this.handleDateInput.bind(this);

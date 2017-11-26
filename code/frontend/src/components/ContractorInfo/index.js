@@ -100,16 +100,22 @@ class ContractorInfoContainer extends React.Component {
       console.log(data);
     }
 
-    if(state.selectedContractorId == null){
+
+    if (state.selectedContractorId == null){
       return <ContractorInfoComponent
         tabledata={data}
         searchvalue={state.searchvalue}
         handleSearch={this.handleSearch}
         handleEditContractor={this.handleEditContractor}/>;
     } else {
-      return <EditContractor/>;
+      let selectedContractor = {};
+      for (let contractor of props.contractors.data.originalData) {
+        if (contractor['id'] === state.selectedContractorId) {
+          selectedContractor = contractor;
+        }
+      }
+      return <EditContractor contractor={selectedContractor} projects={selectedContractor.contracts}/>;
     }
-
   }
 }
 
