@@ -197,6 +197,7 @@ public class ContractorsController extends Controller {
     @CrossOrigin("*")
     @RequestMapping(value = "/contractors/edit/engagementContract", method={RequestMethod.POST})
     public Response editEngagementContract(
+            @RequestParam("token") String token,
             @RequestParam("id") String id,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
@@ -218,6 +219,9 @@ public class ContractorsController extends Controller {
             @RequestParam("poNum") int poNum,
             @RequestParam("hourlyrate") int hourlyRate
     ) {
+        if (!isUserLoggedIn(token)) {
+            return Response.createErrorResponse("User not logged in");
+        }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         try {
             connection.openConnection();
@@ -372,7 +376,10 @@ public class ContractorsController extends Controller {
     }
 
     @RequestMapping("/contractors/viewAllData")
-    public Response viewAllContractorData() {
+    public Response viewAllContractorData(@RequestParam("token") String token) {
+        if (!isUserLoggedIn(token)) {
+            return ContractorsResponse.createErrorResponse("User is not logged in");
+        }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         List<Contractor> allContractorData = new ArrayList<>();
 
