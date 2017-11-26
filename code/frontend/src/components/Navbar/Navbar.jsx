@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './navbar.css';
 import * as TABS from '../../constants/tabs.js';
+import User from '../User/index.js';
 
 function NavbarComponent({isAdmin, tab, onClick}) {
   return (
@@ -71,6 +72,7 @@ function NavbarComponent({isAdmin, tab, onClick}) {
           }
         </ul>
       </div>
+      <User/>
     </div>
   );
 }

@@ -11,7 +11,6 @@ import AddContractor from '../AddContractor';
 import ContractorInfo from '../ContractorInfo';
 import Filtering from '../Filtering';
 import Reports from '../Reports';
-import User from '../User';
 import css from './layout.css';
 
 const mapStateToProps = (state, ownProps) => {
@@ -54,7 +53,6 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
   return (
     <div className={css.wrapper}>
       {isLoading ? <div className={css.spinner}></div> : null}
-      <User />
       <Navbar />
       <div className={css.content}>
         {child}
