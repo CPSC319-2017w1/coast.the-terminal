@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
+import { withCookies, Cookies } from 'react-cookie';
 import { switchView } from '../../actions/main-actions.js';
 import NavbarComponent from './Navbar.jsx';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     isAdmin: state.user.isAdmin,
-    tab: state.main.tab
+    tab: ownProps.cookies.get('tab') ? ownProps.cookies.get('tab') : state.main.tab
   };
 };
 
@@ -27,7 +28,9 @@ class NavbarContainer extends React.Component{
 
   onClick(event) {
     event.preventDefault();
-    this.props.handleTabClick(event.target.getAttribute('name'));
+    const tab = event.target.getAttribute('name');
+    this.props.cookies.set('tab', tab);
+    this.props.handleTabClick(tab);
   }
 
   render() {
@@ -42,7 +45,8 @@ class NavbarContainer extends React.Component{
 NavbarContainer.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   tab: PropTypes.string.isRequired,
-  handleTabClick: PropTypes.func.isRequired
+  handleTabClick: PropTypes.func.isRequired,
+  cookies: instanceOf(Cookies).isRequired
 };
 
 const Navbar = connect(
@@ -50,4 +54,4 @@ const Navbar = connect(
   mapDispatchToProps
 )(NavbarContainer);
 
-export default Navbar;
+export default withCookies(Navbar);
