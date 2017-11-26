@@ -197,26 +197,30 @@ public class AuthenticationController extends Controller{
     }
 
     public static boolean logout(String username) {
+        boolean flag = true;
         if (isLoggedIn(username)) {
             DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
             try {
                 connection.openConnection();
                 if (!connection.isConnected()) {
                     Logger.getAnonymousLogger().log(Level.INFO, "Failed to connect to database");
+                    flag = false;
                 }
                 PreparedStatement st = connection.getPreparedStatement(deleteQuery);
                 st.setString(1, username);
                 int success = st.executeUpdate();
                 if (success == 0) {
                     Logger.getAnonymousLogger().log(Level.INFO, "Failed to logout");
+                    flag = false;
                 }
                 connection.commitTransaction();
                 connection.closeConnection();
             } catch(SQLException e) {
                 Logger.getAnonymousLogger().log(Level.INFO, "Failed to logout: " + e.getMessage());
+                flag = false;
             }
         }
-        return false;
+        return flag;
     }
 
     public static ArrayList<Login> getLogins() {
