@@ -60,7 +60,10 @@ class ContractorInfoContainer extends React.Component {
 
   render() {
     const {props, state} = this;
-    let contractorData = props.contractors.data.humanReadableData;
+    let contractorData;
+    if (props.contractors && props.contractors.data) {
+      contractorData = props.contractors.data.humanReadableData;
+    }
     if (typeof contractorData === typeof undefined) {
       contractorData = [];
     }
