@@ -55,7 +55,7 @@ export function validateSession(username, token, cookies) {
         cookies.set('token', token);
         cookies.set('username', username);
         dispatch(hasStoppedLoading());
-        dispatch(loginSuccessful(body.username, body.permissions === 'admin', body.token));
+        dispatch(loginSuccessful(username, body.permissions === 'admin', token));
       }).catch((err) => {
         cookies.remove('token');
         cookies.remove('username');
