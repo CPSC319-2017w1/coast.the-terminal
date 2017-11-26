@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import nock from 'nock';
-import { addContractor, editContractor, viewContractors } from '../src/actions/contractor-info-actions.js';
+
 import * as TYPES from '../src/constants/action-types.js';
 
 const middlewares = [thunk];

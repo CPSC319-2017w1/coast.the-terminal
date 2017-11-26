@@ -1,6 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
-import { LIVE_SITE, LOCALHOST } from '../constants/urls.js';
+import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
 function addContractorSuccessful() {
@@ -12,33 +12,6 @@ function addContractorSuccessful() {
 function addContractorFailed(error) {
   return {
     type: ACTIONS.ADD_CONTRACTOR_FAILED,
-    error
-  };
-}
-
-function editContractorSuccessful() {
-  return {
-    type: ACTIONS.EDIT_CONTRACTOR
-  };
-}
-
-function editContractorFailed(error) {
-  return {
-    type: ACTIONS.EDIT_CONTRACTOR_FAILED,
-    error
-  };
-}
-
-function viewContractorSuccessful(data) {
-  return {
-    type: ACTIONS.VIEW_CONTRACTORS,
-    data
-  };
-}
-
-function viewContractorFailed(error) {
-  return {
-    type: ACTIONS.VIEW_CONTRACTORS_FAILED,
     error
   };
 }
@@ -57,12 +30,12 @@ function viewAllData(data) {
   };
 }
 
-export function addContractor(contractorData, projectData, tableData, callback) {
+export function addContractor(contractorData, projectData, tableData, callback, token) {
   return dispatch => {
     dispatch(isLoading());
     return request
       .post(`${LIVE_SITE}contractors/add`)
-      .query(contractorData)
+      .query(Object.assign({}, contractorData, {token}))
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
@@ -73,7 +46,7 @@ export function addContractor(contractorData, projectData, tableData, callback) 
         return contractorId;
       })
       .then((contractorId) => {
-        return addEngagementContract(projectData, contractorId, tableData);
+        return addEngagementContract(projectData, contractorId, tableData, token);
       })
       .then((responses) => {
         for(let res of responses) {
@@ -94,7 +67,7 @@ export function addContractor(contractorData, projectData, tableData, callback) 
   };
 }
 
-function addEngagementContract(projectData, contractorId, tableData) {
+function addEngagementContract(projectData, contractorId, tableData, token) {
   let allEngagementPromises = [];
   for(let project of projectData) {
     project['contractorId'] = contractorId;
@@ -102,7 +75,7 @@ function addEngagementContract(projectData, contractorId, tableData) {
     project = conformDropdownValuesToDefault(project, tableData);
     let req = request
       .post(`${LIVE_SITE}contractors/add/engagementContract`)
-      .query(project);
+      .query(Object.assign({}, project, {token}));
     allEngagementPromises.push(req);
   }
 
@@ -131,59 +104,21 @@ function conformDropdownValuesToDefault (project, tableData) {
   return project;
 }
 
-export function editContractor(data) {
-  return dispatch => {
-    dispatch(isLoading());
-    return request
-      .post(`${LIVE_SITE}contractors/edit`)
-      .query(data)
-      .then((res) => {
-        const body = res.body;
-        if (!res.ok || body.error) {
-          throw new Error(body.errorMessage);
-        }
-        dispatch(hasStoppedLoading());
-        dispatch(editContractorSuccessful());
-      }).catch((err) => {
-        dispatch(hasStoppedLoading());
-        dispatch(editContractorFailed(err.message));
-      });
-  };
+export function viewAllContractorDataSeparateRows(token) {
+  return viewAllContractorData(generateContractorRows, token);
 }
 
-export function viewContractors() {
-  return dispatch => {
-    dispatch(isLoading());
-    return request
-      .get(`${LIVE_SITE}contractors/view`)
-      .then((res) => {
-        const body = res.body;
-        if (!res.ok || body.error) {
-          throw new Error(body.errorMessage);
-        }
-        dispatch(hasStoppedLoading());
-        dispatch(viewContractorSuccessful(body.contractors));
-      }).catch((err) => {
-        dispatch(hasStoppedLoading());
-        dispatch(viewContractorFailed(err.message));
-      });
-  };
-}
-
-export function viewAllContractorDataSeparateRows() {
-  return viewAllContractorData(generateContractorRows);
-}
-
-export function viewAllContractorDataKeepOriginal() {
-  return viewAllContractorData(keepOriginalAndGenerateRows);
+export function viewAllContractorDataKeepOriginal(token) {
+  return viewAllContractorData(keepOriginalAndGenerateRows, token);
 }
 
 
 
-function viewAllContractorData(parsingFunc) {
+function viewAllContractorData(parsingFunc, token) {
   return dispatch => {
     return request
       .get(`${LIVE_SITE}contractors/viewAllData`)
+      .query({token})
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {

@@ -9,22 +9,23 @@ const mapStateToProps = state => {
   return {
     error: state.contractors.error,
     isLoading: state.main.isLoading,
-    tables: state.tables
+    tables: state.tables,
+    token: state.user.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (contractorData, projectData, tableData, callback) => {
-      dispatch(addContractor(contractorData, projectData, tableData, callback));
+    onSubmit: (contractorData, projectData, tableData, callback, token) => {
+      dispatch(addContractor(contractorData, projectData, tableData, callback, token));
     },
-    viewTables: () => {
-      dispatch(viewTableRows('skills'));
-      dispatch(viewTableRows('fxrates'));
-      dispatch(viewTableRows('paygrades'));
-      dispatch(viewTableRows('hrroles'));
-      dispatch(viewTableRows('hiringmanagers'));
-      dispatch(viewTableRows('costcenters'));
+    viewTables: (token) => {
+      dispatch(viewTableRows('skills', token));
+      dispatch(viewTableRows('fxrates', token));
+      dispatch(viewTableRows('paygrades', token));
+      dispatch(viewTableRows('hrroles', token));
+      dispatch(viewTableRows('hiringmanagers', token));
+      dispatch(viewTableRows('costcenters', token));
     }
   };
 };
@@ -56,7 +57,7 @@ class AddContractorContainer extends React.Component{
   }
 
   componentDidMount() {
-    this.props.viewTables();
+    this.props.viewTables(this.props.token);
   }
 
   handleTextInput(event) {
@@ -128,7 +129,7 @@ class AddContractorContainer extends React.Component{
     event.preventDefault();
     const { contractor } = this.state;
     const { projects } = this.state;
-    this.props.onSubmit(contractor, projects, this.props.tables, this.resetState);
+    this.props.onSubmit(contractor, projects, this.props.tables, this.resetState, this.props.token);
   }
 
   createDefaultProjectObject() {

@@ -20,9 +20,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getData: () => {
+    getData: (token) => {
       dispatch(isLoading());
-      dispatch(viewAllContractorDataKeepOriginal());
+      dispatch(viewAllContractorDataKeepOriginal(token));
     },
     stopLoading: () => {
       dispatch(hasStoppedLoading());
@@ -47,7 +47,7 @@ class ContractorInfoContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getData();
+    this.props.getData(this.props.user.token);
   }
 
   handleEditContractor(event) {
