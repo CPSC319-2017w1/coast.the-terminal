@@ -16,6 +16,19 @@ function addContractorFailed(error) {
   };
 }
 
+function editContractorSuccessful() {
+  return {
+    type: ACTIONS.EDIT_CONTRACTOR
+  };
+}
+
+function editContractorFailed(error) {
+  return {
+    type: ACTIONS.EDIT_CONTRACTOR_FAILED,
+    error
+  };
+}
+
 function viewAllDataFailed(error) {
   return {
     type: ACTIONS.VIEW_ALL_DATA_FAILED,
@@ -102,6 +115,26 @@ function conformDropdownValuesToDefault (project, tableData) {
   }
 
   return project;
+}
+
+export function editContractor(data, token) {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .post(`${LIVE_SITE}contractors/edit`)
+      .query(Object.assign(data, {token}))
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        dispatch(hasStoppedLoading());
+        dispatch(editContractorSuccessful());
+      }).catch((err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(editContractorFailed(err.message));
+      });
+  };
 }
 
 export function viewAllContractorDataSeparateRows(token) {
