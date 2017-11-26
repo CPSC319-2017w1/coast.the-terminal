@@ -24,24 +24,76 @@ public class HiringManagersController extends Controller{
     private static String addQuery = "insert into HiringManager values(?, ?, ?)";
     private static String editQuery = "update HiringManager set firstName=?, lastName=? where userId=?";
 
-    @RequestMapping("/hiringmanagers/view")
-    public HiringManagersResponse hiringmanagers() {
+    public ArrayList<HiringManager> getHiringManagers() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<HiringManager> hiringManagers = new ArrayList<HiringManager>();
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Failed to open database connection");
+        }
+        PreparedStatement st = connection.getPreparedStatement(getQuery);
+        ResultSet set = st.executeQuery();
+        while (set.next()) {
+            HiringManager hm = new HiringManager(set.getString("userId"),
+                    set.getString("firstName"),
+                    set.getString("lastName"));
+            hiringManagers.add(hm);
+        }
+        connection.closeConnection();
+        return hiringManagers;
+    }
+
+    public HiringManager addHiringManager(String firstName, String lastName) throws SQLException {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        String id = UUID.randomUUID().toString();
+        HiringManager manager = new HiringManager(id, firstName, lastName);
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Failed to open database connection");
+        }
+        PreparedStatement st = connection.getPreparedStatement(addQuery);
+        int index = 1;
+        st.setString(index++, manager.getId());
+        st.setString(index++, manager.getFirstName());
+        st.setString(index++, manager.getLastName());
+        int success = st.executeUpdate();
+        if (success == 0) {
+            throw new SQLException("Failed to add hiring manager");
+        }
+        connection.commitTransaction();
+        connection.closeConnection();
+        return manager;
+    }
+
+    public HiringManager editHiringManager(String userID, String firstName, String lastName) throws SQLException {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        HiringManager manager = new HiringManager(userID, firstName, lastName);
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Failed to connect to database");
+        }
+        PreparedStatement st = connection.getPreparedStatement(editQuery);
+        int index = 1;
+        st.setString(index++, manager.getFirstName());
+        st.setString(index++, manager.getLastName());
+        st.setString(index++, manager.getId());
+        int success = st.executeUpdate();
+        if (success == 0) {
+            throw new SQLException("Failed to edit Hiring Manager");
+        }
+        connection.commitTransaction();
+        connection.closeConnection();
+        return manager;
+    }
+
+    @RequestMapping("/hiringmanagers/view")
+    public HiringManagersResponse hiringmanagers(@RequestParam("token") String token) {
+        if (!isUserLoggedIn(token)) {
+            return HiringManagersResponse.hiringManagersFailure("User is not logged in");
+        }
+        ArrayList<HiringManager> hiringManagers;
         try {
-            connection.openConnection();
-            if (!connection.isConnected()) {
-                return HiringManagersResponse.hiringManagersFailure("Failed to open database connection");
-            }
-            PreparedStatement st = connection.getPreparedStatement(getQuery);
-            ResultSet set = st.executeQuery();
-            while (set.next()) {
-                HiringManager hm = new HiringManager(set.getString("userId"),
-                                                     set.getString("firstName"),
-                                                     set.getString("lastName"));
-                hiringManagers.add(hm);
-            }
-            connection.closeConnection();
+            hiringManagers = this.getHiringManagers();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get HiringManagers Failed: " + e.getMessage());
@@ -51,28 +103,15 @@ public class HiringManagersController extends Controller{
     }
 
     @RequestMapping("/hiringmanagers/add")
-    public HiringManagerResponse addManager(
+    public HiringManagerResponse addManager(@RequestParam("token") String token,
         @RequestParam("firstName") String firstName,
         @RequestParam("lastName") String lastName) {
-        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
-        String id = UUID.randomUUID().toString();
-        HiringManager manager = new HiringManager(id, firstName, lastName);
+        if (!isUserLoggedIn(token)) {
+            return HiringManagerResponse.hiringManagerFailure("User is not logged in");
+        }
+        HiringManager manager;
         try {
-            connection.openConnection();
-            if (!connection.isConnected()) {
-                return HiringManagerResponse.hiringManagerFailure("Failed to open database connection");
-            }
-            PreparedStatement st = connection.getPreparedStatement(addQuery);
-            int index = 1;
-            st.setString(index++, manager.getId());
-            st.setString(index++, manager.getFirstName());
-            st.setString(index++, manager.getLastName());
-            int success = st.executeUpdate();
-            if (success == 0) {
-                return HiringManagerResponse.hiringManagerFailure("Failed to add hiring manager");
-            }
-            connection.commitTransaction();
-            connection.closeConnection();
+            manager = this.addHiringManager(firstName, lastName);
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Add Hiring Manager failed: " + e.getMessage());
@@ -84,27 +123,16 @@ public class HiringManagersController extends Controller{
 
     @RequestMapping("/hiringmanagers/edit")
     public HiringManagerResponse editManager(
+            @RequestParam("token") String token,
         @RequestParam("userId") String userID,
         @RequestParam("firstName") String firstName,
         @RequestParam("lastName") String lastName) {
-        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
-        HiringManager manager = new HiringManager(userID, firstName, lastName);
+        if (!isUserLoggedIn(token)) {
+            return HiringManagerResponse.hiringManagerFailure("User is not logged in");
+        }
+        HiringManager manager;
         try {
-            connection.openConnection();
-            if (!connection.isConnected()) {
-                return HiringManagerResponse.hiringManagerFailure("Failed to connect to database");
-            }
-            PreparedStatement st = connection.getPreparedStatement(editQuery);
-            int index = 1;
-            st.setString(index++, manager.getFirstName());
-            st.setString(index++, manager.getLastName());
-            st.setString(index++, manager.getId());
-            int success = st.executeUpdate();
-            if (success == 0) {
-                return HiringManagerResponse.hiringManagerFailure("Failed to edit Hiring Manager");
-            }
-            connection.commitTransaction();
-            connection.closeConnection();
+            manager = this.editHiringManager(userID, firstName, lastName);
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit HiringManager Failed" + e.getMessage());

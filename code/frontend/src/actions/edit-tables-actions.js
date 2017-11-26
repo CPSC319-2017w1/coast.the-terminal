@@ -21,7 +21,7 @@ export function editRow(tableName, data) {
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
-        dispatch(viewTableRows(tableName));
+        dispatch(viewTableRows(tableName, data.token));
       }).catch((err) => {
         dispatch(editRowFailed(err.message, tableName));
       });

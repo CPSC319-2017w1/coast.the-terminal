@@ -31,6 +31,7 @@
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-c3js": "^0.1.20",
+    "react-cookie": "^2.1.2",
     "react-dom": "^16.0.0",
     "react-dropzone": "^4.2.3",
     "react-pivottable": "^0.2.11",

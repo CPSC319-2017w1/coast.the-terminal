@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './dashboard.css';
-import { FILTERING, CONTRACTOR_INFO , REPORTS} from '../../constants/tabs.js';
+import { FILTERING, CONTRACTOR_INFO , REPORTS, ADD_CONTRACTOR} from '../../constants/tabs.js';
 
 function DashboardComponent({onClick}) {
   return (
@@ -16,7 +16,8 @@ function DashboardComponent({onClick}) {
           Data Filtering System
         </button>
         <button className={css.addcontractor}
-        onClick={onClick}>
+          name={ADD_CONTRACTOR}
+          onClick={onClick}>
           Add Contractor
         </button>
         <button className={css.contractorinfo}

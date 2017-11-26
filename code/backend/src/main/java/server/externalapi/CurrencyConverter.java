@@ -6,6 +6,7 @@ import server.model.FXRate;
 import server.rest.controllers.FXRateController;
 import server.rest.responses.FXRatesResponse;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +31,12 @@ public class CurrencyConverter {
 
     public static void updateRates() {
         FXRateController controller = new FXRateController();
-        FXRatesResponse response = controller.fxrates();
-        ArrayList<FXRate> rates = response.getData();
+        ArrayList<FXRate> rates = new ArrayList<FXRate>();
+        try {
+             rates = controller.getRates();
+        } catch (SQLException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, "Failed to update rates: " + e.getMessage());
+        }
         Logger.getAnonymousLogger().log(Level.INFO, "Updating Rates");
         for( int i = 0; i < rates.size(); ++i) {
             double rate = getRate(rates.get(i).getCur1ID(), rates.get(i).getCur2ID(), rates.get(i).getRate());

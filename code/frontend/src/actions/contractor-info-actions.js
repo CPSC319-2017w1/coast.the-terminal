@@ -1,6 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
-import { LIVE_SITE, LOCALHOST } from '../constants/urls.js';
+import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
 function addContractorSuccessful() {
@@ -29,20 +29,6 @@ function editContractorFailed(error) {
   };
 }
 
-function viewContractorSuccessful(data) {
-  return {
-    type: ACTIONS.VIEW_CONTRACTORS,
-    data
-  };
-}
-
-function viewContractorFailed(error) {
-  return {
-    type: ACTIONS.VIEW_CONTRACTORS_FAILED,
-    error
-  };
-}
-
 function viewAllDataFailed(error) {
   return {
     type: ACTIONS.VIEW_ALL_DATA_FAILED,
@@ -57,12 +43,12 @@ function viewAllData(data) {
   };
 }
 
-export function addContractor(contractorData, projectData, tableData, callback) {
+export function addContractor(contractorData, projectData, tableData, callback, token) {
   return dispatch => {
     dispatch(isLoading());
     return request
       .post(`${LIVE_SITE}contractors/add`)
-      .query(contractorData)
+      .query(Object.assign({}, contractorData, {token}))
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
@@ -73,7 +59,7 @@ export function addContractor(contractorData, projectData, tableData, callback) 
         return contractorId;
       })
       .then((contractorId) => {
-        return addEngagementContract(projectData, contractorId, tableData);
+        return addEngagementContract(projectData, contractorId, tableData, token);
       })
       .then((responses) => {
         for(let res of responses) {
@@ -94,29 +80,29 @@ export function addContractor(contractorData, projectData, tableData, callback) 
   };
 }
 
-function addEngagementContract(projectData, contractorId, tableData) {
-   let allEngagementPromises = [];
-   for(let project of projectData) {
-       project["contractorId"] = contractorId;
-       project["resourceId"] = "";
-       project = conformDropdownValuesToDefault(project, tableData);
-       let req = request
-        .post(`${LIVE_SITE}contractors/add/engagementContract`)
-        .query(project);
-       allEngagementPromises.push(req);
-   }
+function addEngagementContract(projectData, contractorId, tableData, token) {
+  let allEngagementPromises = [];
+  for(let project of projectData) {
+    project['contractorId'] = contractorId;
+    project['resourceId'] = '';
+    project = conformDropdownValuesToDefault(project, tableData);
+    let req = request
+      .post(`${LIVE_SITE}contractors/add/engagementContract`)
+      .query(Object.assign({}, project, {token}));
+    allEngagementPromises.push(req);
+  }
 
-   return Promise.all(allEngagementPromises);
+  return Promise.all(allEngagementPromises);
 }
 
 function conformDropdownValuesToDefault (project, tableData) {
   //todo change this to less hacky fix
-  const REQUIRED_FIELDS = {"hrPositionId": "hrroles",
-                          "hrPayGradeId": "paygrades",
-                          "costCenterId": "costcenters",
-                          "reportingManagerId": "hiringmanagers",
-                          "mainSkillId": "skills",
-                          "rateType": "ratetypes"};
+  const REQUIRED_FIELDS = {'hrPositionId': 'hrroles',
+    'hrPayGradeId': 'paygrades',
+    'costCenterId': 'costcenters',
+    'reportingManagerId': 'hiringmanagers',
+    'mainSkillId': 'skills',
+    'rateType': 'ratetypes'};
   for(let reqField in REQUIRED_FIELDS) {
     let actualFieldName = REQUIRED_FIELDS[reqField];
     if(!project.hasOwnProperty(reqField)){
@@ -131,12 +117,12 @@ function conformDropdownValuesToDefault (project, tableData) {
   return project;
 }
 
-export function editContractor(data) {
+export function editContractor(data, token) {
   return dispatch => {
     dispatch(isLoading());
     return request
       .post(`${LIVE_SITE}contractors/edit`)
-      .query(data)
+      .query(Object.assign(data, {token}))
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
@@ -151,39 +137,21 @@ export function editContractor(data) {
   };
 }
 
-export function viewContractors() {
-  return dispatch => {
-    dispatch(isLoading());
-    return request
-      .get(`${LIVE_SITE}contractors/view`)
-      .then((res) => {
-        const body = res.body;
-        if (!res.ok || body.error) {
-          throw new Error(body.errorMessage);
-        }
-        dispatch(hasStoppedLoading());
-        dispatch(viewContractorSuccessful(body.contractors));
-      }).catch((err) => {
-        dispatch(hasStoppedLoading());
-        dispatch(viewContractorFailed(err.message));
-      });
-  };
+export function viewAllContractorDataSeparateRows(token) {
+  return viewAllContractorData(generateContractorRows, token);
 }
 
-export function viewAllContractorDataSeparateRows() {
-  return viewAllContractorData(generateContractorRows);
-}
-
-export function viewAllContractorDataKeepOriginal() {
-  return viewAllContractorData(keepOriginalAndGenerateRows);
+export function viewAllContractorDataKeepOriginal(token) {
+  return viewAllContractorData(keepOriginalAndGenerateRows, token);
 }
 
 
 
-function viewAllContractorData(parsingFunc) {
+function viewAllContractorData(parsingFunc, token) {
   return dispatch => {
     return request
       .get(`${LIVE_SITE}contractors/viewAllData`)
+      .query({token})
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
@@ -200,8 +168,8 @@ function viewAllContractorData(parsingFunc) {
 
 function keepOriginalAndGenerateRows(data) {
   let parsedData = {};
-  parsedData["originalData"] = data;
-  parsedData["humanReadableData"] = generateContractorRows(data);
+  parsedData['originalData'] = data;
+  parsedData['humanReadableData'] = generateContractorRows(data);
   return parsedData;
 }
 
@@ -218,41 +186,41 @@ function generateContractorRows(data) {
     'contracts': 'contracts'};
 
   const contractFields = {'chargeType': 'Charge Type',
-                        'currencyCode': 'Currency Code',
-                        'dailyAllowance': 'Allowance Expense',
-                        'endDate': "End Date",
-                       //'id': 'engagement-id',
-                        'hourlyRate': 'Hourly Rate',
-                        'originalDocumentation': 'Original Documentation',
-                        'poRefNum': 'PO Reference Number',
-                        'projectName': 'Project Name',
-                        'rateType': 'Rate Type',
-                        'rehire': 'Rehire',
-                        'startDate': 'Start Date',
-                        'terminationNum': 'Termination Number',
-                        'timeMaterialTerms': 'Time And Material Terms'};
+    'currencyCode': 'Currency Code',
+    'dailyAllowance': 'Allowance Expense',
+    'endDate': 'End Date',
+    //'id': 'engagement-id',
+    'hourlyRate': 'Hourly Rate',
+    'originalDocumentation': 'Original Documentation',
+    'poRefNum': 'PO Reference Number',
+    'projectName': 'Project Name',
+    'rateType': 'Rate Type',
+    'rehire': 'Rehire',
+    'startDate': 'Start Date',
+    'terminationNum': 'Termination Number',
+    'timeMaterialTerms': 'Time And Material Terms'};
 
   const contractObjectFields = {
-    "costCenter": {
+    'costCenter': {
       //"id": "costcenter-id",
-      "location": "Location"
+      'location': 'Location'
     },
-    "hrPayGrade": {
-     // "id": "hrPayGrade-id",
-      "startAmount": "Pay Grade Start Amount",
-      "endAmount": "Pay Grade End Amount",
-      "name": "Pay Grade Name"
+    'hrPayGrade': {
+      // "id": "hrPayGrade-id",
+      'startAmount': 'Pay Grade Start Amount',
+      'endAmount': 'Pay Grade End Amount',
+      'name': 'Pay Grade Name'
     },
-    "hrPositionRole": {
-     // "id": "hrPosition-id",
-      "roleName": "HR Role Name",
-      "description": "HR Role Description",
+    'hrPositionRole': {
+      // "id": "hrPosition-id",
+      'roleName': 'HR Role Name',
+      'description': 'HR Role Description'
     },
-    "mainSkill": {
-     // "id": "skill-id",
-      "name": "Skill Name",
-      "description": "Skill Description",
-      "type": "Skill Type"
+    'mainSkill': {
+      // "id": "skill-id",
+      'name': 'Skill Name',
+      'description': 'Skill Description',
+      'type': 'Skill Type'
     }
   };
 
@@ -315,6 +283,6 @@ function flattenData(data) {
         result[prop] = {};
     }
   }
-  recurse(data, "");
+  recurse(data, '');
   return result;
 }

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import server.model.HRPositionRole;
 import server.rest.responses.HRPositionRoleResponse;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,9 +20,13 @@ class HRPositionRoleControllerTest {
 
     @Test
     void viewHRPositionsTest(){
-        HRPositionRoleResponse response =  hrPositionRoleController.hrroles();
-        assertFalse(response.isError());
-        assertFalse(response.getData().isEmpty());
+        ArrayList<HRPositionRole> roles = new ArrayList<HRPositionRole>();
+        try {
+            roles =  hrPositionRoleController.getHRRoles();
+        } catch (SQLException e) {
+            fail(e.getMessage());
+        }
+        assertFalse(roles.isEmpty());
     }
 
 }

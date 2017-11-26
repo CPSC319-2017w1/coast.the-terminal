@@ -25,9 +25,9 @@ const Plot = createPlotlyComponent(window.Plotly);
 
 const mapDispatchToProps = dispatch => {
   return {
-    getData: () => {
+    getData: (token) => {
       dispatch(isLoading());
-      dispatch(viewAllContractorDataSeparateRows());
+      dispatch(viewAllContractorDataSeparateRows(token));
     },
     stopLoading: () => {
       dispatch(hasStoppedLoading());
@@ -51,7 +51,7 @@ class PivotTableContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getData();
+    this.props.getData(this.props.user.token);
   }
 
   componentWillMount() {

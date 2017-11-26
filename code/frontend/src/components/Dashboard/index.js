@@ -13,10 +13,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => {
-      // TODO - dispatch action to change isLoggedIn to false in state
-      // Ideas: "<Welcome ${username}!> <Logout>"
-    },
     switchTab: tab => {
       dispatch(switchView(tab));
     }

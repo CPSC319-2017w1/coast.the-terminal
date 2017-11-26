@@ -1,0 +1,19 @@
+.wrapper {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.username {
+    padding-right: 5px;
+}
+
+.link {
+    font-weight: 800;
+}
+
+.link:hover {
+    cursor: pointer;
+}

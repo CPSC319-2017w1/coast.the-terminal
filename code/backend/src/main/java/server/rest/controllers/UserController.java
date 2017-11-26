@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import server.database.DatabaseConnection;
 import server.model.User;
 import server.rest.responses.*;
+import server.session.AuthenticationController;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,67 @@ public class UserController extends Controller {
     private static String updateQuery = "update User set password=?, permissions=? where username=?";
     private static String addQuery = "insert into User values(?, ?, ?)";
 
+    public ArrayList<User> getUsers() throws SQLException {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        ArrayList<User> users = new ArrayList<User>();
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Can't connect to Database");
+        }
+        PreparedStatement st = connection.getPreparedStatement(usersQuery);
+        ResultSet set = st.executeQuery();
+        while(set.next()) {
+            User user = new User(set.getString("username"),
+                    set.getString("password"),
+                    set.getString("permissions"));
+            users.add(user);
+        }
+        connection.closeConnection();
+        return users;
+    }
+
+    public User editUser(String username, String password, String permissions) throws SQLException {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        User user = new User(username, password, permissions);
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Failed to connect to database");
+        }
+        PreparedStatement st = connection.getPreparedStatement(updateQuery);
+        int index = 1;
+        st.setString(index++, user.getPassword());
+        st.setString(index++, user.getPermissions());
+        st.setString(index++, user.getUsername());
+        int success = st.executeUpdate();
+        if (success == 0) {
+            throw new SQLException("Failed to edit user");
+        }
+        connection.commitTransaction();
+        connection.closeConnection();
+        return user;
+    }
+
+    public User addUser(String username, String password, String permissions) throws SQLException {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        User user = new User(username, password, permissions);
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Failed to add user");
+        }
+        PreparedStatement st = connection.getPreparedStatement(addQuery);
+        int index = 1;
+        st.setString(index++, username);
+        st.setString(index++, password);
+        st.setString(index++, permissions);
+        int success = st.executeUpdate();
+        if (success == 0) {
+            throw new SQLException("Add user failed");
+        }
+        connection.commitTransaction();
+        connection.closeConnection();
+        return user;
+    }
+
     @RequestMapping("/login")
     public LoginResponse login(@RequestParam("username") String username,
                                @RequestParam("password") String password) {
@@ -27,6 +89,7 @@ public class UserController extends Controller {
         boolean success = true;
         String user = username;
         String permissions = "none";
+        String token = "";
         try {
             connection.openConnection();
             if (!connection.isConnected()) {
@@ -42,7 +105,7 @@ public class UserController extends Controller {
             resultSet.next();
             user = resultSet.getString("username");
             permissions = resultSet.getString("permissions");
-
+            token = AuthenticationController.login(username);
             connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
@@ -50,27 +113,17 @@ public class UserController extends Controller {
         }
 
         //NOTE Spring automatically converts all fields with getters into JSON for transmission
-        return new LoginResponse(user, success, permissions);
+        return new LoginResponse(user, success, permissions, token);
     }
 
     @RequestMapping("/users/view")
-    public UsersResponse users() {
-        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
-        ArrayList<User> users = new ArrayList<User>();
+    public UsersResponse users(@RequestParam("token") String token) {
+        if (!isUserLoggedIn(token)) {
+            return UsersResponse.usersResponseFailure("User is not logged in");
+        }
+        ArrayList<User> users;
         try {
-            connection.openConnection();
-            if (!connection.isConnected()) {
-                return UsersResponse.usersResponseFailure("Can't connect to Database");
-            }
-            PreparedStatement st = connection.getPreparedStatement(usersQuery);
-            ResultSet set = st.executeQuery();
-            while(set.next()) {
-                User user = new User(set.getString("username"),
-                                     set.getString("password"),
-                                     set.getString("permissions"));
-                users.add(user);
-            }
-            connection.closeConnection();
+            users = this.getUsers();
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get users failed: " + e.getMessage());
@@ -80,27 +133,16 @@ public class UserController extends Controller {
     }
     @RequestMapping("/users/edit")
     public UsersEditResponse editUser(
+            @RequestParam("token") String token,
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             @RequestParam("permissions") String permissions) {
-        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
-        User user = new User(username, password, permissions);
+        if (!isUserLoggedIn(token)) {
+            return UsersEditResponse.usersEditFailure("User is not logged in");
+        }
+        User user;
         try {
-            connection.openConnection();
-            if (!connection.isConnected()) {
-                return UsersEditResponse.usersEditFailure("Failed to connect to database");
-            }
-            PreparedStatement st = connection.getPreparedStatement(updateQuery);
-            int index = 1;
-            st.setString(index++, user.getPassword());
-            st.setString(index++, user.getPermissions());
-            st.setString(index++, user.getUsername());
-            int success = st.executeUpdate();
-            if (success == 0) {
-                return UsersEditResponse.usersEditFailure("Failed to edit user");
-            }
-            connection.commitTransaction();
-            connection.closeConnection();
+            user = this.editUser(username, password, permissions);
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit user failed: " + e.getMessage());
@@ -111,27 +153,16 @@ public class UserController extends Controller {
 
     @RequestMapping("/users/add")
     public UsersAddResponse addUser(
+            @RequestParam("token") String token,
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             @RequestParam("permissions") String permissions) {
-        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
-        User user = new User(username, password, permissions);
+        if (!isUserLoggedIn(token)) {
+            return UsersAddResponse.addUserFailure("User is not logged in");
+        }
+        User user = null;
         try {
-            connection.openConnection();
-            if (!connection.isConnected()) {
-                return UsersAddResponse.addUserFailure("Failed to add user");
-            }
-            PreparedStatement st = connection.getPreparedStatement(addQuery);
-            int index = 1;
-            st.setString(index++, username);
-            st.setString(index++, password);
-            st.setString(index++, permissions);
-            int success = st.executeUpdate();
-            if (success == 0) {
-                return UsersAddResponse.addUserFailure("Add user failed");
-            }
-            connection.commitTransaction();
-            connection.closeConnection();
+            user = this.addUser(username, password, permissions);
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Add user failed: " + e.getMessage());

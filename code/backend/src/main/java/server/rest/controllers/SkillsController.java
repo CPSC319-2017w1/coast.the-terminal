@@ -27,7 +27,10 @@ public class SkillsController extends Controller {
     private static String updateQuery = "update Skill set name=?, description=?, type=? where id=?";
 
     @RequestMapping("/skills/view")
-    public SkillsResponse skills() {
+    public SkillsResponse skills(@RequestParam("token") String token) {
+        if (!isUserLoggedIn(token)) {
+            return SkillsResponse.skillsFailure("User is not logged in");
+        }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<Skill> skills = new ArrayList<Skill>();
         try {
@@ -56,9 +59,13 @@ public class SkillsController extends Controller {
 
     @RequestMapping("/skills/add")
     public SkillsAddResponse addSkill(
+            @RequestParam("token") String token,
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("type") String type) {
+        if (!isUserLoggedIn(token)) {
+            return SkillsAddResponse.addSkillsFailure("User not logged in");
+        }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         String id = UUID.randomUUID().toString();
         Skill skill = new Skill(id, name, description, type);
@@ -89,10 +96,14 @@ public class SkillsController extends Controller {
 
     @RequestMapping("/skills/edit")
     public SkillsEditResponse editSkill(
+            @RequestParam("token") String token,
             @RequestParam("id") String id,
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("type") String type) {
+        if (!isUserLoggedIn(token)) {
+            return SkillsEditResponse.editSkillFailure("User is not logged in");
+        }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         Skill skill = new Skill(id, name, description, type);
         try {

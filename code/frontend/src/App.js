@@ -3,6 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import { CookiesProvider } from 'react-cookie';
 import reducer from './reducers';
 import Layout from './components/Layout';
 
@@ -13,11 +14,11 @@ const store = createStore(reducer, middleware);
 export default class App extends Component {
   render() {
     return (
-      <div>
+      <CookiesProvider>
         <Provider store={store}>
           <Layout />
         </Provider>
-      </div>
+      </CookiesProvider>
     );
   }
 }

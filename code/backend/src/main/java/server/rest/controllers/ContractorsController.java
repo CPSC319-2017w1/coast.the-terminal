@@ -79,7 +79,7 @@ public class ContractorsController extends Controller {
             "INNER JOIN HiringManager rp on rp.userId=e.reportingManagerUserId\n" +
             "ORDER BY c.id";
 
-    public ArrayList<Contractor> editContractorImpl(String id, String firstName, String lastName, String agencySource, String status) throws SQLException {
+    public ArrayList<Contractor> editContractor(String id, String firstName, String lastName, String agencySource, String status) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<Contractor> contractors = new ArrayList<Contractor>();
         connection.openConnection();
@@ -104,28 +104,65 @@ public class ContractorsController extends Controller {
         return contractors;
     }
 
-    @RequestMapping("/contractors/view")
-    public ContractorsResponse contractors() {
+    public ArrayList<Contractor> getContractors() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Failed to connect to database");
+        }
         ArrayList<Contractor> contractors = new ArrayList<Contractor>();
+        PreparedStatement st = connection.getPreparedStatement(getQuery);
+        ResultSet set = st.executeQuery();
+        while(set.next()) {
+            Contractor c = new Contractor(set.getString("id"),
+                    set.getString("firstName"),
+                    set.getString("surname"),
+                    set.getString("agencySource"),
+                    set.getString("status"),
+                    set.getBoolean("rehire"));
+            contractors.add(c);
+        }
+        connection.closeConnection();
+        return contractors;
+    }
 
+    public ArrayList<Contractor> addContractor(String firstName, String surName, String agencySource, String status) throws SQLException {
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        ArrayList<Contractor> newContractor = new ArrayList<>();
+        connection.openConnection();
+        if (!connection.isConnected()) {
+            throw new SQLException("Failed to connect to database");
+        }
+        String newContractorId = UUID.randomUUID().toString();
+        final boolean rehire = false;
+        PreparedStatement st = connection.getPreparedStatement(insertContractorQuery);
+        int i =1;
+        st.setString(i++, newContractorId);
+        st.setString(i++, firstName);
+        st.setString(i++, surName);
+        st.setString(i++, agencySource);
+        st.setString(i++, status);
+        st.setBoolean(i++, rehire);
+        int success = st.executeUpdate();
+        connection.commitTransaction();
+        if(success == 0){
+            throw new SQLException("Failed to add contractor. SQL Update failed");
+        }
+
+        Contractor contractor = new Contractor(newContractorId, firstName, surName, agencySource, status, false);
+        newContractor.add(contractor);
+        connection.closeConnection();
+        return newContractor;
+    }
+
+    @RequestMapping("/contractors/view")
+    public ContractorsResponse contractors(@RequestParam("token") String token) {
+        if (!isUserLoggedIn(token)) {
+            return ContractorsResponse.contractorsFailure("User is not logged in");
+        }
+        ArrayList<Contractor> contractors;
         try {
-            connection.openConnection();
-            if (!connection.isConnected()) {
-                return ContractorsResponse.contractorsFailure("Failed to connect to database");
-            }
-            PreparedStatement st = connection.getPreparedStatement(getQuery);
-            ResultSet set = st.executeQuery();
-            while(set.next()) {
-                Contractor c = new Contractor(set.getString("id"),
-                                              set.getString("firstName"),
-                                              set.getString("surname"),
-                                              set.getString("agencySource"),
-                                              set.getString("status"),
-                                              set.getBoolean("rehire"));
-                contractors.add(c);
-            }
-            connection.closeConnection();
+            contractors = this.getContractors();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Get Contractors Failed: " + e.getMessage());
@@ -137,50 +174,30 @@ public class ContractorsController extends Controller {
 
     @RequestMapping("/contractors/add")
     public ContractorsResponse addContractor(
+            @RequestParam("token") String token,
             @RequestParam("firstName") String firstName,
             @RequestParam("surname") String surName,
             @RequestParam("agencySource") String agencySource,
             @RequestParam("status") String status) {
-        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
-        List<Contractor> newContractor = new ArrayList<>();
-
+        if (!isUserLoggedIn(token)) {
+            return ContractorsResponse.contractorsFailure("User not logged in");
+        }
+        List<Contractor> newContractor;
         try {
-            connection.openConnection();
-            if (!connection.isConnected()) {
-                return ContractorsResponse.contractorsFailure("Failed to connect to database");
-            }
-            String newContractorId = UUID.randomUUID().toString();
-            final boolean rehire = false;
-            PreparedStatement st = connection.getPreparedStatement(insertContractorQuery);
-            int i =1;
-            st.setString(i++, newContractorId);
-            st.setString(i++, firstName);
-            st.setString(i++, surName);
-            st.setString(i++, agencySource);
-            st.setString(i++, status);
-            st.setBoolean(i++, rehire);
-            int success = st.executeUpdate();
-            connection.commitTransaction();
-            if(success == 0){
-                return ContractorsResponse.contractorsFailure("Failed to add contractor. SQL Update failed");
-            }
-
-            Contractor contractor = new Contractor(newContractorId, firstName, surName, agencySource, status, false);
-            newContractor.add(contractor);
-            connection.closeConnection();
+            newContractor = this.addContractor(firstName, surName, agencySource, status);
         } catch (SQLException e) {
 
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Add Contractor Failed: " + e.getMessage());
             return ContractorsResponse.contractorsFailure(e.getMessage());
         }
-
         return new ContractorsResponse(newContractor);
     }
 
     @CrossOrigin("*")
     @RequestMapping(value = "/contractors/edit/engagementContract", method={RequestMethod.POST})
     public Response editEngagementContract(
+            @RequestParam("token") String token,
             @RequestParam("id") String id,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
@@ -202,6 +219,9 @@ public class ContractorsController extends Controller {
             @RequestParam("poNum") int poNum,
             @RequestParam("hourlyrate") int hourlyRate
     ) {
+        if (!isUserLoggedIn(token)) {
+            return Response.createErrorResponse("User not logged in");
+        }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         try {
             connection.openConnection();
@@ -251,7 +271,8 @@ public class ContractorsController extends Controller {
 
     @CrossOrigin("*")
     @RequestMapping(value = "/contractors/add/engagementContract", method={RequestMethod.POST})
-    public Response addEngagementContract(@RequestParam("startDate") String startDate,
+    public Response addEngagementContract(@RequestParam("token") String token,
+                                          @RequestParam("startDate") String startDate,
                                           @RequestParam("endDate") String endDate,
                                           @RequestParam("rateType") String rateType,
                                           @RequestParam("projectName") String projectName,
@@ -270,7 +291,9 @@ public class ContractorsController extends Controller {
                                           @RequestParam("timeMaterialTerms") int timeMaterialTerms,
                                           @RequestParam("poNum") int poNum,
                                           @RequestParam("hourlyrate") int hourlyRate) {
-
+        if (!isUserLoggedIn(token)) {
+            return Response.createErrorResponse("User not logged in");
+        }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         try {
             connection.openConnection();
@@ -332,15 +355,19 @@ public class ContractorsController extends Controller {
 
     @RequestMapping("/contractors/edit")
     public ContractorsResponse editContractor(
+            @RequestParam("token") String token,
             @RequestParam("id") String id,
             @RequestParam("firstName") String firstName,
             @RequestParam("surname") String surname,
             @RequestParam("agencySource") String agencySource,
             @RequestParam("status") String status) {
 
+        if (!isUserLoggedIn(token)) {
+            return ContractorsResponse.contractorsFailure("User is not logged in");
+        }
         ArrayList<Contractor> contractors;
         try {
-            contractors = editContractorImpl(id, firstName, surname, agencySource, status);
+            contractors = editContractor(id, firstName, surname, agencySource, status);
         } catch (SQLException e) {
             Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
             return ContractorsResponse.contractorsFailure(e.getMessage());
@@ -349,7 +376,10 @@ public class ContractorsController extends Controller {
     }
 
     @RequestMapping("/contractors/viewAllData")
-    public Response viewAllContractorData() {
+    public Response viewAllContractorData(@RequestParam("token") String token) {
+        if (!isUserLoggedIn(token)) {
+            return ContractorsResponse.createErrorResponse("User is not logged in");
+        }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         List<Contractor> allContractorData = new ArrayList<>();
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
+import { withCookies, Cookies } from 'react-cookie';
 import * as TABS from '../../constants/tabs.js';
 import Login from '../Login';
 import Navbar from '../Navbar';
@@ -10,11 +11,12 @@ import AddContractor from '../AddContractor';
 import ContractorInfo from '../ContractorInfo';
 import Filtering from '../Filtering';
 import Reports from '../Reports';
+import User from '../User';
 import css from './layout.css';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    tab: state.main.tab,
+    tab: ownProps.cookies.get('tab') ? ownProps.cookies.get('tab') : state.main.tab,
     isLoading: state.main.isLoading,
     isLoggedIn: state.user.isLoggedIn
   };
@@ -52,6 +54,7 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
   return (
     <div className={css.wrapper}>
       {isLoading ? <div className={css.spinner}></div> : null}
+      <User />
       <Navbar />
       <div className={css.content}>
         {child}
@@ -63,7 +66,8 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
 LayoutContainer.propTypes = {
   tab: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  cookies: instanceOf(Cookies).isRequired
 };
 
 const Layout = connect(
@@ -71,4 +75,4 @@ const Layout = connect(
   null
 )(LayoutContainer);
 
-export default Layout;
+export default withCookies(Layout);
