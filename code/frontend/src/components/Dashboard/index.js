@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
+import { withCookies, Cookies } from 'react-cookie';
 import DashboardComponent from './Dashboard.jsx';
 import { switchView } from '../../actions/main-actions.js';
 
@@ -27,7 +28,9 @@ class DashboardContainer extends React.Component {
 
   onClick(event) {
     event.preventDefault();
-    this.props.switchTab(event.target.getAttribute('name'));
+    const tab = event.target.getAttribute('name');
+    this.props.cookies.set('tab', tab);
+    this.props.switchTab(tab);
   }
 
   render() {
@@ -38,7 +41,8 @@ class DashboardContainer extends React.Component {
 DashboardContainer.propTypes = {
   user: PropTypes.object.isRequired,
   tables: PropTypes.object.isRequired,
-  switchTab: PropTypes.func.isRequired
+  switchTab: PropTypes.func.isRequired,
+  cookies: instanceOf(Cookies).isRequired
 };
 
 const Dashboard = connect(
@@ -46,5 +50,5 @@ const Dashboard = connect(
   mapDispatchToProps
 )(DashboardContainer);
 
-export default Dashboard;
+export default withCookies(Dashboard);
 
