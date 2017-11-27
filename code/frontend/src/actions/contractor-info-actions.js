@@ -2,6 +2,7 @@ import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
+import { loginFailed } from './login-actions.js';
 
 function addContractorSuccessful() {
   return {
@@ -76,6 +77,9 @@ export function addContractor(contractorData, projectData, tableData, callback, 
         dispatch(hasStoppedLoading());
         dispatch(addContractorFailed(err.message));
         callback();
+        if (err.message.toLowerCase() === 'user is not logged in') {
+          dispatch(loginFailed('Login session has timed out. Please sign in again.'));
+        }
       });
   };
 }
@@ -133,6 +137,9 @@ export function editContractor(data, token) {
       }).catch((err) => {
         dispatch(hasStoppedLoading());
         dispatch(editContractorFailed(err.message));
+        if (err.message.toLowerCase() === 'user is not logged in') {
+          dispatch(loginFailed('Login session has timed out. Please sign in again.'));
+        }
       });
   };
 }
@@ -162,6 +169,9 @@ function viewAllContractorData(parsingFunc, token) {
       })
       .catch((err) => {
         dispatch(viewAllDataFailed(err.message));
+        if (err.message.toLowerCase() === 'user is not logged in') {
+          dispatch(loginFailed('Login session has timed out. Please sign in again.'));
+        }
       });
   };
 }

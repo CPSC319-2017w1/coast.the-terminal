@@ -2,8 +2,9 @@ import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
+import { DASHBOARD } from '../constants/tabs.js';
 
-function loginFailed(error) {
+export function loginFailed(error) {
   return {
     type: ACTIONS.LOGIN_FAILED,
     error
@@ -32,6 +33,7 @@ export function loginUser(username, password, cookies) {
         }
         cookies.set('token', body.token);
         cookies.set('username', username);
+        cookies.set('tab', DASHBOARD);
         dispatch(hasStoppedLoading());
         dispatch(loginSuccessful(body.username, body.permissions === 'admin', body.token));
       }).catch((err) => {

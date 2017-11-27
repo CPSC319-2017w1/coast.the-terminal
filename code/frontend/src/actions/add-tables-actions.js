@@ -2,6 +2,7 @@ import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE } from '../constants/urls.js';
 import { viewTableRows } from './view-tables-actions.js';
+import { loginFailed } from './login-actions.js';
 
 function addNewRowFailed(error, tableName) {
   return {
@@ -24,6 +25,9 @@ export function addNewRow(tableName, data) {
         dispatch(viewTableRows(tableName, data.token));
       }).catch((err) => {
         dispatch(addNewRowFailed(err.message, tableName));
+        if (err.message.toLowerCase() === 'user is not logged in') {
+          dispatch(loginFailed('Login session has timed out. Please sign in again.'));
+        }
       });
   };
 }
