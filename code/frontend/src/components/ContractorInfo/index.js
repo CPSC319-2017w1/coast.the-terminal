@@ -73,14 +73,6 @@ class ContractorInfoContainer extends React.Component {
   }
 
   render() {
-    if(this.state.selectedContractorId == null){
-      return <ContractorInfoComponent
-        tabledata={this.state.data}
-        handleEditContractor={this.handleEditContractor}/>;
-    } else {
-      return <EditContractor/>;
-    }
-
     const {props, state} = this;
     let contractorData;
     if (props.contractors && props.contractors.data) {
@@ -96,12 +88,10 @@ class ContractorInfoContainer extends React.Component {
       data = contractorData.filter(contractor => (
         (contractor['First Name'].toLowerCase().includes(state.searchvalue.toLowerCase())) ||
         (contractor['Last Name'].toLowerCase().includes(state.searchvalue.toLowerCase()))));
-      console.log('Filtered Data:');
-      console.log(data);
     }
 
 
-    if (state.selectedContractorId == null){
+    if (state.selectedContractorId == null) {
       return <ContractorInfoComponent
         tabledata={data}
         searchvalue={state.searchvalue}

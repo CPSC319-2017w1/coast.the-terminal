@@ -32,7 +32,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             <select className={css.txtfield}
               name="costCenterId"
               type="text"
-              value={project.costcentre}
+              value={project.costCenterId}
               onChange={handleDropdownInput}
               data-index={index}>
               {getDataOptions(tables, 'costcenters')}
@@ -66,7 +66,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="hrPositionId"
               type="text"
               data-index={index}
-              onChange={handleDropdownInput}>
+              onChange={handleDropdownInput}
+              value={project.hrPositionId}
+            >
               {getDataOptions(tables, 'hrroles')}
             </select>
           </p>
@@ -76,7 +78,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="rateType"
               type="text"
               data-index={index}
-              onChange={handleDropdownInput}>
+              onChange={handleDropdownInput}
+              value={project.rateType}
+              >
               {getOptions(project.ratetypes)}
             </select>
           </p>
@@ -86,7 +90,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="hourlyrate"
               type="number"
               data-index={index}
-              value={project.hourlyrate}
+              value={project.hourlyRate}
               onChange={handleTextInput}/>
           </p>
           <p className={css.hrpay}>
@@ -96,7 +100,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="hrPayGradeId"
               type="text"
               data-index={index}
-              onChange={handleDropdownInput}>
+              onChange={handleDropdownInput}
+              value={project.hrPayGradeId}
+            >
               {getDataOptions(tables, 'paygrades')}
             </select>
           </p>
@@ -106,14 +112,16 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="poNum"
               type="number"
               data-index={index}
-              onChange={handleTextInput}>
+              onChange={handleTextInput}
+              value={project.poRefNum}
+            >
             </input>
           </p>
           <p className={css.currency}>
             Currency
-            <input name={`currencyCode-${index}`}  value="USD" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
+            <input name={`currencyCode-${index}`}  value='USD' className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput} checked={project.currencyCode === 'USD'}/>
             USD
-            <input name={`currencyCode-${index}`} value="CAD" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
+            <input name={`currencyCode-${index}`} value='CAD' className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput} checked={project.currencyCode === 'CAD'}/>
             CAD
           </p>
           <p className={css.timeMaterial}>
@@ -136,9 +144,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
           </p>
           <p className={css.chargeType}>
             Charge Type
-            <input name={`chargeType-${index}`} value="capital" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
+            <input name={`chargeType-${index}`} value="capital" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput} checked={project.chargeType === 'capital'}/>
             Capital - Depreciated
-            <input name={`chargeType-${index}`} value="opcost" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput}/>
+            <input name={`chargeType-${index}`} value="opcost" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput} checked={project.chargeType === 'opcost'}/>
             Operating Costs
           </p>
           <p className={css.mainSkill}>
@@ -147,7 +155,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="mainSkillId"
               type="text"
               data-index={index}
-              onChange={handleDropdownInput}>
+              onChange={handleDropdownInput}
+              value={project.mainSkillId}
+            >
               {getDataOptions(tables, 'skills')}
             </select>
           </p>

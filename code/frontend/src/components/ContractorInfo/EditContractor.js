@@ -25,8 +25,16 @@ class EditContractorContainer extends React.Component {
     this.state.contractor = props.contractor;
     this.state.projects = props.projects;
     for(let project of this.state.projects) {
+      project.rateType = project.rateType.charAt(0).toUpperCase() + project.rateType.slice(1);
       project['ratetypes'] = this.getRateTypeOptions();
+      project['mainSkillId'] = project.mainSkill.id;
+      project['hrPayGradeId'] = project.hrPayGrade.id;
+      project['costCenterId'] = project.costCenter.id;
+      project['hrPositionId'] = project.hrPositionRole.id;
+
     }
+    this.state.contractor = props.contractor;
+    this.state.projects = props.projects;
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleDropdownInput = this.handleDropdownInput.bind(this);
     this.handleDateInput = this.handleDateInput.bind(this);
@@ -109,7 +117,6 @@ class EditContractorContainer extends React.Component {
 
   createDefaultProjectObject() {
     return {
-
       projectName: '',
       reportingmanagers: this.getReportingManagersOptions(),
       hrpositions: this.getHrPositionOptions(),
