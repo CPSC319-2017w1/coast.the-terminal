@@ -6,10 +6,10 @@ function Tutorial({closeTutorial}) {
   return (
     <div className={css.tutorialholder}>
       <p><b>Choose your parameters for the x-axis</b>
-      <br/>
+        <br/>
         Drag and drop a field that you would like to have on the x-axis of your report to your <i>column area.</i></p>
       <p>Once you drag this down, you can see a graph has been generated without any filter.</p>
-        <br/>
+      <br/>
       <p><b>Choose your filter</b>
         <br/>
         You can choose to refine the graph by clicking the arrow beside each field and selecting the filters in the <i>filter area.</i></p>
@@ -19,10 +19,10 @@ function Tutorial({closeTutorial}) {
       <p><b>Choose count values</b>
         <br/>
         The <i>count drop-down menu</i> determines what kind of values you have in your y-axis.</p>
-    <br/>
-      <i><p>For example:<br/>
-        <ul><li>To view the number of contractors per month, choose "Count Unique Values" in the Count drop-down menu and then select "Contractor Name"</li>
-          <li>To view the cost of contractors per month, choose "Sum" in the Count drop-down and then select "Contractor Cost"</li></ul></p></i>
+      <br/>
+      <p><i>For example:<br/>
+        - To view the number of contractors per month, choose "Count Unique Values" in the Count drop-down menu and then select "Contractor Name"<br/>
+        - To view the cost of contractors per month, choose "Sum" in the Count drop-down and then select "Contractor Cost"</i></p>
       <br/>
       <p><b>Choose the view</b>
         <br/>
