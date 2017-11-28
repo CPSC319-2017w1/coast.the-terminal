@@ -145,14 +145,15 @@ export function editContractor(contractorData, projectData, tableData, numNewCon
 
       })
       .then((responses) => {
-        for(let res of responses) {
-          let body = res.body;
-          if (!res.ok || body.error) {
-            throw new Error(body.errorMessage);
+        for(let responseArray of responses) {
+          for (let res of responseArray) {
+            let body = res.body;
+            if (!res.ok || body.error) {
+              throw new Error(body.errorMessage);
+            }
           }
         }
         dispatch(hasStoppedLoading());
-        dispatch(editContractorSuccessful());
         callback();
       })
       .catch((err) => {

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import EditContractorComponent from './EditPage.jsx';
 import { editContractor } from '../../actions/contractor-info-actions.js';
 import { viewTableRows } from '../../actions/view-tables-actions.js';
+import { switchView } from '../../actions/main-actions.js';
+import { CONTRACTOR_INFO } from '../../constants/tabs';
 
 
 const mapStateToProps = state => {
@@ -26,7 +28,11 @@ const mapDispatchToProps = dispatch => {
     dispatch(viewTableRows('hrroles', token));
     dispatch(viewTableRows('hiringmanagers', token));
     dispatch(viewTableRows('costcenters', token));
-  }};
+  },
+  switchBack: () => {
+    dispatch(switchView(CONTRACTOR_INFO));
+  }}
+
 };
 
 class EditContractorContainer extends React.Component {
@@ -118,7 +124,9 @@ class EditContractorContainer extends React.Component {
       const { projects } = state;
       let dataIndex = event.target.getAttribute('data-index');
       let project = projects[dataIndex];
-      project[event.target.getAttribute('name')] = event.target.value;
+      let nameWithIndex = event.target.getAttribute('name');
+      let name = nameWithIndex.split("-")[0];
+      project[name] = event.target.value;
       this.setState(Object.assign(state, {projects}));
     }
   }
@@ -217,17 +225,9 @@ class EditContractorContainer extends React.Component {
     if (props.error) {
       this.setState({ message: props.error });
     } else {
-      this.setState({
-        contractor: {
-          firstName: '',
-          surname: '',
-          agencySource: ''
-        },
-        projects: [
-          this.createDefaultProjectObject()
-        ],
-        message: 'Contractor saved successfully.'
-      });
+      this.setState({selectedContractorId: null});
+      alert('Contractor Edited Successfully');
+      this.props.switchBack();
     }
   }
 
