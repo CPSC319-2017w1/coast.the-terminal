@@ -23,7 +23,9 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="reportingManagerId"
               type="text"
               onChange={handleDropdownInput}
-              data-index={index}>
+              data-index={index}
+              value={project.reportingManagerId}
+            >
               {getDataOptions(tables, 'hiringmanagers')}
             </select>
           </p>
@@ -90,7 +92,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               name="hourlyrate"
               type="number"
               data-index={index}
-              value={project.hourlyRate}
+              value={project.hourlyrate}
               onChange={handleTextInput}/>
           </p>
           <p className={css.hrpay}>

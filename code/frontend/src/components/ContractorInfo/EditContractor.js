@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EditContractorComponent from './EditPage.jsx';
+import { editContractor } from '../../actions/contractor-info-actions.js';
 import { viewTableRows } from '../../actions/view-tables-actions.js';
 
 
@@ -15,6 +16,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onSubmit: (contractorData, projectData, tableData, numNewContracts, callback, token) => {
+      dispatch(editContractor(contractorData, projectData, tableData, numNewContracts, callback, token));
+    },
     viewTables: (token) => {
     dispatch(viewTableRows('skills', token));
     dispatch(viewTableRows('fxrates', token));
@@ -30,23 +34,25 @@ class EditContractorContainer extends React.Component {
     super(props);
     this.state = {
       message: '',
-      tables: {}
+      tables: {},
+      numNewContracts: 0
     };
     this.state.contractor = props.contractor;
     this.state.contractor['surname'] = this.state.contractor.lastName;
     this.state.projects = props.projects;
 
-    for(let project of this.state.projects) {
+    for (let project of this.state.projects) {
       project.rateType = project.rateType.charAt(0).toUpperCase() + project.rateType.slice(1);
       project['ratetypes'] = this.getRateTypeOptions();
       project['mainSkillId'] = project.mainSkill.id;
       project['hrPayGradeId'] = project.hrPayGrade.id;
       project['costCenterId'] = project.costCenter.id;
       project['hrPositionId'] = project.hrPositionRole.id;
+      project['hourlyrate'] = project.hourlyRate;
+      project['reportingManagerId'] = project.hiringManager.id;
+      project['poNum'] = project.poRefNum;
     }
-    
-    this.state.contractor = props.contractor;
-    this.state.projects = props.projects;
+
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleDropdownInput = this.handleDropdownInput.bind(this);
     this.handleDateInput = this.handleDateInput.bind(this);
@@ -120,6 +126,7 @@ class EditContractorContainer extends React.Component {
   handleAdd(event) {
     event.preventDefault();
     let projectState = this.state.projects;
+    this.state.numNewContracts++;
     projectState.push(this.createDefaultProjectObject());
     this.setState({projects: projectState});
   }
@@ -128,7 +135,9 @@ class EditContractorContainer extends React.Component {
     event.preventDefault();
     const { contractor } = this.state;
     const { projects } = this.state;
-    this.props.onSubmit(contractor, projects, this.resetState);
+    const { numNewContracts } = this.state;
+
+    this.props.onSubmit(contractor, projects, this.props.tables, numNewContracts, this.resetState, this.props.token);
   }
 
   createDefaultProjectObject() {

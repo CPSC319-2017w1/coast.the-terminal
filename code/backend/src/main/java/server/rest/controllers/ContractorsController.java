@@ -431,6 +431,12 @@ public class ContractorsController extends Controller {
                         set.getString("s.description")
                 );
 
+                HiringManager hiringManager = new HiringManager(
+                        set.getString("userId"),
+                        set.getString("rp.firstName"),
+                        set.getString("lastName")
+                );
+
 
                 EngagementContract newContract = new EngagementContract(
                         set.getString("e.id"),
@@ -450,7 +456,8 @@ public class ContractorsController extends Controller {
                         positionRole,
                         payGrade,
                         mainSkill,
-                        set.getBoolean("rehire")
+                        set.getBoolean("rehire"),
+                        hiringManager
                 );
 
                 lastContractor.addEngagementContract(newContract);

@@ -48,7 +48,7 @@ class ContractorInfoContainer extends React.Component {
     });
   }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.contractors.data.humanReadableData.length > 0) {
+    if(nextProps.contractors.data && nextProps.contractors.data.humanReadableData.length > 0) {
       this.props.stopLoading();
     }
   }

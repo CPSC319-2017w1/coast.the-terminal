@@ -21,6 +21,7 @@ public class EngagementContract {
     private HRPayGrade hrPayGrade;
     private Skill mainSkill;
     private boolean rehire;
+    private HiringManager hiringManager;
 
 
     /**
@@ -51,7 +52,8 @@ public class EngagementContract {
                               HRPositionRole hrPositionRole,
                               HRPayGrade hrPayGrade,
                               Skill mainSkill,
-                              boolean rehire) {
+                              boolean rehire,
+                              HiringManager hiringManager) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -70,6 +72,7 @@ public class EngagementContract {
         this.hrPayGrade = hrPayGrade;
         this.mainSkill = mainSkill;
         this.rehire = rehire;
+        this.hiringManager = hiringManager;
     }
 
     public String getId() {
@@ -143,4 +146,6 @@ public class EngagementContract {
     public boolean isRehire() {
         return rehire;
     }
+
+    public HiringManager getHiringManager() { return hiringManager; }
 }
