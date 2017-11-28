@@ -89,8 +89,9 @@
     border: 1px solid #ddd
 }
 
-.tablerow {
-
+.tablerow th{
+    padding-right: 30px;
+    padding-left: 8px;
 }
 
 .table tr:nth-child(even){
