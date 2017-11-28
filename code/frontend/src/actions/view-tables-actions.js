@@ -1,6 +1,7 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE, LOCALHOST } from '../constants/urls.js';
+import { loginFailed } from './login-actions.js';
 
 function viewTableSuccessful(tableName, data) {
   return {
@@ -31,6 +32,9 @@ export function viewTableRows(tableName, token) {
         dispatch(viewTableSuccessful(tableName, body.data));
       }).catch((err) => {
         dispatch(viewTableFailed(tableName, err.message));
+        if (err.message.toLowerCase() === 'user is not logged in') {
+          dispatch(loginFailed('Login session has timed out. Please sign in again.'));
+        }
       });
   };
 }

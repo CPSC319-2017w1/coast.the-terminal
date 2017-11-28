@@ -40,8 +40,15 @@ class ContractorInfoContainer extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  handleEditContractor(event) {
+    event.preventDefault();
+    let id = event.target.getAttribute('name');
+    this.setState({
+      selectedContractorId: id
+    });
+  }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.contractors.data.humanReadableData.length > 0) {
+    if(nextProps.contractors.data && nextProps.contractors.data.humanReadableData.length > 0) {
       this.props.stopLoading();
     }
   }
@@ -83,16 +90,22 @@ class ContractorInfoContainer extends React.Component {
         (contractor['Last Name'].toLowerCase().includes(state.searchvalue.toLowerCase()))));
     }
 
-    if(state.selectedContractorId == null){
+
+    if (state.selectedContractorId == null) {
       return <ContractorInfoComponent
         tabledata={data}
         searchvalue={state.searchvalue}
         handleSearch={this.handleSearch}
         handleEditContractor={this.handleEditContractor}/>;
     } else {
-      return <EditContractor/>;
+      let selectedContractor = {};
+      for (let contractor of props.contractors.data.originalData) {
+        if (contractor['id'] === state.selectedContractorId) {
+          selectedContractor = contractor;
+        }
+      }
+      return <EditContractor contractor={selectedContractor} projects={selectedContractor.contracts}/>;
     }
-
   }
 }
 

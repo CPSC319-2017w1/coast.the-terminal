@@ -21,9 +21,9 @@ function Contractor({contractor, handleTextInput, handleRadioInput}) {
       </form>
       <form className={css.status}>
         <span>Status</span>
-        <input className={css.radiobutton} type="radio" name="status" value="active" onChange={handleRadioInput}/>
+        <input className={css.radiobutton} type="radio" name="status" value="active" onChange={handleRadioInput} checked={contractor.status === 'active'}/>
         <span>Active</span>
-        <input className={css.radiobutton} type="radio" name="status" value="inactive" onChange={handleRadioInput}/>
+        <input className={css.radiobutton} type="radio" name="status" value="inactive" onChange={handleRadioInput} checked={contractor.status === 'inactive'}/>
         <span>Inactive</span>
       </form>
     </div>

@@ -2,6 +2,7 @@ import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
+import { loginFailed } from './login-actions.js';
 
 function addContractorSuccessful() {
   return {
@@ -76,6 +77,9 @@ export function addContractor(contractorData, projectData, tableData, callback, 
         dispatch(hasStoppedLoading());
         dispatch(addContractorFailed(err.message));
         callback();
+        if (err.message.toLowerCase() === 'user is not logged in') {
+          dispatch(loginFailed('Login session has timed out. Please sign in again.'));
+        }
       });
   };
 }
@@ -117,24 +121,67 @@ function conformDropdownValuesToDefault (project, tableData) {
   return project;
 }
 
-export function editContractor(data, token) {
+export function editContractor(contractorData, projectData, tableData, numNewContracts, callback, token) {
   return dispatch => {
     dispatch(isLoading());
     return request
       .post(`${LIVE_SITE}contractors/edit`)
-      .query(Object.assign(data, {token}))
+      .query(Object.assign({}, contractorData, {token}))
       .then((res) => {
         const body = res.body;
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
         }
+        let contractorId = body.contractors[0].id;
+        return contractorId;
+      })
+      .then((contractorId) => {
+        let engagementPromises = [];
+        if (numNewContracts > 0) {
+          let newContractsPromises = addEngagementContract(projectData.slice(projectData.length - numNewContracts), contractorId, tableData, token);
+          engagementPromises.push(newContractsPromises);
+
+        }
+
+        let edittedContractorPromises = editEngagementContract(projectData.slice(0, projectData.length - numNewContracts), contractorId, token);
+        engagementPromises.push(edittedContractorPromises);
+        return Promise.all(engagementPromises);
+
+      })
+      .then((responses) => {
+        for(let responseArray of responses) {
+          for (let res of responseArray) {
+            let body = res.body;
+            if (!res.ok || body.error) {
+              throw new Error(body.errorMessage);
+            }
+          }
+        }
         dispatch(hasStoppedLoading());
-        dispatch(editContractorSuccessful());
-      }).catch((err) => {
+        callback();
+      })
+      .catch((err) => {
         dispatch(hasStoppedLoading());
         dispatch(editContractorFailed(err.message));
+        if (err.message.toLowerCase() === 'user is not logged in') {
+          dispatch(loginFailed('Login session has timed out. Please sign in again.'));
+        }
       });
   };
+}
+
+export function editEngagementContract(projectData, contractorId, token) {
+  let allEngagementPromises = [];
+  for(let project of projectData) {
+    project['contractorId'] = contractorId;
+    project['resourceId'] = '';
+    let req = request
+      .post(`${LIVE_SITE}contractors/edit/engagementContract`)
+      .query(Object.assign({}, project, {token}));
+    allEngagementPromises.push(req);
+  }
+
+  return Promise.all(allEngagementPromises);
 }
 
 export function viewAllContractorDataSeparateRows(token) {
@@ -162,6 +209,9 @@ function viewAllContractorData(parsingFunc, token) {
       })
       .catch((err) => {
         dispatch(viewAllDataFailed(err.message));
+        if (err.message.toLowerCase() === 'user is not logged in') {
+          dispatch(loginFailed('Login session has timed out. Please sign in again.'));
+        }
       });
   };
 }
@@ -221,6 +271,10 @@ function generateContractorRows(data) {
       'name': 'Skill Name',
       'description': 'Skill Description',
       'type': 'Skill Type'
+    },
+    'hiringManager': {
+      'firstName': 'Reporting Manager First Name',
+      'lastName': 'Reporting Manager Last Name'
     }
   };
 

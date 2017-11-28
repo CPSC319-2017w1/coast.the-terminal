@@ -8,7 +8,7 @@ import reducer from './reducers';
 import Layout from './components/Layout';
 
 
-const middleware = applyMiddleware(logger, thunk);
+const middleware = process.env.NODE_ENV === 'production' ? applyMiddleware(thunk) : applyMiddleware(logger, thunk);
 const store = createStore(reducer, middleware);
 
 export default class App extends Component {

@@ -1,36 +1,64 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EditContractorComponent from './EditPage.jsx';
+import { editContractor } from '../../actions/contractor-info-actions.js';
+import { viewTableRows } from '../../actions/view-tables-actions.js';
+import { switchView } from '../../actions/main-actions.js';
+import { CONTRACTOR_INFO } from '../../constants/tabs';
 
 
 const mapStateToProps = state => {
   return {
     error: state.contractors.error,
     isLoading: state.main.isLoading,
-    tables: state.tables
+    tables: state.tables,
+    token: state.user.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    onSubmit: (contractorData, projectData, tableData, numNewContracts, callback, token) => {
+      dispatch(editContractor(contractorData, projectData, tableData, numNewContracts, callback, token));
+    },
+    viewTables: (token) => {
+    dispatch(viewTableRows('skills', token));
+    dispatch(viewTableRows('fxrates', token));
+    dispatch(viewTableRows('paygrades', token));
+    dispatch(viewTableRows('hrroles', token));
+    dispatch(viewTableRows('hiringmanagers', token));
+    dispatch(viewTableRows('costcenters', token));
+  },
+  switchBack: () => {
+    dispatch(switchView(CONTRACTOR_INFO));
+  }}
+
 };
 
 class EditContractorContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contractor: {
-        firstName: '',
-        surname: '',
-        agencySource: '',
-        status: 'active'
-      },
-      projects: [
-        this.createDefaultProjectObject()
-      ],
       message: '',
-      tables: {}
+      tables: {},
+      numNewContracts: 0
     };
+    this.state.contractor = props.contractor;
+    this.state.contractor['surname'] = this.state.contractor.lastName;
+    this.state.projects = props.projects;
+
+    for (let project of this.state.projects) {
+      project.rateType = project.rateType.charAt(0).toUpperCase() + project.rateType.slice(1);
+      project['ratetypes'] = this.getRateTypeOptions();
+      project['mainSkillId'] = project.mainSkill.id;
+      project['hrPayGradeId'] = project.hrPayGrade.id;
+      project['costCenterId'] = project.costCenter.id;
+      project['hrPositionId'] = project.hrPositionRole.id;
+      project['hourlyrate'] = project.hourlyRate;
+      project['reportingManagerId'] = project.hiringManager.id;
+      project['poNum'] = project.poRefNum;
+    }
+
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleDropdownInput = this.handleDropdownInput.bind(this);
     this.handleDateInput = this.handleDateInput.bind(this);
@@ -39,6 +67,10 @@ class EditContractorContainer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
 
+  }
+
+  componentDidMount() {
+    this.props.viewTables(this.props.token);
   }
 
   handleTextInput(event) {
@@ -92,7 +124,9 @@ class EditContractorContainer extends React.Component {
       const { projects } = state;
       let dataIndex = event.target.getAttribute('data-index');
       let project = projects[dataIndex];
-      project[event.target.getAttribute('name')] = event.target.value;
+      let nameWithIndex = event.target.getAttribute('name');
+      let name = nameWithIndex.split("-")[0];
+      project[name] = event.target.value;
       this.setState(Object.assign(state, {projects}));
     }
   }
@@ -100,6 +134,7 @@ class EditContractorContainer extends React.Component {
   handleAdd(event) {
     event.preventDefault();
     let projectState = this.state.projects;
+    this.state.numNewContracts++;
     projectState.push(this.createDefaultProjectObject());
     this.setState({projects: projectState});
   }
@@ -108,12 +143,13 @@ class EditContractorContainer extends React.Component {
     event.preventDefault();
     const { contractor } = this.state;
     const { projects } = this.state;
-    this.props.onSubmit(contractor, projects, this.resetState);
+    const { numNewContracts } = this.state;
+
+    this.props.onSubmit(contractor, projects, this.props.tables, numNewContracts, this.resetState, this.props.token);
   }
 
   createDefaultProjectObject() {
     return {
-
       projectName: '',
       reportingmanagers: this.getReportingManagersOptions(),
       hrpositions: this.getHrPositionOptions(),
@@ -189,17 +225,9 @@ class EditContractorContainer extends React.Component {
     if (props.error) {
       this.setState({ message: props.error });
     } else {
-      this.setState({
-        contractor: {
-          firstName: '',
-          surname: '',
-          agencySource: ''
-        },
-        projects: [
-          this.createDefaultProjectObject()
-        ],
-        message: 'Contractor saved successfully.'
-      });
+      this.setState({selectedContractorId: null});
+      alert('Contractor Edited Successfully');
+      this.props.switchBack();
     }
   }
 

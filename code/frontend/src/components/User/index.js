@@ -31,6 +31,7 @@ class UserContainer extends React.Component {
     const { props } = this;
     props.cookies.remove('username');
     props.cookies.remove('token');
+    props.cookies.remove('tab');
     props.logout(props.username, props.token);
   }
 
