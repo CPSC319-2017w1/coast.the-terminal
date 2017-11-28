@@ -12,7 +12,7 @@ function Contractor({contractor, handleTextInput, handleRadioInput}) {
         </p>
         <p className={css.surname}>
           <span>Last Name</span>
-          <input className={css.txtfield} name="surname" type="text" value={contractor.lastName} onChange={handleTextInput}/>
+          <input className={css.txtfield} name="surname" type="text" value={contractor.surname} onChange={handleTextInput}/>
         </p>
         <p className={css.agency}>
           <span>Agency</span>

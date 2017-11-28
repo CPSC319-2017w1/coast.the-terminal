@@ -1,18 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EditContractorComponent from './EditPage.jsx';
+import { viewTableRows } from '../../actions/view-tables-actions.js';
 
 
 const mapStateToProps = state => {
   return {
     error: state.contractors.error,
     isLoading: state.main.isLoading,
-    tables: state.tables
+    tables: state.tables,
+    token: state.user.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    viewTables: (token) => {
+    dispatch(viewTableRows('skills', token));
+    dispatch(viewTableRows('fxrates', token));
+    dispatch(viewTableRows('paygrades', token));
+    dispatch(viewTableRows('hrroles', token));
+    dispatch(viewTableRows('hiringmanagers', token));
+    dispatch(viewTableRows('costcenters', token));
+  }};
 };
 
 class EditContractorContainer extends React.Component {
@@ -23,7 +33,9 @@ class EditContractorContainer extends React.Component {
       tables: {}
     };
     this.state.contractor = props.contractor;
+    this.state.contractor['surname'] = this.state.contractor.lastName;
     this.state.projects = props.projects;
+
     for(let project of this.state.projects) {
       project.rateType = project.rateType.charAt(0).toUpperCase() + project.rateType.slice(1);
       project['ratetypes'] = this.getRateTypeOptions();
@@ -31,8 +43,8 @@ class EditContractorContainer extends React.Component {
       project['hrPayGradeId'] = project.hrPayGrade.id;
       project['costCenterId'] = project.costCenter.id;
       project['hrPositionId'] = project.hrPositionRole.id;
-
     }
+    
     this.state.contractor = props.contractor;
     this.state.projects = props.projects;
     this.handleTextInput = this.handleTextInput.bind(this);
@@ -43,6 +55,10 @@ class EditContractorContainer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
 
+  }
+
+  componentDidMount() {
+    this.props.viewTables(this.props.token);
   }
 
   handleTextInput(event) {
