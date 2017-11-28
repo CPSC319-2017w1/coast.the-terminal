@@ -18,8 +18,10 @@ import java.util.logging.Logger;
 public class UserController extends Controller {
     private static final String loginQuery = "select * from User where username=? and password=?";
     private static final String usersQuery = "select * from User";
-    private static String updateQuery = "update User set password=?, permissions=? where username=?";
-    private static String addQuery = "insert into User values(?, ?, ?)";
+    private static final String updateQuery = "update User set password=?, permissions=? where username=?";
+    private static final String addQuery = "insert into User values(?, ?, ?)";
+    private static final String userQuery = "select* from User where username=?";
+    private static final String deleteQuery = "delete from User where username=?";
 
     public ArrayList<User> getUsers() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
@@ -171,8 +173,42 @@ public class UserController extends Controller {
     }
 
     @RequestMapping("/users/delete")
-    public Response deleteUser(User user) {
-        //TODO
-        return new Response();
+    public Response deleteUser(
+            @RequestParam("token") String token,
+            @RequestParam("username") String username,
+            @RequestParam("usertodelete") String usertodelete) {
+        if (!isUserLoggedIn(token)) {
+            return Response.createErrorResponse("User not logged in");
+        }
+        Response response= new Response();
+        DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
+        try {
+            connection.openConnection();
+            PreparedStatement st = connection.getPreparedStatement(userQuery);
+            st.setString(1, username);
+            ResultSet set = st.executeQuery();
+            if (set.next()) {
+                String permissions = set.getString("permissions");
+                if (permissions.equals("admin")) {
+                    st = connection.getPreparedStatement(deleteQuery);
+                    st.setString(1, usertodelete);
+                    int success = st.executeUpdate();
+                    if (success != 0) {
+                        connection.commitTransaction();
+                    } else {
+                        response = Response.createErrorResponse("Failed to delete user");
+                    }
+                } else {
+                    response = Response.createErrorResponse("Incorrect permissions for user");
+                }
+            } else {
+                response = Response.createErrorResponse("Failed to find user");
+            }
+            connection.closeConnection();
+        } catch (SQLException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+            return Response.createErrorResponse("Failed to delete user: " + e.getMessage());
+        }
+        return response;
     }
 }
