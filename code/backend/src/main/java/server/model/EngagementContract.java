@@ -1,6 +1,9 @@
 package server.model;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class EngagementContract {
     private String id;
@@ -16,7 +19,7 @@ public class EngagementContract {
     private String currencyCode;
     private int timeMaterialTerms;
     private int poRefNum;
-    private int hourlyRate;
+    private int dollarRate;
     private HRPositionRole hrPositionRole;
     private HRPayGrade hrPayGrade;
     private Skill mainSkill;
@@ -48,7 +51,7 @@ public class EngagementContract {
                               String currencyCode,
                               int timeMaterialTerms,
                               int poRefNum,
-                              int hourlyRate,
+                              int dollarRate,
                               HRPositionRole hrPositionRole,
                               HRPayGrade hrPayGrade,
                               Skill mainSkill,
@@ -67,12 +70,38 @@ public class EngagementContract {
         this.currencyCode = currencyCode;
         this.timeMaterialTerms = timeMaterialTerms;
         this.poRefNum = poRefNum;
-        this.hourlyRate = hourlyRate;
+        this.dollarRate = dollarRate;
         this.hrPositionRole = hrPositionRole;
         this.hrPayGrade = hrPayGrade;
         this.mainSkill = mainSkill;
         this.rehire = rehire;
         this.hiringManager = hiringManager;
+    }
+
+    public List<Integer> getEstimatedMonthlyCosts() {
+        final int HOURS_IN_DAY = 24;
+        List<Integer> totalMonthlyCost = new ArrayList<>();
+        Calendar cStart = Calendar.getInstance(); cStart.setTime(startDate);
+        Calendar cEnd = Calendar.getInstance(); cEnd.setTime(endDate);
+
+        while(cStart.before(cEnd)) {
+            int multiplier = 1;
+            //monthly rate type will stay the same
+            switch (this.rateType) {
+                case "hourly":
+                    multiplier = cStart.getActualMaximum(Calendar.DAY_OF_MONTH) * HOURS_IN_DAY;
+                    break;
+                case "daily":
+                    multiplier = cStart.getActualMaximum(Calendar.DAY_OF_MONTH);
+                    break;
+                default:
+                    multiplier = 1;
+            }
+            int monthlyCost = this.dollarRate * multiplier;
+            totalMonthlyCost.add(monthlyCost);
+            cStart.add(Calendar.MONTH, 1);
+        }
+        return totalMonthlyCost;
     }
 
     public String getId() {
@@ -127,8 +156,8 @@ public class EngagementContract {
         return poRefNum;
     }
 
-    public int getHourlyRate() {
-        return hourlyRate;
+    public int getDollarRate() {
+        return dollarRate;
     }
 
     public HRPositionRole getHrPositionRole() {
