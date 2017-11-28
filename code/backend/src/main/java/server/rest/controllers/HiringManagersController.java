@@ -124,7 +124,7 @@ public class HiringManagersController extends Controller{
     @RequestMapping("/hiringmanagers/edit")
     public HiringManagerResponse editManager(
             @RequestParam("token") String token,
-        @RequestParam("userId") String userID,
+        @RequestParam("id") String userID,
         @RequestParam("firstName") String firstName,
         @RequestParam("lastName") String lastName) {
         if (!isUserLoggedIn(token)) {
