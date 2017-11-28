@@ -1,6 +1,6 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
-import { LIVE_SITE,LOCALHOST } from '../constants/urls.js';
+import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
 function addContractorSuccessful() {
@@ -190,7 +190,7 @@ export function viewAllContractorDataKeepOriginal(token) {
 function viewAllContractorData(parsingFunc, token) {
   return dispatch => {
     return request
-      .get(`${LOCALHOST}contractors/viewAllData`)
+      .get(`${LIVE_SITE}contractors/viewAllData`)
       .query({token})
       .then((res) => {
         const body = res.body;
