@@ -3,7 +3,7 @@ import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
-function loginFailed(error) {
+export function loginFailed(error) {
   return {
     type: ACTIONS.LOGIN_FAILED,
     error
