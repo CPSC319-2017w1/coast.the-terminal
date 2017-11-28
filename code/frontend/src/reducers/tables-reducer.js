@@ -36,6 +36,7 @@ export default function tables(state = mainInitialState, action) {
     case ACTIONS.VIEW_TABLES_FAILED:
     case ACTIONS.ADD_NEW_ROW_FAILED:
     case ACTIONS.EDIT_ROW_FAILED:
+    case ACTIONS.DELETE_ROW_FAILED:
       return Object.assign({}, state, {
         [action.tableName]: { error: action.error, data: state[action.tableName].data }
       });
