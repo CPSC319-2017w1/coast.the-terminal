@@ -36,7 +36,7 @@ class AddContractorContainer extends React.Component{
     this.state = {
       contractor: {
         firstName: '',
-        surname: '',
+        lastName: '',
         agencySource: '',
         status: 'active'
       },
