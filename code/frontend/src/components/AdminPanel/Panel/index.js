@@ -25,6 +25,7 @@ class PanelWrapperContainer extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.getContent = this.getContent.bind(this);
     this.toggleAdd = this.toggleAdd.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
@@ -45,7 +46,8 @@ class PanelWrapperContainer extends React.Component {
     if (toggleEdit) {
       const parent = event.target.parentNode.parentNode;
       const children = parent.childNodes;
-      for(let i = 1; i < children.length; i++) { //starting from 1 because 0 is the edit button
+      const startIndex = children[1].getAttribute('name') === 'delete' ? 2 : 1; // starting from 1 because 0 is the edit button
+      for(let i = startIndex; i < children.length; i++) {
         const name = children[i].getAttribute('name');
         const value = children[i].innerText;
         inputs[name].selected = value;
@@ -128,6 +130,15 @@ class PanelWrapperContainer extends React.Component {
     }
   }
 
+  handleDelete(event) {
+    event.preventDefault();
+    const { props } = this;
+    const username = props.cookies.get('username');
+    const token = props.cookies.get('token');
+    const usertodelete = event.target.parentNode.parentNode.getAttribute('name');
+    props.handleDeleteRow({username, usertodelete, token});
+  }
+
   clearAll(event) {
     event.preventDefault();
     this.setState(Object.assign({ inputValidationMessage: '' }, this.props.getInitialState()));
@@ -151,7 +162,9 @@ class PanelWrapperContainer extends React.Component {
           addNew={this.toggleAdd}
           edit={this.toggleEdit}
           editingRow={state.itemId}
-          isAddingNew={state.toggleAdd} />
+          isAddingNew={state.toggleAdd}
+          deleteRow={props.handleDeleteRow ? this.handleDelete : null}
+          activeUser={props.cookies.get('username')} />
       </div>
     );
   }
@@ -195,6 +208,10 @@ class PanelWrapperContainer extends React.Component {
   }
 }
 
+PanelWrapperContainer.defaultProps = {
+  handleDeleteRow: null
+};
+
 PanelWrapperContainer.propTypes = {
   table: PropTypes.object.isRequired,
   onReturn: PropTypes.func.isRequired,
@@ -203,9 +220,9 @@ PanelWrapperContainer.propTypes = {
   tableName: PropTypes.string.isRequired,
   handleAddNew: PropTypes.func.isRequired,
   handleEditRow: PropTypes.func.isRequired,
+  handleDeleteRow: PropTypes.func,
   cookies: instanceOf(Cookies).isRequired
 };
-
 
 const PanelWrapper = connect(
   mapStateToProps,

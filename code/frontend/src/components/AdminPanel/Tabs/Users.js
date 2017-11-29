@@ -5,6 +5,7 @@ import PanelWrapper from '../Panel';
 import * as TYPES from '../../../constants/input-types.js';
 import { addNewRow } from '../../../actions/add-tables-actions.js';
 import { editRow } from '../../../actions/edit-tables-actions.js';
+import { deleteRow } from '../../../actions/delete-tables-actions.js';
 import { DISPLAY_NAME, TABLE_NAMES } from '../../../constants/admin-tables.js';
 import css from './table.css';
 
@@ -12,11 +13,14 @@ const tableName = TABLE_NAMES.USERS;
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleAddNew: (data) => {
+    handleAddNew: data => {
       dispatch(addNewRow(tableName, data));
     },
-    handleEditRow: (data) => {
+    handleEditRow: data => {
       dispatch(editRow(tableName, data));
+    },
+    handleDeleteRow: data => {
+      dispatch(deleteRow(tableName, data));
     }
   };
 };
@@ -57,20 +61,22 @@ function getInitialState() {
   };
 }
 
-function UsersContainer({ onReturn, handleAddNew, handleEditRow }) {
+function UsersContainer({ onReturn, handleAddNew, handleEditRow, handleDeleteRow }) {
   return <PanelWrapper className={css.panelwrapper}
     getInitialState={getInitialState}
     header={'Users'}
     tableName={tableName}
     onReturn={onReturn}
     handleAddNew={handleAddNew}
-    handleEditRow={handleEditRow} />;
+    handleEditRow={handleEditRow}
+    handleDeleteRow={handleDeleteRow}/>;
 }
 
 UsersContainer.propTypes = {
   onReturn: PropTypes.func.isRequired,
   handleAddNew: PropTypes.func.isRequired,
-  handleEditRow: PropTypes.func.isRequired
+  handleEditRow: PropTypes.func.isRequired,
+  handleDeleteRow: PropTypes.func.isRequired
 };
 
 const Users = connect(
