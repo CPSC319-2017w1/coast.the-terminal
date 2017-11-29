@@ -6,8 +6,10 @@
 .contractorform {
     font-size: 14px;
     background-color: #F2F4F7;
-    padding: 1%;
-}
+    padding-top: 1%;
+    padding-right: 1%;
+    padding-left: 1%;
+    padding-bottom: 1%;}
 
 .projectInfo {
     font-size: 14px;
@@ -24,9 +26,9 @@
 .contractorform .words {
     display: grid;
         display: -ms-grid;
-    grid-template-columns: 340px 100px 340px;
+    grid-template-columns: 340px 100px 395px;
     grid-template-rows: 50px auto;
-    -ms-grid-columns: 340px 100px 340px;
+    -ms-grid-columns: 340px 100px 395px;
     -ms-grid-rows: 50px auto;
 }
 
