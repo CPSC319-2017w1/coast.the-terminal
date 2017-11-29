@@ -21,7 +21,7 @@ function getHeaders(data) {
   if(data.length > 0) {
     let firstRow = data[0];
     for(let fieldName in firstRow) {
-      if(firstRow.hasOwnProperty(fieldName)) {
+      if(firstRow.hasOwnProperty(fieldName) && fieldName !== 'id') {
         headers.push((
           <th>{fieldName}</th>
         ));
@@ -45,7 +45,7 @@ function getRows(data, func) {
 function getColumns(contractorData) {
   let cols = [];
   for(let contractorField in contractorData) {
-    if(contractorData.hasOwnProperty(contractorField)) {
+    if(contractorData.hasOwnProperty(contractorField) && contractorField !== 'id') {
       cols.push((
         <td className={css.columns} key={contractorField}>{contractorData[contractorField]}</td>
       ));

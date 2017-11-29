@@ -78,6 +78,23 @@ public class EngagementContract {
         this.hiringManager = hiringManager;
     }
 
+    public int getMonthlyCost(Calendar thisDate) {
+        final int HOURS_IN_DAY = 24;
+        int multiplier = 1;
+        int totalMonthlyCost = this.dollarRate;
+
+        switch (this.rateType) {
+            case "hourly":
+                multiplier = thisDate.getActualMaximum(Calendar.DAY_OF_MONTH) * HOURS_IN_DAY;
+                break;
+            case "daily":
+                multiplier = thisDate.getActualMaximum(Calendar.DAY_OF_MONTH);
+                break;
+        }
+
+        return totalMonthlyCost * multiplier;
+    }
+
     public List<Integer> getEstimatedMonthlyCosts() {
         final int HOURS_IN_DAY = 24;
         List<Integer> totalMonthlyCost = new ArrayList<>();

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import server.database.DatabaseConnection;
 import server.model.*;
 import server.rest.responses.ContractorsResponse;
+import server.rest.responses.ReportResponse;
 import server.rest.responses.Response;
 
 import java.sql.PreparedStatement;
@@ -376,9 +377,9 @@ public class ContractorsController extends Controller {
     }
 
     @RequestMapping("/contractors/viewAllData")
-    public Response viewAllContractorData(@RequestParam("token") String token) {
+    public ContractorsResponse viewAllContractorData(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
-            return ContractorsResponse.createErrorResponse("User is not logged in");
+            return ContractorsResponse.contractorsFailure("User is not logged in");
         }
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         List<Contractor> allContractorData = new ArrayList<>();
@@ -386,7 +387,7 @@ public class ContractorsController extends Controller {
         try {
             connection.openConnection();
             if (!connection.isConnected()) {
-                return ContractorsResponse.createErrorResponse("View All Data Failed: Error opening database connection");
+                return ContractorsResponse.contractorsFailure("View All Data Failed: Error opening database connection");
             }
 
             PreparedStatement st = connection.getPreparedStatement(viewAllContractorDataQuery);
@@ -466,10 +467,28 @@ public class ContractorsController extends Controller {
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "View all contractor data failed: " + e.getMessage());
-            return ContractorsResponse.createErrorResponse("View all contractor data failed: " + e.getMessage());
+            return ContractorsResponse.contractorsFailure("View all contractor data failed: " + e.getMessage());
         }
 
         return new ContractorsResponse(allContractorData);
     }
+
+    @RequestMapping("contractors/viewReportData")
+    public ReportResponse viewReportData(@RequestParam("token") String token) {
+        if (!isUserLoggedIn(token)) {
+            return ReportResponse.reportsFailure("User is not logged in");
+        }
+        List<ReportData> reportData = new ArrayList<>();
+        ContractorsResponse response = viewAllContractorData(token);
+        if (response.isError()) {
+            return ReportResponse.reportsFailure(response.getErrorMessage());
+        }
+        for(Contractor contractor : response.getContractors()) {
+            reportData.addAll(Contractor.generateReportData(contractor));
+        }
+
+        return new ReportResponse(reportData);
+    }
+
 }
 

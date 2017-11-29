@@ -9,11 +9,14 @@ import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
 import TableRenderers from 'react-pivottable/TableRenderers';
 import {reportinfo} from '../Filtering/Data.js';
+import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
+import { viewReportData } from '../../actions/report-info-actions';
 
 const mapStateToProps = state => {
   return {
     user: state.user,
-    tables: state.tables
+    tables: state.tables,
+    reportData: state.reportData
   };
 };
 
@@ -21,7 +24,13 @@ const Plot = createPlotlyComponent(window.Plotly);
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getData: (token) => {
+      dispatch(isLoading());
+      dispatch(viewReportData(token));
+    },
+    stopLoading: () => {
+      dispatch(hasStoppedLoading());
+    }
   };
 };
 
@@ -35,6 +44,20 @@ class ReportBuilderContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({pivotState: nextProps});
+    if (nextProps.reportData.data && nextProps.reportData.data.length > 0) {
+      this.setState({pivotState: {
+        data: nextProps.reportData.data,
+        cols:["Working Month"],
+        aggregatorName: "Count Unique Values", vals: ["Contractor Name"],
+        rendererName: "Stacked Column Chart",
+        plotlyOptions: {width: 900, height: 500}
+      }});
+      this.props.stopLoading();
+    }
+  }
+
+  componentDidMount() {
+    this.props.getData(this.props.user.token);
   }
 
   componentWillMount() {
@@ -43,7 +66,7 @@ class ReportBuilderContainer extends React.Component {
       filename: "Trending Reports",
       pivotState: {
         data: reportinfo,
-        cols:["Working Month"],
+        cols: ["Working Month"],
         aggregatorName: "Count Unique Values", vals: ["Contractor Name"],
         rendererName: "Stacked Column Chart",
         plotlyOptions: {width: 900, height: 500}
@@ -54,7 +77,7 @@ class ReportBuilderContainer extends React.Component {
 
   render() {
     return <PivotTableUI
-      data={data} onChange={s => this.setState({pivotState: s})}
+      data={this.state.pivotState.data} onChange={s => this.setState({pivotState: s})}
       renderers={Object.assign({}, TableRenderers, createPlotlyRenderers(Plot))}
       {...this.state.pivotState} unusedOrientationCutoff={Infinity}
     />;

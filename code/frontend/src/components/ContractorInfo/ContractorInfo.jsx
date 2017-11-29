@@ -4,7 +4,8 @@ import css from './contractorinfo.css';
 import Table from './Table.jsx';
 
 function ContractorInfoComponent({tabledata, searchvalue, handleSearch, handleEditContractor}) {
-  return (<div className={css.wrapper}>
+  return (
+    <div className={css.wrapper}>
     <h1>Contractor Information</h1>
     <br/>
     <input className={css.searchbar} name="searchBar" type="text" value={searchvalue} onChange={handleSearch} placeholder="Search by Contractor Name..."/>

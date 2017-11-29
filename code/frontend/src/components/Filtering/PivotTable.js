@@ -66,11 +66,22 @@ class PivotTableContainer extends React.Component {
     });
   }
 
+  removeIdFromContractors(contractorData) {
+    if (!Array.isArray(contractorData)) {
+      contractorData = contractorData.humanReadableData;
+    }
+      for (let contractor of contractorData) {
+        delete contractor['id'];
+      }
+
+    return contractorData;
+  }
 
   render() {
     const { props, state }  = this;
+    let contractorData = this.removeIdFromContractors(props.contractors.data);
     return <PivotTableUI
-      data={reportinfo} onChange={s => this.setState({pivotState: s})}
+      data={contractorData} onChange={s => this.setState({pivotState: s})}
       renderers={Object.assign({}, TableRenderers, createPlotlyRenderers(Plot))}
       {...this.state.pivotState} unusedOrientationCutoff={Infinity}
     />;
