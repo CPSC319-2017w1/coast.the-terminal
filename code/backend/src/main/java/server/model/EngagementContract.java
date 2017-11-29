@@ -78,47 +78,26 @@ public class EngagementContract {
         this.hiringManager = hiringManager;
     }
 
-    public int getMonthlyCost(Calendar thisDate) {
-        final int HOURS_IN_DAY = 24;
+    /**
+     * Gets the estimated monthly cost for this month of the engagement contract
+     * @return The estimated monthly cost for this engagement contract.
+     */
+    public int getMonthlyCost() {
+        final int HOURS_IN_DAY = 8;
+        final int DAYS_IN_MONTH = 20;
         int multiplier = 1;
         int totalMonthlyCost = this.dollarRate;
 
         switch (this.rateType) {
             case "hourly":
-                multiplier = thisDate.getActualMaximum(Calendar.DAY_OF_MONTH) * HOURS_IN_DAY;
+                multiplier =  HOURS_IN_DAY * DAYS_IN_MONTH;
                 break;
             case "daily":
-                multiplier = thisDate.getActualMaximum(Calendar.DAY_OF_MONTH);
+                multiplier = DAYS_IN_MONTH;
                 break;
         }
 
         return totalMonthlyCost * multiplier;
-    }
-
-    public List<Integer> getEstimatedMonthlyCosts() {
-        final int HOURS_IN_DAY = 24;
-        List<Integer> totalMonthlyCost = new ArrayList<>();
-        Calendar cStart = Calendar.getInstance(); cStart.setTime(startDate);
-        Calendar cEnd = Calendar.getInstance(); cEnd.setTime(endDate);
-
-        while(cStart.before(cEnd)) {
-            int multiplier = 1;
-            //monthly rate type will stay the same
-            switch (this.rateType) {
-                case "hourly":
-                    multiplier = cStart.getActualMaximum(Calendar.DAY_OF_MONTH) * HOURS_IN_DAY;
-                    break;
-                case "daily":
-                    multiplier = cStart.getActualMaximum(Calendar.DAY_OF_MONTH);
-                    break;
-                default:
-                    multiplier = 1;
-            }
-            int monthlyCost = this.dollarRate * multiplier;
-            totalMonthlyCost.add(monthlyCost);
-            cStart.add(Calendar.MONTH, 1);
-        }
-        return totalMonthlyCost;
     }
 
     public String getId() {

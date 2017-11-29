@@ -106,6 +106,11 @@ public class Contractor {
     }
 
 
+    /**
+     * Generates a List of ReportData objects for viewing contractor data in report format.
+     * @param contractor The contractor to generate report data for.
+     * @return A List of ReportData objects, used for viewing reports.
+     */
     public static List<ReportData> generateReportData(Contractor contractor) {
         List<ReportData> allReportData = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -125,7 +130,7 @@ public class Contractor {
             while(cStart.before(cEnd)) {
                 String workingMonth;
                 String billingMonth;
-                int monthlyCost = contract.getMonthlyCost(cStart);
+                int monthlyCost = contract.getMonthlyCost();
                 workingMonth = cStart.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
 
                 Calendar cNextMonth = Calendar.getInstance();

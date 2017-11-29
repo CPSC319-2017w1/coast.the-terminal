@@ -473,6 +473,11 @@ public class ContractorsController extends Controller {
         return new ContractorsResponse(allContractorData);
     }
 
+    /**
+     * Get's contractor data formatted for viewing reports.
+     * @param token The user log in token.
+     * @return Contractor Data formatted for viewing reports.
+     */
     @RequestMapping("contractors/viewReportData")
     public ReportResponse viewReportData(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
