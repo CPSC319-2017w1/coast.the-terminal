@@ -6,7 +6,7 @@ import Contractor from './Contractor.jsx';
 import Projects from './Projects.jsx';
 
 function AddContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
-  handleDateInput, handleRadioInput, handleAdd, handleSubmit, message, tables}) {
+  handleDateInput, handleRadioInput, handleAdd, handleSubmit, handleCancel, message, tables}) {
   return (
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
@@ -17,6 +17,7 @@ function AddContractorComponent({contractor, projects, handleTextInput, handleDr
         handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} tables={tables} />
       <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
       <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
+      <button className={css.btnstyle} onClick={handleCancel}>Cancel</button>
     </div>
   );
 }
@@ -31,7 +32,8 @@ AddContractorComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleRadioInput: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
-  tables: PropTypes.object.isRequired
+  tables: PropTypes.object.isRequired,
+  handleCancel: PropTypes.func.isRequired
 };
 
 export default AddContractorComponent;
