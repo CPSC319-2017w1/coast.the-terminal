@@ -12,10 +12,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by vaast on 14/11/2017.
+ * Currency Converter object for getting the FX rates from the Fixer api
  */
 public class CurrencyConverter {
 
+    /**
+     * Gets the exchange rate between 2 given currencies
+     * @param curID1 ID of the selling currency
+     * @param curID2 ID of the buying currency
+     * @param rate The current rate that is being used
+     * @return The new FX rate
+     */
     public static double getRate(String curID1, String curID2, double rate) {
         String urlString = "http://api.fixer.io/latest?base=" + curID1 + "&symbols=" + curID2;
         try {
@@ -29,6 +36,9 @@ public class CurrencyConverter {
         return rate;
     }
 
+    /**
+     * Function to update the rates for all the currencies in the database
+     */
     public static void updateRates() {
         FXRateController controller = new FXRateController();
         ArrayList<FXRate> rates = new ArrayList<FXRate>();

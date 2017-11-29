@@ -3,11 +3,16 @@ package server.rest.responses;
 import server.model.User;
 
 /**
- * Created by vaast on 13/11/2017.
+ * Response Object for REST API edit user link
  */
 public class UsersEditResponse extends Response {
     User user;
 
+    /**
+     * Creates an error response object
+     * @param msg Error message
+     * @return Error response object
+     */
     public static UsersEditResponse usersEditFailure(String msg) {
         User user = new User("", "", "");
         UsersEditResponse response = new UsersEditResponse(user);
@@ -16,10 +21,18 @@ public class UsersEditResponse extends Response {
         return response;
     }
 
+    /**
+     * Creates a UsersEditResponse Object
+     * @param user
+     */
     public UsersEditResponse(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets the user object
+     * @return The user object
+     */
     public User getUser() {
         return user;
     }

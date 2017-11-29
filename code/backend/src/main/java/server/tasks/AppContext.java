@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import java.util.concurrent.Executor;
 
 /**
- * Created by vaast on 15/11/2017.
+ * Object to enable Automated Task Scheduling and Executing
  */
 @Configuration
 @EnableScheduling

@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller for the User table in the database
+ * Provides all the REST endpoints related to Users and stored SQL procedures
+ */
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class UserController extends Controller {
@@ -23,6 +27,11 @@ public class UserController extends Controller {
     private static final String userQuery = "select* from User where username=?";
     private static final String deleteQuery = "delete from User where username=?";
 
+    /**
+     * Gets all the users in the database
+     * @return The list of all users in the database
+     * @throws SQLException
+     */
     public ArrayList<User> getUsers() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<User> users = new ArrayList<User>();
@@ -42,6 +51,14 @@ public class UserController extends Controller {
         return users;
     }
 
+    /**
+     * Updates an existing user in the database
+     * @param username Username of the user
+     * @param password Password of the user
+     * @param permissions Permissions of the user
+     * @return The updated User
+     * @throws SQLException
+     */
     public User editUser(String username, String password, String permissions) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         User user = new User(username, password, permissions);
@@ -63,6 +80,14 @@ public class UserController extends Controller {
         return user;
     }
 
+    /**
+     * Adds a new User to the database
+     * @param username Username of the user
+     * @param password Password of the user
+     * @param permissions Permissions of the user
+     * @return The added User
+     * @throws SQLException
+     */
     public User addUser(String username, String password, String permissions) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         User user = new User(username, password, permissions);
@@ -84,6 +109,12 @@ public class UserController extends Controller {
         return user;
     }
 
+    /**
+     * REST API link to login
+     * @param username Username of the User
+     * @param password Password of the User
+     * @return Response stating if the login was successful or not
+     */
     @RequestMapping("/login")
     public LoginResponse login(@RequestParam("username") String username,
                                @RequestParam("password") String password) {
@@ -108,6 +139,9 @@ public class UserController extends Controller {
             user = resultSet.getString("username");
             permissions = resultSet.getString("permissions");
             token = AuthenticationController.login(username);
+            if (token.equals("")) {
+                return LoginResponse.loginFailure("Login failed");
+            }
             connection.closeConnection();
         } catch (SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
@@ -118,6 +152,11 @@ public class UserController extends Controller {
         return new LoginResponse(user, success, permissions, token);
     }
 
+    /**
+     * REST API link to view all users
+     * @param token The unique token of the User making the API call
+     * @return Response that contains all the users
+     */
     @RequestMapping("/users/view")
     public UsersResponse users(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
@@ -133,6 +172,15 @@ public class UserController extends Controller {
         }
         return new UsersResponse(users);
     }
+
+    /**
+     * REST API to update an existing user
+     * @param token The Unique token of the User making the API call
+     * @param username The username of the user to be updated
+     * @param password The password of the user to be updated
+     * @param permissions The permissions of the user to be updated
+     * @return Response with the Updated User or an error response
+     */
     @RequestMapping("/users/edit")
     public UsersEditResponse editUser(
             @RequestParam("token") String token,
@@ -145,6 +193,7 @@ public class UserController extends Controller {
         User user;
         try {
             user = this.editUser(username, password, permissions);
+            AuthenticationController.logout(username);
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit user failed: " + e.getMessage());
@@ -153,6 +202,14 @@ public class UserController extends Controller {
         return new UsersEditResponse(user);
     }
 
+    /**
+     * REST API to add a new User to the database
+     * @param token The unique token of the User making the API call
+     * @param username The username of the new user
+     * @param password The password of the new User
+     * @param permissions The permissions of the new User
+     * @return Response with newly created user or an error response
+     */
     @RequestMapping("/users/add")
     public UsersAddResponse addUser(
             @RequestParam("token") String token,
@@ -172,6 +229,13 @@ public class UserController extends Controller {
         return new UsersAddResponse(user);
     }
 
+    /**
+     * Delete an existing user
+     * @param token The unique token of the User making the API call
+     * @param username The username of the user making the API call
+     * @param usertodelete The username of the user to be deleted
+     * @return Response stating whether the deletion was successful or not
+     */
     @RequestMapping("/users/delete")
     public Response deleteUser(
             @RequestParam("token") String token,
@@ -195,6 +259,7 @@ public class UserController extends Controller {
                     int success = st.executeUpdate();
                     if (success != 0) {
                         connection.commitTransaction();
+                        AuthenticationController.logout(usertodelete);
                     } else {
                         response = Response.createErrorResponse("Failed to delete user");
                     }

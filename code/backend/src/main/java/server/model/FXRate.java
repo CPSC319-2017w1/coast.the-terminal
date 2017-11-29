@@ -1,7 +1,7 @@
 package server.model;
 
 /**
- * Created by vaast on 30/10/2017.
+ * Foreign Exchange rate object that represents the FX rate between 2 currencies
  */
 public class FXRate {
     private String cur1ID;

@@ -8,13 +8,16 @@ import server.session.AuthenticationController;
 import java.util.ArrayList;
 
 /**
- * Created by vaast on 17/11/2017.
+ * Automated task to delete the expired sessions in the database
  */
 @Component
 public class UpdateSessionStatusTask {
 
     long maxDuration = 60 * 60 * 1000;
 
+    /**
+     * Creates a scheduled task to delete the expired sessions in the database
+     */
     @Scheduled(fixedDelay = 36000000, initialDelay = 36000000)
     public void updateSessions() {
         ArrayList<Login> logins = AuthenticationController.getLogins();
