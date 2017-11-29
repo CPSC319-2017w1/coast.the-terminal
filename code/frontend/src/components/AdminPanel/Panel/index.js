@@ -22,7 +22,9 @@ class PanelWrapperContainer extends React.Component {
       toggleEdit: false,
       inputValidationMessage: null,
       itemId: '',
-      togglePrompt: false
+      successPrompt: false,
+      safetyPrompt: false,
+      safetyPromptValue: ''
     }, props.getInitialState());
     this.username = props.cookies.get('username');
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -33,13 +35,23 @@ class PanelWrapperContainer extends React.Component {
     this.toggleAdd = this.toggleAdd.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
     this.clearAll = this.clearAll.bind(this);
-    this.togglePromptOn = this.togglePromptOn.bind(this);
+    this.toggleSuccessPromptOn = this.toggleSuccessPromptOn.bind(this);
+    this.handleDeleteButton = this.handleDeleteButton.bind(this);
+    this.cancelDelete = this.cancelDelete.bind(this);
   }
 
   toggleAdd(event) {
     event.preventDefault();
     const toggleAdd = !this.state.toggleAdd;
-    this.setState({ toggleAdd, toggleEdit: false, itemId: '', inputValidationMessage: null, togglePrompt: false });
+    this.setState({
+      toggleAdd,
+      toggleEdit: false,
+      itemId: '',
+      inputValidationMessage: null,
+      successPrompt: false,
+      safetyPrompt: false,
+      safetyPromptValue: ''
+    });
   }
 
   toggleEdit(event) {
@@ -65,7 +77,16 @@ class PanelWrapperContainer extends React.Component {
     } else {
       inputs = this.props.getInitialState().inputs;
     }
-    this.setState({ toggleEdit, toggleAdd: false, inputs, itemId, inputValidationMessage: null, togglePrompt: false });
+    this.setState({
+      toggleEdit,
+      toggleAdd: false,
+      inputs,
+      itemId,
+      inputValidationMessage: null,
+      successPrompt: false,
+      safetyPrompt: false,
+      safetyPromptValue: ''
+    });
   }
 
   handleInputChange(event) {
@@ -105,7 +126,7 @@ class PanelWrapperContainer extends React.Component {
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: null });
       data.token = this.props.cookies.get('token');
-      this.props.handleAddNew(data, this.togglePromptOn);
+      this.props.handleAddNew(data, this.toggleSuccessPromptOn);
       this.toggleAdd(event);
     } else {
       this.setState({ inputValidationMessage: inputValidation.message });
@@ -128,7 +149,7 @@ class PanelWrapperContainer extends React.Component {
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: null });
       data.token = this.props.cookies.get('token');
-      this.props.handleEditRow(data, this.togglePromptOn);
+      this.props.handleEditRow(data, this.toggleSuccessPromptOn);
       this.toggleEdit(event);
     } else {
       this.setState({ inputValidationMessage: inputValidation.message });
@@ -137,23 +158,45 @@ class PanelWrapperContainer extends React.Component {
 
   handleDelete(event) {
     event.preventDefault();
-    const { props } = this;
+    this.setState({
+      toggleAdd: false,
+      toggleEdit: false,
+      itemId: '',
+      successPrompt: false,
+      safetyPrompt: true,
+      safetyPromptValue: event.target.parentNode.parentNode.getAttribute('name')
+    });
+  }
+
+  handleDeleteButton(event) {
+    event.preventDefault();
+    const { props, state } = this;
     const username = props.cookies.get('username');
     const token = props.cookies.get('token');
-    const usertodelete = event.target.parentNode.parentNode.getAttribute('name');
-    props.handleDeleteRow({username, usertodelete, token}, this.togglePromptOn);
+    props.handleDeleteRow({
+      usertodelete: state.safetyPromptValue,
+      username,
+      token
+    }, this.toggleSuccessPromptOn);
+    this.setState({ safetyPrompt: false });
+  }
+
+  cancelDelete(event) {
+    event.preventDefault();
+    this.setState({ safetyPrompt: false, safetyPromptValue: '' });
   }
 
   clearAll(event) {
     event.preventDefault();
     this.setState(Object.assign({
       inputValidationMessage: null,
-      togglePrompt: false
+      successPrompt: false,
+      safetyPrompt: false
     }, this.props.getInitialState()));
   }
 
-  togglePromptOn() {
-    this.setState({ togglePrompt: true });
+  toggleSuccessPromptOn() {
+    this.setState({ successPrompt: true });
   }
 
   getContent() {
@@ -187,7 +230,16 @@ class PanelWrapperContainer extends React.Component {
     return <div className={css.topoftable}>
       <h1 className={css.titlename}>{props.header}</h1>
       <button className= {css.returnbtn} onClick={props.onReturn}>Return to main admin panel page</button>
-      {state.togglePrompt ? <div className={css2.success}>Success!</div> : null}
+      {state.safetyPrompt
+        ? <div className={css2.safetyPromptWrapper}>
+          <div className={css2.safetyPrompt}>
+            <p>{`Delete user "${state.safetyPromptValue}"?`}</p>
+            <button className={css2.confirmButton} onClick={this.handleDeleteButton}>Confirm</button>
+            <button className={css2.cancelButton} onClick={this.cancelDelete}>Cancel</button>
+          </div>
+        </div>
+        : null}
+      {state.successPrompt ? <div className={css2.success}>Success!</div> : null}
       {state.inputValidationMessage ? <div className={css2.error}>{state.inputValidationMessage}</div> : null}
       {props.table.error ? <div className={css2.error}>{props.table.error}</div> : null}
       {this.getContent()}
