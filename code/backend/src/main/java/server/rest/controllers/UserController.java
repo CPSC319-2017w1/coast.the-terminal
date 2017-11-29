@@ -193,6 +193,7 @@ public class UserController extends Controller {
         User user;
         try {
             user = this.editUser(username, password, permissions);
+            AuthenticationController.logout(username);
         } catch(SQLException e) {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.INFO, "Edit user failed: " + e.getMessage());
@@ -258,6 +259,7 @@ public class UserController extends Controller {
                     int success = st.executeUpdate();
                     if (success != 0) {
                         connection.commitTransaction();
+                        AuthenticationController.logout(usertodelete);
                     } else {
                         response = Response.createErrorResponse("Failed to delete user");
                     }
