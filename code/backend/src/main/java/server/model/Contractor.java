@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by vaast on 31/10/2017.
+ * Creates a Contractor object
  */
 public class Contractor {
     private String id;
@@ -85,6 +85,10 @@ public class Contractor {
         return status;
     }
 
+    /**
+     * Sets the agencySource of the Contractor
+     * @param agencySource The new agency source of the contractor
+     */
     public void setAgencySource(String agencySource) {
         this.agencySource = agencySource;
     }

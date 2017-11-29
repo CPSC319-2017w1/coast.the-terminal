@@ -1,7 +1,7 @@
 package server.model;
 
 /**
- * Created by vaast on 06/11/2017.
+ * Represents the Hiring Manager object
  */
 public class HiringManager {
     String id;

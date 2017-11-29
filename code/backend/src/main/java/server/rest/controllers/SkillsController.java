@@ -19,6 +19,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller for the Skills table in the database
+ * Provides all the REST endpoints related to Skills and stored SQL procedures
+ */
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class SkillsController extends Controller {
@@ -26,6 +30,11 @@ public class SkillsController extends Controller {
     private static String insertQuery = "insert into Skill values(?, ?, ?, ?)";
     private static String updateQuery = "update Skill set name=?, description=?, type=? where id=?";
 
+    /**
+     * REST API link to get all skills data
+     * @param token The unique token of the User making the API call
+     * @return Response containing all the skills
+     */
     @RequestMapping("/skills/view")
     public SkillsResponse skills(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
@@ -57,6 +66,14 @@ public class SkillsController extends Controller {
         return new SkillsResponse(skills);
     }
 
+    /**
+     * REST API Call to add a new skill
+     * @param token The unique token of the User making the API call
+     * @param name The name of the Skill
+     * @param description The description of the skill
+     * @param type The type of the skill
+     * @return Response with the newly Added Skill or an error response
+     */
     @RequestMapping("/skills/add")
     public SkillsAddResponse addSkill(
             @RequestParam("token") String token,
@@ -94,6 +111,15 @@ public class SkillsController extends Controller {
         return new SkillsAddResponse(skill);
     }
 
+    /**
+     * REST API link to update an existing skill
+     * @param token The unique token of the User making the API call
+     * @param id The id of the skill to be updated
+     * @param name The name of the skill
+     * @param description The description of the skill
+     * @param type The type of the skill
+     * @return Response containing the updated skill or an error response
+     */
     @RequestMapping("/skills/edit")
     public SkillsEditResponse editSkill(
             @RequestParam("token") String token,

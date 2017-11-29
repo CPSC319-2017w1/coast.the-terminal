@@ -17,6 +17,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller for Position Role table in the database
+ * Provides all the REST endpoints related to HR Position Roles and stored SQL procedures
+ */
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class HRPositionRoleController extends Controller {
@@ -24,6 +28,11 @@ public class HRPositionRoleController extends Controller {
     private static String addQuery = "insert into HRPositionRole values(? ,? ,?)";
     private static String editQuery = "update HRPositionRole set roleName=?, description=? where id=?";
 
+    /**
+     * Get all HR Roles
+     * @return List of HR Roles in the database
+     * @throws SQLException
+     */
     public ArrayList<HRPositionRole> getHRRoles() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<HRPositionRole> roles = new ArrayList<HRPositionRole>();
@@ -43,6 +52,13 @@ public class HRPositionRoleController extends Controller {
         return roles;
     }
 
+    /**
+     * Adds a HR Role in the database
+     * @param roleName Name of the role
+     * @param description Description
+     * @return Newly created HRPositionRole
+     * @throws SQLException
+     */
     public HRPositionRole addRole(String roleName, String description) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         String id = UUID.randomUUID().toString();
@@ -65,6 +81,14 @@ public class HRPositionRoleController extends Controller {
         return role;
     }
 
+    /**
+     * Updates an existing Role in the database
+     * @param id ID of the role to be updated
+     * @param roleName Name of the role
+     * @param description Description of the role
+     * @return The Updated HRPositionRole
+     * @throws SQLException
+     */
     public HRPositionRole editRole(String id, String roleName, String description) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         HRPositionRole role = new HRPositionRole(id, roleName, description);
@@ -86,6 +110,11 @@ public class HRPositionRoleController extends Controller {
         return role;
     }
 
+    /**
+     * REST API link for viewing all HR Roles
+     * @param token The unique token of the User making the API call
+     * @return Response containing all HR Roles or an error response
+     */
     @RequestMapping("/hrroles/view")
     public HRPositionRoleResponse hrroles(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
@@ -102,6 +131,13 @@ public class HRPositionRoleController extends Controller {
         return new HRPositionRoleResponse(roles);
     }
 
+    /**
+     * REST API link to add a new HR Role
+     * @param token The unique token of the User making the API call
+     * @param roleName Name of the role
+     * @param description Description of the role
+     * @return Response containing the newly created Role or an error response
+     */
     @RequestMapping("hrroles/add")
     public HRRolesResponse addHrrole(
             @RequestParam("token") String token,
@@ -121,6 +157,14 @@ public class HRPositionRoleController extends Controller {
         return new HRRolesResponse(role);
     }
 
+    /**
+     * REST API link to update an existing role
+     * @param token The unique token of the User making the API call
+     * @param id The id of the role being updated
+     * @param roleName Name of the role
+     * @param description Description of the role
+     * @return Response containing the Updated role or an error response
+     */
     @RequestMapping("/hrroles/edit")
     public HRRolesResponse editHrrole(
             @RequestParam("token") String token,

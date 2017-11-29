@@ -17,11 +17,20 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller for Cost Centers Table
+ * Provides all the REST endpoints related to Cost Centers and stored SQL procedures
+ */
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class CostCentersController extends Controller {
     private static String VIEW_COST_CENTER_QUERY = "SELECT * from CostCenter";
 
+    /**
+     * Get all the Cost Centers
+     * @return The cost centers in the database
+     * @throws SQLException if something goes wrong whilst querying the database
+     */
     public ArrayList<CostCenter> getCostCenters() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<CostCenter> costCenters = new ArrayList<CostCenter>();
@@ -41,6 +50,11 @@ public class CostCentersController extends Controller {
         return costCenters;
     }
 
+    /**
+     * REST API link for viewing all the cost centers
+     * @param token The unique token of the user making the API call
+     * @return Response containing all the CostCenter information or an error response
+     */
     @RequestMapping("/costcenters/view")
     public CostCentersResponse fxrates(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {

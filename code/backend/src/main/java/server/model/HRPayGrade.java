@@ -1,7 +1,7 @@
 package server.model;
 
 /**
- * Created by vaast on 31/10/2017.
+ * Represents the pay grade of the object
  */
 public class HRPayGrade {
     private String id;
@@ -46,5 +46,9 @@ public class HRPayGrade {
         return startAmount;
     }
 
+    /**
+     * Gets the name of the Pay Grade
+     * @return The name of the pay grade
+     */
     public String getName() { return name; }
 }

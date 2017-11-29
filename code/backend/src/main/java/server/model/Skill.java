@@ -1,7 +1,7 @@
 package server.model;
 
 /**
- * Created by vaast on 31/10/2017.
+ * Represents the skill object
  */
 public class Skill {
     private String id;

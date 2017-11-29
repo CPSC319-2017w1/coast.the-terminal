@@ -19,6 +19,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller for Contractors Table
+ * Provides all the REST endpoints related to Contractors and stored SQL procedures
+ */
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"}, methods = {RequestMethod.GET, RequestMethod.POST})
 @RestController
 public class ContractorsController extends Controller {
@@ -80,6 +84,16 @@ public class ContractorsController extends Controller {
             "INNER JOIN HiringManager rp on rp.userId=e.reportingManagerUserId\n" +
             "ORDER BY c.id";
 
+    /**
+     * Edits a Contractor in the Database
+     * @param id ID of the contractor to be edited
+     * @param firstName first name of the contractor
+     * @param lastName last name of the contractor
+     * @param agencySource agency source of the contractor
+     * @param status status of the contractor
+     * @return list of contractor with just the edited contractor as an element in it.
+     * @throws SQLException if something goes wrong whilst querying/updating the database
+     */
     public ArrayList<Contractor> editContractor(String id, String firstName, String lastName, String agencySource, String status) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<Contractor> contractors = new ArrayList<Contractor>();
@@ -105,6 +119,11 @@ public class ContractorsController extends Controller {
         return contractors;
     }
 
+    /**
+     * Gets the list of all contractors in the database
+     * @return The list of all contractors in the database
+     * @throws SQLException If something goes wrong whilst querying the database
+     */
     public ArrayList<Contractor> getContractors() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         connection.openConnection();
@@ -127,6 +146,15 @@ public class ContractorsController extends Controller {
         return contractors;
     }
 
+    /**
+     * Adds a contractor to the database
+     * @param firstName First Name of the contractor
+     * @param surName Last Name of the Contractor
+     * @param agencySource Agency Source of the Contractor
+     * @param status Status of the contractor
+     * @return The list of Contractors with only the newly added contractor as its element
+     * @throws SQLException if something oes wrong whilst querying/updating the database
+     */
     public ArrayList<Contractor> addContractor(String firstName, String surName, String agencySource, String status) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<Contractor> newContractor = new ArrayList<>();
@@ -156,6 +184,22 @@ public class ContractorsController extends Controller {
         return newContractor;
     }
 
+    /**
+     * Converts the date in SQL format from String format
+     * @param date The date in String format
+     * @return The date in SQL format
+     * @throws ParseException if the string provided is not a valid date
+     */
+    private java.sql.Date getSQLDate(String date) throws ParseException {
+        Date dateParsed = new SimpleDateFormat(DATE_FORMAT).parse(date);
+        return new java.sql.Date(dateParsed.getTime());
+    }
+
+    /**
+     * REST API call for viewing all the contractors
+     * @param token The unique token of the user making the api call
+     * @return Response that contains all the contractors as a response
+     */
     @RequestMapping("/contractors/view")
     public ContractorsResponse contractors(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
@@ -173,6 +217,15 @@ public class ContractorsController extends Controller {
         return new ContractorsResponse(contractors);
     }
 
+    /**
+     * REST API call for adding a new contractor
+     * @param token The unique token of the user making the api call
+     * @param firstName The first name of the new Contractor
+     * @param surName The last name of the new Contractor
+     * @param agencySource The agency source of the new Contractor
+     * @param status The status of the new Contractor
+     * @return Response that contains the added contractor or an error response
+     */
     @RequestMapping("/contractors/add")
     public ContractorsResponse addContractor(
             @RequestParam("token") String token,
@@ -195,6 +248,31 @@ public class ContractorsController extends Controller {
         return new ContractorsResponse(newContractor);
     }
 
+    /**
+     * REST API call to edit an engagement contract of a specific Contractor
+     * @param token The unique token of the user making the API call
+     * @param id The id of the engagement contract
+     * @param startDate The start date of the contract
+     * @param endDate The end date of the contract
+     * @param rateType The rate type of the contract
+     * @param projectName The project name of the contract
+     * @param chargeType The charge type of the contract
+     * @param dailyAllowance The daily allowance of the contract
+     * @param originalDocumentation The original documentation of the contract
+     * @param terminationNum The termination number of the contract
+     * @param contractorId The id of the contractor associated with the contractor
+     * @param resourceId The id of the resource provided
+     * @param hrPositionId The id of the hr position
+     * @param hrPayGradeId The id of the hr pay grade for the contract
+     * @param costCenterId The id of the cost center associated with the contractor
+     * @param reportingManagerId The id of the reporting manager
+     * @param currencyCode The currency code for all the input fields
+     * @param mainSkillId The id of the skill that was used for hiring
+     * @param timeMaterialTerms The time material terms for the contract
+     * @param poNum
+     * @param hourlyRate The hourly rate negotiated for this contract
+     * @return Response stating whether the edit was successful or not
+     */
     @CrossOrigin("*")
     @RequestMapping(value = "/contractors/edit/engagementContract", method={RequestMethod.POST})
     public Response editEngagementContract(
@@ -270,6 +348,30 @@ public class ContractorsController extends Controller {
         return new Response();
     }
 
+    /**
+     * REST API call to edit an engagement contract of a specific Contractor
+     * @param token The unique token of the user making the API call
+     * @param startDate The start date of the contract
+     * @param endDate The end date of the contract
+     * @param rateType The rate type of the contract
+     * @param projectName The project name of the contract
+     * @param chargeType The charge type of the contract
+     * @param dailyAllowance The daily allowance of the contract
+     * @param originalDocumentation The original documentation of the contract
+     * @param terminationNum The termination number of the contract
+     * @param contractorId The id of the contractor associated with the contractor
+     * @param resourceId The id of the resource provided
+     * @param hrPositionId The id of the hr position
+     * @param hrPayGradeId The id of the hr pay grade for the contract
+     * @param costCenterId The id of the cost center associated with the contractor
+     * @param reportingManagerId The id of the reporting manager
+     * @param currencyCode The currency code for all the input fields
+     * @param mainSkillId The id of the skill that was used for hiring
+     * @param timeMaterialTerms The time material terms for the contract
+     * @param poNum
+     * @param hourlyRate The hourly rate negotiated for this contract
+     * @return Response stating whether the edit was successful or not
+     */
     @CrossOrigin("*")
     @RequestMapping(value = "/contractors/add/engagementContract", method={RequestMethod.POST})
     public Response addEngagementContract(@RequestParam("token") String token,
@@ -349,11 +451,16 @@ public class ContractorsController extends Controller {
         return new Response();
     }
 
-    private java.sql.Date getSQLDate(String date) throws ParseException {
-        Date dateParsed = new SimpleDateFormat(DATE_FORMAT).parse(date);
-        return new java.sql.Date(dateParsed.getTime());
-    }
-
+    /**
+     * REST API call to edit a contractor
+     * @param token The unique token of the user making the API call
+     * @param id The id of the contractor
+     * @param firstName The first name of the Contractor
+     * @param surname The last name of the Contractor
+     * @param agencySource The Agency Source of the Contractor
+     * @param status The status of the Contractor
+     * @return Response that contains the edited contractor or an error response
+     */
     @RequestMapping("/contractors/edit")
     public ContractorsResponse editContractor(
             @RequestParam("token") String token,
@@ -376,6 +483,11 @@ public class ContractorsController extends Controller {
         return new ContractorsResponse(contractors);
     }
 
+    /**
+     * REST API call for viewing all the data
+     * @param token The unique token of the User making the API call
+     * @return Response that contains all the contractor info or an error response
+     */
     @RequestMapping("/contractors/viewAllData")
     public ContractorsResponse viewAllContractorData(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
