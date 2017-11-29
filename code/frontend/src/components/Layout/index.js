@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
 import { withCookies, Cookies } from 'react-cookie';
+import cx from 'classnames';
 import * as TABS from '../../constants/tabs.js';
 import Login from '../Login';
 import Navbar from '../Navbar';
@@ -56,11 +57,15 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
       {isLoading ? <div className={css.spinner}></div> : null}
       <User />
       <Navbar />
-      <div className={css.content}>
+      <div className={cx(css.content, isChrome() ? css.relative : css.absolute)}>
         {child}
       </div>
     </div>
   );
+}
+
+function isChrome() {
+  return typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.indexOf('Chrome') > -1;
 }
 
 LayoutContainer.propTypes = {

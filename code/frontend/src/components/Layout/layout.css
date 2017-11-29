@@ -5,10 +5,14 @@
 }
 
 .content {
-    position: relative;
-    top: 60%;
-    left: 200px;
-    margin-left: -150px;
+    position: absolute;
+    top: 50px;
+    left: 300px;
+    display: inline-flex;
+    overflow: auto;
+    max-width: 100%;
+    padding-bottom: 15px;
+
 }
 
 .spinner {
@@ -22,4 +26,12 @@
     position: fixed;
     top: 0;
     left: 0;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
 }
