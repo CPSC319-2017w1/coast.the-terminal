@@ -20,6 +20,7 @@ class FilteringContainer extends React.Component {
     this.closeTutorial = this.closeTutorial.bind(this);
   }
 
+  // toggles the state of visibility of tutorial
   handleTutorial(event) {
     event.preventDefault();
     this.setState({
@@ -27,6 +28,7 @@ class FilteringContainer extends React.Component {
     });
   }
 
+  // closes the tutorial
   closeTutorial(event){
     event.preventDefault();
     this.setState({
