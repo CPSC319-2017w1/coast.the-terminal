@@ -1,9 +1,11 @@
 .wrapper {
     display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
+    top: 3%;
+    right: 5%;
     z-index: 1;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
+
 }
 
 .username {
