@@ -19,9 +19,10 @@ class PanelWrapperContainer extends React.Component {
     this.state = Object.assign({
       toggleAdd: false,
       toggleEdit: false,
-      inputValidationMessage: '',
+      inputValidationMessage: null,
       itemId: ''
     }, props.getInitialState());
+    this.username = props.cookies.get('username');
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -35,7 +36,7 @@ class PanelWrapperContainer extends React.Component {
   toggleAdd(event) {
     event.preventDefault();
     const toggleAdd = !this.state.toggleAdd;
-    this.setState({ toggleAdd, toggleEdit: false, itemId: '' });
+    this.setState({ toggleAdd, toggleEdit: false, itemId: '', inputValidationMessage: null });
   }
 
   toggleEdit(event) {
@@ -61,7 +62,7 @@ class PanelWrapperContainer extends React.Component {
     } else {
       inputs = this.props.getInitialState().inputs;
     }
-    this.setState({ toggleEdit, toggleAdd: false, inputs, itemId });
+    this.setState({ toggleEdit, toggleAdd: false, inputs, itemId, inputValidationMessage: null });
   }
 
   handleInputChange(event) {
@@ -73,6 +74,7 @@ class PanelWrapperContainer extends React.Component {
     state.inputs[name].selected = target.value;
     switch (target.getAttribute('type')) {
       case TYPES.TEXT:
+      case TYPES.PASSWORD:
         state.inputs[name].value = target.value;
         break;
       case TYPES.NUMBER:
@@ -96,9 +98,9 @@ class PanelWrapperContainer extends React.Component {
         data[key] = inputs[key].selected;
       }
     }
-    const inputValidation = this.areInputsValid(data);
+    const inputValidation = areInputsValid(data, this.props.tableName);
     if (inputValidation.isValid) {
-      this.setState({ inputValidationMessage: '' });
+      this.setState({ inputValidationMessage: null });
       data.token = this.props.cookies.get('token');
       this.props.handleAddNew(data);
       this.toggleAdd(event);
@@ -119,9 +121,9 @@ class PanelWrapperContainer extends React.Component {
     if (Object.keys(data).indexOf('username') === -1) { // this means the table is users and uses usernames as ids
       data.id = event.target.parentNode.getAttribute('name');
     }
-    const inputValidation = this.areInputsValid(data);
+    const inputValidation = areInputsValid(data, this.props.tableName);
     if (inputValidation.isValid) {
-      this.setState({ inputValidationMessage: '' });
+      this.setState({ inputValidationMessage: null });
       data.token = this.props.cookies.get('token');
       this.props.handleEditRow(data);
       this.toggleEdit(event);
@@ -141,7 +143,7 @@ class PanelWrapperContainer extends React.Component {
 
   clearAll(event) {
     event.preventDefault();
-    this.setState(Object.assign({ inputValidationMessage: '' }, this.props.getInitialState()));
+    this.setState(Object.assign({ inputValidationMessage: null }, this.props.getInitialState()));
   }
 
   getContent() {
@@ -155,7 +157,8 @@ class PanelWrapperContainer extends React.Component {
               onSubmit={state.toggleAdd ? this.handleAdd : this.handleEdit}
               clearAll={this.clearAll}
               itemId={state.itemId}
-              isEdit={state.toggleEdit} />
+              isEdit={state.toggleEdit}
+              isActiveUser={state.inputs.username && state.inputs.username.value === this.username} />
             : null
         }
         <Table table={props.table.data}
@@ -169,32 +172,7 @@ class PanelWrapperContainer extends React.Component {
     );
   }
 
-  areInputsValid(inputs) {
-    const response = {
-      isValid: true,
-      message: ''
-    };
-    const keys = Object.keys(inputs);
-    keys.forEach(key => {
-      if (typeof inputs[key] === 'undefined' || inputs[key] === '') {
-        response.isValid = false;
-        response.message = 'Please make sure all fields have been filled in.';
-        return response;
-      } else if (key.indexOf('start') > -1) {
-        const end = keys.find(item => item.indexOf('end') > -1);
-        if (end && (inputs[key] < 0 || inputs[end] < 0)) {
-          response.isValid = false;
-          response.message = 'Values cannot be negative.';
-          return response;
-        } else if (end && inputs[key] >= inputs[end]) {
-          response.isValid = false;
-          response.message = 'End value cannot be smaller than or equal to start value.';
-          return response;
-        }
-      }
-    });
-    return response;
-  }
+
 
   render() {
     const { props, state } = this;
@@ -206,6 +184,57 @@ class PanelWrapperContainer extends React.Component {
       {this.getContent()}
     </div>;
   }
+}
+
+function areInputsValid(inputs, tableName) {
+  const response = {
+    isValid: true,
+    message: ''
+  };
+  const keys = Object.keys(inputs);
+  keys.forEach(key => {
+    if (typeof inputs[key] === 'undefined' || inputs[key] === '') {
+      response.isValid = false;
+      response.message = <p>Please make sure all fields have been filled in.</p>;
+      return response;
+    } else if (key.indexOf('start') > -1) {
+      const end = keys.find(item => item.indexOf('end') > -1);
+      if (end && (inputs[key] < 0 || inputs[end] < 0)) {
+        response.isValid = false;
+        response.message = <p>Values cannot be negative.</p>;
+        return response;
+      } else if (end && inputs[key] >= inputs[end]) {
+        response.isValid = false;
+        response.message = <p>End value cannot be smaller than or equal to start value.</p>;
+        return response;
+      }
+    } else if (tableName === 'users') {
+      if (key === 'password') {
+        if (!inputs[key].match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_,.?])(?=.{8,})/)) {
+          response.isValid = false;
+          let message = [];
+          if (!inputs[key].match(/(?=.{8,})/)) {
+            message.push(<li key="length" className={css.validationItem}>Minimum length of 8 characters</li>);
+          }
+          if (!inputs[key].match(/(?=.*[a-z])/)) {
+            message.push(<li key="lower" className={css.validationItem}>At least one lower case letter</li>);
+          }
+          if (!inputs[key].match(/(?=.*[A-Z])/)) {
+            message.push(<li key="upper" className={css.validationItem}>At least one upper case letter</li>);
+          }
+          if (!inputs[key].match(/(?=.*[0-9])/)) {
+            message.push(<li key="number" className={css.validationItem}>At least one number</li>);
+          }
+          if (!inputs[key].match(/(?=.*[!@#$%^&*\-_,.?])/)) {
+            message.push(<li key="special" className={css.validationItem}>At least one special character (allowed special characters are: <strong>!@#$%^&*-_,.?</strong>)</li>);
+          }
+          response.message = [<p key="title" className={css.validationTitle}>Password field is missing the following items:</p>,
+            <ul key="header">{message}</ul>];
+        }
+      }
+    }
+  });
+  return response;
 }
 
 PanelWrapperContainer.defaultProps = {
