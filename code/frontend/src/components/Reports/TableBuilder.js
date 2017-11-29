@@ -54,9 +54,9 @@ class ReportBuilderContainer extends React.Component {
           data: contractorInfo,
           rendererName: 'Table',
           plotlyOptions: {width: 900, height: 500},
-          aggregatorName: 'Count Unique Values', vals: ['Contractor Name'],
-          //cols: [] TODO
-          //rows: [] TODO
+          aggregatorName: 'Sum', vals: ['Total Monthly Cost'],
+          cols: [],
+          rows: ['Reporting Manager Last Name', 'Agency Source', 'Contractor Name', 'Project Name', 'Skill Name', 'Pay Grade End Amount', 'Allowance Expense']
         }
       });
       this.props.stopLoading();
