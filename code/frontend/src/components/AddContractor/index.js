@@ -43,7 +43,6 @@ class AddContractorContainer extends React.Component{
       projects: [
         this.createDefaultProjectObject()
       ],
-      message: '',
       tables: {}
     };
     this.handleTextInput = this.handleTextInput.bind(this);
@@ -129,6 +128,7 @@ class AddContractorContainer extends React.Component{
     event.preventDefault();
     const { contractor } = this.state;
     const { projects } = this.state;
+
     this.props.onSubmit(contractor, projects, this.props.tables, this.resetState, this.props.token);
   }
 
@@ -206,7 +206,7 @@ class AddContractorContainer extends React.Component{
   resetState() {
     const { props } = this;
     if (props.error) {
-      this.setState({ message: props.error });
+      alert(props.error);
     } else {
       this.setState({
         contractor: {
@@ -216,9 +216,9 @@ class AddContractorContainer extends React.Component{
         },
         projects: [
           this.createDefaultProjectObject()
-        ],
-        message: 'Contractor added successfully.'
+        ]
       });
+      alert('Contractor added Successfully');
     }
   }
 
