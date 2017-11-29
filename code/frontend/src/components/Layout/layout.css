@@ -7,8 +7,9 @@
 .content {
     position: relative;
     top: 60%;
-    left: 200px;
-    margin-left: -150px;
+    left: 300px;
+    display: inline-flex;
+
 }
 
 .spinner {
