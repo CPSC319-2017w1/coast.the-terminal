@@ -38,6 +38,7 @@ class ContractorInfoContainer extends React.Component {
     };
     this.handleEditContractor = this.handleEditContractor.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleBack = this.handleBack.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,6 +63,13 @@ class ContractorInfoContainer extends React.Component {
     let id = event.target.getAttribute('name');
     this.setState({
       selectedContractorId: id
+    });
+  }
+
+  handleBack(event){
+    event.preventDefault();
+    this.setState({
+      selectedContractorId: null
     });
   }
 
@@ -97,7 +105,7 @@ class ContractorInfoContainer extends React.Component {
           selectedContractor = contractor;
         }
       }
-      return <EditContractor contractor={selectedContractor} projects={selectedContractor.contracts}/>;
+      return <EditContractor contractor={selectedContractor} projects={selectedContractor.contracts} returnBack={this.handleBack}/>;
     }
   }
 }

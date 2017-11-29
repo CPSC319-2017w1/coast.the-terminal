@@ -66,7 +66,6 @@ class EditContractorContainer extends React.Component {
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
-    this.handleBack = this.handleBack.bind(this);
 
   }
 
@@ -148,16 +147,6 @@ class EditContractorContainer extends React.Component {
     this.props.onSubmit(contractor, projects, this.props.tables, numNewContracts, this.resetState, this.props.token);
   }
 
-  handleBack(){
-    const { props } = this;
-    if (props.error) {
-      this.setState({ message: props.error });
-    } else {
-      this.setState({selectedContractorId: null});
-      this.props.switchBack();
-    }
-  }
-
   createDefaultProjectObject() {
     return {
       projectName: '',
@@ -235,9 +224,7 @@ class EditContractorContainer extends React.Component {
     if (props.error) {
       this.setState({ message: props.error });
     } else {
-      this.setState({selectedContractorId: null});
       alert('Contractor Edited Successfully');
-      this.props.switchBack();
     }
   }
 
@@ -251,7 +238,7 @@ class EditContractorContainer extends React.Component {
       handleRadioInput={this.handleRadioInput}
       handleAdd={this.handleAdd}
       handleSubmit={this.handleSubmit}
-      handleBack={this.handleBack}
+      handleBack={this.props.returnBack}
       message={this.state.message}
       tables={this.props.tables}
     />;
