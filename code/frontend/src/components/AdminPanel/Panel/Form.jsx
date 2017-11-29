@@ -27,8 +27,8 @@ function Form({inputs, onChange, onSubmit, clearAll, itemId, isEdit}) {
   }
   return <div className={css.form} name={itemId}>
     {children}
-    <button className={css.returnbtn} type="submit" onClick={onSubmit}>Submit</button>
-    <button className={css.returnbtn} onClick={clearAll}>Clear Fields</button>
+    <button className={css.cancelbtn} type="submit" onClick={onSubmit}>Submit</button>
+    <button className={css.cancelbtn} onClick={clearAll}>Clear Fields</button>
   </div>;
 }
 

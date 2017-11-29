@@ -11,6 +11,21 @@
     margin-right: 20px;
 }
 
+.cancelbtn {
+    background-color: #BFD9F1;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    margin-right: 20px;
+    padding: 5px 10px;
+}
+
+.cancelbtn:hover {
+    background-color: #E5F0FA;
+    color: black;
+    border: #494949;
+}
+
 .fxreturnbtn {
     padding: 5px 10px;
     background-color: #0067c6;
@@ -105,6 +120,10 @@
 .form {
     margin-top: 20px;
     margin-bottom: 10px;
+    background-color: #F2F4F7;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 5px;
 }
 
 .form div {
