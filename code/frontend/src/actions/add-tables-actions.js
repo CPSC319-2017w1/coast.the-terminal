@@ -12,7 +12,7 @@ function addNewRowFailed(error, tableName) {
   };
 }
 
-export function addNewRow(tableName, data) {
+export function addNewRow(tableName, data, successCallback) {
   return dispatch => {
     return request
       .post(`${LIVE_SITE}${tableName}/add`)
@@ -21,6 +21,9 @@ export function addNewRow(tableName, data) {
         const body = res.body;
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
+        }
+        if (typeof successCallback !== 'undefined') {
+          successCallback();
         }
         dispatch(viewTableRows(tableName, data.token));
       }).catch((err) => {
