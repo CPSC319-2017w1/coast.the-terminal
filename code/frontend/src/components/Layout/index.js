@@ -63,6 +63,10 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
   );
 }
 
+function isChrome() {
+  return typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.indexOf('Chrome') > -1;
+}
+
 LayoutContainer.propTypes = {
   tab: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
