@@ -1,6 +1,9 @@
 package server.model;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class EngagementContract {
     private String id;
@@ -16,7 +19,7 @@ public class EngagementContract {
     private String currencyCode;
     private int timeMaterialTerms;
     private int poRefNum;
-    private int hourlyRate;
+    private int dollarRate;
     private HRPositionRole hrPositionRole;
     private HRPayGrade hrPayGrade;
     private Skill mainSkill;
@@ -48,7 +51,7 @@ public class EngagementContract {
                               String currencyCode,
                               int timeMaterialTerms,
                               int poRefNum,
-                              int hourlyRate,
+                              int dollarRate,
                               HRPositionRole hrPositionRole,
                               HRPayGrade hrPayGrade,
                               Skill mainSkill,
@@ -67,12 +70,34 @@ public class EngagementContract {
         this.currencyCode = currencyCode;
         this.timeMaterialTerms = timeMaterialTerms;
         this.poRefNum = poRefNum;
-        this.hourlyRate = hourlyRate;
+        this.dollarRate = dollarRate;
         this.hrPositionRole = hrPositionRole;
         this.hrPayGrade = hrPayGrade;
         this.mainSkill = mainSkill;
         this.rehire = rehire;
         this.hiringManager = hiringManager;
+    }
+
+    /**
+     * Gets the estimated monthly cost for this month of the engagement contract
+     * @return The estimated monthly cost for this engagement contract.
+     */
+    public int getMonthlyCost() {
+        final int HOURS_IN_DAY = 8;
+        final int DAYS_IN_MONTH = 20;
+        int multiplier = 1;
+        int totalMonthlyCost = this.dollarRate;
+
+        switch (this.rateType) {
+            case "hourly":
+                multiplier =  HOURS_IN_DAY * DAYS_IN_MONTH;
+                break;
+            case "daily":
+                multiplier = DAYS_IN_MONTH;
+                break;
+        }
+
+        return totalMonthlyCost * multiplier;
     }
 
     public String getId() {
@@ -127,8 +152,8 @@ public class EngagementContract {
         return poRefNum;
     }
 
-    public int getHourlyRate() {
-        return hourlyRate;
+    public int getDollarRate() {
+        return dollarRate;
     }
 
     public HRPositionRole getHrPositionRole() {

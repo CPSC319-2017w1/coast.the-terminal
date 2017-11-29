@@ -233,7 +233,8 @@ function generateContractorRows(data) {
     'lastName': 'Last Name',
     'agencySource': 'Agency Source',
     'status': 'Status',
-    'contracts': 'contracts'};
+    'contracts': 'contracts'
+  };
 
   const contractFields = {'chargeType': 'Charge Type',
     'currencyCode': 'Currency Code',

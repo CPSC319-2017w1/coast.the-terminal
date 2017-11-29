@@ -87,7 +87,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
             </select>
           </p>
           <p className={css.hourrate}>
-            Est. Hourly Rate
+            Est. Rate ($)
             <input className={css.txtfield}
               name="hourlyrate"
               type="number"

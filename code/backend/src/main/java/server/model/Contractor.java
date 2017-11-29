@@ -1,7 +1,10 @@
 package server.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by vaast on 31/10/2017.
@@ -100,5 +103,48 @@ public class Contractor {
      */
     public void addEngagementContract(EngagementContract contract) {
         contracts.add(contract);
+    }
+
+
+    /**
+     * Generates a List of ReportData objects for viewing contractor data in report format.
+     * @param contractor The contractor to generate report data for.
+     * @return A List of ReportData objects, used for viewing reports.
+     */
+    public static List<ReportData> generateReportData(Contractor contractor) {
+        List<ReportData> allReportData = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String contractorName = contractor.firstName + " " + contractor.lastName;
+        String company = contractor.agencySource;
+        for (EngagementContract contract : contractor.getContracts()) {
+            String costCenter = contract.getCostCenter().getLocation();
+            String startDate = dateFormat.format(contract.getStartDate());
+            String endDate = dateFormat.format(contract.getEndDate());
+            String hiringManager = contract.getHiringManager().getFirstName() + " " + contract.getHiringManager().getLastName();
+
+            Calendar cStart = Calendar.getInstance();
+            cStart.setTime(contract.getStartDate());
+            Calendar cEnd = Calendar.getInstance();
+            cEnd.setTime(contract.getEndDate());
+
+            while(cStart.before(cEnd)) {
+                String workingMonth;
+                String billingMonth;
+                int monthlyCost = contract.getMonthlyCost();
+                workingMonth = cStart.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+
+                Calendar cNextMonth = Calendar.getInstance();
+                cNextMonth.setTime(cStart.getTime());
+                cNextMonth.add(Calendar.MONTH, 1);
+                billingMonth = cNextMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+
+                cStart.add(Calendar.MONTH, 1);
+
+                ReportData rp = new ReportData(contractorName, company, costCenter, workingMonth, billingMonth, monthlyCost, hiringManager, startDate, endDate);
+                allReportData.add(rp);
+            }
+        }
+
+        return allReportData;
     }
 }
