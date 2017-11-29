@@ -12,11 +12,11 @@ const tableName = TABLE_NAMES.HR_ROLES;
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleAddNew: (data) => {
-      dispatch(addNewRow(tableName, data));
+    handleAddNew: (data, callback) => {
+      dispatch(addNewRow(tableName, data, callback));
     },
-    handleEditRow: (data) => {
-      dispatch(editRow(tableName, data));
+    handleEditRow: (data, callback) => {
+      dispatch(editRow(tableName, data, callback));
     }
   };
 };

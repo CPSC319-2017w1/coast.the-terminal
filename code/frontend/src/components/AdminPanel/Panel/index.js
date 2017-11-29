@@ -6,6 +6,7 @@ import Table from './Table.jsx';
 import * as TYPES from '../../../constants/input-types.js';
 import { withCookies, Cookies } from 'react-cookie';
 import css from '../../../components/AdminPanel/Tabs/table.css';
+import css2 from '../adminpanel.css';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -20,7 +21,8 @@ class PanelWrapperContainer extends React.Component {
       toggleAdd: false,
       toggleEdit: false,
       inputValidationMessage: null,
-      itemId: ''
+      itemId: '',
+      togglePrompt: false
     }, props.getInitialState());
     this.username = props.cookies.get('username');
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -31,12 +33,13 @@ class PanelWrapperContainer extends React.Component {
     this.toggleAdd = this.toggleAdd.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
     this.clearAll = this.clearAll.bind(this);
+    this.togglePromptOn = this.togglePromptOn.bind(this);
   }
 
   toggleAdd(event) {
     event.preventDefault();
     const toggleAdd = !this.state.toggleAdd;
-    this.setState({ toggleAdd, toggleEdit: false, itemId: '', inputValidationMessage: null });
+    this.setState({ toggleAdd, toggleEdit: false, itemId: '', inputValidationMessage: null, togglePrompt: false });
   }
 
   toggleEdit(event) {
@@ -62,7 +65,7 @@ class PanelWrapperContainer extends React.Component {
     } else {
       inputs = this.props.getInitialState().inputs;
     }
-    this.setState({ toggleEdit, toggleAdd: false, inputs, itemId, inputValidationMessage: null });
+    this.setState({ toggleEdit, toggleAdd: false, inputs, itemId, inputValidationMessage: null, togglePrompt: false });
   }
 
   handleInputChange(event) {
@@ -102,7 +105,7 @@ class PanelWrapperContainer extends React.Component {
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: null });
       data.token = this.props.cookies.get('token');
-      this.props.handleAddNew(data);
+      this.props.handleAddNew(data, this.togglePromptOn);
       this.toggleAdd(event);
     } else {
       this.setState({ inputValidationMessage: inputValidation.message });
@@ -125,7 +128,7 @@ class PanelWrapperContainer extends React.Component {
     if (inputValidation.isValid) {
       this.setState({ inputValidationMessage: null });
       data.token = this.props.cookies.get('token');
-      this.props.handleEditRow(data);
+      this.props.handleEditRow(data, this.togglePromptOn);
       this.toggleEdit(event);
     } else {
       this.setState({ inputValidationMessage: inputValidation.message });
@@ -138,12 +141,19 @@ class PanelWrapperContainer extends React.Component {
     const username = props.cookies.get('username');
     const token = props.cookies.get('token');
     const usertodelete = event.target.parentNode.parentNode.getAttribute('name');
-    props.handleDeleteRow({username, usertodelete, token});
+    props.handleDeleteRow({username, usertodelete, token}, this.togglePromptOn);
   }
 
   clearAll(event) {
     event.preventDefault();
-    this.setState(Object.assign({ inputValidationMessage: null }, this.props.getInitialState()));
+    this.setState(Object.assign({
+      inputValidationMessage: null,
+      togglePrompt: false
+    }, this.props.getInitialState()));
+  }
+
+  togglePromptOn() {
+    this.setState({ togglePrompt: true });
   }
 
   getContent() {
@@ -172,15 +182,14 @@ class PanelWrapperContainer extends React.Component {
     );
   }
 
-
-
   render() {
     const { props, state } = this;
     return <div className={css.topoftable}>
       <h1 className={css.titlename}>{props.header}</h1>
       <button className= {css.returnbtn} onClick={props.onReturn}>Return to main admin panel page</button>
-      {state.inputValidationMessage === '' ? null : <div>{state.inputValidationMessage}</div>}
-      {props.table.error ? <div>{props.table.error}</div> : null}
+      {state.togglePrompt ? <div className={css2.success}>Success!</div> : null}
+      {state.inputValidationMessage ? <div className={css2.error}>{state.inputValidationMessage}</div> : null}
+      {props.table.error ? <div className={css2.error}>{props.table.error}</div> : null}
       {this.getContent()}
     </div>;
   }

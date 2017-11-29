@@ -12,7 +12,7 @@ function deleteRowFailed(error, tableName) {
   };
 }
 
-export function deleteRow(tableName, data) {
+export function deleteRow(tableName, data, successCallback) {
   return dispatch => {
     return request
       .post(`${LIVE_SITE}${tableName}/delete`)
@@ -21,6 +21,9 @@ export function deleteRow(tableName, data) {
         const body = res.body;
         if (!res.ok || body.error) {
           throw new Error(body.errorMessage);
+        }
+        if (typeof successCallback !== 'undefined') {
+          successCallback();
         }
         dispatch(viewTableRows(tableName, data.token));
       }).catch((err) => {
