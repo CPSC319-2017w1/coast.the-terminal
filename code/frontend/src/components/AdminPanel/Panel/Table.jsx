@@ -12,7 +12,7 @@ function Table({ table, addNew, edit, editingRow, isAddingNew, deleteRow, active
         <tr className={css.tablerow}>
           {edit === null ? null : <th>Edit</th>}
           {deleteRow === null ? null : <th>Delete</th>}
-          {keys.map((key, index) => key === 'id' ? null : <th key={index}>{DISPLAY_NAME[key]}</th>)}
+          {keys.map((key, index) => key === 'id' ? null : <th key={index} style={key === 'password' ? {display: 'none'} : null}>{DISPLAY_NAME[key]}</th>)}
         </tr>
       </thead>
       <tbody>
@@ -31,7 +31,12 @@ function Table({ table, addNew, edit, editingRow, isAddingNew, deleteRow, active
             {edit === null ? null : <td name="edit">{editButton}</td>}
             {deleteRow === null ? null : <td name="delete">{deleteButton}</td>}
             {keys.map((column, columnIndex) => column === 'id' ? null
-              : <td className={css.tablerowcontent} key={`${rowIndex}_${columnIndex}`} name={column}>{row[column]}</td>)}
+              : <td className={css.tablerowcontent}
+                key={`${rowIndex}_${columnIndex}`}
+                name={column}
+                style={column === 'password' ? {display: 'none'} : null}>
+                {row[column]}
+              </td>)}
           </tr>;
         })}
       </tbody>

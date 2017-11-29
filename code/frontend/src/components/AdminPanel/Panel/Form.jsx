@@ -5,20 +5,21 @@ import css from '../../../components/AdminPanel/Tabs/table.css';
 
 // todo: input validations
 
-function Form({inputs, onChange, onSubmit, clearAll, itemId, isEdit}) {
+function Form({inputs, onChange, onSubmit, clearAll, itemId, isEdit, isActiveUser}) {
   let children = [];
   for (let key in inputs) {
     if (inputs.hasOwnProperty(key)) {
       const item = inputs[key];
       switch (item.type) {
         case TYPES.TEXT:
+        case TYPES.PASSWORD:
           children.push(getTextField(item, key, onChange, isEdit));
           break;
         case TYPES.NUMBER:
           children.push(getNumberField(item, key, onChange));
           break;
         case TYPES.DROPDOWN:
-          children.push(getDropdownField(item, key, onChange));
+          children.push(getDropdownField(item, key, onChange, isActiveUser));
           break;
         default:
           break;
@@ -46,14 +47,18 @@ function getTextField(item, key, onChange, isEdit) {
   </div>;
 }
 
-function getDropdownField(items, key, onChange) {
+function getDropdownField(items, key, onChange, isActiveUser) {
   return <div className={css.formfield} key={key}>
     <span>{items.title}</span>
-    <select onChange={onChange} type={items.type} value={items.selected} name={key}>
+    <select onChange={onChange} type={items.type} value={items.selected} name={key} disabled={key === 'permissions' && isActiveUser}>
       {items.value.map(item => <option key={`${key}_${item.value}`} value={item.value}>{item.title}</option>)}
     </select>
   </div>;
 }
+
+Form.defaultProps = {
+  isActiveUser: false
+};
 
 Form.propTypes = {
   inputs: PropTypes.object.isRequired,
@@ -61,7 +66,8 @@ Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   clearAll: PropTypes.func.isRequired,
   itemId: PropTypes.string.isRequired,
-  isEdit: PropTypes.bool.isRequired
+  isEdit: PropTypes.bool.isRequired,
+  isActiveUser: PropTypes.bool
 };
 
 export default Form;
