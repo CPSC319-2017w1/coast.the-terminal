@@ -40,13 +40,6 @@ class ContractorInfoContainer extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  handleEditContractor(event) {
-    event.preventDefault();
-    let id = event.target.getAttribute('name');
-    this.setState({
-      selectedContractorId: id
-    });
-  }
   componentWillReceiveProps(nextProps) {
     if(nextProps.contractors.data && nextProps.contractors.data.humanReadableData.length > 0) {
       this.props.stopLoading();
