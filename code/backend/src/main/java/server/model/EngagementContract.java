@@ -84,7 +84,7 @@ public class EngagementContract {
      */
     public int getMonthlyCost() {
         final int HOURS_IN_DAY = 8;
-        final int DAYS_IN_MONTH = 20;
+        final int DAYS_IN_MONTH = 22;
         int multiplier = 1;
         int totalMonthlyCost = this.dollarRate;
 
