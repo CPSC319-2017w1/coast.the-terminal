@@ -22,16 +22,16 @@ const mapDispatchToProps = dispatch => {
       dispatch(editContractor(contractorData, projectData, tableData, numNewContracts, callback, token));
     },
     viewTables: (token) => {
-    dispatch(viewTableRows('skills', token));
-    dispatch(viewTableRows('fxrates', token));
-    dispatch(viewTableRows('paygrades', token));
-    dispatch(viewTableRows('hrroles', token));
-    dispatch(viewTableRows('hiringmanagers', token));
-    dispatch(viewTableRows('costcenters', token));
-  },
-  switchBack: () => {
-    dispatch(switchView(CONTRACTOR_INFO));
-  }}
+      dispatch(viewTableRows('skills', token));
+      dispatch(viewTableRows('fxrates', token));
+      dispatch(viewTableRows('paygrades', token));
+      dispatch(viewTableRows('hrroles', token));
+      dispatch(viewTableRows('hiringmanagers', token));
+      dispatch(viewTableRows('costcenters', token));
+    },
+    switchBack: () => {
+      dispatch(switchView(CONTRACTOR_INFO));
+    }};
 
 };
 
@@ -125,7 +125,7 @@ class EditContractorContainer extends React.Component {
       let dataIndex = event.target.getAttribute('data-index');
       let project = projects[dataIndex];
       let nameWithIndex = event.target.getAttribute('name');
-      let name = nameWithIndex.split("-")[0];
+      let name = nameWithIndex.split('-')[0];
       project[name] = event.target.value;
       this.setState(Object.assign(state, {projects}));
     }
@@ -144,7 +144,6 @@ class EditContractorContainer extends React.Component {
     const { contractor } = this.state;
     const { projects } = this.state;
     const { numNewContracts } = this.state;
-
     this.props.onSubmit(contractor, projects, this.props.tables, numNewContracts, this.resetState, this.props.token);
   }
 
@@ -225,9 +224,7 @@ class EditContractorContainer extends React.Component {
     if (props.error) {
       this.setState({ message: props.error });
     } else {
-      this.setState({selectedContractorId: null});
       alert('Contractor Edited Successfully');
-      this.props.switchBack();
     }
   }
 
@@ -241,6 +238,7 @@ class EditContractorContainer extends React.Component {
       handleRadioInput={this.handleRadioInput}
       handleAdd={this.handleAdd}
       handleSubmit={this.handleSubmit}
+      handleBack={this.props.returnBack}
       message={this.state.message}
       tables={this.props.tables}
     />;

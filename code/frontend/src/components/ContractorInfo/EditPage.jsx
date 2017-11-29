@@ -5,12 +5,13 @@ import Contractor from '../AddContractor/Contractor.jsx';
 import Projects from '../AddContractor/Projects.jsx';
 
 function EditContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
-  handleDateInput, handleRadioInput, handleAdd, handleSubmit, message, tables}) {
+  handleDateInput, handleRadioInput, handleAdd, handleSubmit, handleBack, message, tables}) {
   return (
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
       <h1>Edit Contractor</h1>
       <p> Use the form below to edit contractor information stored in the system.</p>
+      <button className={css.backbtnstyle} onClick={handleBack}> Back to Contractor Info</button>
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleRadioInput={handleRadioInput}/>
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
         handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} tables={tables} />
@@ -28,6 +29,7 @@ EditContractorComponent.propTypes = {
   handleDateInput: PropTypes.func.isRequired,
   handleAdd: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleBack: PropTypes.func.isRequired,
   handleRadioInput: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   tables: PropTypes.object.isRequired
