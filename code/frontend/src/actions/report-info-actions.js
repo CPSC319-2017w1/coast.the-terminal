@@ -47,7 +47,7 @@ function mapReportDataToHumanReadable(reportData) {
     'startDate': 'Start Date',
     'totalMonthlyCost': 'Total Monthly Cost',
     'hiringManager': 'Hiring Manager'
-  }
+  };
   let parsedReports = [];
   for (let report of reportData) {
     let parsedReport = {};

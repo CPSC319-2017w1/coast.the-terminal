@@ -249,7 +249,9 @@ function generateContractorRows(data) {
     'rehire': 'Rehire',
     'startDate': 'Start Date',
     'terminationNum': 'Termination Number',
-    'timeMaterialTerms': 'Time And Material Terms'};
+    'timeMaterialTerms': 'Time And Material Terms',
+    'monthlyCost': 'Total Monthly Cost'
+  };
 
   const contractObjectFields = {
     'costCenter': {
@@ -315,29 +317,4 @@ function generateContractorRows(data) {
   }
 
   return contractors;
-}
-
-//taken from https://stackoverflow.com/questions/19098797/fastest-way-to-flatten-un-flatten-nested-json-objects/19101235#19101235
-function flattenData(data) {
-  var result = {};
-  function recurse (cur, prop) {
-    if (Object(cur) !== cur) {
-      result[prop] = cur;
-    } else if (Array.isArray(cur)) {
-      for(var i=0, l=cur.length; i<l; i++)
-        recurse(cur[i], prop + '_');
-      if (l == 0)
-        result[prop] = [];
-    } else {
-      var isEmpty = true;
-      for (var p in cur) {
-        isEmpty = false;
-        recurse(cur[p], prop ? prop +p : p);
-      }
-      if (isEmpty && prop)
-        result[prop] = {};
-    }
-  }
-  recurse(data, '');
-  return result;
 }

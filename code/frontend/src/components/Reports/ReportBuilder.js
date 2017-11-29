@@ -74,7 +74,6 @@ class ReportBuilderContainer extends React.Component {
     });
   }
 
-
   render() {
     return <PivotTableUI
       data={this.state.pivotState.data} onChange={s => this.setState({pivotState: s})}
@@ -86,7 +85,8 @@ class ReportBuilderContainer extends React.Component {
 
 ReportBuilderContainer.propTypes = {
   user: PropTypes.object.isRequired,
-  tables: PropTypes.object.isRequired
+  tables: PropTypes.object.isRequired,
+  reportData: PropTypes.object.isRequired
 };
 
 const ReportBuilder = connect(
