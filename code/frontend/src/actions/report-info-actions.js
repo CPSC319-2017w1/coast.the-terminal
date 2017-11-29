@@ -20,7 +20,7 @@ function getReportDataFailed(error) {
 export function viewReportData(token) {
   return dispatch => {
     return request
-      .get(`${LOCALHOST}contractors/viewReportData`)
+      .get(`${LIVE_SITE}contractors/viewReportData`)
       .query({token})
       .then((res) => {
         const body = res.body;
