@@ -144,7 +144,14 @@ class EditContractorContainer extends React.Component {
     const { contractor } = this.state;
     const { projects } = this.state;
     const { numNewContracts } = this.state;
-    this.props.onSubmit(contractor, projects, this.props.tables, numNewContracts, this.resetState, this.props.token);
+    let confirmation = confirm('Are you sure you want to add changes to this contractor?');
+
+    if(confirmation){
+      this.props.onSubmit(contractor, projects, this.props.tables, numNewContracts, this.resetState, this.props.token);
+    } else {
+      alert('Contractor changes not saved');
+    }
+
   }
 
   createDefaultProjectObject() {
@@ -222,7 +229,7 @@ class EditContractorContainer extends React.Component {
   resetState() {
     const { props } = this;
     if (props.error) {
-      this.setState({ message: props.error });
+      alert(props.error);
     } else {
       alert('Contractor Edited Successfully');
     }

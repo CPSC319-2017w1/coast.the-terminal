@@ -129,27 +129,38 @@ class AddContractorContainer extends React.Component{
     event.preventDefault();
     const { contractor } = this.state;
     const { projects } = this.state;
+    let confirmation = confirm('Are you sure you want to add this contractor to the system?');
 
-    this.props.onSubmit(contractor, projects, this.props.tables, this.resetState, this.props.token);
+    if(confirmation){
+      this.props.onSubmit(contractor, projects, this.props.tables, this.resetState, this.props.token);
+    } else {
+      alert('Contractor not added');
+    }
+
   }
 
   handleCancel(){
     event.preventDefault();
     const { props } = this;
-    if (props.error) {
-      alert(props.error);
+    let confirmation = confirm('Are you sure you want to clear fields?');
+    if(confirmation){
+      if (props.error) {
+        alert(props.error);
+      } else {
+        this.setState({
+          contractor: {
+            firstName: '',
+            surname: '',
+            agencySource: '',
+            status: 'active'
+          },
+          projects: [
+            this.createDefaultProjectObject()
+          ]
+        });
+      }
     } else {
-      this.setState({
-        contractor: {
-          firstName: '',
-          surname: '',
-          agencySource: '',
-          status: 'active'
-        },
-        projects: [
-          this.createDefaultProjectObject()
-        ]
-      });
+
     }
   }
 

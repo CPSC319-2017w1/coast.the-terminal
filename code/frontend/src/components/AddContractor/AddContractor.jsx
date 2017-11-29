@@ -17,7 +17,7 @@ function AddContractorComponent({contractor, projects, handleTextInput, handleDr
         handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} tables={tables} />
       <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
       <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
-      <button className={css.btnstyle} onClick={handleCancel}>Cancel</button>
+      <button className={css.btnstyle} onClick={handleCancel}>Clear Fields</button>
     </div>
   );
 }
