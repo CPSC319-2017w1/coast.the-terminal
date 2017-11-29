@@ -5,10 +5,12 @@
 }
 
 .content {
-    position: relative;
-    top: 60%;
+    position: absolute;
+    top: 50px;
     left: 300px;
     display: inline-flex;
+    overflow: auto;
+    max-width: 100%;
 
 }
 
