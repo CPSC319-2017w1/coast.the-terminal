@@ -1,3 +1,6 @@
+// warning, tests won't work without data in the backend
+// changes to selectors will need to be changed accordingly
+
 module.exports = {
 
 // test for login page
@@ -21,52 +24,52 @@ module.exports = {
     })
   },
 
-  // test that dashboard buttons navigate correctly
-  'dashboard buttons': (browser) => {
-    browser
-      // click the data filtering button to navigate to that page
-      .click('button[data-qa="datafilterbtn"]')
-      // wait for the data filtering page to load
-      .waitForElementVisible('div[data-qa="filtering-wrapper"]', 3000)
-      // check if page loaded was the filtering page
-      .getText('h1[data-qa="filtering-header"]', function(comp) {
-        this.assert.equal(comp.value, 'Data Filtering System')
-      })
-      // go back to dashboard
-      .click('li[data-qa="dashboard-nav"]')
-
-      // click the contractor information button to navigate to that page
-      .click('button[data-qa="infobtn"]')
-      // wait for the data filtering page to load
-      .waitForElementVisible('div[data-qa=info-wrapper]', 3000)
-      // check if page loaded was the information page
-      .getText('h1[data-qa="info-header"]', function(comp) {
-        this.assert.equal(comp.value, 'Contractor Information')
-      })
-      // go back to dashboard
-      .click('li[data-qa="dashboard-nav"]')
-
-      // click the reports button to navigate to that page
-      .click('button[data-qa="reportsbtn"]')
-      // wait for the reports page to load
-      .waitForElementVisible('div[data-qa="reports-wrapper"]', 3000)
-      // check if page loaded was the filtering page
-      .getText('h1[data-qa="reports-header"]', function(comp) {
-        this.assert.equal(comp.value, 'Trending Reports')
-      })
-      // go back to dashboard
-      .click('li[data-qa="dashboard-nav"]')
-
-      //click the add contractor button to navigate to that page
-      .click('button[data-qa="addbtn"]')
-      // wait for the add contractor page to load
-      .waitForElementVisible('div[data-qa="add-wrapper"]', 3000)
-      // check if page loaded was the add contractor page
-      .getText('h1[data-qa="add-header"]', function(comp) {
-        this.assert.equal(comp.value, 'Add Contractor')
-      })
-  },
+  // // test that dashboard buttons navigate correctly
+  // 'dashboard buttons': (browser) => {
+  //   browser
+  //     // click the data filtering button to navigate to that page
+  //     .click('button[data-qa="datafilterbtn"]')
+  //     // wait for the data filtering page to load
+  //     .waitForElementVisible('div[data-qa="filtering-wrapper"]', 3000)
+  //     // check if page loaded was the filtering page
+  //     .getText('h1[data-qa="filtering-header"]', function(comp) {
+  //       this.assert.equal(comp.value, 'Data Filtering System')
+  //     })
+  //     // go back to dashboard
+  //     .click('li[data-qa="dashboard-nav"]')
   //
+  //     // click the contractor information button to navigate to that page
+  //     .click('button[data-qa="infobtn"]')
+  //     // wait for the data filtering page to load
+  //     .waitForElementVisible('div[data-qa=info-wrapper]', 3000)
+  //     // check if page loaded was the information page
+  //     .getText('h1[data-qa="info-header"]', function(comp) {
+  //       this.assert.equal(comp.value, 'Contractor Information')
+  //     })
+  //     // go back to dashboard
+  //     .click('li[data-qa="dashboard-nav"]')
+  //
+  //     // click the reports button to navigate to that page
+  //     .click('button[data-qa="reportsbtn"]')
+  //     // wait for the reports page to load
+  //     .waitForElementVisible('div[data-qa="reports-wrapper"]', 3000)
+  //     // check if page loaded was the filtering page
+  //     .getText('h1[data-qa="reports-header"]', function(comp) {
+  //       this.assert.equal(comp.value, 'Trending Reports')
+  //     })
+  //     // go back to dashboard
+  //     .click('li[data-qa="dashboard-nav"]')
+  //
+  //     //click the add contractor button to navigate to that page
+  //     .click('button[data-qa="addbtn"]')
+  //     // wait for the add contractor page to load
+  //     .waitForElementVisible('div[data-qa="add-wrapper"]', 3000)
+  //     // check if page loaded was the add contractor page
+  //     .getText('h1[data-qa="add-header"]', function(comp) {
+  //       this.assert.equal(comp.value, 'Add Contractor')
+  //     })
+  // },
+
   // // test that add contractor form is fillable and contractor can be successfully added
   // 'add contractors': (browser) => {
   //   browser
@@ -130,40 +133,66 @@ module.exports = {
   //   console.log("add contractor tests ran successfully")
   // },
 
-  // test to check search implementation and edit contractor
-  'contractor information': (browser) => {
-    browser
-      // go to contractor information page
-      .click('li[data-qa="info-nav"]')
-      .pause(500)
-      // search for contractor
-      .setValue('input[data-qa="name"]', "v")
-      .pause(1000)
-
-      // edit contractor button navigates to the right page
-      // navigate to first cell
-      .moveToElement('.contractorinfo__rowData___2cmwr', 5, 5)
-      .pause(1000)
-      // wait for the edit button to be visible
-      .waitForElementVisible('.contractorinfo__editbtn___2K13L', 1000)
-      .click('.contractorinfo__editbtn___2K13L')
-      // check if the edit page is now visible
-      .getText('h1[data-qa="editpage"]', function(comp) {
-        this.assert.equal(comp.value, 'Edit Contractor')
-      })
-
-      //
-
-  },
-  //
-  // 'admin table': (browser) => {
+  // // test to check search implementation and edit contractor
+  // 'contractor information': (browser) => {
   //   browser
-  // }
-
+  //     // go to contractor information page
+  //     .click('li[data-qa="info-nav"]')
+  //     .pause(500)
+  //     // search for contractor
+  //     .setValue('input[data-qa="name"]', "v")
+  //     .pause(1000)
   //
-  // 'edit contractor': (browser) => {
-  //   browser
+  //     // edit contractor button navigates to the right page
+  //     // navigate to first cell
+  //     .moveToElement('.contractorinfo__rowData___2cmwr', 5, 5)
+  //     .pause(1000)
+  //     // wait for the edit button to be visible
+  //     .waitForElementVisible('.contractorinfo__editbtn___2K13L', 1000)
+  //     .click('.contractorinfo__editbtn___2K13L')
+  //     // check if the edit page is now visible
+  //     .getText('h1[data-qa="editpage"]', function(comp) {
+  //       this.assert.equal(comp.value, 'Edit Contractor')
+  //     })
+  //
+  //     //edit a value and save new contractor
+  //     // set first name as Draco
+  //     .setValue('input[data-qa="firstname"]', "Draco")
+  //     // set last name to Malfoy
+  //     .setValue('input[data-qa="lastname"]', "Malfoy")
+  //     // set agency to Slytherin
+  //     .setValue('input[data-qa="agency"]', "Slytherin")
+  //     // save the changes
+  //     .click('input[data-qa="save"]')
+  //     .pause(1000)
+  //     // click 'ok' in safety prompt
+  //     .acceptAlert()
+  //     .pause(1000)
+  //     // click 'ok' in confirmation prompt
+  //     .acceptAlert()
+  //
+  //     // go back to contractor information page
+  //     .click('input[data-qa"backbtn"]')
   // },
+
+  'admin table': (browser) => {
+    browser
+    // go to admin panel page
+      .click('li[data-qa="admin-nav"]')
+
+      // click the data filtering button to navigate to that page
+      .click('button[data-qa="datafilterbtn"]')
+      // wait for the data filtering page to load
+      .waitForElementVisible('div[data-qa="filtering-wrapper"]', 3000)
+      // check if page loaded was the filtering page
+      .getText('h1[data-qa="filtering-header"]', function(comp) {
+        this.assert.equal(comp.value, 'Data Filtering System')
+      })
+      // go back to dashboard
+      .click('li[data-qa="dashboard-nav"]')
+
+
+  }
   //
   // 'filtering': (browser) => {
   //   browser
@@ -176,8 +205,6 @@ module.exports = {
   // 'admin dashboard': (browser) => {
   //   browser
   // },
-  //
-
   //
   // 'logout': (browser) => {
   //   browser
