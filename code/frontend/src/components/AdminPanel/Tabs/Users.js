@@ -13,18 +13,36 @@ const tableName = TABLE_NAMES.USERS;
 
 const mapDispatchToProps = dispatch => {
   return {
+    /**
+     * Add a new row to the table
+     * @param {object} data - Data to be sent to the backend
+     * @param {function} callback - Callback function in case of success
+     * */
     handleAddNew: (data, callback) => {
       dispatch(addNewRow(tableName, data, callback));
     },
+    /**
+     * Edit a row in the table
+     * @param {object} data - Data to be sent to the backend
+     * @param {function} callback - Callback function in case of success
+     * */
     handleEditRow: (data, callback) => {
       dispatch(editRow(tableName, data, callback));
     },
+    /**
+     * Delete a row from the table
+     * @param {object} data - Data to be sent to the backend
+     * @param {function} callback - Callback function in case of success
+     * */
     handleDeleteRow: (data, callback) => {
       dispatch(deleteRow(tableName, data, callback));
     }
   };
 };
 
+/**
+ * Retrieve a brand new state of the component
+ * */
 function getInitialState() {
   return {
     inputs: {
@@ -61,6 +79,13 @@ function getInitialState() {
   };
 }
 
+/**
+ * Render Users table view
+ * @param {function} onReturn - Click handler for return button
+ * @param {function} handleAddNew - Click handler for adding a new row
+ * @param {function} handleEditRow - Click handler for editing an existing row
+ * @param {function} handleDeleteRow - Click handler for deleting an existing row
+ * */
 function UsersContainer({ onReturn, handleAddNew, handleEditRow, handleDeleteRow }) {
   return <PanelWrapper className={css.panelwrapper}
     getInitialState={getInitialState}

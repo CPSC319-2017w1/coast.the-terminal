@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import { DISPLAY_NAME } from '../../../constants/admin-tables.js';
 import css from '../../../components/AdminPanel/Tabs/table.css';
 
+/**
+ * Renders a table view
+ * @param {array} table - An array of objects to be rendered into a table
+ * @param {function} addNew - Click handler for adding a new row
+ * @param {function} edit - Click handler for editing an existing row
+ * @param {string} editingRow - ID of the row currently being edited
+ * @param {boolean} isAddingNew - Is the add new form open
+ * @param {function} deleteRow - Click handler for deleting a row
+ * @param {string} activeUser - Username of the user currently logged in
+ * */
 function Table({ table, addNew, edit, editingRow, isAddingNew, deleteRow, activeUser }) {
   const keys = Object.keys(table[0]);
   return <div>

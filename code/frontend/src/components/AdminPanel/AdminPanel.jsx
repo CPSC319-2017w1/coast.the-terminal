@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import css from './adminpanel.css';
 import * as TABS from '../../constants/admin-tabs.js';
 
+/**
+ * Renders the main admin view with links to all tables
+ * @param {function} onClick - Click handler for tab buttons
+ * */
 function AdminPanelComponent({onClick}) {
   return (
     <div className={css.wrapper}>
