@@ -1,8 +1,8 @@
 import request from 'superagent';
 import * as ACTIONS from '../constants/action-types.js';
-import { LIVE_SITE } from '../constants/urls.js';
-import { isLoading, hasStoppedLoading } from './main-actions.js';
-import { loginFailed } from './login-actions.js';
+import {LIVE_SITE} from '../constants/urls.js';
+import {isLoading, hasStoppedLoading} from './main-actions.js';
+import {loginFailed} from './login-actions.js';
 
 function addContractorSuccessful() {
   return {
@@ -63,9 +63,9 @@ export function addContractor(contractorData, projectData, tableData, callback, 
         return addEngagementContract(projectData, contractorId, tableData, token);
       })
       .then((responses) => {
-        for(let res of responses) {
+        for (let res of responses) {
           let body = res.body;
-          if(!res.ok || body.error) {
+          if (!res.ok || body.error) {
             throw new Error(body.errorMessage);
           }
         }
@@ -86,7 +86,7 @@ export function addContractor(contractorData, projectData, tableData, callback, 
 
 function addEngagementContract(projectData, contractorId, tableData, token) {
   let allEngagementPromises = [];
-  for(let project of projectData) {
+  for (let project of projectData) {
     project['contractorId'] = contractorId;
     project['resourceId'] = '';
     project = conformDropdownValuesToDefault(project, tableData);
@@ -99,18 +99,20 @@ function addEngagementContract(projectData, contractorId, tableData, token) {
   return Promise.all(allEngagementPromises);
 }
 
-function conformDropdownValuesToDefault (project, tableData) {
+function conformDropdownValuesToDefault(project, tableData) {
   //todo change this to less hacky fix
-  const REQUIRED_FIELDS = {'hrPositionId': 'hrroles',
+  const REQUIRED_FIELDS = {
+    'hrPositionId': 'hrroles',
     'hrPayGradeId': 'paygrades',
     'costCenterId': 'costcenters',
     'reportingManagerId': 'hiringmanagers',
     'mainSkillId': 'skills',
-    'rateType': 'ratetypes'};
-  for(let reqField in REQUIRED_FIELDS) {
+    'rateType': 'ratetypes'
+  };
+  for (let reqField in REQUIRED_FIELDS) {
     let actualFieldName = REQUIRED_FIELDS[reqField];
-    if(!project.hasOwnProperty(reqField)){
-      if(tableData.hasOwnProperty(actualFieldName)) {
+    if (!project.hasOwnProperty(reqField)) {
+      if (tableData.hasOwnProperty(actualFieldName)) {
         project[reqField] = tableData[actualFieldName].data[0].id;
       } else {
         project[reqField] = project[actualFieldName][0];
@@ -149,7 +151,7 @@ export function editContractor(contractorData, projectData, tableData, numNewCon
 
       })
       .then((responses) => {
-        for(let responseArray of responses) {
+        for (let responseArray of responses) {
           for (let res of responseArray) {
             let body = res.body;
             if (!res.ok || body.error) {
@@ -172,7 +174,7 @@ export function editContractor(contractorData, projectData, tableData, numNewCon
 
 export function editEngagementContract(projectData, contractorId, token) {
   let allEngagementPromises = [];
-  for(let project of projectData) {
+  for (let project of projectData) {
     project['contractorId'] = contractorId;
     project['resourceId'] = '';
     let req = request
@@ -191,7 +193,6 @@ export function viewAllContractorDataSeparateRows(token) {
 export function viewAllContractorDataKeepOriginal(token) {
   return viewAllContractorData(keepOriginalAndGenerateRows, token);
 }
-
 
 
 function viewAllContractorData(parsingFunc, token) {
@@ -236,7 +237,8 @@ function generateContractorRows(data) {
     'contracts': 'contracts'
   };
 
-  const contractFields = {'chargeType': 'Charge Type',
+  const contractFields = {
+    'chargeType': 'Charge Type',
     'currencyCode': 'Currency Code',
     'dailyAllowance': 'Allowance Expense',
     'endDate': 'End Date',
@@ -253,57 +255,57 @@ function generateContractorRows(data) {
     'monthlyCost': 'Total Monthly Cost'
   };
 
-            const contractObjectFields = {
-              'costCenter': {
-                //"id": "costcenter-id",
-                'location': 'Location'
-              },
-              'hrPayGrade': {
-                // "id": "hrPayGrade-id",
-                'startAmount': 'Pay Grade Start Amount',
-                'endAmount': 'Pay Grade End Amount',
-                'name': 'Pay Grade Name'
-              },
-              'hrPositionRole': {
-                // "id": "hrPosition-id",
-                'roleName': 'HR Role Name',
-                'description': 'HR Role Description'
-              },
-              'mainSkill': {
-                // "id": "skill-id",
-                'name': 'Skill Name',
-                'description': 'Skill Description',
-                'type': 'Skill Type'
-              },
-              'hiringManager': {
-                'firstName': 'Reporting Manager First Name',
-                'lastName': 'Reporting Manager Last Name'
-              }
-            };
+  const contractObjectFields = {
+    'costCenter': {
+      //"id": "costcenter-id",
+      'location': 'Location'
+    },
+    'hrPayGrade': {
+      // "id": "hrPayGrade-id",
+      'startAmount': 'Pay Grade Start Amount',
+      'endAmount': 'Pay Grade End Amount',
+      'name': 'Pay Grade Name'
+    },
+    'hrPositionRole': {
+      // "id": "hrPosition-id",
+      'roleName': 'HR Role Name',
+      'description': 'HR Role Description'
+    },
+    'mainSkill': {
+      // "id": "skill-id",
+      'name': 'Skill Name',
+      'description': 'Skill Description',
+      'type': 'Skill Type'
+    },
+    'hiringManager': {
+      'firstName': 'Reporting Manager First Name',
+      'lastName': 'Reporting Manager Last Name'
+    }
+  };
 
-            for(let contractor of data) {
-              let contractorParsed = {};
-              for(let contractorField in contractorFields) {
-                if(contractorField !== CONTRACTS_FIELD){
-                  let humanReadableName = contractorFields[contractorField];
-                  contractorParsed[humanReadableName] = contractor[contractorField];
-                } else {
-                  //new row for each contract (even with same contractor data)
-                  let saveContractorParsed = Object.assign({}, contractorParsed);
-                  let contracts = contractor[CONTRACTS_FIELD];
-                  for(let contract of contracts) {
-                    //extract out string fields in each contract
-                    for (let contractField in contractFields) {
-                      let humanReadableName = contractFields[contractField];
-                      contractorParsed[humanReadableName] = contract[contractField];
-                    }
-                    //extract out object type fields in each contract
-                    for(let contractObjectFieldName in contractObjectFields){
-                      let contractObjectValues = contract[contractObjectFieldName];
-                      let contractObjectSchema = contractObjectFields[contractObjectFieldName];
+  for (let contractor of data) {
+    let contractorParsed = {};
+    for (let contractorField in contractorFields) {
+      if (contractorField !== CONTRACTS_FIELD) {
+        let humanReadableName = contractorFields[contractorField];
+        contractorParsed[humanReadableName] = contractor[contractorField];
+      } else {
+        //new row for each contract (even with same contractor data)
+        let saveContractorParsed = Object.assign({}, contractorParsed);
+        let contracts = contractor[CONTRACTS_FIELD];
+        for (let contract of contracts) {
+          //extract out string fields in each contract
+          for (let contractField in contractFields) {
+            let humanReadableName = contractFields[contractField];
+            contractorParsed[humanReadableName] = contract[contractField];
+          }
+          //extract out object type fields in each contract
+          for (let contractObjectFieldName in contractObjectFields) {
+            let contractObjectValues = contract[contractObjectFieldName];
+            let contractObjectSchema = contractObjectFields[contractObjectFieldName];
 
-            for(let contractObjectFieldName in contractObjectSchema){
-              if(contractObjectSchema.hasOwnProperty(contractObjectFieldName)) {
+            for (let contractObjectFieldName in contractObjectSchema) {
+              if (contractObjectSchema.hasOwnProperty(contractObjectFieldName)) {
                 let humanReadableName = contractObjectSchema[contractObjectFieldName];
                 contractorParsed[humanReadableName] = contractObjectValues[contractObjectFieldName];
               }
