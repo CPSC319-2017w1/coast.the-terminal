@@ -54,3 +54,39 @@ Runs webpack on watch mode for development. This enables the developers to not h
 Runs web pack watch and the http server together.
 
 ---
+
+### Selenium Test Environment 
+
+Selenium testing requires an NPM package and some additional set-up that is not taken care of just by running 'npm i'.
+
+* Install selenium
+	* Download the standalone server through the selenium [website](http://docs.seleniumhq.org/download/)
+	* The 2 NPM packages required are already part of our package.json file, but for clarity, we've listed them below:
+		* nightwatch
+		* selenium-webdriver 
+	* Download the webdrivers (available [here](https://www.npmjs.com/package/selenium-webdriver) for the browsers you'd like to do automated testing on. 
+	* Place the webdrivers in the root folder (code/frontend)
+		* e.g. for chrome: download the chromedriver.exe 
+
+* Set-up selenium
+	* Create a file called: nightwatch.conf.js in the root folder (code/frontend)
+		* this contains the information such as the webdriver you're using, the port the browser will be running on, etc. 
+	* Create a selenium test file called: selenium.js (code/frontend/test-selenium)
+		* this contains the tests
+		
+* Run the tests
+	* Open 3 consoles
+	* In the first one, run:
+	```
+	java -jar selenium-server-standalone-{version}.jar
+	```
+	* In the second one, run: 
+	```
+	npm run dev
+	```
+	* In the third one, run: 
+	```
+	nightwatch
+	```
+
+--- 
