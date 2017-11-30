@@ -18,7 +18,7 @@ function NavbarComponent({isAdmin, tab, onClick}) {
       </div>
       <div>
         <ul>
-          <li className={getClassName(tab, TABS.DASHBOARD)}
+          <li data-qa="dashboard-nav" className={getClassName(tab, TABS.DASHBOARD)}
             name={TABS.DASHBOARD}
             onClick={onClick}>
             <img name={TABS.DASHBOARD}
@@ -27,7 +27,7 @@ function NavbarComponent({isAdmin, tab, onClick}) {
               alt="home"/>
             <p name={TABS.DASHBOARD}>Dashboard</p>
           </li>
-          <li className={getClassName(tab, TABS.FILTERING)}
+          <li data-qa="filter-nav" className={getClassName(tab, TABS.FILTERING)}
             name={TABS.FILTERING}
             onClick={onClick}>
             <img name={TABS.FILTERING}
@@ -36,7 +36,7 @@ function NavbarComponent({isAdmin, tab, onClick}) {
               alt="home"/>
             <p name={TABS.FILTERING}>Data Filtering System</p>
           </li>
-          <li className={getClassName(tab, TABS.ADD_CONTRACTOR)}
+          <li data-qa="add-nav" className={getClassName(tab, TABS.ADD_CONTRACTOR)}
             name={TABS.ADD_CONTRACTOR}
             onClick={onClick}>
             <img name={TABS.ADD_CONTRACTOR}
@@ -45,7 +45,7 @@ function NavbarComponent({isAdmin, tab, onClick}) {
               alt="home"/>
             <p name={TABS.ADD_CONTRACTOR}>Add Contractor</p>
           </li>
-          <li className={getClassName(tab, TABS.CONTRACTOR_INFO)}
+          <li data-qa="info-nav" className={getClassName(tab, TABS.CONTRACTOR_INFO)}
             name={TABS.CONTRACTOR_INFO}
             onClick={onClick}>
             <img name={TABS.CONTRACTOR_INFO}
@@ -54,7 +54,7 @@ function NavbarComponent({isAdmin, tab, onClick}) {
               alt="home"/>
             <p name={TABS.CONTRACTOR_INFO}>Contractor Information</p>
           </li>
-          <li className={getClassName(tab, TABS.REPORTS)}
+          <li data-qa="reports-nav" className={getClassName(tab, TABS.REPORTS)}
             name={TABS.REPORTS}
             onClick={onClick}>
             <img name={TABS.REPORTS}
@@ -65,7 +65,7 @@ function NavbarComponent({isAdmin, tab, onClick}) {
           </li>
           {
             isAdmin
-              ? <li className={getClassName(tab, TABS.ADMIN_PANEL)}
+              ? <li data-qa="admin-nav" className={getClassName(tab, TABS.ADMIN_PANEL)}
                 name={TABS.ADMIN_PANEL}
                 onClick={onClick}>
                 <img name={TABS.ADMIN_PANEL}

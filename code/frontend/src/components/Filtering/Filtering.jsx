@@ -13,9 +13,9 @@ import Tutorial from './Tutorial.jsx';
  */
 function FilteringComponent({showTutorial, handleTutorial, closeTutorial}) {
   return (
-    <div className={css.wrapper}>
+    <div data-qa="filtering-wrapper" className={css.wrapper}>
       <div className={css.heading}>
-        <h1>Data Filtering System</h1>
+        <h1 data-qa="filtering-header" >Data Filtering System</h1>
         <p>Use the Pivot Table to extract relevant to you from the contractor database.</p>
         <button className={css.handletutorial} onClick={handleTutorial}>Show/hide tutorial for the pivot table</button>
       </div>
