@@ -21,9 +21,9 @@ import Projects from './Projects.jsx';
 function AddContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
   handleDateInput, handleRadioInput, handleAdd, handleSubmit, handleCancel, message, tables}) {
   return (
-    <div className={css.wrapper}>
+    <div data-qa="add-wrapper" className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
-      <h1>Add Contractor</h1>
+      <h1 data-qa="add-header">Add Contractor</h1>
       <p> Use the form below to add contractor information into the system.</p>
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleRadioInput={handleRadioInput}/>
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
