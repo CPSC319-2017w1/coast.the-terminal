@@ -125,6 +125,7 @@ public class Contractor {
             String startDate = dateFormat.format(contract.getStartDate());
             String endDate = dateFormat.format(contract.getEndDate());
             String hiringManager = contract.getHiringManager().getFirstName() + " " + contract.getHiringManager().getLastName();
+            String projectName = contract.getProjectName();
 
             Calendar cStart = Calendar.getInstance();
             cStart.setTime(contract.getStartDate());
@@ -144,7 +145,7 @@ public class Contractor {
 
                 cStart.add(Calendar.MONTH, 1);
 
-                ReportData rp = new ReportData(contractorName, company, costCenter, workingMonth, billingMonth, monthlyCost, hiringManager, startDate, endDate);
+                ReportData rp = new ReportData(contractorName, company, costCenter, workingMonth, billingMonth, monthlyCost, hiringManager, startDate, endDate, projectName);
                 allReportData.add(rp);
             }
         }

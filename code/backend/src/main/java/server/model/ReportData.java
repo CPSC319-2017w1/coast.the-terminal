@@ -10,6 +10,7 @@ public class ReportData {
     private String hiringManager;
     private String startDate;
     private String endDate;
+    private String projectName;
 
     /**
      * Creates a ReportData object
@@ -31,7 +32,8 @@ public class ReportData {
                       int totalMonthlyCost,
                       String hiringManager,
                       String startDate,
-                      String endDate) {
+                      String endDate,
+                      String projectName) {
         this.contractorName = contractorName;
         this.company = company;
         this.costCenter = costCenter;
@@ -41,6 +43,7 @@ public class ReportData {
         this.hiringManager = hiringManager;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.projectName = projectName;
     }
 
     /**
@@ -113,4 +116,6 @@ public class ReportData {
     public String getEndDate() {
         return endDate;
     }
+
+    public String getProjectName() { return projectName; }
 }
