@@ -223,3 +223,7 @@ alter table EngagementContract
 		foreign key (reportingManagerUserId) references User (username)
 ;
 
+INSERT into FXRate(curCode1, curCode2, rate) VALUES ('CAD', 'USD',  0.78);
+
+INSERT into User(username, password, permissions) VALUES ('admin', 'admin', 'admin');
+
