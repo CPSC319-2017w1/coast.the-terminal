@@ -67,7 +67,7 @@ The user can add contractors to the contractor database. The same web-form that 
 
 \includegraphics[width=1.0\textwidth]{../design/Report1}
 
-Reports can be generated as lists or as bar graphs. The tab selection on top reduces the clutter, and makes the system very intuitive on what has been selected and what hasn’t. Filtering on the graphs can be done through a drop down menu.
+Reports can be generated as lists or as bar graphs. The tab selection on top reduces the clutter, and makes the system very intuitive on what has been selected and what hasnï¿½t. Filtering on the graphs can be done through a drop down menu.
 
 \includegraphics[width=1.0\textwidth]{"../design/Admin Dashboard"}
 
@@ -86,7 +86,7 @@ We will be using JavaScript, Java and MySQL for this project.
         \centering
         \begin{tabularx}{\linewidth}{|| c | L ||}
     \hline
-    WebStorm & WebStorm provides great JS developing tools and it’s free for students. \\
+    WebStorm & WebStorm provides great JS developing tools and itï¿½s free for students. \\
     \hline
     JavaScript & The site is interactive, so we will need to use JS. \\
     \hline
@@ -101,8 +101,6 @@ We will be using JavaScript, Java and MySQL for this project.
     Babel & Since we will be supporting IE11, it is essential for our JS code to be recompiled for compatibility. Babel will be doing that for us. \\
     \hline
     CSS Loader & This library will help us integrate CSS and JS. \\
-    \hline
-    D3.js & This JS library will help us to visualize graphs and reports. \\
     \hline
     \end{tabularx}
     \end{table}
@@ -123,7 +121,7 @@ We will be using JavaScript, Java and MySQL for this project.
     \hline
     Java & Java is our main programming language for the business logic of our application. \\
     \hline
-    MySQL & We will be using MySQL as our relational database management system for storing data, aligning us with Coast Capital’s requirements.\\
+    MySQL & We will be using MySQL as our relational database management system for storing data, aligning us with Coast Capitalï¿½s requirements.\\
     \hline
     Amazon RDS & Amazon RDS (Relational Database Service) is where we will be hosting our MySQL database. \\
     \hline
@@ -152,7 +150,7 @@ We will be using JavaScript, Java and MySQL for this project.
     \hline
     Chai & Chai is a great extension for Mocha which will give us more in-depth unit testing abilities.\\
     \hline
-    Sinon & In order to test API calls from the front-end, Sinon will give us a fake server, function spies, fake responses, etc.\\
+    Nock & In order to test API calls from the front-end, Nock will give us a fake server, function spies, fake responses, etc.\\
     \hline
     \end{tabularx}
     \end{table}
@@ -203,45 +201,214 @@ Here is the list of tables:
     \item User (\underline{username}, password, permissions)
     \item Contractor(\underline{id}, firstName, surname, agencySource, status, rehire)
     \item EngagementContract(\underline{id}, startDate, endDate, rateType, projectName, chargeType, dailyAllowance, originalDocumentation, terminationNum, \textbf{contractorId, resourceId, hrPositionId, hrPayGradeId,  costCenterId, reportingManagerUserId, currencyCode, mainSkillId, materialNeeds})
-    \item SkillProvided(\underline{id}, \textbf{contractorID}, name, type, description)
+    \item Skill(\underline{id}, name, type, description)
+    \item SkillProvided(\textbf{\underline{skillID}, \underline{contractorID}})
     \item ResourceProvided(\underline{id}, \textbf{engagementID}, phone, remoteToken, buildingPass, notebook, deskLoc, others)
     \item HRPositionRole(\underline{id}, roleName, description)
     \item HRPayGrade(\underline{code}, startAmount, endAmount)
     \item CostCenter(\underline{id}, location)
-    \item Currency(\underline{code}, location)
+    \item Currency(\underline{code}, country)
     \item FXRate(\textbf{\underline{curCode1}, \underline{curCode2}}, rate)
+    \item HiringManager(\underline{userID}, firstName, lastName)
+    \item Login (\textbf{\underline{userID}}, \underline{token})
 \end{enumerate}
 
 The normalized database schema shows the tables required for capturing all of the information used by our application. The schema has primary keys underlined and foreign keys bolded. The database is normalized into third normal form to allow for fast access of necessary data and to reduce redundant data stored within the database. 
 
 \section{API Design}
 
-\subsection{API Calls-Internal}
+\subsection{REST API Calls}
 
 \begin{enumerate}
-        \item login(username, password) - Allows a user to login to the web application.
-        \item createNewUser(User) - Allows an admin user to create a new user in the database.
-        \item updateUser(User) - Allows an admin user to update an existing user in the database.
-        \item deleteUser(User) - Allows an admin user to delete an existing user from the database.
-        \item fetchContractorData(Contractors) - Fetches relevant contractor data for the given contractor.
-        \item fetchAllActiveContractorData() - Fetches data relating to all active contractors and their engagement contracts.
-        \item fetchAllContractorData() - Fetches data relating to all contractors (active and inactive) and their respective engagement contracts. 
-        \item updateContractor(Contractor) - Updates data relating to the given contractor in the database. 
-        \item addContractor(Contractor) - Adds the given contractor to the database. 
-        \item updateEngagementContract(EngagementContracts) - Updates data relating to the given engagement contract.
-        \item addEngagementContracts(List\textless EngagementContracts\textgreater ) - Adds the given EngagementContract(s) to the database.
-        \item updateSkills(Skills) - Updates data relating to the given skill in the database.
-        \item addSkills(Skills) - Adds the given skill to the database.
-        \item deleteSkills(Skills) - Delets the given skill in the database.
-        \item updateHRPayGrade(HRPayGrade) - Updates the given HRPayGrade in the database
-        \item addHRPayGrade(HRPayGrade) - Adds the given HRPayGrade to the database.
-        \item deleteHRPayGrade(HRPayGrade) - Deletes the given HRPayGrade from the database.
-        \item updateHRRole(HRRoles) - Updates the given HRRole in the database.
-        \item addHRRole(HRRoles) - Adds the given HRRole to the database.
-        \item deleteHRRole(HRRoles) - Deletes the given HRRole from the database.
-        \item updateHiringManager(HiringManager) - Updates the given HiringManager in the database.
-        \item deleteHiringManager(HiringManager) - Deletes the given HiringManager in the database.
-        \item addHiringManager(List\textless HiringManager\textgreater ) - Adds the given HiringManager(s) to the database.
+        \item Login user \\
+                Allows a user to login to the web application.
+                \begin{enumerate}
+                    \item \textbf{URL} : /login
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : username=[String], password=[String]
+                \end{enumerate}
+        \item Logout user \\ 
+            Allows a user to logout from the web application.
+                \begin{enumerate}
+                    \item \textbf{URL} : /logout
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : username=[String], token=[String]
+                \end{enumerate}
+        \item Refresh User
+            Validates that the user is already logged in.
+                \begin{enumerate}
+                    \item \textbf{URL} : /refresh
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : username=[String], password=[String]
+                \end{enumerate}
+        \item Add User \\
+             Allows an admin user to create a new user in the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /users/add
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], username=[String], password=[String], permissions=[String]
+                \end{enumerate}
+        \item Update User \\
+             Allows an admin user to update an existing user in the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /users/edit
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], username=[String], password=[String], permissions=[String]
+                \end{enumerate}
+        \item Delete User \\ 
+            Allows an admin user to delete an existing user from the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /users/delete
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], username=[String], userToDelete=[String]
+                \end{enumerate}
+        \item View Contractors \\
+             Fetches tombstone data for all the contractors.
+                \begin{enumerate}
+                    \item \textbf{URL} : /contractors/view
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}
+        \item View All Contractor Data \\
+             Fetches data relating to all contractors (active and inactive) and their respective engagement contracts. 
+                \begin{enumerate}
+                    \item \textbf{URL} : /contractors/viewAllData
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}
+        \item View Contractor Data for Reports \\
+             Fetches all the relevant data about all contractors required for generating reports and filtering
+                \begin{enumerate}
+                    \item \textbf{URL} : /contractors/viewReportData
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}
+        \item Update Contractor \\
+             Updates data relating to the given contractor in the database. 
+                \begin{enumerate}
+                    \item \textbf{URL} : /contractors/edit
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], id=[String], firstName=[String], surname=[String], agencySource = [String], status=[String]
+                \end{enumerate}
+        \item Add Contractor \\ 
+             Adds the given contractor to the database. 
+                \begin{enumerate}
+                    \item \textbf{URL} : /contractors/add
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], id=[String], firstName=[String], surname=[String], agencySource = [String], status=[String]
+                \end{enumerate}
+        \item Update EngagementContract \\ 
+             Updates data relating to the given engagement contract.
+                \begin{enumerate}
+                    \item \textbf{URL} : /contractors/edit/engagementContract
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], id=[String], startDate=[String], endDate=[String], rateType=[String], projectName=[String], chargeType=[String], dailyAllowance=[int], originalDocumentation=[String], terminationNum=[int], contractorId=[String], resourceId=[String], hrPositionId=[String], hrPayGradeId=[String], costCenterId=[String], reportingManagerId=[String], currencyCode=[String], mainSkillId=[String], timeMaterialTerms=[int], poNum=[int], hourlyRate=[int]
+                \end{enumerate}
+        \item Add EngagementContract \\
+             Adds the given EngagementContract(s) to the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /contractors/add/engagementContract
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], startDate=[String], endDate=[String], rateType=[String], projectName=[String], chargeType=[String], dailyAllowance=[int], originalDocumentation=[String], terminationNum=[int], contractorId=[String], resourceId=[String], hrPositionId=[String], hrPayGradeId=[String], costCenterId=[String], reportingManagerId=[String], currencyCode=[String], mainSkillId=[String], timeMaterialTerms=[int], poNum=[int], hourlyRate=[int]
+                \end{enumerate}
+        \item Update Skill \\ 
+             Updates data relating to the given skill in the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /skills/edit
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], id=[String], name=[String], description=[String], type=[String]
+                \end{enumerate}
+        \item Add Skill \\
+             Adds the given skill to the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /skills/edit
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], name=[String], description=[String], type=[String]
+                \end{enumerate}
+        \item View Skills \\
+             Fetches data for all the Skills
+                \begin{enumerate}
+                    \item \textbf{URL} : /skills/view
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}  
+        \item Update HR PayGrade(HRPayGrade) \\
+             Updates the given HRPayGrade in the database
+                \begin{enumerate}
+                    \item \textbf{URL} : /paygrades/edit
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], id=[String], startAmount=[int], endAmount=[int], name=[String]
+                \end{enumerate}
+        \item Add HR PayGrade \\
+             Adds the given HRPayGrade to the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /paygrades/add
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], startAmount=[int], endAmount=[int], name=[String]
+                \end{enumerate}
+        \item View PayGrades \\
+             Fetches all paygrades data
+                \begin{enumerate}
+                    \item \textbf{URL} : /paygrades/view
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}
+        \item Update HR Role \\
+             Updates the given HRRole in the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /hrroles/edit
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], id=[String], roleName=[String], description=[String]
+                \end{enumerate}
+        \item Add HR Role \\ 
+             Adds the given HRRole to the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /hrroles/add
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], roleName=[String], description=[String]
+                \end{enumerate}
+        \item View HR Roles \\
+             Fetches all hr roles data
+                \begin{enumerate}
+                    \item \textbf{URL} : /hrroles/view
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}
+        \item Update HiringManager \\
+             Updates the given HiringManager in the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /hiringmanagers/edit
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], id=[String], firstName=[String], lastName=[String]
+                \end{enumerate}
+        \item Add Hiring Manager \\ 
+             Adds the given HiringManager(s) to the database.
+                \begin{enumerate}
+                    \item \textbf{URL} : /hiringmanagers/add
+                    \item \textbf{Method} : POST
+                    \item \textbf{URL Params} : token=[String], firstName=[String], lastName=[String]
+                \end{enumerate}
+        \item View Hiring Managers \\
+             Fetches tombstone data for all the contractors.
+                \begin{enumerate}
+                    \item \textbf{URL} : /hiringmanagers/view
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}
+        \item View Cost Centers \\
+             Fetches all cost centers
+                \begin{enumerate}
+                    \item \textbf{URL} : /costcenters/view
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}
+        \item View FX Rates \\
+             Fetches all fxrates
+                \begin{enumerate}
+                    \item \textbf{URL} : /fxrates/view
+                    \item \textbf{Method} : GET
+                    \item \textbf{URL Params} : token=[String]
+                \end{enumerate}
 \end{enumerate}
 
 \subsection{API Calls-External}
@@ -258,8 +425,7 @@ We will not be using any complex algorithms in our code. One of the more complic
     \item Since we are using AWS for our hosting needs opposed to setting up our own physical server infrastructure, we have less control over the actual hardware used to host our server. However, setting up our server on AWS is a lot faster and easier than setting up our own infrastructure and AWS already has scaling built in so we do not have to worry about those issues. Furthermore, we do not have to deal with physical server maintenance as Amazon takes care of that for us.
     \item When filtering tables/graphs, the client will take care of it instead of calling an API to ask the back-end to do it. It will be faster and easier to manage because there will be fewer API calls. However, the front-end code will be more complicated and if the data is very big, filtering can be slow.
     \item When filtering tables/graphs, the client will take care of it instead of calling an API to ask the back-end to do it. It will be faster and easier to manage because there will be fewer API calls. However, the front-end code will be more complicated and if the data is very big, filtering can be slow.
-    \item For visualization, we decided to use d3.js as compared to other APIs since it helps us to keep the data secure rather than sharing it with an external server. However, this also means more complicated code in the front-end.
-\end{enumerate}
+  \end{enumerate}
 
 \section{Notable Risks}
 
