@@ -54,7 +54,7 @@ class EditContractorContainer extends React.Component {
       project['hrPayGradeId'] = project.hrPayGrade.id;
       project['costCenterId'] = project.costCenter.id;
       project['hrPositionId'] = project.hrPositionRole.id;
-      project['hourlyrate'] = project.hourlyRate;
+      project['hourlyrate'] = project.dollarRate;
       project['reportingManagerId'] = project.hiringManager.id;
       project['poNum'] = project.poRefNum;
     }
