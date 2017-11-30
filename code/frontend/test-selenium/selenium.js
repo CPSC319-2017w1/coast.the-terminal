@@ -210,4 +210,8 @@ module.exports = {
       .waitForElementVisible('div[data-qa="login-wrapper"]', 3000)
   },
 
+  //closes the browser after tests execute
+  'close': (browser) =>
+    browser.end()
+
 };
