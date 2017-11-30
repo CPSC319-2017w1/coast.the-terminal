@@ -90,3 +90,19 @@ Selenium testing requires an NPM package and some additional set-up that is not 
 	```
 
 --- 
+
+### Setting up the Pivot Table
+
+The react-pivottable package is a little complex to work with and needs some additional work to be done after 'npm i'.
+
+* Install plotly manually
+    * Copy the script tag to your index.html:
+    ```
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    ```
+* Creating the Pivot table component
+    * Create a pivot table using the same format as the example given [here](https://github.com/plotly/react-pivottable/blob/master/examples/App.jsx).
+* There is a possibility that your current packages might interfere with the css.
+To fix this issue manually import the css from the [example](https://github.com/plotly/react-pivottable/blob/master/src/pivottable.css) by putting it inside the ```<style></style>``` tag of index.html
+
+---
