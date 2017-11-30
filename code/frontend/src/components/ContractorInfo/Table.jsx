@@ -52,7 +52,8 @@ function getRows(data, func) {
   return data.map((contractor, index) =>
     <tr key={index} className={css.tablerow}>
       <td className={css.rowData}>
-        <button data-qa="edit" name={contractor.id} className={css.editbtn} onClick={func}>EDIT</button>
+        <button data-qa="edit" name={contractor.id} className={css.editimage} onClick={func}>
+        </button>
       </td>
       {getColumns(contractor)}
     </tr>
