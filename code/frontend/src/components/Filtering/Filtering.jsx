@@ -4,7 +4,6 @@ import css from './filtering.css';
 import PivotTable from './PivotTable.js';
 import Tutorial from './Tutorial.jsx';
 
-
 function FilteringComponent({showTutorial, handleTutorial, closeTutorial}) {
   return (
     <div className={css.wrapper}>

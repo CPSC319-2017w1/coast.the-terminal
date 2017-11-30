@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './filtering.css';
 
+//
 function Tutorial({closeTutorial}) {
   return (
     <div className={css.tutorialholder}>
@@ -22,11 +23,11 @@ function Tutorial({closeTutorial}) {
         - If you select Sum over Sum, you get two dropdowns, and this will divide the sum of field 1 over field 2 and return that as count value
       </p>
       <p><b>EXAMPLE</b><br/>
-        To view the operating and capital costs of each contractor in a certain company:<br/>
-        - Move OPEX/CAPEX field and the Contractor Name field into the row area (in that order).<br/>
-        - Move Years and Billing Month into the column area (in that order).<br/>
+        To view the monthly costs of each contractor in a certain cost centre:<br/>
+        - Move Company field and the Contractor Name field into the row area (in that order).<br/>
+        - Move Billing Month into the column area (in that order).<br/>
         - Select Sum from the Count dropdown and select Monthly Cost in the dropdown that appears underneath<br/>
-        - Click on the arrow in the Company field, hover to the desired company in the list and click on <i>'only'</i> beside the name.
+        - Click on the arrow in the Cost Centre field, hover to the desired cost centre in the list and click on <i>'only'</i> beside the name.
       </p>
       <p><b>Choosing the view:</b> The most useful option for this feature is the Table view.<br/>
         There are many options that you can choose for viewing this pivot table, and you can even generate a chart based on the data you have selected for the table. <br/>
