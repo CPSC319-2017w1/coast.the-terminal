@@ -109,7 +109,6 @@ To fix this issue manually import the css from the [example](https://github.com/
 
 ### Documentation for Front-end Functions
 
-
+* Can be found in /frontend/index.html
 
 ---
-
