@@ -17,8 +17,8 @@ function LoginComponent({username, password, error, handleUsernameInput, handleP
     <div data-qa="login-wrapper" className={css.wrapper}>
       {error ? <div data-qa="login-error">{error}</div> : null}
       <form>
-        <input className={css.username} type="text" value={username} onChange={handleUsernameInput} placeholder="username"/>
-        <input className={css.password} type="password" value={password} onChange={handlePasswordInput} placeholder="password" />
+        <input data-qa="loginInput" className={css.username} type="text" value={username} onChange={handleUsernameInput} placeholder="username"/>
+        <input data-qa="loginpw" className={css.password} type="password" value={password} onChange={handlePasswordInput} placeholder="password" />
         <input data-qa="login-button" className={css.submit} type="submit" onClick={handleSubmit} value="Login" />
       </form>
     </div>
