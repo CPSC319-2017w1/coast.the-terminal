@@ -23,6 +23,10 @@ class ReportsContainer extends React.Component {
     this.closeTutorial = this.closeTutorial.bind(this);
   }
 
+  /**
+   * toggles the state of visibility of tutorial
+   * @param event
+   */
   handleTutorial(event) {
     event.preventDefault();
     this.setState({
@@ -30,6 +34,10 @@ class ReportsContainer extends React.Component {
     });
   }
 
+  /**
+   * toggles showTable to show the List view
+   * @param event
+   */
   handleTable(event){
     event.preventDefault();
     this.setState({
@@ -37,6 +45,10 @@ class ReportsContainer extends React.Component {
     });
   }
 
+  /**
+   * toggles showTable to show the graph view
+   * @param event
+   */
   handleReport(event){
     event.preventDefault();
     this.setState({
@@ -44,6 +56,10 @@ class ReportsContainer extends React.Component {
     });
   }
 
+  /**
+   * closes the tutorial
+   * @param event
+   */
   closeTutorial(event){
     event.preventDefault();
     this.setState({
@@ -51,6 +67,10 @@ class ReportsContainer extends React.Component {
     });
   }
 
+  /**
+   * Renders the Reports component with the Tutorial and Report Generator
+   * @return {XML}
+   */
   render(){
     return <ReportsComponent
       showTutorial={this.state.showTutorial}

@@ -30,7 +30,14 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+/**
+ * Class representing add contractor
+ */
 class AddContractorContainer extends React.Component{
+  /**
+   * defines the state
+   * @param props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -53,13 +60,19 @@ class AddContractorContainer extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-
   }
 
+  /**
+   *
+   */
   componentDidMount() {
     this.props.viewTables(this.props.token);
   }
 
+  /**
+   * Saves the text input to the designated field in the database
+   * @param event - user input
+   */
   handleTextInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -76,6 +89,10 @@ class AddContractorContainer extends React.Component{
     }
   }
 
+  /**
+   * Saves the dropdown input to the designated field in the database
+   * @param event - user input
+   */
   handleDropdownInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -91,6 +108,10 @@ class AddContractorContainer extends React.Component{
     }
   }
 
+  /**
+   * Saves the date input to the designated field in the database
+   * @param event - user input
+   */
   handleDateInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -101,6 +122,10 @@ class AddContractorContainer extends React.Component{
     this.setState(Object.assign(state, {projects}));
   }
 
+  /**
+   * Saves the radio input to the designated field in the database
+   * @param event - user input
+   */
   handleRadioInput(event) {
     const { state } = this;
     if (!event.target.hasAttribute('data-index')) {
@@ -118,6 +143,10 @@ class AddContractorContainer extends React.Component{
     }
   }
 
+  /**
+   * Adds another project component to the page
+   * @param event - user input
+   */
   handleAdd(event) {
     event.preventDefault();
     let projectState = this.state.projects;
@@ -125,6 +154,10 @@ class AddContractorContainer extends React.Component{
     this.setState({projects: projectState});
   }
 
+  /**
+   * Saves the contractor to the database
+   * @param event - user input
+   */
   handleSubmit(event) {
     event.preventDefault();
     const { contractor } = this.state;
@@ -164,6 +197,9 @@ class AddContractorContainer extends React.Component{
     }
   }
 
+  /**
+   * Creates an empty project object
+   */
   createDefaultProjectObject() {
     return {
       projectName: '',
@@ -184,6 +220,11 @@ class AddContractorContainer extends React.Component{
     };
   }
 
+  /**
+   * gets dropdown options
+   * @param optionName - name of dropdown
+   * @return {*} - gets options for given dropdowns
+   */
   getDropdownOptions (optionName) {
     switch  (optionName) {
       case 'reportingManager':
@@ -235,6 +276,9 @@ class AddContractorContainer extends React.Component{
     return ['Vancouver', 'Calgary'];
   }
 
+  /**
+   * resets the component to initial state
+   */
   resetState() {
     const { props } = this;
     if (props.error) {

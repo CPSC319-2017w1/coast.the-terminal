@@ -73,6 +73,10 @@ class EditContractorContainer extends React.Component {
     this.props.viewTables(this.props.token);
   }
 
+  /**
+   * Saves the text input to the designated field in the database
+   * @param event - user input
+   */
   handleTextInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -89,6 +93,10 @@ class EditContractorContainer extends React.Component {
     }
   }
 
+  /**
+   * Saves the dropdown input to the designated field in the database
+   * @param event - user input
+   */
   handleDropdownInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -104,6 +112,10 @@ class EditContractorContainer extends React.Component {
     }
   }
 
+  /**
+   * Saves the date input to the designated field in the database
+   * @param event - user input
+   */
   handleDateInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -114,6 +126,10 @@ class EditContractorContainer extends React.Component {
     this.setState(Object.assign(state, {projects}));
   }
 
+  /**
+   * Saves the radio input to the designated field in the database
+   * @param event - user input
+   */
   handleRadioInput(event) {
     const { state } = this;
     if (!event.target.hasAttribute('data-index')) {
@@ -131,6 +147,10 @@ class EditContractorContainer extends React.Component {
     }
   }
 
+  /**
+   * Adds another project component to the page
+   * @param event - user input
+   */
   handleAdd(event) {
     event.preventDefault();
     let projectState = this.state.projects;
@@ -139,6 +159,10 @@ class EditContractorContainer extends React.Component {
     this.setState({projects: projectState});
   }
 
+  /**
+   * Saves the contractor to the database
+   * @param event - user input
+   */
   handleSubmit(event) {
     event.preventDefault();
     const { contractor } = this.state;
@@ -154,6 +178,9 @@ class EditContractorContainer extends React.Component {
 
   }
 
+  /**
+   * Creates an empty project object
+   */
   createDefaultProjectObject() {
     return {
       projectName: '',
@@ -170,6 +197,11 @@ class EditContractorContainer extends React.Component {
     };
   }
 
+  /**
+   * gets dropdown options
+   * @param optionName - name of dropdown
+   * @return {*} - gets options for given dropdowns
+   */
   getDropdownOptions (optionName) {
     switch  (optionName) {
       case 'reportingManager':
@@ -226,6 +258,9 @@ class EditContractorContainer extends React.Component {
     return ['Vancouver', 'Calgary'];
   }
 
+  /**
+   * resets the component to initial state
+   */
   resetState() {
     const { props } = this;
     if (props.error) {

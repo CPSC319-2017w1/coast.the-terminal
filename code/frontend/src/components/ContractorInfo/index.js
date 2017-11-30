@@ -51,6 +51,10 @@ class ContractorInfoContainer extends React.Component {
     this.props.getData(this.props.user.token);
   }
 
+  /**
+   * Handle search value to search a contractor in the table
+   * @param event
+   */
   handleSearch(event){
     event.preventDefault();
     this.setState({
@@ -58,6 +62,10 @@ class ContractorInfoContainer extends React.Component {
     });
   }
 
+  /**
+   * Set the selected contractor id to the contractor selected for editing
+   * @param event
+   */
   handleEditContractor(event) {
     event.preventDefault();
     let id = event.target.getAttribute('name');
@@ -66,6 +74,10 @@ class ContractorInfoContainer extends React.Component {
     });
   }
 
+  /**
+   * set the selected Contractor id to null to render back to contractor info page
+   * @param event
+   */
   handleBack(event){
     event.preventDefault();
     this.setState({
@@ -73,6 +85,12 @@ class ContractorInfoContainer extends React.Component {
     });
   }
 
+  /**
+   * Render is based on two factors.
+   * If selected contractor id is null, then contractor info page is rendered. Otherwise, edit contractor is loaded with the selected contractor id.
+   * If search value is empty then the entire table is loaded otherwise only data that contain the search value are rendered.
+   * @return React component to be rendered
+   */
   render() {
     const {props, state} = this;
     let contractorData;

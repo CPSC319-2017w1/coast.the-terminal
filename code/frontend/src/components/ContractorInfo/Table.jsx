@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './contractorinfo.css';
 
+/**
+ * Creates html component for Table
+ * @param tabledata - array of objects that table is supposed to be populated with
+ * @param handleEditContractor - function that takes the id of the contractor and populates edit contractor page
+ * @return React component for Table
+ */
 function Table({tabledata, handleEditContractor}) {
   return <table className={css.filtertable}>
     <thead className={css.tableheader}>
@@ -15,6 +21,11 @@ function Table({tabledata, handleEditContractor}) {
   </table>;
 }
 
+/**
+ * Generates the header for the table
+ * @param data
+ * @return {Array} - array of header options
+ */
 function getHeaders(data) {
   var headers = [];
   headers.push(<th></th>);
@@ -31,6 +42,12 @@ function getHeaders(data) {
   return headers;
 }
 
+/**
+ * Generates the rows in the table
+ * @param data - data to be populated in the rows
+ * @param func - function for the edit button
+ * @return row for each contractor
+ */
 function getRows(data, func) {
   return data.map((contractor, index) =>
     <tr key={index} className={css.tablerow}>
@@ -42,6 +59,11 @@ function getRows(data, func) {
   );
 }
 
+/**
+ * Generates the columns in the table
+ * @param contractorData - data to be populated in the columns
+ * @return {Array} - returns columns in each row.
+ */
 function getColumns(contractorData) {
   let cols = [];
   for(let contractorField in contractorData) {

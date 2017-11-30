@@ -20,12 +20,19 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+/**
+ * Class that represents Dashboard Container
+ */
 class DashboardContainer extends React.Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
   }
 
+  /**
+   * Redirects to the page based on the button clicked
+   * @param event
+   */
   onClick(event) {
     event.preventDefault();
     const tab = event.target.getAttribute('name');
@@ -33,6 +40,10 @@ class DashboardContainer extends React.Component {
     this.props.switchTab(tab);
   }
 
+  /**
+   * renders the react component to the screen
+   * @return {XML}
+   */
   render() {
     return <DashboardComponent onClick={this.onClick} />;
   }

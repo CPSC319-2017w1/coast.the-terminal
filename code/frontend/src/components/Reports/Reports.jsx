@@ -5,6 +5,16 @@ import ReportBuilder from './ReportBuilder.js';
 import TableBuilder from './TableBuilder.js';
 import Tutorial from './Tutorial.jsx';
 
+/**
+ * Creates html component for Filtering
+ * @param showTutorial - boolean that returns true when tutorial is shown
+ * @param showTable - boolean that returns true when info is shown
+ * @param handleTable - function that handles visibility of list view of trending report
+ * @param handleReport - function that handles visibility of graph view view of trending report
+ * @param handleTutorial - function that handles visibility of tutorial
+ * @param closeTutorial - function that closes the tutorial
+ * @return React component for Reports
+ */
 function ReportsComponent({showTutorial, showTable, handleTable, handleReport, handleTutorial, closeTutorial}) {
   return (
     <div className={css.wrapper}>
@@ -16,8 +26,8 @@ function ReportsComponent({showTutorial, showTable, handleTable, handleReport, h
       {showTutorial
         ? <Tutorial closeTutorial={closeTutorial}/>
         : null}
-      <button className={css.tab} onClick={handleTable}>Contractor Report</button>
-      <button className={css.tab} onClick={handleReport}>Trending Report</button>
+      <button className={css.tab} onClick={handleTable}>List Items</button>
+      <button className={css.tab} onClick={handleReport}>Charts</button>
       <div className={css.reportholder}>
         {showTable
           ?<TableBuilder/>

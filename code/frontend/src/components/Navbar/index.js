@@ -20,12 +20,19 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+/**
+ * Class that represents Navbar container
+ */
 class NavbarContainer extends React.Component{
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
   }
 
+  /**
+   * function that redirects to selected tab
+   * @param event
+   */
   onClick(event) {
     event.preventDefault();
     const tab = event.target.getAttribute('name');
@@ -33,6 +40,10 @@ class NavbarContainer extends React.Component{
     this.props.handleTabClick(tab);
   }
 
+  /**
+   * renders the navbar to the screen
+   * @return {XML}
+   */
   render() {
     const {props} = this;
     return <NavbarComponent

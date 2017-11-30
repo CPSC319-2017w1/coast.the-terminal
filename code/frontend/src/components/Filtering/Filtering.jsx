@@ -4,6 +4,13 @@ import css from './filtering.css';
 import PivotTable from './PivotTable.js';
 import Tutorial from './Tutorial.jsx';
 
+/**
+ * Creates html component for Filtering
+ * @param showTutorial - boolean that returns true when tutorial is shown
+ * @param handleTutorial - function that handles visibility of tutorial
+ * @param closeTutorial - function that closes the tutorial
+ * @return React component for Filtering
+ */
 function FilteringComponent({showTutorial, handleTutorial, closeTutorial}) {
   return (
     <div className={css.wrapper}>

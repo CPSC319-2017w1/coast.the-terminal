@@ -8,7 +8,6 @@ import PivotTableUI from 'react-pivottable/PivotTableUI';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
 import TableRenderers from 'react-pivottable/TableRenderers';
-import {reportinfo} from '../Filtering/Data.js';
 import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
 import { viewReportData } from '../../actions/report-info-actions';
 
@@ -33,8 +32,6 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-
-const data = reportinfo;
 
 class ReportBuilderContainer extends React.Component {
   constructor(props) {
@@ -61,11 +58,14 @@ class ReportBuilderContainer extends React.Component {
   }
 
   componentWillMount() {
+    /**
+     * set data for report here
+     */
     this.setState({
       mode: "demo",
       filename: "Trending Reports",
       pivotState: {
-        data: reportinfo,
+        data: this.state.pivotState.data,
         cols: ["Working Month"],
         aggregatorName: "Count Unique Values", vals: ["Contractor Name"],
         rendererName: "Stacked Column Chart",

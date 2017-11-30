@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import css from './navbar.css';
 import * as TABS from '../../constants/tabs.js';
 
+/**
+ * creates html component for navbar
+ * @param isAdmin - boolean that returns true if user has admin privileges
+ * @param tab - the tab that is currently selected
+ * @param onClick - function that is called when the tab is clicked
+ * @return React component for Navbar
+ */
 function NavbarComponent({isAdmin, tab, onClick}) {
   return (
     <div className={css.wrapper}>
@@ -75,6 +82,12 @@ function NavbarComponent({isAdmin, tab, onClick}) {
   );
 }
 
+/**
+ * returns classname based on which tab is selected
+ * @param selectedTab - tab that is selected
+ * @param currentTab - tab that is to be selected
+ * @return {*}
+ */
 function getClassName(selectedTab, currentTab) {
   return selectedTab === currentTab ? css.selected : css.option;
 }
