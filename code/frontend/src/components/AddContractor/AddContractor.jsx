@@ -29,7 +29,7 @@ function AddContractorComponent({contractor, projects, handleTextInput, handleDr
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
         handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} tables={tables} />
       <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
-      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
+      <input data-qa="addcontractor" className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
       <button className={css.btnstyle} onClick={handleCancel}>Clear Fields</button>
     </div>
   );
