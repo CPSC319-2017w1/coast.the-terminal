@@ -241,7 +241,7 @@ function generateContractorRows(data) {
     'dailyAllowance': 'Allowance Expense',
     'endDate': 'End Date',
     //'id': 'engagement-id',
-    'hourlyRate': 'Hourly Rate',
+    'dollarRate': 'Dollar Rate',
     'originalDocumentation': 'Original Documentation',
     'poRefNum': 'PO Reference Number',
     'projectName': 'Project Name',
@@ -253,54 +253,54 @@ function generateContractorRows(data) {
     'monthlyCost': 'Total Monthly Cost'
   };
 
-  const contractObjectFields = {
-    'costCenter': {
-      //"id": "costcenter-id",
-      'location': 'Location'
-    },
-    'hrPayGrade': {
-      // "id": "hrPayGrade-id",
-      'startAmount': 'Pay Grade Start Amount',
-      'endAmount': 'Pay Grade End Amount',
-      'name': 'Pay Grade Name'
-    },
-    'hrPositionRole': {
-      // "id": "hrPosition-id",
-      'roleName': 'HR Role Name',
-      'description': 'HR Role Description'
-    },
-    'mainSkill': {
-      // "id": "skill-id",
-      'name': 'Skill Name',
-      'description': 'Skill Description',
-      'type': 'Skill Type'
-    },
-    'hiringManager': {
-      'firstName': 'Reporting Manager First Name',
-      'lastName': 'Reporting Manager Last Name'
-    }
-  };
+            const contractObjectFields = {
+              'costCenter': {
+                //"id": "costcenter-id",
+                'location': 'Location'
+              },
+              'hrPayGrade': {
+                // "id": "hrPayGrade-id",
+                'startAmount': 'Pay Grade Start Amount',
+                'endAmount': 'Pay Grade End Amount',
+                'name': 'Pay Grade Name'
+              },
+              'hrPositionRole': {
+                // "id": "hrPosition-id",
+                'roleName': 'HR Role Name',
+                'description': 'HR Role Description'
+              },
+              'mainSkill': {
+                // "id": "skill-id",
+                'name': 'Skill Name',
+                'description': 'Skill Description',
+                'type': 'Skill Type'
+              },
+              'hiringManager': {
+                'firstName': 'Reporting Manager First Name',
+                'lastName': 'Reporting Manager Last Name'
+              }
+            };
 
-  for(let contractor of data) {
-    let contractorParsed = {};
-    for(let contractorField in contractorFields) {
-      if(contractorField !== CONTRACTS_FIELD){
-        let humanReadableName = contractorFields[contractorField];
-        contractorParsed[humanReadableName] = contractor[contractorField];
-      } else {
-        //new row for each contract (even with same contractor data)
-        let saveContractorParsed = Object.assign({}, contractorParsed);
-        let contracts = contractor[CONTRACTS_FIELD];
-        for(let contract of contracts) {
-          //extract out string fields in each contract
-          for (let contractField in contractFields) {
-            let humanReadableName = contractFields[contractField];
-            contractorParsed[humanReadableName] = contract[contractField];
-          }
-          //extract out object type fields in each contract
-          for(let contractObjectFieldName in contractObjectFields){
-            let contractObjectValues = contract[contractObjectFieldName];
-            let contractObjectSchema = contractObjectFields[contractObjectFieldName];
+            for(let contractor of data) {
+              let contractorParsed = {};
+              for(let contractorField in contractorFields) {
+                if(contractorField !== CONTRACTS_FIELD){
+                  let humanReadableName = contractorFields[contractorField];
+                  contractorParsed[humanReadableName] = contractor[contractorField];
+                } else {
+                  //new row for each contract (even with same contractor data)
+                  let saveContractorParsed = Object.assign({}, contractorParsed);
+                  let contracts = contractor[CONTRACTS_FIELD];
+                  for(let contract of contracts) {
+                    //extract out string fields in each contract
+                    for (let contractField in contractFields) {
+                      let humanReadableName = contractFields[contractField];
+                      contractorParsed[humanReadableName] = contract[contractField];
+                    }
+                    //extract out object type fields in each contract
+                    for(let contractObjectFieldName in contractObjectFields){
+                      let contractObjectValues = contract[contractObjectFieldName];
+                      let contractObjectSchema = contractObjectFields[contractObjectFieldName];
 
             for(let contractObjectFieldName in contractObjectSchema){
               if(contractObjectSchema.hasOwnProperty(contractObjectFieldName)) {
