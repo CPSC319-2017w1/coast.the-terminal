@@ -46,7 +46,8 @@ function mapReportDataToHumanReadable(reportData) {
     'workingMonth': 'Working Month',
     'startDate': 'Start Date',
     'totalMonthlyCost': 'Total Monthly Cost',
-    'hiringManager': 'Hiring Manager'
+    'hiringManager': 'Hiring Manager',
+    'projectName': 'Project Name'
   };
   let parsedReports = [];
   for (let report of reportData) {
