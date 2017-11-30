@@ -33,6 +33,8 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const data = [];
+
 class ReportBuilderContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -65,7 +67,7 @@ class ReportBuilderContainer extends React.Component {
       mode: "demo",
       filename: "Trending Reports",
       pivotState: {
-        data: this.state.pivotState.data,
+        data: data,
         cols: ["Working Month"],
         aggregatorName: "Count Unique Values", vals: ["Contractor Name"],
         rendererName: "Stacked Column Chart",
