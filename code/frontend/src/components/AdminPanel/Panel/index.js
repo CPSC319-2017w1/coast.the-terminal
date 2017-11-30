@@ -15,6 +15,11 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 class PanelWrapperContainer extends React.Component {
+  /**
+   * Handle the state of the current admin view
+   * @constructor
+   * @param {object} props
+   * */
   constructor(props) {
     super(props);
     this.state = Object.assign({
@@ -40,6 +45,10 @@ class PanelWrapperContainer extends React.Component {
     this.cancelDelete = this.cancelDelete.bind(this);
   }
 
+  /**
+   * Toggle add new row form
+   * @param {object} event
+   * */
   toggleAdd(event) {
     event.preventDefault();
     const toggleAdd = !this.state.toggleAdd;
@@ -54,6 +63,10 @@ class PanelWrapperContainer extends React.Component {
     });
   }
 
+  /**
+   * Toggle edit existing row form
+   * @param {object} event
+   * */
   toggleEdit(event) {
     event.preventDefault();
     let inputs = Object.assign({}, this.state.inputs);
@@ -89,6 +102,10 @@ class PanelWrapperContainer extends React.Component {
     });
   }
 
+  /**
+   * Handle state change for any of the inputs in the forms
+   * @param {object} event
+   * */
   handleInputChange(event) {
     event.preventDefault();
     const state = Object.assign({}, this.state);
@@ -113,6 +130,10 @@ class PanelWrapperContainer extends React.Component {
     this.setState(state);
   }
 
+  /**
+   * Gather all needed data from the state and send it to the backend to be added to the table
+   * @param {object} event
+   * */
   handleAdd(event) {
     event.preventDefault();
     const { inputs } = this.state;
@@ -133,6 +154,10 @@ class PanelWrapperContainer extends React.Component {
     }
   }
 
+  /**
+   * Gather all needed data from the state and send it to the backend to be edited in the table
+   * @param {object} event
+   * */
   handleEdit(event) {
     event.preventDefault();
     const { inputs } = this.state;
@@ -156,6 +181,10 @@ class PanelWrapperContainer extends React.Component {
     }
   }
 
+  /**
+   * Find the selected item to be deleted and add it to the state
+   * @param {object} event
+   * */
   handleDelete(event) {
     event.preventDefault();
     this.setState({
@@ -168,6 +197,10 @@ class PanelWrapperContainer extends React.Component {
     });
   }
 
+  /**
+   * Call backend to delete a row after user confirmation
+   * @param {object} event
+   * */
   handleDeleteButton(event) {
     event.preventDefault();
     const { props, state } = this;
@@ -181,11 +214,19 @@ class PanelWrapperContainer extends React.Component {
     this.setState({ safetyPrompt: false });
   }
 
+  /**
+   * Cancel delete action after user confirmation
+   * @param {object} event
+   * */
   cancelDelete(event) {
     event.preventDefault();
     this.setState({ safetyPrompt: false, safetyPromptValue: '' });
   }
 
+  /**
+   * Clear all the text from the inputs in the open form
+   * @param {object} event
+   * */
   clearAll(event) {
     event.preventDefault();
     this.setState(Object.assign({
@@ -195,10 +236,16 @@ class PanelWrapperContainer extends React.Component {
     }, this.props.getInitialState()));
   }
 
+  /**
+   * Show success prompt
+   * */
   toggleSuccessPromptOn() {
     this.setState({ successPrompt: true });
   }
 
+  /**
+   * Render table and if requested, edit/add row form
+   * */
   getContent() {
     const { props, state } = this;
     return (
@@ -225,6 +272,9 @@ class PanelWrapperContainer extends React.Component {
     );
   }
 
+  /**
+   * Render admin tab
+   * */
   render() {
     const { props, state } = this;
     return <div className={css.topoftable}>
@@ -247,6 +297,11 @@ class PanelWrapperContainer extends React.Component {
   }
 }
 
+/**
+ * Validate input based on given rules
+ * @param {object} inputs - Inputs to be validated
+ * @param {string} tableName - Name of the current admin table
+ * */
 function areInputsValid(inputs, tableName) {
   const response = {
     isValid: true,

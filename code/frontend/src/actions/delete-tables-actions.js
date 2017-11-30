@@ -4,6 +4,11 @@ import { LIVE_SITE } from '../constants/urls.js';
 import { viewTableRows } from './view-tables-actions.js';
 import { loginFailed } from './login-actions.js';
 
+/**
+ * Action to be dispatched when the call to backend has failed
+ * @param {string} error - Error message
+ * @param {string} tableName - The table in question
+ * */
 function deleteRowFailed(error, tableName) {
   return {
     type: DELETE_ROW_FAILED,
@@ -12,6 +17,12 @@ function deleteRowFailed(error, tableName) {
   };
 }
 
+/**
+ * Call backend to delete a row
+ * @param {string} tableName - The table in question
+ * @param {object} data - The query to be sent to the backend
+ * @param {function} successCallback - Callback function in case of success
+ * */
 export function deleteRow(tableName, data, successCallback) {
   return dispatch => {
     return request

@@ -3,6 +3,10 @@ import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE } from '../constants/urls.js';
 import { isLoading, hasStoppedLoading } from './main-actions.js';
 
+/**
+ * Action to be dispatched when the call to backend has failed
+ * @param {string} error - Error message
+ * */
 export function loginFailed(error) {
   return {
     type: ACTIONS.LOGIN_FAILED,
@@ -10,6 +14,12 @@ export function loginFailed(error) {
   };
 }
 
+/**
+ * Action to be dispatched when the call to backend has been successful
+ * @param {string} username - The username of the currently logged in user
+ * @param {boolean} isAdmin - Whether the current user has admin privileges
+ * @param {string} token - Session token of the current user
+ * */
 function loginSuccessful(username, isAdmin, token) {
   return {
     type: ACTIONS.LOGIN,
@@ -19,6 +29,12 @@ function loginSuccessful(username, isAdmin, token) {
   };
 }
 
+/**
+ * Call backend to log in the user
+ * @param {string} username - Inputted username
+ * @param {string} password - Inputted password
+ * @param {object} cookies - The cookies object which enables setting, getting, and removing cookies
+ * */
 export function loginUser(username, password, cookies) {
   return dispatch => {
     dispatch(isLoading());
@@ -41,6 +57,12 @@ export function loginUser(username, password, cookies) {
   };
 }
 
+/**
+ * Call backend to validate the login session of the current user
+ * @param {string} username - Current user
+ * @param {string} token - Session token of the current user
+ * @param {object} cookies - The cookies object which enables setting, getting, and removing cookies
+ * */
 export function validateSession(username, token, cookies) {
   return dispatch => {
     dispatch(isLoading());
@@ -65,12 +87,20 @@ export function validateSession(username, token, cookies) {
   };
 }
 
+/**
+ * Action to be dispatched to log out the user from the frontend
+ * */
 export function logoutUser() {
   return {
     type: ACTIONS.LOGOUT
   };
 }
 
+/**
+ * Call backend to expire the session of the current user in the backend
+ * @param {string} username - Current user
+ * @param {string} token - Session token of the current user
+ * */
 export function logout(username, token) {
   return dispatch => {
     dispatch(isLoading());

@@ -24,6 +24,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    /**
+     * Fetches all tables viewable by the admin
+     * @param {string} token
+     * */
     getTables: (token) => {
       dispatch(isLoading());
       dispatch(viewTableRows(TABLE_NAMES.USERS, token));
@@ -40,6 +44,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 class AdminPanelContainer extends React.Component {
+  /**
+   * Class responsible for rendering the proper admin panel component
+   * @constructor
+   * @param {object} props
+   * */
   constructor(props) {
     super(props);
     this.state = {
@@ -49,26 +58,44 @@ class AdminPanelContainer extends React.Component {
     this.onReturn = this.onReturn.bind(this);
   }
 
+  /**
+   * Takes user to specified table based on the clicked button
+   * @param {object} event
+   * */
   onClick(event){
     event.preventDefault();
     this.setState({ tab: event.target.getAttribute('name') });
   }
 
+  /**
+   * Takes user back to main admin panel view
+   * @param {object} event
+   * */
   onReturn(event){
     event.preventDefault();
     this.setState({ tab: TABS.MAIN });
   }
 
+  /**
+   * Stop showing the loading screen after tables have been fetched
+   * @param {object} nextProps
+   * */
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoading) {
       this.props.stopLoading();
     }
   }
 
+  /**
+   * Fetch all admin tables
+   * */
   componentDidMount() {
     this.props.getTables(this.props.cookies.get('token'));
   }
 
+  /**
+   * Renders the proper view based on the chosen tab
+   * */
   render(){
     switch (this.state.tab) {
       case TABS.FX_TABLE:
