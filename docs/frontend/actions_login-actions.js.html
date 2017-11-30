@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: actions/login-actions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: actions/login-actions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import request from 'superagent';
+import * as ACTIONS from '../constants/action-types.js';
+import { LIVE_SITE } from '../constants/urls.js';
+import { isLoading, hasStoppedLoading } from './main-actions.js';
+
+/**
+ * Action to be dispatched when the call to backend has failed
+ * @param {string} error - Error message
+ * */
+export function loginFailed(error) {
+  return {
+    type: ACTIONS.LOGIN_FAILED,
+    error
+  };
+}
+
+/**
+ * Action to be dispatched when the call to backend has been successful
+ * @param {string} username - The username of the currently logged in user
+ * @param {boolean} isAdmin - Whether the current user has admin privileges
+ * @param {string} token - Session token of the current user
+ * */
+function loginSuccessful(username, isAdmin, token) {
+  return {
+    type: ACTIONS.LOGIN,
+    username,
+    isAdmin,
+    token
+  };
+}
+
+/**
+ * Call backend to log in the user
+ * @param {string} username - Inputted username
+ * @param {string} password - Inputted password
+ * @param {object} cookies - The cookies object which enables setting, getting, and removing cookies
+ * */
+export function loginUser(username, password, cookies) {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .get(`${LIVE_SITE}login`)
+      .query({ username, password })
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        cookies.set('token', body.token);
+        cookies.set('username', username);
+        dispatch(hasStoppedLoading());
+        dispatch(loginSuccessful(body.username, body.permissions === 'admin', body.token));
+      }).catch((err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(loginFailed(err.message));
+      });
+  };
+}
+
+/**
+ * Call backend to validate the login session of the current user
+ * @param {string} username - Current user
+ * @param {string} token - Session token of the current user
+ * @param {object} cookies - The cookies object which enables setting, getting, and removing cookies
+ * */
+export function validateSession(username, token, cookies) {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .get(`${LIVE_SITE}refresh`)
+      .query({ username, token })
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        cookies.set('token', token);
+        cookies.set('username', username);
+        dispatch(hasStoppedLoading());
+        dispatch(loginSuccessful(username, body.permissions === 'admin', token));
+      }).catch((err) => {
+        cookies.remove('token');
+        cookies.remove('username');
+        dispatch(hasStoppedLoading());
+        dispatch(loginFailed(`${err.message} - Please sign in again.`));
+      });
+  };
+}
+
+/**
+ * Action to be dispatched to log out the user from the frontend
+ * */
+export function logoutUser() {
+  return {
+    type: ACTIONS.LOGOUT
+  };
+}
+
+/**
+ * Call backend to expire the session of the current user in the backend
+ * @param {string} username - Current user
+ * @param {string} token - Session token of the current user
+ * */
+export function logout(username, token) {
+  return dispatch => {
+    dispatch(isLoading());
+    return request
+      .get(`${LIVE_SITE}logout`)
+      .query({ username, token })
+      .then((res) => {
+        const body = res.body;
+        if (!res.ok || body.error) {
+          throw new Error(body.errorMessage);
+        }
+        dispatch(hasStoppedLoading());
+        dispatch(logoutUser());
+      }).catch((err) => {
+        dispatch(hasStoppedLoading());
+        dispatch(logoutUser());
+        dispatch(loginFailed(`Failed to remove session from backend: ${err.message}`));
+      });
+  };
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddContractorContainer.html">AddContractorContainer</a></li><li><a href="AdminPanelContainer.html">AdminPanelContainer</a></li><li><a href="DashboardContainer.html">DashboardContainer</a></li><li><a href="LoginContainer.html">LoginContainer</a></li><li><a href="module.html#.exports">exports</a></li><li><a href="NavbarContainer.html">NavbarContainer</a></li><li><a href="PanelWrapperContainer.html">PanelWrapperContainer</a></li><li><a href="UserContainer.html">UserContainer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddContractorComponent">AddContractorComponent</a></li><li><a href="global.html#addNewRow">addNewRow</a></li><li><a href="global.html#addNewRowFailed">addNewRowFailed</a></li><li><a href="global.html#AdminPanelComponent">AdminPanelComponent</a></li><li><a href="global.html#areInputsValid">areInputsValid</a></li><li><a href="global.html#Contractor">Contractor</a></li><li><a href="global.html#ContractorInfoComponent">ContractorInfoComponent</a></li><li><a href="global.html#DashboardComponent">DashboardComponent</a></li><li><a href="global.html#deleteRow">deleteRow</a></li><li><a href="global.html#deleteRowFailed">deleteRowFailed</a></li><li><a href="global.html#EditContractorComponent">EditContractorComponent</a></li><li><a href="global.html#editRow">editRow</a></li><li><a href="global.html#editRowFailed">editRowFailed</a></li><li><a href="global.html#FilteringComponent">FilteringComponent</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#FXTable">FXTable</a></li><li><a href="global.html#getClassName">getClassName</a></li><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#getDataOptions">getDataOptions</a></li><li><a href="global.html#getDisplayField">getDisplayField</a></li><li><a href="global.html#getDropdownField">getDropdownField</a></li><li><a href="global.html#getHeaders">getHeaders</a></li><li><a href="global.html#getIdField">getIdField</a></li><li><a href="global.html#getInitialState">getInitialState</a></li><li><a href="global.html#getNumberField">getNumberField</a></li><li><a href="global.html#getOptions">getOptions</a></li><li><a href="global.html#getRows">getRows</a></li><li><a href="global.html#getTables">getTables</a></li><li><a href="global.html#getTextField">getTextField</a></li><li><a href="global.html#handleAddNew">handleAddNew</a></li><li><a href="global.html#handleDeleteRow">handleDeleteRow</a></li><li><a href="global.html#handleEditRow">handleEditRow</a></li><li><a href="global.html#hasStoppedLoading">hasStoppedLoading</a></li><li><a href="global.html#HiringManagersContainer">HiringManagersContainer</a></li><li><a href="global.html#HRRolesContainer">HRRolesContainer</a></li><li><a href="global.html#isChrome">isChrome</a></li><li><a href="global.html#isLoading">isLoading</a></li><li><a href="global.html#LayoutContainer">LayoutContainer</a></li><li><a href="global.html#LoginComponent">LoginComponent</a></li><li><a href="global.html#loginFailed">loginFailed</a></li><li><a href="global.html#loginSuccessful">loginSuccessful</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#logoutUser">logoutUser</a></li><li><a href="global.html#NavbarComponent">NavbarComponent</a></li><li><a href="global.html#PayGradesContainer">PayGradesContainer</a></li><li><a href="global.html#Projects">Projects</a></li><li><a href="global.html#ReportsComponent">ReportsComponent</a></li><li><a href="global.html#SkillsContainer">SkillsContainer</a></li><li><a href="global.html#switchView">switchView</a></li><li><a href="global.html#Table">Table</a></li><li><a href="global.html#Tutorial">Tutorial</a></li><li><a href="global.html#UsersContainer">UsersContainer</a></li><li><a href="global.html#validateSession">validateSession</a></li><li><a href="global.html#viewTableFailed">viewTableFailed</a></li><li><a href="global.html#viewTableRows">viewTableRows</a></li><li><a href="global.html#viewTableSuccessful">viewTableSuccessful</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Nov 30 2017 11:54:30 GMT-0800 (PST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

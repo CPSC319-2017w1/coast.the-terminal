@@ -106,3 +106,10 @@ The react-pivottable package is a little complex to work with and needs some add
 To fix this issue manually import the css from the [example](https://github.com/plotly/react-pivottable/blob/master/src/pivottable.css) by putting it inside the ```<style></style>``` tag of index.html
 
 ---
+
+### Documentation for Front-end Functions
+
+
+
+---
+

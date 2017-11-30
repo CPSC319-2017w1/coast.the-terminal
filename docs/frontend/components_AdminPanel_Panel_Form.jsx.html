@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/AdminPanel/Panel/Form.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/AdminPanel/Panel/Form.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import PropTypes from 'prop-types';
+import * as TYPES from '../../../constants/input-types.js';
+import css from '../../../components/AdminPanel/Tabs/table.css';
+
+/**
+ * Renders a form
+ * @param {object} inputs - Inputs to appear in the form
+ * @param {function} onChange - State change handler for inputs
+ * @param {function} onSubmit - Click handler for submit button
+ * @param {function} clearAll - Click handler for Clear All button
+ * @param {string} itemId - ID of the item that is being edited (only if the form is for edit row, not adding a new row)
+ * @param {boolean} isEdit - Whether or not the form is for editing an existing row
+ * @param {boolean} isActiveUser - Whether or not the form is displaying information for the currently logged in user
+ * */
+function Form({inputs, onChange, onSubmit, clearAll, itemId, isEdit, isActiveUser}) {
+  let children = [];
+  for (let key in inputs) {
+    if (inputs.hasOwnProperty(key)) {
+      const item = inputs[key];
+      switch (item.type) {
+        case TYPES.TEXT:
+        case TYPES.PASSWORD:
+          children.push(getTextField(item, key, onChange, isEdit));
+          break;
+        case TYPES.NUMBER:
+          children.push(getNumberField(item, key, onChange));
+          break;
+        case TYPES.DROPDOWN:
+          children.push(getDropdownField(item, key, onChange, isActiveUser));
+          break;
+        default:
+          break;
+      }
+    }
+  }
+  return &lt;div className={css.form} name={itemId}>
+    {children}
+    &lt;button className={css.cancelbtn} type="submit" onClick={onSubmit}>Submit&lt;/button>
+    &lt;button className={css.cancelbtn} onClick={clearAll}>Clear Fields&lt;/button>
+  &lt;/div>;
+}
+
+/**
+ * Render input of type number
+ * @param {object} item
+ * @param {string} key - A unique ID for the input
+ * @param {function} onChange - State change handler for the input
+ * */
+function getNumberField(item, key, onChange) {
+  return &lt;div className={css.formfield} key={key}>
+    &lt;span>{item.title}&lt;/span>
+    &lt;input name={key} onChange={onChange} value={item.value} type={item.type} min={0} />
+  &lt;/div>;
+}
+
+/**
+ * Render input of type text
+ * @param {object} item
+ * @param {string} key - A unique ID for the input
+ * @param {function} onChange - State change handler for the input
+ * @param {boolean} isEdit - Whether or not the form is for editing an existing row
+ * */
+function getTextField(item, key, onChange, isEdit) {
+  return &lt;div className={css.formfield} key={key}>
+    &lt;span>{item.title}&lt;/span>
+    &lt;input name={key} onChange={onChange} disabled={isEdit &amp;&amp; item.title === 'Username'} value={item.value} type={item.type} />
+  &lt;/div>;
+}
+
+/**
+ * Render input of type dropdown
+ * @param {object} items
+ * @param {string} key - A unique ID for the input
+ * @param {function} onChange - State change handler for the input
+ * @param {boolean} isActiveUser - Whether or not the form is displaying information for the currently logged in user
+ * */
+function getDropdownField(items, key, onChange, isActiveUser) {
+  return &lt;div className={css.formfield} key={key}>
+    &lt;span>{items.title}&lt;/span>
+    &lt;select onChange={onChange} type={items.type} value={items.selected} name={key} disabled={key === 'permissions' &amp;&amp; isActiveUser}>
+      {items.value.map(item => &lt;option key={`${key}_${item.value}`} value={item.value}>{item.title}&lt;/option>)}
+    &lt;/select>
+  &lt;/div>;
+}
+
+Form.defaultProps = {
+  isActiveUser: false
+};
+
+Form.propTypes = {
+  inputs: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  clearAll: PropTypes.func.isRequired,
+  itemId: PropTypes.string.isRequired,
+  isEdit: PropTypes.bool.isRequired,
+  isActiveUser: PropTypes.bool
+};
+
+export default Form;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddContractorContainer.html">AddContractorContainer</a></li><li><a href="AdminPanelContainer.html">AdminPanelContainer</a></li><li><a href="DashboardContainer.html">DashboardContainer</a></li><li><a href="LoginContainer.html">LoginContainer</a></li><li><a href="module.html#.exports">exports</a></li><li><a href="NavbarContainer.html">NavbarContainer</a></li><li><a href="PanelWrapperContainer.html">PanelWrapperContainer</a></li><li><a href="UserContainer.html">UserContainer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddContractorComponent">AddContractorComponent</a></li><li><a href="global.html#addNewRow">addNewRow</a></li><li><a href="global.html#addNewRowFailed">addNewRowFailed</a></li><li><a href="global.html#AdminPanelComponent">AdminPanelComponent</a></li><li><a href="global.html#areInputsValid">areInputsValid</a></li><li><a href="global.html#Contractor">Contractor</a></li><li><a href="global.html#ContractorInfoComponent">ContractorInfoComponent</a></li><li><a href="global.html#DashboardComponent">DashboardComponent</a></li><li><a href="global.html#deleteRow">deleteRow</a></li><li><a href="global.html#deleteRowFailed">deleteRowFailed</a></li><li><a href="global.html#EditContractorComponent">EditContractorComponent</a></li><li><a href="global.html#editRow">editRow</a></li><li><a href="global.html#editRowFailed">editRowFailed</a></li><li><a href="global.html#FilteringComponent">FilteringComponent</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#FXTable">FXTable</a></li><li><a href="global.html#getClassName">getClassName</a></li><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#getDataOptions">getDataOptions</a></li><li><a href="global.html#getDisplayField">getDisplayField</a></li><li><a href="global.html#getDropdownField">getDropdownField</a></li><li><a href="global.html#getHeaders">getHeaders</a></li><li><a href="global.html#getIdField">getIdField</a></li><li><a href="global.html#getInitialState">getInitialState</a></li><li><a href="global.html#getNumberField">getNumberField</a></li><li><a href="global.html#getOptions">getOptions</a></li><li><a href="global.html#getRows">getRows</a></li><li><a href="global.html#getTables">getTables</a></li><li><a href="global.html#getTextField">getTextField</a></li><li><a href="global.html#handleAddNew">handleAddNew</a></li><li><a href="global.html#handleDeleteRow">handleDeleteRow</a></li><li><a href="global.html#handleEditRow">handleEditRow</a></li><li><a href="global.html#hasStoppedLoading">hasStoppedLoading</a></li><li><a href="global.html#HiringManagersContainer">HiringManagersContainer</a></li><li><a href="global.html#HRRolesContainer">HRRolesContainer</a></li><li><a href="global.html#isChrome">isChrome</a></li><li><a href="global.html#isLoading">isLoading</a></li><li><a href="global.html#LayoutContainer">LayoutContainer</a></li><li><a href="global.html#LoginComponent">LoginComponent</a></li><li><a href="global.html#loginFailed">loginFailed</a></li><li><a href="global.html#loginSuccessful">loginSuccessful</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#logoutUser">logoutUser</a></li><li><a href="global.html#NavbarComponent">NavbarComponent</a></li><li><a href="global.html#PayGradesContainer">PayGradesContainer</a></li><li><a href="global.html#Projects">Projects</a></li><li><a href="global.html#ReportsComponent">ReportsComponent</a></li><li><a href="global.html#SkillsContainer">SkillsContainer</a></li><li><a href="global.html#switchView">switchView</a></li><li><a href="global.html#Table">Table</a></li><li><a href="global.html#Tutorial">Tutorial</a></li><li><a href="global.html#UsersContainer">UsersContainer</a></li><li><a href="global.html#validateSession">validateSession</a></li><li><a href="global.html#viewTableFailed">viewTableFailed</a></li><li><a href="global.html#viewTableRows">viewTableRows</a></li><li><a href="global.html#viewTableSuccessful">viewTableSuccessful</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Nov 30 2017 11:54:30 GMT-0800 (PST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/AddContractor/Projects.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/AddContractor/Projects.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import Proptypes from 'prop-types';
+import css from './addcontractor.css';
+import 'date-input-polyfill';
+
+/**
+ * Creates the html for Project Information
+ * @param projects - array that holds the engagement contracts of the contractor
+ * @param handleTextInput -  function that handles the input in the text fields
+ * @param handleDropdownInput - function that handles the input in the dropdown fields
+ * @param handleDateInput - function that handles the input in the date field
+ * @param handleRadioInput - function that hanldes the input for radio button
+ * @param tables - data for dropdowns
+ * @returns React component for Project Information
+ */
+function Projects({projects, handleTextInput, handleDropdownInput, handleDateInput, handleRadioInput, tables}) {
+  return &lt;div>
+    {
+      projects.map((project, index) =>
+        &lt;div key={index} className={css.projectInfo}>
+          &lt;p className={css.projname}>
+            Project Name
+            &lt;input className={css.txtfield}
+              data-qa="project"
+              name="projectName"
+              type="text"
+              data-index={index}
+              value={project.projectName}
+              onChange={handleTextInput}/>
+          &lt;/p>
+          &lt;p className={css.rm}>
+            Reporting Manager
+            &lt;select className={css.txtfield}
+              data-qa="pm"
+              name="reportingManagerId"
+              type="text"
+              onChange={handleDropdownInput}
+              data-index={index}
+              value={project.reportingManagerId}
+            >
+              {getDataOptions(tables, 'hiringmanagers')}
+            &lt;/select>
+          &lt;/p>
+          &lt;p className={css.costcen}>
+          Cost Centre
+            &lt;select className={css.txtfield}
+              data-qa="costcentre"
+              name="costCenterId"
+              type="text"
+              value={project.costCenterId}
+              onChange={handleDropdownInput}
+              data-index={index}>
+              {getDataOptions(tables, 'costcenters')}
+            &lt;/select>
+          &lt;/p>
+          &lt;p className={css.start}>
+            Start Date
+            &lt;br/>
+            &lt;input className={css.startinput}
+                   data-qa="start"
+              data-index={index}
+              type="date"
+              name="startDate"
+              value={project.startDate}
+              date-format="mm/dd/yyyy"
+              onChange={handleDateInput}/>
+          &lt;/p>
+          &lt;p className={css.end}>
+            End Date
+            &lt;br/>
+            &lt;input className={css.endinput}
+                   data-qa="end"
+              data-index={index}
+              type="date"
+              name="endDate"
+              value={project.endDate}
+              date-format="mm/dd/yyyy"
+              onChange={handleDateInput}/>
+          &lt;/p>
+          &lt;p className={css.hrpos}>
+            HR Position
+            &lt;select className={css.txtfield}
+                    data-qa="hrposition"
+              name="hrPositionId"
+              type="text"
+              data-index={index}
+              onChange={handleDropdownInput}
+              value={project.hrPositionId}
+            >
+              {getDataOptions(tables, 'hrroles')}
+            &lt;/select>
+          &lt;/p>
+          &lt;p className={css.rate}>
+            Rate Type
+            &lt;select className={css.txtfield}
+                    data-qa="rate"
+              name="rateType"
+              type="text"
+              data-index={index}
+              onChange={handleDropdownInput}
+              value={project.rateType}
+            >
+              {getOptions(project.ratetypes)}
+            &lt;/select>
+          &lt;/p>
+          &lt;p className={css.hourrate}>
+            Est. Rate ($)
+            &lt;input className={css.txtfield}
+                   data-qa="estrate"
+              name="hourlyrate"
+              type="number"
+              data-index={index}
+              value={project.hourlyrate}
+              onChange={handleTextInput}/>
+          &lt;/p>
+          &lt;p className={css.hrpay}>
+            HR Pay Grade
+            &lt;br/>
+            &lt;select className={css.txtfield}
+                    data-qa="hrpay"
+              name="hrPayGradeId"
+              type="text"
+              data-index={index}
+              onChange={handleDropdownInput}
+              value={project.hrPayGradeId}
+            >
+              {getDataOptions(tables, 'paygrades')}
+            &lt;/select>
+          &lt;/p>
+          &lt;p className={css.poref}>
+            P.O. Reference #
+            &lt;input className={css.txtfield}
+                   data-qa="pref"
+              name="poNum"
+              type="number"
+              data-index={index}
+              onChange={handleTextInput}
+              value={project.poRefNum}
+            >
+            &lt;/input>
+          &lt;/p>
+          &lt;p className={css.currency}>
+            Currency
+            &lt;input name={`currencyCode-${index}`}  value='USD' className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput} checked={project.currencyCode === 'USD'}/>
+            USD
+            &lt;input data-qa="cad" name={`currencyCode-${index}`} value='CAD' className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput} checked={project.currencyCode === 'CAD'}/>
+            CAD
+          &lt;/p>
+          &lt;p className={css.timeMaterial}>
+            Time and Material Terms ($)
+            &lt;input className={css.txtField}
+                   data-qa="time"
+              name="timeMaterialTerms"
+              type="number"
+              value={project.timeMaterialTerms}
+              data-index={index}
+              onChange={handleTextInput}/>
+          &lt;/p>
+          &lt;p className={css.allowanceExpense}>
+            Allowance expense daily per deem
+            &lt;input className={css.txtField}
+                   data-qa="allow"
+              name="dailyAllowance"
+              type="number"
+              value={project.dailyAllowance}
+              data-index={index}
+              onChange={handleTextInput}/>
+          &lt;/p>
+          &lt;p className={css.chargeType}>
+            Charge Type
+            &lt;input name={`chargeType-${index}`} value="capital" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput} checked={project.chargeType === 'capital'}/>
+            Capital - Depreciated
+            &lt;input data-qa="operational" name={`chargeType-${index}`} value="opcost" className={css.radiobutton} data-index={index} type="radio" onChange={handleRadioInput} checked={project.chargeType === 'opcost'}/>
+            Operating Costs
+          &lt;/p>
+          &lt;p className={css.mainSkill}>
+            Main Skill for Engagement
+            &lt;select className={css.txtField}
+                    data-qa="mainskill"
+              name="mainSkillId"
+              type="text"
+              data-index={index}
+              onChange={handleDropdownInput}
+              value={project.mainSkillId}
+            >
+              {getDataOptions(tables, 'skills')}
+            &lt;/select>
+          &lt;/p>
+          &lt;p className={css.origindoc}>
+            Original Documentation
+            &lt;input
+              className={css.txtField}
+              data-qa="original"
+              type="text"
+              data-index={index}
+              value={project.originalDocumentation}
+              onChange={handleTextInput}
+              name="originalDocumentation"/>
+          &lt;/p>
+          &lt;p className={css.termination}>
+            Notification for contract termination
+            &lt;input
+              className={css.txtField}
+              data-qa="notif"
+              type="number"
+              data-index={index}
+              value={project.terminationNum}
+              onChange={handleTextInput}
+              name="terminationNum"/>
+          &lt;/p>
+        &lt;/div>
+      )
+    }
+  &lt;/div>;
+}
+
+/**
+ * Populates dropdown with data
+ * @param tables - data for dropdowns
+ * @param tableName - dropdown name
+ * @return options for the dropdown
+ */
+
+function getDataOptions(tables, tableName) {
+  let desiredTable = tables[tableName];
+  if(typeof desiredTable === typeof undefined) {
+    return;
+  }
+  let desiredTableData = desiredTable.data;
+  let displayField = getDisplayField(tableName);
+  let idField = getIdField(tableName);
+  return desiredTableData.map((item, index) =>
+    &lt;option key={index}
+      value={item[idField]}>
+      {item[displayField]}
+    &lt;/option>
+  );
+}
+
+/**
+ * gets the id of the dropdown
+ * @param tableName - name of dropdown
+ * @return {string} - id of dropdown
+ */
+function getIdField(tableName) {
+  switch(tableName) {
+    default:
+      return 'id';
+  }
+}
+
+/**
+ * gets fields based on the name of dropdown
+ * @param tableName - name of dropdown
+ * @return {*} - fields that are displayed in the dropdown
+ */
+function getDisplayField(tableName) {
+  switch(tableName) {
+    case 'skills':
+      return 'name';
+    case 'paygrades':
+      return 'name';
+    case 'hiringmanagers':
+      return 'firstName';
+    case 'hrroles':
+      return 'roleName';
+    case 'costcenters':
+      return 'location';
+    default:
+      return 'id';
+  }
+}
+
+/**
+ * gets options for dropdown
+ * @param items - list of items to be populated in the dropdown
+ * @return oprions for dropdown
+ */
+function getOptions(items) {
+  return items.map((item, index) =>
+    &lt;option key={index}
+      value={item.text}>
+      {item}
+    &lt;/option>
+  );
+}
+
+export default Projects;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddContractorContainer.html">AddContractorContainer</a></li><li><a href="AdminPanelContainer.html">AdminPanelContainer</a></li><li><a href="DashboardContainer.html">DashboardContainer</a></li><li><a href="LoginContainer.html">LoginContainer</a></li><li><a href="module.html#.exports">exports</a></li><li><a href="NavbarContainer.html">NavbarContainer</a></li><li><a href="PanelWrapperContainer.html">PanelWrapperContainer</a></li><li><a href="UserContainer.html">UserContainer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddContractorComponent">AddContractorComponent</a></li><li><a href="global.html#addNewRow">addNewRow</a></li><li><a href="global.html#addNewRowFailed">addNewRowFailed</a></li><li><a href="global.html#AdminPanelComponent">AdminPanelComponent</a></li><li><a href="global.html#areInputsValid">areInputsValid</a></li><li><a href="global.html#Contractor">Contractor</a></li><li><a href="global.html#ContractorInfoComponent">ContractorInfoComponent</a></li><li><a href="global.html#DashboardComponent">DashboardComponent</a></li><li><a href="global.html#deleteRow">deleteRow</a></li><li><a href="global.html#deleteRowFailed">deleteRowFailed</a></li><li><a href="global.html#EditContractorComponent">EditContractorComponent</a></li><li><a href="global.html#editRow">editRow</a></li><li><a href="global.html#editRowFailed">editRowFailed</a></li><li><a href="global.html#FilteringComponent">FilteringComponent</a></li><li><a href="global.html#Form">Form</a></li><li><a href="global.html#FXTable">FXTable</a></li><li><a href="global.html#getClassName">getClassName</a></li><li><a href="global.html#getColumns">getColumns</a></li><li><a href="global.html#getDataOptions">getDataOptions</a></li><li><a href="global.html#getDisplayField">getDisplayField</a></li><li><a href="global.html#getDropdownField">getDropdownField</a></li><li><a href="global.html#getHeaders">getHeaders</a></li><li><a href="global.html#getIdField">getIdField</a></li><li><a href="global.html#getInitialState">getInitialState</a></li><li><a href="global.html#getNumberField">getNumberField</a></li><li><a href="global.html#getOptions">getOptions</a></li><li><a href="global.html#getRows">getRows</a></li><li><a href="global.html#getTables">getTables</a></li><li><a href="global.html#getTextField">getTextField</a></li><li><a href="global.html#handleAddNew">handleAddNew</a></li><li><a href="global.html#handleDeleteRow">handleDeleteRow</a></li><li><a href="global.html#handleEditRow">handleEditRow</a></li><li><a href="global.html#hasStoppedLoading">hasStoppedLoading</a></li><li><a href="global.html#HiringManagersContainer">HiringManagersContainer</a></li><li><a href="global.html#HRRolesContainer">HRRolesContainer</a></li><li><a href="global.html#isChrome">isChrome</a></li><li><a href="global.html#isLoading">isLoading</a></li><li><a href="global.html#LayoutContainer">LayoutContainer</a></li><li><a href="global.html#LoginComponent">LoginComponent</a></li><li><a href="global.html#loginFailed">loginFailed</a></li><li><a href="global.html#loginSuccessful">loginSuccessful</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#logoutUser">logoutUser</a></li><li><a href="global.html#NavbarComponent">NavbarComponent</a></li><li><a href="global.html#PayGradesContainer">PayGradesContainer</a></li><li><a href="global.html#Projects">Projects</a></li><li><a href="global.html#ReportsComponent">ReportsComponent</a></li><li><a href="global.html#SkillsContainer">SkillsContainer</a></li><li><a href="global.html#switchView">switchView</a></li><li><a href="global.html#Table">Table</a></li><li><a href="global.html#Tutorial">Tutorial</a></li><li><a href="global.html#UsersContainer">UsersContainer</a></li><li><a href="global.html#validateSession">validateSession</a></li><li><a href="global.html#viewTableFailed">viewTableFailed</a></li><li><a href="global.html#viewTableRows">viewTableRows</a></li><li><a href="global.html#viewTableSuccessful">viewTableSuccessful</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Nov 30 2017 11:54:30 GMT-0800 (PST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
