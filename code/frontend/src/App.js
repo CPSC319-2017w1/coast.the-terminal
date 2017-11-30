@@ -11,6 +11,10 @@ import Layout from './components/Layout';
 const middleware = process.env.NODE_ENV === 'production' ? applyMiddleware(thunk) : applyMiddleware(logger, thunk);
 const store = createStore(reducer, middleware);
 
+/**
+ * @class
+ * Main component wrapping all components with state and cookie providers
+ * */
 export default class App extends Component {
   render() {
     return (

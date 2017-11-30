@@ -30,7 +30,14 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+/**
+ * Class representing add contractor
+ */
 class AddContractorContainer extends React.Component{
+  /**
+   * defines the state
+   * @param props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +50,6 @@ class AddContractorContainer extends React.Component{
       projects: [
         this.createDefaultProjectObject()
       ],
-      message: '',
       tables: {}
     };
     this.handleTextInput = this.handleTextInput.bind(this);
@@ -53,13 +59,20 @@ class AddContractorContainer extends React.Component{
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
-
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
+  /**
+   *
+   */
   componentDidMount() {
     this.props.viewTables(this.props.token);
   }
 
+  /**
+   * Saves the text input to the designated field in the database
+   * @param event - user input
+   */
   handleTextInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -76,6 +89,10 @@ class AddContractorContainer extends React.Component{
     }
   }
 
+  /**
+   * Saves the dropdown input to the designated field in the database
+   * @param event - user input
+   */
   handleDropdownInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -91,6 +108,10 @@ class AddContractorContainer extends React.Component{
     }
   }
 
+  /**
+   * Saves the date input to the designated field in the database
+   * @param event - user input
+   */
   handleDateInput(event) {
     event.preventDefault();
     const { state } = this;
@@ -101,6 +122,10 @@ class AddContractorContainer extends React.Component{
     this.setState(Object.assign(state, {projects}));
   }
 
+  /**
+   * Saves the radio input to the designated field in the database
+   * @param event - user input
+   */
   handleRadioInput(event) {
     const { state } = this;
     if (!event.target.hasAttribute('data-index')) {
@@ -112,61 +137,109 @@ class AddContractorContainer extends React.Component{
       let dataIndex = event.target.getAttribute('data-index');
       let project = projects[dataIndex];
       let nameWithIndex = event.target.getAttribute('name');
-      let name = nameWithIndex.split("-")[0];
+      let name = nameWithIndex.split('-')[0];
       project[name] = event.target.value;
       this.setState(Object.assign(state, {projects}));
     }
   }
 
+  /**
+   * Adds another project component to the page
+   * @param event - user input
+   */
   handleAdd(event) {
     event.preventDefault();
     let projectState = this.state.projects;
     projectState.push(this.createDefaultProjectObject());
-    this.setState({projects: projectState})
+    this.setState({projects: projectState});
   }
 
+  /**
+   * Saves the contractor to the database
+   * @param event - user input
+   */
   handleSubmit(event) {
     event.preventDefault();
     const { contractor } = this.state;
     const { projects } = this.state;
-    this.props.onSubmit(contractor, projects, this.props.tables, this.resetState, this.props.token);
+    let confirmation = confirm('Are you sure you want to add this contractor to the system?');
+
+    if(confirmation){
+      this.props.onSubmit(contractor, projects, this.props.tables, this.resetState, this.props.token);
+    } else {
+      alert('Contractor not added');
+    }
+
   }
 
+  handleCancel(){
+    event.preventDefault();
+    const { props } = this;
+    let confirmation = confirm('Are you sure you want to clear fields?');
+    if(confirmation){
+      if (props.error) {
+        alert(props.error);
+      } else {
+        this.setState({
+          contractor: {
+            firstName: '',
+            surname: '',
+            agencySource: '',
+            status: 'active'
+          },
+          projects: [
+            this.createDefaultProjectObject()
+          ]
+        });
+      }
+    } else {
+
+    }
+  }
+
+  /**
+   * Creates an empty project object
+   */
   createDefaultProjectObject() {
     return {
-        projectName: '',
-        reportingmanagers: this.getReportingManagersOptions(),
-        hrpositions: this.getHrPositionOptions(),
-        ratetypes: this.getRateTypeOptions(),
-        paygrades: this.getPayGradeOptions(),
-        refnos: 0,
-        mainSkills: this.getMainSkillsOptions(),
-        costCenters: this.getCostCenterOptions(),
-        originalDocumentation: '',
-        terminationNum: 0,
-        startDate: "2017-01-01",
-        endDate: "2017-01-02",
-        dailyAllowance:0,
-        timeMaterialTerms:0,
-        hourlyrate:0
+      projectName: '',
+      reportingmanagers: this.getReportingManagersOptions(),
+      hrpositions: this.getHrPositionOptions(),
+      ratetypes: this.getRateTypeOptions(),
+      paygrades: this.getPayGradeOptions(),
+      refnos: 0,
+      mainSkills: this.getMainSkillsOptions(),
+      costCenters: this.getCostCenterOptions(),
+      originalDocumentation: '',
+      terminationNum: 0,
+      startDate: '2017-01-01',
+      endDate: '2017-01-02',
+      dailyAllowance:0,
+      timeMaterialTerms:0,
+      hourlyrate:0
     };
   }
 
+  /**
+   * gets dropdown options
+   * @param optionName - name of dropdown
+   * @return {*} - gets options for given dropdowns
+   */
   getDropdownOptions (optionName) {
     switch  (optionName) {
-      case "reportingManager":
+      case 'reportingManager':
         return this.getReportingManagersOptions();
-      case "hrPosition":
+      case 'hrPosition':
         return this.getHrPositionOptions();
-      case "rateType":
+      case 'rateType':
         return this.getRateTypeOptions();
-      case "payGrade":
+      case 'payGrade':
         return this.getPayGradeOptions();
-      case "refNos":
+      case 'refNos':
         return this.getRefNosOptions();
-      case "mainSkills":
+      case 'mainSkills':
         return this.getMainSkillsOptions();
-      case "costCenters":
+      case 'costCenters':
         return this.getCostCenterOptions();
       default:
         return [];
@@ -200,13 +273,16 @@ class AddContractorContainer extends React.Component{
 
   getCostCenterOptions() {
     //fallbacks
-    return ["Vancouver", "Calgary"];
+    return ['Vancouver', 'Calgary'];
   }
 
+  /**
+   * resets the component to initial state
+   */
   resetState() {
     const { props } = this;
     if (props.error) {
-      this.setState({ message: props.error });
+      alert(props.error);
     } else {
       this.setState({
         contractor: {
@@ -216,9 +292,9 @@ class AddContractorContainer extends React.Component{
         },
         projects: [
           this.createDefaultProjectObject()
-        ],
-        message: 'Contractor added successfully.'
+        ]
       });
+      alert('Contractor added Successfully');
     }
   }
 
@@ -232,6 +308,7 @@ class AddContractorContainer extends React.Component{
       handleRadioInput={this.handleRadioInput}
       handleAdd={this.handleAdd}
       handleSubmit={this.handleSubmit}
+      handleCancel={this.handleCancel}
       message={this.state.message}
       tables={this.props.tables}
     />;

@@ -3,8 +3,16 @@ import PropTypes from 'prop-types';
 import * as TYPES from '../../../constants/input-types.js';
 import css from '../../../components/AdminPanel/Tabs/table.css';
 
-// todo: input validations
-
+/**
+ * Renders a form
+ * @param {object} inputs - Inputs to appear in the form
+ * @param {function} onChange - State change handler for inputs
+ * @param {function} onSubmit - Click handler for submit button
+ * @param {function} clearAll - Click handler for Clear All button
+ * @param {string} itemId - ID of the item that is being edited (only if the form is for edit row, not adding a new row)
+ * @param {boolean} isEdit - Whether or not the form is for editing an existing row
+ * @param {boolean} isActiveUser - Whether or not the form is displaying information for the currently logged in user
+ * */
 function Form({inputs, onChange, onSubmit, clearAll, itemId, isEdit, isActiveUser}) {
   let children = [];
   for (let key in inputs) {
@@ -33,6 +41,12 @@ function Form({inputs, onChange, onSubmit, clearAll, itemId, isEdit, isActiveUse
   </div>;
 }
 
+/**
+ * Render input of type number
+ * @param {object} item
+ * @param {string} key - A unique ID for the input
+ * @param {function} onChange - State change handler for the input
+ * */
 function getNumberField(item, key, onChange) {
   return <div className={css.formfield} key={key}>
     <span>{item.title}</span>
@@ -40,6 +54,13 @@ function getNumberField(item, key, onChange) {
   </div>;
 }
 
+/**
+ * Render input of type text
+ * @param {object} item
+ * @param {string} key - A unique ID for the input
+ * @param {function} onChange - State change handler for the input
+ * @param {boolean} isEdit - Whether or not the form is for editing an existing row
+ * */
 function getTextField(item, key, onChange, isEdit) {
   return <div className={css.formfield} key={key}>
     <span>{item.title}</span>
@@ -47,6 +68,13 @@ function getTextField(item, key, onChange, isEdit) {
   </div>;
 }
 
+/**
+ * Render input of type dropdown
+ * @param {object} items
+ * @param {string} key - A unique ID for the input
+ * @param {function} onChange - State change handler for the input
+ * @param {boolean} isActiveUser - Whether or not the form is displaying information for the currently logged in user
+ * */
 function getDropdownField(items, key, onChange, isActiveUser) {
   return <div className={css.formfield} key={key}>
     <span>{items.title}</span>

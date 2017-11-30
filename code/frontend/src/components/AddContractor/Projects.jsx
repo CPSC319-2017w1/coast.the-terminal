@@ -3,6 +3,16 @@ import Proptypes from 'prop-types';
 import css from './addcontractor.css';
 import 'date-input-polyfill';
 
+/**
+ * Creates the html for Project Information
+ * @param projects - array that holds the engagement contracts of the contractor
+ * @param handleTextInput -  function that handles the input in the text fields
+ * @param handleDropdownInput - function that handles the input in the dropdown fields
+ * @param handleDateInput - function that handles the input in the date field
+ * @param handleRadioInput - function that hanldes the input for radio button
+ * @param tables - data for dropdowns
+ * @returns React component for Project Information
+ */
 function Projects({projects, handleTextInput, handleDropdownInput, handleDateInput, handleRadioInput, tables}) {
   return <div>
     {
@@ -82,7 +92,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               data-index={index}
               onChange={handleDropdownInput}
               value={project.rateType}
-              >
+            >
               {getOptions(project.ratetypes)}
             </select>
           </p>
@@ -189,6 +199,13 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
   </div>;
 }
 
+/**
+ * Populates dropdown with data
+ * @param tables - data for dropdowns
+ * @param tableName - dropdown name
+ * @return options for the dropdown
+ */
+
 function getDataOptions(tables, tableName) {
   let desiredTable = tables[tableName];
   if(typeof desiredTable === typeof undefined) {
@@ -199,36 +216,51 @@ function getDataOptions(tables, tableName) {
   let idField = getIdField(tableName);
   return desiredTableData.map((item, index) =>
     <option key={index}
-            value={item[idField]}>
+      value={item[idField]}>
       {item[displayField]}
     </option>
   );
 }
 
+/**
+ * gets the id of the dropdown
+ * @param tableName - name of dropdown
+ * @return {string} - id of dropdown
+ */
 function getIdField(tableName) {
   switch(tableName) {
     default:
-      return "id";
+      return 'id';
   }
 }
 
+/**
+ * gets fields based on the name of dropdown
+ * @param tableName - name of dropdown
+ * @return {*} - fields that are displayed in the dropdown
+ */
 function getDisplayField(tableName) {
   switch(tableName) {
-    case "skills":
-       return "name";
+    case 'skills':
+      return 'name';
     case 'paygrades':
-      return "name";
+      return 'name';
     case 'hiringmanagers':
-      return "firstName";
+      return 'firstName';
     case 'hrroles':
-      return "roleName";
+      return 'roleName';
     case 'costcenters':
       return 'location';
     default:
-      return "id";
+      return 'id';
   }
 }
 
+/**
+ * gets options for dropdown
+ * @param items - list of items to be populated in the dropdown
+ * @return oprions for dropdown
+ */
 function getOptions(items) {
   return items.map((item, index) =>
     <option key={index}

@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+/**
+ * Creates a Database Connection object which allows for making all calls to a connected database
+ */
 public class DatabaseConnection {
     private Connection dbConnection;
     private String url;

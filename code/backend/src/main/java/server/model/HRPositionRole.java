@@ -1,7 +1,7 @@
 package server.model;
 
 /**
- * Created by vaast on 31/10/2017.
+ * Represents the HR Position Role of the object
  */
 public class HRPositionRole {
     private String id;

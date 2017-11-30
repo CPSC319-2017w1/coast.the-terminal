@@ -2,6 +2,13 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import css from './addcontractor.css';
 
+/**
+ * Creates the html for Contractor Information
+ * @param contractor - object that holds information of the contractor
+ * @param handleTextInput - function that handles the input in the text fields
+ * @param handleRadioInput - function that handles the input for radio button
+ * @returns React Component for Contractor Information
+ */
 function Contractor({contractor, handleTextInput, handleRadioInput}) {
   return <div className={css.contractorInfo}>
     <div className={css.contractorform}>
@@ -32,7 +39,8 @@ function Contractor({contractor, handleTextInput, handleRadioInput}) {
 
 Contractor.propTypes = {
   contractor: Proptypes.object.isRequired,
-  handleTextInput: Proptypes.func.isRequired
+  handleTextInput: Proptypes.func.isRequired,
+  handleRadioInput: Proptypes.func.isRequired
 };
 
 export default Contractor;

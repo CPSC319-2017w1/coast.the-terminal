@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import css from './dashboard.css';
 import { FILTERING, CONTRACTOR_INFO , REPORTS, ADD_CONTRACTOR} from '../../constants/tabs.js';
 
+/**
+ * Creates html for dashboard component
+ * @param onClick - function for buttons of the dashboard
+ * @return React component for Dashboard
+ */
 function DashboardComponent({onClick}) {
   return (
     <div className={css.wrapper}>

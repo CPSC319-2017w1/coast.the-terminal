@@ -1,6 +1,8 @@
 package server.model;
 
-//TODO add stuff to this class, have it implement the IUser interface we define
+/**
+ * Represents the User object
+ */
 public class User {
 
     private String username;

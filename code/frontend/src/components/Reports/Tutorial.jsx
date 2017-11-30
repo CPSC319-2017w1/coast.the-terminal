@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './reports.css';
 
+/**
+ * Creates html component for Tutorial
+ * @param closeTutorial - function for the close button in the tutorial component
+ * @return React component for Tutorial
+ */
 function Tutorial({closeTutorial}) {
   return (
     <div className={css.tutorialholder}>

@@ -4,6 +4,21 @@ import css from '../AddContractor/addcontractor.css';
 import Contractor from '../AddContractor/Contractor.jsx';
 import Projects from '../AddContractor/Projects.jsx';
 
+/**
+ * Creates the html component for Edit Contractor
+ * @param contractor - object that holds information of the contractor
+ * @param projects - array that holds the engagement contracts of the contractor
+ * @param handleTextInput -  function that handles the input in the text fields
+ * @param handleDropdownInput - function that handles the input in the dropdown fields
+ * @param handleDateInput - function that handles the input in the date field
+ * @param handleRadioInput - function that hanldes the input for radio button
+ * @param handleAdd - adds another project component
+ * @param handleSubmit - saves the contractor to the database
+ * @param handleBack - returns to contractor info page
+ * @param message - error message
+ * @param tables - data for dropdowns
+ * @returns React component for EditContractor
+ */
 function EditContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
   handleDateInput, handleRadioInput, handleAdd, handleSubmit, handleBack, message, tables}) {
   return (

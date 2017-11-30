@@ -19,7 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by vaast on 17/11/2017.
+ * Controller for the Authentication related tables
+ * Provides all the REST endpoints related to Authentication and stored SQL procedures
  */
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"}, methods = {RequestMethod.GET, RequestMethod.POST})
 @RestController
@@ -33,6 +34,10 @@ public class AuthenticationController extends Controller{
     private static final String refreshQuery = "select * from Login where token=? and username=?";
     private static final String permissionsQuery = "select * from User where username=?";
 
+    /**
+     * Gets the current date and time in a String
+     * @return The current date and time in a String
+     */
     public static String getCurrentDateTime() {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -40,6 +45,12 @@ public class AuthenticationController extends Controller{
         return currentTime;
     }
 
+    /**
+     * REST API link to refresh
+     * @param username Username to refresh login for
+     * @param token Unique token of the user
+     * @return Response containing the User data or an error response
+     */
     @RequestMapping("/refresh")
     public RefreshResponse refresh(
             @RequestParam("username") String username,
@@ -63,6 +74,7 @@ public class AuthenticationController extends Controller{
             set = st.executeQuery();
             if (set.next()) {
                 permissions = set.getString("permissions");
+                updateTimeStamp(token);
             } else {
                 return RefreshResponse.errorResponse("Invalid User");
             }
@@ -73,6 +85,12 @@ public class AuthenticationController extends Controller{
         return new RefreshResponse(permissions);
     }
 
+    /**
+     * REST API link to logout
+     * @param username The username of the user who is logging out
+     * @param token The qunique token of the user
+     * @return Response stating whether logout was successful or not
+     */
     @RequestMapping("/logout")
     public LogoutResponse logout(@RequestParam("username") String username, @RequestParam("token") String token) {
         if (!logout(username)) {
@@ -81,6 +99,11 @@ public class AuthenticationController extends Controller{
         return new LogoutResponse();
     }
 
+    /**
+     * Checks if a user is logged in or not given their unique token
+     * @param token The unique token of the user
+     * @return true if user is logged in
+     */
     public static boolean isLoggedInToken(String token) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         boolean result = true;
@@ -103,6 +126,10 @@ public class AuthenticationController extends Controller{
         return result;
     }
 
+    /**
+     * Updates the last access time stamp for a user in the database
+     * @param token The unique token of the user
+     */
     public static void updateTimeStamp(String token) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         try {
@@ -119,6 +146,11 @@ public class AuthenticationController extends Controller{
         }
     }
 
+    /**
+     * Checks if a user is logged in given the username
+     * @param username The username of the User
+     * @return true if the user is logged in
+     */
     public static boolean isLoggedIn(String username) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         boolean result = true;
@@ -141,6 +173,11 @@ public class AuthenticationController extends Controller{
         return result;
     }
 
+    /**
+     * Gets the unique token of the username
+     * @param username The username of the User
+     * @return The unique token of the User
+     */
     public static String getToken(String username) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         String result = "";
@@ -165,6 +202,11 @@ public class AuthenticationController extends Controller{
         return result;
     }
 
+    /**
+     * Generates a unique token and logs the user in if it is a registered user
+     * @param username Username of the user to login
+     * @return The unique generated token.
+     */
     public static String login(String username) {
         if (isLoggedIn(username)) {
             String token = getToken(username);
@@ -177,6 +219,7 @@ public class AuthenticationController extends Controller{
             connection.openConnection();
             if (!connection.isConnected()) {
                 Logger.getAnonymousLogger().log(Level.INFO, "Failed to connect to database");
+                return "";
             }
             PreparedStatement st = connection.getPreparedStatement(insertQuery);
             int index = 1;
@@ -186,16 +229,23 @@ public class AuthenticationController extends Controller{
             int success = st.executeUpdate();
             if (success == 0) {
                 Logger.getAnonymousLogger().log(Level.INFO, "Failed to update login");
+                return "";
             } else {
                 connection.commitTransaction();
             }
             connection.closeConnection();
         } catch (SQLException e) {
             Logger.getAnonymousLogger().log(Level.INFO, "Failed to update login: " + e.getMessage());
+            return "";
         }
         return token;
     }
 
+    /**
+     * Logs a user out of the system
+     * @param username The username of the user
+     * @return true if the user was successfully logged out
+     */
     public static boolean logout(String username) {
         boolean flag = true;
         if (isLoggedIn(username)) {
@@ -223,6 +273,10 @@ public class AuthenticationController extends Controller{
         return flag;
     }
 
+    /**
+     * Get all the users that are logged in
+     * @return The list of all logged in users
+     */
     public static ArrayList<Login> getLogins() {
         ArrayList<Login> logins = new ArrayList<Login>();
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);

@@ -3,6 +3,9 @@ package server.database;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Configuration Object that parses and stores the database url, username and password
+ */
 @Component
 public class DatabaseConnectionConfig {
     private static final String DB_CONNECTION_URL_PREFIX = "jdbc:mysql://";

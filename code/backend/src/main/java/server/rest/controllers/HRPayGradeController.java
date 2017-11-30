@@ -18,6 +18,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller for HR PayGrade table
+ * Provides all the REST endpoints related to HR Pay Grades and stored SQL procedures
+ */
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class HRPayGradeController extends Controller {
@@ -25,6 +29,11 @@ public class HRPayGradeController extends Controller {
     private static String addQuery = "insert into HRPayGrade values(?, ?, ?, ?)";
     private static String editQuery = "update HRPayGrade set startAmount=?, endAmount=?, name=? where id=?";
 
+    /**
+     * Get all the paygrades in the database
+     * @return The list of all paygrades
+     * @throws SQLException if something goes wrong whilst querying the database
+     */
     public ArrayList<HRPayGrade> getPayGrades() throws SQLException{
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<HRPayGrade> payGrades = new ArrayList<HRPayGrade>();
@@ -45,6 +54,14 @@ public class HRPayGradeController extends Controller {
         return payGrades;
     }
 
+    /**
+     * Adds a pay grade to the database
+     * @param startAmt The start amount
+     * @param endAmt The end amount
+     * @param name The name of the pay grade
+     * @return Newly created paygrade object
+     * @throws SQLException
+     */
     public HRPayGrade addPayGrade(int startAmt, int endAmt, String name) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         String id = UUID.randomUUID().toString();
@@ -68,6 +85,15 @@ public class HRPayGradeController extends Controller {
         return payGrade;
     }
 
+    /**
+     * Update an existing pay grade in the database
+     * @param id ID of the paygrade to update
+     * @param startAmt Start amount of the paygrade
+     * @param endAmt End amount of the pay grade
+     * @param name Name of the pay grade
+     * @return The updated pay grade object
+     * @throws SQLException
+     */
     public HRPayGrade editPayGrade(String id, int startAmt, int endAmt, String name) throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         HRPayGrade payGrade = new HRPayGrade(id, startAmt, endAmt, name);
@@ -90,6 +116,11 @@ public class HRPayGradeController extends Controller {
         return payGrade;
     }
 
+    /**
+     * REST API link to view all the pay grades
+     * @param token The unique token of the user making the API call
+     * @return Response containing all the paygrades or an error response
+     */
     @RequestMapping("/paygrades/view")
     public HRPayGradeResponse paygrades(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
@@ -106,6 +137,14 @@ public class HRPayGradeController extends Controller {
         return new HRPayGradeResponse(payGrades);
     }
 
+    /**
+     * REST API link to add a pay grade in the database
+     * @param token The unique token of the User making the API call
+     * @param startAmt The start amount of the pay grade
+     * @param endAmt The end amount of the pay grade
+     * @param name The name of the pay grade
+     * @return Response containing the newly added paygrade or an error response
+     */
     @RequestMapping("/paygrades/add")
     public Response addPayGrade(
             @RequestParam("token") String token,
@@ -126,6 +165,15 @@ public class HRPayGradeController extends Controller {
         return new HRAddEditPayGradeResponse(payGrade);
     }
 
+    /**
+     * REST API link to edit a pay grade in the database
+     * @param token The unique token of the User making the API call
+     * @param id The id of the pay grade being edited
+     * @param startAmt The start amount of the pay grade
+     * @param endAmt The end amount of the pay grade
+     * @param name The name of the pay grade
+     * @return Response containing the updated paygrade or an error response
+     */
     @RequestMapping("/paygrades/edit")
     public HRAddEditPayGradeResponse editPayGrade(
             @RequestParam("token") String token,

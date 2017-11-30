@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller for the FXRates table
+ * Provides all the REST endpoints related to FXRates and stored SQL procedures
+ */
 @CrossOrigin(origins = {"http://localhost:1234","http://theterminal.s3-website.us-west-2.amazonaws.com"})
 @RestController
 public class FXRateController extends Controller {
@@ -22,6 +26,11 @@ public class FXRateController extends Controller {
     private static final String addQuery = "insert into FXRate values(?, ?, ?)";
     private static final String editQuery = "update FXRate set rate=? where curCode1=? and curCode2=?";
 
+    /**
+     * Get all the FXRates in the database
+     * @return List of all FXRates
+     * @throws SQLException if something went wrong whilst querying the database
+     */
     public ArrayList<FXRate> getRates() throws SQLException {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         ArrayList<FXRate> fxRates = new ArrayList<FXRate>();
@@ -42,6 +51,11 @@ public class FXRateController extends Controller {
         return fxRates;
     }
 
+    /**
+     * REST API link for viewing all the FXRates
+     * @param token The unique token of the User making the API call
+     * @return Response containing all the FXRates or an error response
+     */
     @RequestMapping("/fxrates/view")
     public FXRatesResponse fxrates(@RequestParam("token") String token) {
         if (!isUserLoggedIn(token)) {
@@ -59,6 +73,11 @@ public class FXRateController extends Controller {
         return new FXRatesResponse(rates);
     }
 
+    /**
+     * Updates a Exchange rate in the database
+     * @param rate FXRate object that contains the source currency, dest currency and current rate
+     * @return true if successful in making the update
+     */
     public boolean updateFXRates(FXRate rate) {
         DatabaseConnection connection = new DatabaseConnection(dbConnectionUrl, dbUsername, dbPassword);
         boolean success = true;

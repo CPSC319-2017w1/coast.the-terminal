@@ -20,6 +20,10 @@ class FilteringContainer extends React.Component {
     this.closeTutorial = this.closeTutorial.bind(this);
   }
 
+  /**
+   * toggles the state of visibility of tutorial
+   * @param event
+   */
   handleTutorial(event) {
     event.preventDefault();
     this.setState({
@@ -27,6 +31,10 @@ class FilteringContainer extends React.Component {
     });
   }
 
+  /**
+   * closes the tutorial
+   * @param event
+   */
   closeTutorial(event){
     event.preventDefault();
     this.setState({
@@ -34,6 +42,10 @@ class FilteringContainer extends React.Component {
     });
   }
 
+  /**
+   * Renders the Filtering component with the Tutorial and Pivot Table
+   * @return {XML}
+   */
   render(){
     return <FilteringComponent
       showTutorial={this.state.showTutorial}

@@ -6,7 +6,7 @@ import server.externalapi.CurrencyConverter;
 
 
 /**
- * Created by vaast on 15/11/2017.
+ * Automated task to update the FXRates stored in the Database
  */
 @Component
 public class UpdateFXRateTask {

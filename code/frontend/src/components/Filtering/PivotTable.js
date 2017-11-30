@@ -9,7 +9,6 @@ import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
 import '../Filtering/pivottable.css';
 import TableRenderers from 'react-pivottable/TableRenderers';
-import {reportinfo} from '../Filtering/Data.js';
 import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
 import { viewAllContractorDataSeparateRows } from '../../actions/contractor-info-actions';
 
@@ -35,8 +34,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const data = reportinfo;
-
 class PivotTableContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -55,11 +52,12 @@ class PivotTableContainer extends React.Component {
   }
 
   componentWillMount() {
+    const{props} = this;
     this.setState({
       mode: 'demo',
       filename: 'Contractor Data',
       pivotState: {
-        data: reportinfo,
+        data: this.removeIdFromContractors(props.contractors.data),
         rendererName: 'Table',
         plotlyOptions: {width: 900, height: 500}
       }
@@ -70,13 +68,17 @@ class PivotTableContainer extends React.Component {
     if (!Array.isArray(contractorData)) {
       contractorData = contractorData.humanReadableData;
     }
-      for (let contractor of contractorData) {
-        delete contractor['id'];
-      }
+    for (let contractor of contractorData) {
+      delete contractor['id'];
+    }
 
     return contractorData;
   }
 
+  /**
+   * Renders the pivot table with the data you set in data={}
+   * @return {XML}
+   */
   render() {
     const { props, state }  = this;
     let contractorData = this.removeIdFromContractors(props.contractors.data);

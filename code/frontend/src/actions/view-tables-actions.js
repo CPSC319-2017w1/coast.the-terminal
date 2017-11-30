@@ -3,6 +3,11 @@ import * as ACTIONS from '../constants/action-types.js';
 import { LIVE_SITE, LOCALHOST } from '../constants/urls.js';
 import { loginFailed } from './login-actions.js';
 
+/**
+ * Action to be dispatched when the call to backend has been successful
+ * @param {string} tableName - The table in question
+ * @param {object} data - Data returned from the backend
+ * */
 function viewTableSuccessful(tableName, data) {
   return {
     type: ACTIONS.VIEW_TABLES,
@@ -11,6 +16,11 @@ function viewTableSuccessful(tableName, data) {
   };
 }
 
+/**
+ * Action to be dispatched when the call to backend has failed
+ * @param {string} error - Error message
+ * @param {string} tableName - The table in question
+ * */
 function viewTableFailed(tableName, error) {
   return {
     type: ACTIONS.VIEW_TABLES_FAILED,
@@ -19,6 +29,11 @@ function viewTableFailed(tableName, error) {
   };
 }
 
+/**
+ * Call backend to get the table rows
+ * @param {string} tableName - The table in question
+ * @param {string} token - The session token of the current user
+ * */
 export function viewTableRows(tableName, token) {
   return dispatch => {
     return request
