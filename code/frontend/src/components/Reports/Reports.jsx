@@ -17,9 +17,9 @@ import Tutorial from './Tutorial.jsx';
  */
 function ReportsComponent({showTutorial, showTable, handleTable, handleReport, handleTutorial, closeTutorial}) {
   return (
-    <div className={css.wrapper}>
+    <div data-qa="reports-wrapper" className={css.wrapper}>
       <div className={css.heading}>
-        <h1>Trending Reports</h1>
+        <h1 data-qa="reports-header">Trending Reports</h1>
         <p>Use the Reports generator to view trending reports</p>
         <button className={css.handletutorial} onClick={handleTutorial}>Show/hide tutorial for the graph</button>
       </div>

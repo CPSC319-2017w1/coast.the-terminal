@@ -24,14 +24,14 @@ function EditContractorComponent({contractor, projects, handleTextInput, handleD
   return (
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
-      <h1>Edit Contractor</h1>
+      <h1 data-qa="editpage" >Edit Contractor</h1>
       <p> Use the form below to edit contractor information stored in the system.</p>
-      <button className={css.backbtnstyle} onClick={handleBack}> Back to Contractor Info</button>
+      <button data-qa="backbtn" className={css.backbtnstyle} onClick={handleBack}> Back to Contractor Info</button>
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleRadioInput={handleRadioInput}/>
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
         handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} tables={tables} />
       <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
-      <input className={css.btnstyle} type="submit" onClick={handleSubmit} value="Save Contractor" />
+      <input data-qa="save" className={css.btnstyle} type="submit" onClick={handleSubmit} value="Save Contractor" />
     </div>
   );
 }

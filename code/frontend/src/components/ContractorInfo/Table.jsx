@@ -51,8 +51,8 @@ function getHeaders(data) {
 function getRows(data, func) {
   return data.map((contractor, index) =>
     <tr key={index} className={css.tablerow}>
-      <td>
-        <button name={contractor.id} className={css.editbtn} onClick={func}>EDIT</button>
+      <td className={css.rowData}>
+        <button data-qa="edit" name={contractor.id} className={css.editbtn} onClick={func}>EDIT</button>
       </td>
       {getColumns(contractor)}
     </tr>

@@ -10,27 +10,27 @@ import { FILTERING, CONTRACTOR_INFO , REPORTS, ADD_CONTRACTOR} from '../../const
  */
 function DashboardComponent({onClick}) {
   return (
-    <div className={css.wrapper}>
+    <div data-qa="dashboard-wrapper" className={css.wrapper}>
       <div className={css.heading}>
-        <h1>Dashboard</h1>
+        <h1 data-qa="dashboard-header"> Dashboard</h1>
       </div>
       <div className={css.dashboardbtn}>
-        <button className={css.datafiltering}
+        <button data-qa="datafilterbtn" className={css.datafiltering}
           name={FILTERING}
           onClick={onClick}>
           Data Filtering System
         </button>
-        <button className={css.addcontractor}
+        <button data-qa="addbtn" className={css.addcontractor}
           name={ADD_CONTRACTOR}
           onClick={onClick}>
           Add Contractor
         </button>
-        <button className={css.contractorinfo}
+        <button data-qa="infobtn" className={css.contractorinfo}
           name={CONTRACTOR_INFO}
           onClick={onClick}>
           Contractor Information
         </button>
-        <button className={css.reports}
+        <button data-qa="reportsbtn" className={css.reports}
           name={REPORTS}
           onClick={onClick}>
           Reports

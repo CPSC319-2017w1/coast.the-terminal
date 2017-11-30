@@ -9,12 +9,12 @@ import * as TABS from '../../constants/admin-tabs.js';
  * */
 function AdminPanelComponent({onClick}) {
   return (
-    <div className={css.wrapper}>
-      <div className={css.heading}>
-        <h1>Admin Panel</h1>
+    <div data-qa="admin-wrapper" className={css.wrapper}>
+      <div  className={css.heading}>
+        <h1 data-qa="admin-header">Admin Panel</h1>
       </div>
       <div className={css.adminpanelbtn}>
-        <button className={css.hrRoles}
+        <button data-qa="hrroles" className={css.hrRoles}
           name={TABS.HR_ROLES}
           onClick={onClick}>
           HR Roles
