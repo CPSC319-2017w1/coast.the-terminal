@@ -24,7 +24,7 @@ function EditContractorComponent({contractor, projects, handleTextInput, handleD
   return (
     <div className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
-      <h1>Edit Contractor</h1>
+      <h1 data-qa="editpage" >Edit Contractor</h1>
       <p> Use the form below to edit contractor information stored in the system.</p>
       <button className={css.backbtnstyle} onClick={handleBack}> Back to Contractor Info</button>
       <Contractor contractor={contractor} handleTextInput={handleTextInput} handleRadioInput={handleRadioInput}/>

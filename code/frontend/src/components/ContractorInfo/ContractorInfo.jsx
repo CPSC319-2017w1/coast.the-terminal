@@ -16,7 +16,7 @@ function ContractorInfoComponent({tabledata, searchvalue, handleSearch, handleEd
     <div data-qa="info-wrapper" className={css.wrapper}>
       <h1 data-qa="info-header">Contractor Information</h1>
       <br/>
-      <input className={css.searchbar} name="searchBar" type="text" value={searchvalue} onChange={handleSearch} placeholder="Search by Contractor Name"/>
+      <input data-qa="name" className={css.searchbar} name="searchBar" type="text" value={searchvalue} onChange={handleSearch} placeholder="Search by Contractor Name"/>
       <br/>
       <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>
     </div>);
