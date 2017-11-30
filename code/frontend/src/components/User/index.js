@@ -20,12 +20,19 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+/**
+ * Class that represents User container
+ */
 class UserContainer extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
 
+  /**
+   * Logs the user out of the system
+   * @param event
+   */
   handleClick(event) {
     event.preventDefault();
     const { props } = this;
@@ -35,6 +42,10 @@ class UserContainer extends React.Component {
     props.logout(props.username, props.token);
   }
 
+  /**
+   * Renders the logout component to the screen
+   * @return {XML}
+   */
   render() {
     return <UserComponent username={this.props.username} handleClick={this.handleClick} />;
   }

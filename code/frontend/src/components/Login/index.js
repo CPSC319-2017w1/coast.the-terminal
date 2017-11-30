@@ -22,6 +22,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+/**
+ * Class that represents the Login container
+ */
 class LoginContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +38,10 @@ class LoginContainer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * sets the username to the value entered in the text box
+   * @param event
+   */
   handleUsernameInput(event) {
     event.preventDefault();
     const {password} = this.state;
@@ -44,6 +51,10 @@ class LoginContainer extends React.Component {
     });
   }
 
+  /**
+   * sets the password to the value entered in the text box
+   * @param event
+   */
   handlePasswordInput(event) {
     event.preventDefault();
     const {username} = this.state;
@@ -53,6 +64,10 @@ class LoginContainer extends React.Component {
     });
   }
 
+  /**
+   * submits the state's username and password to the system
+   * @param event
+   */
   handleSubmit(event) {
     event.preventDefault();
     const {username, password} = this.state;
@@ -67,6 +82,10 @@ class LoginContainer extends React.Component {
     }
   }
 
+  /**
+   * renders the login component to the screen
+   * @return {*}
+   */
   render() {
     const { state } = this;
     if (state.username !== '' && state.token !== '') {

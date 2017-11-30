@@ -23,6 +23,13 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+/**
+ * Defines the layout of the page
+ * @param tab - current tab
+ * @param isLoggedIn - boolean that return true if user is logged in
+ * @param isLoading - boolean that returns true if page is loading
+ * @return {XML} for the entire page
+ */
 function LayoutContainer({tab, isLoggedIn, isLoading}) {
   if (!isLoggedIn) {
     return <div>
@@ -64,6 +71,10 @@ function LayoutContainer({tab, isLoggedIn, isLoading}) {
   );
 }
 
+/**
+ *
+ * @return {boolean|string}
+ */
 function isChrome() {
   return typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.indexOf('Chrome') > -1;
 }
