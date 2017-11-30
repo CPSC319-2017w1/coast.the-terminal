@@ -12,13 +12,13 @@ function Tutorial({closeTutorial}) {
     <div className={css.tutorialholder}>
       <p><b>Choose your parameters for the x-axis</b>
         <br/>
-        Drag and drop a field that you would like to have on the x-axis of your report to your <i>column area.</i></p>
+        Drag and drop a field that you would like to have on the x-axis of your report to your <i>column area(horizontal zone).</i></p>
       <p>Once you drag this down, you can see a graph has been generated without any filter.</p>
       <br/>
       <p><b>Choose your filter</b>
         <br/>
         You can choose to refine the graph by clicking the arrow beside each field and selecting the filters in the <i>filter area.</i></p>
-      <p>If you want the filter to show visually in the graph, drag the desired field to the <i>row area</i>.</p>
+      <p>If you want the filter to show visually in the graph, drag the desired field to the <i>row area(vertical zone)</i>.</p>
       <p>Fields that have not been dragged down will remain as options in the filter area. If you have also not refined your graph using the drop-down arrow, they will not affect the graph.</p>
       <br/>
       <p><b>Choose count values</b>

@@ -10,8 +10,8 @@ import css from './filtering.css';
 function Tutorial({closeTutorial}) {
   return (
     <div className={css.tutorialholder}>
-      <p><b>Choose a row:</b> Drag one of the fields that you want as rows in your pivot table to your <i>row area.</i><br/></p>
-      <p><b>Choose a column:</b> Drag one of the fields that you want as columns in your pivot table to your <i>column area.</i></p>
+      <p><b>Choose a row:</b> Drag one of the fields that you want as rows in your pivot table to your <i>row area(vertical zone).</i><br/></p>
+      <p><b>Choose a column:</b> Drag one of the fields that you want as columns in your pivot table to your <i>column area(horizontal zone).</i></p>
       <p>The order of the fields can also change the way you view the data. For example,</p>
       <p><i>If you arrange Company and Contractor Name as:<br/>
              1) Company<br/>
