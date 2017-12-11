@@ -135,7 +135,7 @@ function Projects({projects, handleTextInput, handleDropdownInput, handleDateInp
               type="number"
               data-index={index}
               onChange={handleTextInput}
-              value={project.poRefNum}
+              value={project.poNum}
             >
             </input>
           </p>

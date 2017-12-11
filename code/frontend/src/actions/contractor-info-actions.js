@@ -258,7 +258,7 @@ function generateContractorRows(data) {
   const contractObjectFields = {
     'costCenter': {
       //"id": "costcenter-id",
-      'location': 'Location'
+      'location': 'Cost Center Location'
     },
     'hrPayGrade': {
       // "id": "hrPayGrade-id",
