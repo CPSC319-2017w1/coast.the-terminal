@@ -207,7 +207,7 @@ class AddContractorContainer extends React.Component{
       hrpositions: this.getHrPositionOptions(),
       ratetypes: this.getRateTypeOptions(),
       paygrades: this.getPayGradeOptions(),
-      refnos: 0,
+      poNum: 0,
       mainSkills: this.getMainSkillsOptions(),
       costCenters: this.getCostCenterOptions(),
       originalDocumentation: '',

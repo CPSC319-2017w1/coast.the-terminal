@@ -187,13 +187,17 @@ class EditContractorContainer extends React.Component {
       reportingmanagers: this.getReportingManagersOptions(),
       hrpositions: this.getHrPositionOptions(),
       ratetypes: this.getRateTypeOptions(),
-      hourlyrate: '',
       paygrades: this.getPayGradeOptions(),
-      refnos: this.getRefNosOptions(),
+      poNum: 0,
       mainSkills: this.getMainSkillsOptions(),
       costCenters: this.getCostCenterOptions(),
       originalDocumentation: '',
-      terminationNum: ''
+      terminationNum: 0,
+      startDate: '2017-01-01',
+      endDate: '2017-01-02',
+      dailyAllowance:0,
+      timeMaterialTerms:0,
+      hourlyrate:0
     };
   }
 
