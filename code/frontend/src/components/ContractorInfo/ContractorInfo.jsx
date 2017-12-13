@@ -18,7 +18,9 @@ function ContractorInfoComponent({tabledata, searchvalue, handleSearch, handleEd
       <br/>
       <input data-qa="name" className={css.searchbar} name="searchBar" type="text" value={searchvalue} onChange={handleSearch} placeholder="Search by Contractor Name"/>
       <br/>
-      <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>
+      <div className={css.tablecontainer}>
+        <Table tabledata={tabledata} handleEditContractor={handleEditContractor}/>
+      </div>
     </div>);
 }
 
