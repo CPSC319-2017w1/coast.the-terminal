@@ -57,6 +57,7 @@ class AddContractorContainer extends React.Component{
     this.handleDateInput = this.handleDateInput.bind(this);
     this.handleRadioInput = this.handleRadioInput.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetState = this.resetState.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -152,6 +153,21 @@ class AddContractorContainer extends React.Component{
     let projectState = this.state.projects;
     projectState.push(this.createDefaultProjectObject());
     this.setState({projects: projectState});
+  }
+
+  /**
+   * Remove last project component to the page
+   * @param event - user input
+   */
+  handleRemove(event) {
+    event.preventDefault();
+    let projectState = this.state.projects;
+    if(projectState.length > 1){
+      projectState.pop();
+      this.setState({projects: projectState});
+    } else {
+      alert('Need to have at least one project');
+    }
   }
 
   /**
@@ -355,6 +371,7 @@ class AddContractorContainer extends React.Component{
       handleDateInput={this.handleDateInput}
       handleRadioInput={this.handleRadioInput}
       handleAdd={this.handleAdd}
+      handleRemove={this.handleRemove}
       handleSubmit={this.handleSubmit}
       handleCancel={this.handleCancel}
       message={this.state.message}
