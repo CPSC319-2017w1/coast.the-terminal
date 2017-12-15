@@ -168,13 +168,19 @@ class EditContractorContainer extends React.Component {
     const { contractor } = this.state;
     const { projects } = this.state;
     const { numNewContracts } = this.state;
-    let confirmation = confirm('Are you sure you want to add changes to this contractor?');
+    let errors = this.handleValidations();
 
-    if(confirmation){
-      this.props.onSubmit(contractor, projects, this.props.tables, numNewContracts, this.resetState, this.props.token);
-    } else {
-      alert('Contractor changes not saved');
+    if(errors.length > 0){
+      alert('Please fix the following errors before proceeding' + '\n' + errors);
+    } else{
+      let confirmation = confirm('Are you sure you want to add changes to this contractor?');
+      if(confirmation){
+        this.props.onSubmit(contractor, projects, this.props.tables, numNewContracts, this.resetState, this.props.token);
+      } else {
+        alert('Contractor changes not saved');
+      }
     }
+
 
   }
 
@@ -225,6 +231,47 @@ class EditContractorContainer extends React.Component {
       default:
         return [];
     }
+  }
+
+  /**
+   * checks if the fields are empty
+   * @return Array of errors
+   */
+  handleValidations(){
+    let errors = [];
+    if(!this.state.contractor.firstName.length){
+      errors.push('Missing contractor first name');
+    }
+    if(!this.state.contractor.lastName.length){
+      errors.push('\n' + 'Missing contractor last name');
+    }
+    if(!this.state.contractor.agencySource.length){
+      errors.push('\n' + 'Missing contractor agency source');
+    }
+    this.state.projects.map((project) =>{
+      if(!project.projectName.length){
+        errors.push('\n' + 'Missing project name');
+      }
+      if(!project.originalDocumentation.length){
+        errors.push('\n' + 'Missing original documentation');
+      }
+      if(!project.originalDocumentation.length){
+        errors.push('\n' + 'Missing original documentation');
+      }
+      if(project.dailyAllowance == 0){
+        errors.push('\n' + 'Missing daily allowance');
+      }
+      if(project.timeMaterialTerms == 0){
+        errors.push('\n' + 'Missing Time and material items');
+      }
+      if(project.hourlyrate == 0){
+        errors.push('\n' + 'Missing hourly rate');
+      }
+      if(project.startDate > project.endDate){
+        errors.push('\n' + 'Start Date cannot be later than end date');
+      }
+    });
+    return errors;
   }
 
   getReportingManagersOptions() {
