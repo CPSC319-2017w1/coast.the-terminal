@@ -10,13 +10,13 @@ import createPlotlyRenderers from 'react-pivottable/PlotlyRenderers';
 import '../Filtering/pivottable.css';
 import TableRenderers from 'react-pivottable/TableRenderers';
 import { isLoading, hasStoppedLoading } from '../../actions/main-actions';
-import { viewAllContractorDataSeparateRows } from '../../actions/contractor-info-actions';
+import { viewReportData } from '../../actions/report-info-actions';
 
 const mapStateToProps = state => {
   return {
     user: state.user,
     tables: state.tables,
-    contractors: state.contractors
+    reportData: state.reportData
   };
 };
 
@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getData: (token) => {
       dispatch(isLoading());
-      dispatch(viewAllContractorDataSeparateRows(token));
+      dispatch(viewReportData(token));
     },
     stopLoading: () => {
       dispatch(hasStoppedLoading());
@@ -42,7 +42,10 @@ class PivotTableContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({pivotState: nextProps});
-    if(nextProps.contractors.data.length > 0) {
+    if(nextProps.reportData.data && nextProps.reportData.data.length > 0) {
+      this.setState({pivotState: {
+        data: nextProps.reportData.data
+      }});
       this.props.stopLoading();
     }
   }
@@ -52,12 +55,11 @@ class PivotTableContainer extends React.Component {
   }
 
   componentWillMount() {
-    const{props} = this;
     this.setState({
       mode: 'demo',
       filename: 'Contractor Data',
       pivotState: {
-        data: this.removeIdFromContractors(props.contractors.data),
+        data: [],
         rendererName: 'Table',
         plotlyOptions: {width: 900, height: 500}
       }
@@ -80,10 +82,8 @@ class PivotTableContainer extends React.Component {
    * @return {XML}
    */
   render() {
-    const { props, state }  = this;
-    let contractorData = this.removeIdFromContractors(props.contractors.data);
     return <PivotTableUI
-      data={contractorData} onChange={s => this.setState({pivotState: s})}
+      data={this.state.pivotState.data} onChange={s => this.setState({pivotState: s})}
       renderers={Object.assign({}, TableRenderers, createPlotlyRenderers(Plot))}
       {...this.state.pivotState} unusedOrientationCutoff={Infinity}
     />;
