@@ -43,7 +43,7 @@ class AddContractorContainer extends React.Component{
     this.state = {
       contractor: {
         firstName: '',
-        lastName: '',
+        surname: '',
         agencySource: '',
         status: 'active'
       },
@@ -262,7 +262,7 @@ class AddContractorContainer extends React.Component{
     if(!this.state.contractor.firstName.length){
       errors.push('Missing contractor first name');
     }
-    if(!this.state.contractor.lastName.length){
+    if(!this.state.contractor.surname.length){
       errors.push('\n' + 'Missing contractor last name');
     }
     if(!this.state.contractor.agencySource.length){
@@ -278,13 +278,13 @@ class AddContractorContainer extends React.Component{
       if(!project.originalDocumentation.length){
         errors.push('\n' + 'Missing original documentation');
       }
-      if(project.dailyAllowance == 0){
+      if(project.dailyAllowance <= 0){
         errors.push('\n' + 'Missing daily allowance');
       }
-      if(project.timeMaterialTerms == 0){
+      if(project.timeMaterialTerms <= 0){
         errors.push('\n' + 'Missing Time and material items');
       }
-      if(project.hourlyrate == 0){
+      if(project.hourlyrate <= 0){
         errors.push('\n' + 'Missing hourly rate');
       }
       if(project.startDate > project.endDate){
