@@ -11,15 +11,17 @@ import Projects from './Projects.jsx';
  * @param handleTextInput -  function that handles the input in the text fields
  * @param handleDropdownInput - function that handles the input in the dropdown fields
  * @param handleDateInput - function that handles the input in the date field
- * @param handleRadioInput - function that hanldes the input for radio button
+ * @param handleRadioInput - function that handles the input for radio button
  * @param handleAdd - adds another project component
+ * @param handleRemove - remove last project component
  * @param handleSubmit - saves the contractor to the database
+ * @param handleCancel - clear all the fields
  * @param message - error message
  * @param tables - data for dropdowns
  * @returns React component for AddContractor
  */
 function AddContractorComponent({contractor, projects, handleTextInput, handleDropdownInput,
-  handleDateInput, handleRadioInput, handleAdd, handleSubmit, handleCancel, message, tables}) {
+  handleDateInput, handleRadioInput, handleAdd, handleRemove, handleSubmit, handleCancel, message, tables}) {
   return (
     <div data-qa="add-wrapper" className={css.wrapper}>
       { message === '' ? null : <p>{message}</p> }
@@ -29,6 +31,7 @@ function AddContractorComponent({contractor, projects, handleTextInput, handleDr
       <Projects projects={projects} handleTextInput={handleTextInput} handleDropdownInput={handleDropdownInput}
         handleDateInput={handleDateInput} handleRadioInput={handleRadioInput} tables={tables} />
       <input className={css.btnstyle} type="submit" onClick={handleAdd} value="Add Additional Contract" />
+      <input className={css.btnstyle} type="submit" onClick={handleRemove} value="Remove Additional Contract" />
       <input data-qa="addcontractor" className={css.btnstyle} type="submit" onClick={handleSubmit} value="Add Contract" />
       <button className={css.btnstyle} onClick={handleCancel}>Clear Fields</button>
     </div>
@@ -46,7 +49,8 @@ AddContractorComponent.propTypes = {
   handleRadioInput: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   tables: PropTypes.object.isRequired,
-  handleCancel: PropTypes.func.isRequired
+  handleCancel: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired
 };
 
 export default AddContractorComponent;
